@@ -40,6 +40,7 @@ nav ul li a{
 }
 nav ul li a:hover{
     color:rgb(78, 39, 78);
+    text-decoration: line-through;
 }
 
 /*hamburger menu*/
@@ -54,7 +55,7 @@ nav ul li a:hover{
 .menu-toggle input{
     position: absolute;
     width: 40px;
-    height: 28px;
+    height: 40px;
     left: -5px;
     top: -3px;
     opacity: 0;
