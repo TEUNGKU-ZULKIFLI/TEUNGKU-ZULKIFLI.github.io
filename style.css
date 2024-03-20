@@ -9,27 +9,33 @@ body{
     overflow-x: hidden;
 }
 
+.madimi-one-regular {
+    font-family: "Madimi One", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+
 /* NAVBAR */
 nav{
     display: flex;
-    background-color: magenta;
-    justify-content: space-around;
+    background-color: rgb(28, 28, 28);
+    justify-content: space-between;
     padding: 20px 0;
-    color: blueviolet;
+    color: rgb(0, 0, 0);
 }
-nav .logo{
-    font-size: xx-large;
-    font-family: "Luckiest Guy", cursive;
-    letter-spacing: 1px;
+
+nav .LOGO{
+    padding-left: 40px;
+    height: 50px;
+    width: 50px;
 }
-nav .logo:hover{
-    color: aqua;
-}
+
 nav ul{
     display: flex;
     list-style: none;
     width: 40%;
-    justify-content: space-between;
+    justify-content: space-around;
 }
 nav ul li a{
     color: white;
@@ -39,7 +45,7 @@ nav ul li a{
     top: 16px;
 }
 nav ul li a:hover{
-    color:rgb(78, 39, 78);
+    color:rgb(0, 0, 0);
     text-decoration: line-through;
 }
 
@@ -50,7 +56,8 @@ nav ul li a:hover{
     height: 20px;
     justify-content: space-between;
     position: relative;
-    top: 16px;
+    top: 15px;
+    right: 20px;
 }
 .menu-toggle input{
     position: absolute;
@@ -70,7 +77,7 @@ nav ul li a:hover{
     border-radius: 9px;
     transition: all 0.5s;
 }
-/*hamburger menu animation*/
+/* Hamburger menu animation */
 .menu-toggle span:nth-child(2){
     background-color: rgb(255, 255, 255);
     transform-origin: 0 0;
@@ -83,17 +90,20 @@ nav ul li a:hover{
 
 .menu-toggle input:checked ~ span:nth-child(2){
     background-color: rgb(255, 255, 255);
-    transform: rotate(45deg) translate(-1px, -1px);
+    transform: rotate(45deg) translate(-2px, -3px);
 }
+
 .menu-toggle input:checked ~ span:nth-child(4){
     background-color: rgb(255, 255, 255);
-    transform: rotate(-45deg) translate(-1px, 0);
+    transform: rotate(-45deg) translate(-2px, -1px);
 }
+
 .menu-toggle input:checked ~ span:nth-child(3){
     background-color: rgb(255, 255, 255);
     opacity: 0;
-    transform: scale(0)
+    transform: scale(0);
 }
+
 
 /*responsive break point*/
 
@@ -117,7 +127,7 @@ nav ul li a:hover{
         justify-content: space-evenly;
         flex-direction: column;
         align-items: center;
-        background-color: magenta;
+        background-color: rgb(28, 28, 28);
         z-index: -1;
         transform: translateX(100%);
         transition: all 1s;
@@ -126,4 +136,25 @@ nav ul li a:hover{
         opacity: 1;
         transform: translateX(0);
     }
+}
+
+/* PROFIL */
+div .profil1{
+    position: absolute;
+    padding-left: 50px;
+    padding-top: 50px;
+}
+
+div ul {
+    color: rgb(65, 5, 56);
+    font-family: "Popins", sans-serif;
+    font-size: 4em;
+    font-weight: 900;
+    padding-left: 400px;
+    padding-top: 120px;
+}
+
+div ul:hover{
+    color: blueviolet;
+    
 }
