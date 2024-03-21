@@ -139,22 +139,34 @@ nav ul li a:hover{
 }
 
 /* PROFIL */
-div .profil1{
+section .profil1{
     position: absolute;
-    padding-left: 50px;
-    padding-top: 50px;
+    padding-left: 5%;
+    padding-top: 5%;
 }
 
-div ul {
+section ul {
     color: rgb(65, 5, 56);
     font-family: "Popins", sans-serif;
-    font-size: 4em;
-    font-weight: 900;
-    padding-left: 400px;
-    padding-top: 120px;
+    font-size: 8em;
+    padding-left: 35%;
+    padding-top: 12%;
 }
 
-div ul:hover{
+section ul:hover{
     color: blueviolet;
     
+}
+
+/*page 2*/
+article{
+    position: absolute;
+    top: 800px;
+    left: 45%;
+    right: 45%;
+
+}
+article h1{
+    text-align: center;
+    color: rgb(65, 5, 56);
 }
