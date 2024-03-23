@@ -1,144 +1,38 @@
 *{
     margin: 0;
     padding: 0;
-}
-
-body{
-    font-family: "Fira Mono", monospace;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
     font-weight: 700;
-    overflow-x: hidden;
 }
 
-.madimi-one-regular {
-    font-family: "Madimi One", sans-serif;
-    font-weight: 400;
-    font-style: normal;
+/* HEADER */
+.LOGO{
+    position: absolute;
 }
-
 
 /* NAVBAR */
 nav{
-    display: flex;
+    text-align: right;
     background-color: rgb(28, 28, 28);
-    justify-content: space-between;
-    padding: 20px 0;
     color: rgb(0, 0, 0);
 }
-
-nav .LOGO{
-    padding-left: 40px;
-    height: 50px;
-    width: 50px;
+nav li{
+    display: inline;
 }
-
-nav ul{
-    display: flex;
-    list-style: none;
-    width: 40%;
-    justify-content: space-around;
-}
-nav ul li a{
-    color: white;
+nav a{
+    color: rgb(0, 0, 0);
+    display: inline-block;
+    padding: 3% 5%;
     text-decoration: none;
-    font-size: 1.5em;
-    position: relative;
-    top: 16px;
 }
-nav ul li a:hover{
-    color:rgb(0, 0, 0);
-    text-decoration: line-through;
+nav a:hover{
+    color:rgb(255, 255, 255);
+    text-decoration: underline;
+    transition: 1s;
 }
 
-/*hamburger menu*/
-.menu-toggle{
-    display: none;
-    flex-direction: column;
-    height: 20px;
-    justify-content: space-between;
-    position: relative;
-    top: 15px;
-    right: 20px;
-}
-.menu-toggle input{
-    position: absolute;
-    width: 40px;
-    height: 40px;
-    left: -5px;
-    top: -3px;
-    opacity: 0;
-    cursor: pointer;
-    z-index: 2;
-}
-.menu-toggle span{
-    display: block;
-    width: 30px;
-    height: 4px;
-    background-color: rgb(255, 255, 255);
-    border-radius: 9px;
-    transition: all 0.5s;
-}
-/* Hamburger menu animation */
-.menu-toggle span:nth-child(2){
-    background-color: rgb(255, 255, 255);
-    transform-origin: 0 0;
-}
-
-.menu-toggle span:nth-child(4){
-    background-color: rgb(255, 255, 255);
-    transform-origin: 0 100%;
-}
-
-.menu-toggle input:checked ~ span:nth-child(2){
-    background-color: rgb(255, 255, 255);
-    transform: rotate(45deg) translate(-2px, -3px);
-}
-
-.menu-toggle input:checked ~ span:nth-child(4){
-    background-color: rgb(255, 255, 255);
-    transform: rotate(-45deg) translate(-2px, -1px);
-}
-
-.menu-toggle input:checked ~ span:nth-child(3){
-    background-color: rgb(255, 255, 255);
-    opacity: 0;
-    transform: scale(0);
-}
-
-
-/*responsive break point*/
-
-/*ukuran tablet*/
-@media screen and (max-width: 760px){
-    nav ul{
-        display: 50%;
-    }
-}
-
-/*ukuran mobile*/
-@media screen and (max-width: 576px){
-    .menu-toggle{
-        display: flex;
-    }
-    nav ul{
-        position: absolute;
-        right: 0;
-        top: 0;
-        height: 100vh;
-        justify-content: space-evenly;
-        flex-direction: column;
-        align-items: center;
-        background-color: rgb(28, 28, 28);
-        z-index: -1;
-        transform: translateX(100%);
-        transition: all 1s;
-    }
-    nav ul.slide{
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-/* PROFIL */
+/* SECTION */
 section .profil1{
     position: absolute;
     padding-left: 5%;
@@ -155,18 +49,24 @@ section ul {
 
 section ul:hover{
     color: blueviolet;
-    
+    transition: 0.9s;
 }
 
-/*page 2*/
-article{
-    position: absolute;
-    top: 800px;
-    left: 45%;
-    right: 45%;
-
+/* ARTICLE */
+article div{
+    display: block;
+    background-color: rgb(172, 30, 150);
+    padding: 10%;
+    border-radius: 5%;
 }
 article h1{
-    text-align: center;
+    text-transform: uppercase;
     color: rgb(65, 5, 56);
+}
+/* FOOTER */
+footer {
+    text-align: center;
+    color: crimson;
+    background-color: rgb(132, 0, 255);
+    padding: 20px;
 }
