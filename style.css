@@ -7,32 +7,46 @@
 }
 
 /* HEADER */
-
+header {
+    text-align: center;
+    padding: 5%;
+    color: chartreuse;
+}
 /* NAVBAR */
-nav{
-    text-align: left;
+nav {
+    text-align: center;
     background-color: rgb(184, 76, 185);
     color: rgb(0, 0, 0);
-    border-radius: 6vh;
+    border-radius: 10vh;
+    letter-spacing: 1px;
 }
-nav ul li{
-    display: inline-block;
-    margin-right: 5%;
-    padding: 30px;
+
+nav ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
 }
-.logo{
-    vertical-align: middle;
+
+nav ul li {
+    display: inline;
+}
+
+.logo {
     height: 70px;
     width: auto;
 }
-nav a{
+
+nav a {
     color: rgb(0, 0, 0);
-    display: inline-block;
     text-decoration: none;
+    padding: 5px 10px;
+    border-radius: 4vh;
 }
-nav a:hover{
-    color:rgb(255, 255, 255);
+
+nav a:hover {
+    color: rgb(255, 255, 255);
     text-decoration: underline;
+    background-color: black;
     transition: 1s;
 }
 
@@ -43,27 +57,21 @@ section {
     text-align: center;
     align-items: center;
     height: 70vh;
-    background-color: #f2f2f2;
 }
 
 section img {
+    margin-top: 10%;
     width: 200px;
     border-radius: 100%;
     border: 5px solid rgb(102, 0, 112);
-    box-shadow: 10px 0px 10px rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
 }
 
-.overlay {
-    display: block;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: rgba(244, 219, 219, 0.491);
-    color: rgb(251, 0, 255);
-    padding: 20px;
-    border-radius: 10vh;
-    text-align: center;
+.biodata {
+    border: 3px solid rgb(0, 0, 0);
+    border-radius: 3vh;
+    background-color: aqua;
+    padding: 5%;
 }
 
 .nama {
@@ -71,25 +79,25 @@ section img {
     font-size: 30px;
     color: #333;
     margin-top: 10px;
+    padding: 10% 0;
 }
 
 .nama:hover{
     color: rgb(0, 0, 0);
     background-color: rgb(255, 0, 162);
-    border-radius: 1vh;
+    border-radius: 3vh;
     transition: 1S;
 }
 
 /* ARTICLE */
-article div{
-    display: block;
-    background-color: rgb(172, 30, 150);
-    padding: 10%;
-    border-radius: 5%;
+article{
+    padding: 20px;
+    height: 2000px;
 }
-article h1{
-    text-transform: uppercase;
-    color: rgb(65, 5, 56);
+
+article div{
+    text-align: center;
+    height: 200px;
 }
 /* FOOTER */
 footer {
