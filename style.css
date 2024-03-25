@@ -5,49 +5,90 @@
     font-family: 'Poppins', sans-serif;
     font-weight: 700;
 }
+/*SPLINE*/
+.spline{
+    margin: 0 0;
+    padding-bottom: 30px;
+    height: 487px;
+    width: auto;
+    border-radius: 100vh;
+}
+/*main*/
+main {
+    background-color: #000000;
+}
+main h1 {
+    text-align: center;
+    color: #ffffff;
+    padding: 10px;
+    transition: 3s;
+}
+
+main h1:hover {
+    color: rgb(0, 0, 0);
+    background-color: rgb(255, 255, 255);
+    border-radius: 5vh;
+    text-decoration: 2px line-through;
+    transition: 2s;
+}
 
 /* HEADER */
 header {
-    text-align: center;
-    padding: 5%;
-    color: chartreuse;
-}
-/* NAVBAR */
-nav {
-    text-align: center;
-    background-color: rgb(184, 76, 185);
-    color: rgb(0, 0, 0);
-    border-radius: 10vh;
-    letter-spacing: 1px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #00b5d5;
+    color: #ffffff;
+    border-radius: 5vh;
+    transition: top 0.3s;
+    width: 100%;
+    top: 5px;
 }
 
-nav ul {
+/* NAVBAR */
+
+.link {
+    display: flex;
+    list-style: none;
     margin: 0;
     padding: 0;
-    list-style: none;
+    top: 10px;
 }
 
-nav ul li {
-    display: inline;
+.link li {
+    margin: 20px 15px; /* Sesuaikan jarak antar elemen */
+    padding-left: 100px;
+}
+
+.link a {
+    color: inherit;
+    text-decoration: none;
+    padding: 20px;
+    margin: 10px;
+    transition: 1s;
 }
 
 .logo {
-    height: 70px;
-    width: auto;
+    display: block;
+    width: 60px;
+    height: auto;
 }
 
-nav a {
-    color: rgb(0, 0, 0);
-    text-decoration: none;
-    padding: 5px 10px;
-    border-radius: 4vh;
-}
-
-nav a:hover {
-    color: rgb(255, 255, 255);
-    text-decoration: underline;
-    background-color: black;
+header a:hover {
+    color: #000000;
+    text-decoration: overline;
+    padding: 20px;
+    margin: 10px;
+    border-radius: 5vh;
+    background-color: #ffffff;
     transition: 1s;
+}
+
+.fixed-header {
+    position: fixed;
+    top: 1;
+    width: 100%;
 }
 
 /* SECTION */
@@ -57,17 +98,19 @@ section {
     text-align: center;
     align-items: center;
     height: 70vh;
+    background-color: rgb(225, 225, 225);
 }
 
 section img {
     margin-top: 10%;
     width: 200px;
     border-radius: 100%;
-    border: 5px solid rgb(102, 0, 112);
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    border: 5px solid rgb(234, 0, 255);
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.637), 0.5;
 }
 
 .biodata {
+    display: block;
     border: 3px solid rgb(0, 0, 0);
     border-radius: 3vh;
     background-color: aqua;
@@ -80,19 +123,24 @@ section img {
     color: #333;
     margin-top: 10px;
     padding: 10% 0;
+    transition: 1s;
 }
 
 .nama:hover{
     color: rgb(0, 0, 0);
     background-color: rgb(255, 0, 162);
-    border-radius: 3vh;
-    transition: 1S;
+    text-decoration: line-through;
+    padding: 5px 10px;
+    border: 1px solid black;
+    border-radius: 5vh;
+    transition: 1s;
 }
 
 /* ARTICLE */
 article{
     padding: 20px;
     height: 2000px;
+    background-color: rgb(225, 225, 225);
 }
 
 article div{
@@ -102,7 +150,9 @@ article div{
 /* FOOTER */
 footer {
     text-align: center;
-    color: crimson;
+    color: rgb(0, 0, 0);
     background-color: rgb(132, 0, 255);
     padding: 20px;
+    border: 2px solid rgb(0, 0, 0);
+    border-radius: 1vh;
 }
