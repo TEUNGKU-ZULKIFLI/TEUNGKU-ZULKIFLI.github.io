@@ -16,6 +16,7 @@
 /*main*/
 main {
     background-color: #000000;
+    overflow-x: hidden;
 }
 @keyframes run-text {
     0% {
@@ -58,7 +59,7 @@ header {
 }
 
 .link li {
-    margin: 20px 15px; /* Sesuaikan jarak antar elemen */
+    margin: 20px 15px;
     padding-left: 100px;
 }
 
@@ -142,11 +143,11 @@ article{
     padding: 20px;
     height: 2000px;
     background-color: rgb(225, 225, 225);
-}
-
-article div{
     text-align: center;
-    height: 200px;
+}
+article div {
+    overflow: auto;
+    background-color: aquamarine;
 }
 /* FOOTER */
 footer {
