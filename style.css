@@ -17,19 +17,20 @@
 main {
     background-color: #000000;
 }
-main h1 {
-    text-align: center;
-    color: #ffffff;
-    padding: 10px;
-    transition: 3s;
+@keyframes run-text {
+    0% {
+    transform: translateX(100%);
+    }
+    100% {
+    transform: translateX(-100%);
+    }
 }
 
-main h1:hover {
-    color: rgb(0, 0, 0);
-    background-color: rgb(255, 255, 255);
-    border-radius: 5vh;
-    text-decoration: 2px line-through;
-    transition: 2s;
+main h1 {
+    color: whitesmoke;
+    white-space: nowrap;
+    animation: run-text 10s linear infinite;
+    background-color: rgb(0, 0, 0);
 }
 
 /* HEADER */
