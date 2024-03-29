@@ -7,7 +7,6 @@
 }
 /*SPLINE*/
 .spline{
-    margin: 0 0;
     padding-bottom: 30px;
     height: 487px;
     width: auto;
@@ -17,6 +16,8 @@
 main {
     background-color: #000000;
     overflow-x: hidden;
+    margin: 5px;
+    border-radius: 5vh;
 }
 @keyframes run-text {
     0% {
@@ -42,10 +43,10 @@ header {
     justify-content: space-between;
     background: #00b5d5;
     color: #ffffff;
-    border-radius: 5vh;
     transition: top 0.3s;
     width: 100%;
     top: 5px;
+    border: solid #ffffff 2px ;
 }
 
 /* NAVBAR */
@@ -53,9 +54,6 @@ header {
 .link {
     display: flex;
     list-style: none;
-    margin: 0;
-    padding: 0;
-    top: 10px;
 }
 
 .link li {
@@ -91,63 +89,67 @@ header a:hover {
     position: fixed;
     top: 1;
     width: 100%;
+    border: solid #000000 2px ;
+    border-radius: 5vh;
 }
 
 /* SECTION */
 section {
-    display: flex;
     justify-content: center;
     text-align: center;
-    align-items: center;
-    height: 70vh;
     background-color: rgb(225, 225, 225);
+    border: #000000 solid 2px;
+    box-shadow: 0px 10px 0px rgba(0, 0, 0, 0.2);
+    border-radius: 5vh;
+    margin: 20px;
+    padding: 10px 10px;
 }
 
 section img {
-    margin-top: 10%;
-    width: 200px;
     border-radius: 100%;
     border: 5px solid rgb(234, 0, 255);
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.637), 0.5;
+    box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.637), 0.5;
+}
+
+section img:hover {
+    box-shadow: 0 8px 90px 0 rgba(255, 0, 225, 0.651);
 }
 
 .biodata {
-    display: block;
-    border: 3px solid rgb(0, 0, 0);
-    border-radius: 3vh;
+    border: 1px solid rgb(0, 0, 0);
+    border-radius: 5vh;
     background-color: aqua;
-    padding: 5%;
 }
 
 .nama {
-    display: block;
     font-size: 30px;
-    color: #333;
-    margin-top: 10px;
-    padding: 10% 0;
+    color: #000000;
     transition: 1s;
 }
 
 .nama:hover{
-    color: rgb(0, 0, 0);
-    background-color: rgb(255, 0, 162);
-    text-decoration: line-through;
-    padding: 5px 10px;
-    border: 1px solid black;
-    border-radius: 5vh;
+    text-decoration: line-through rgba(255, 0, 187, 0.538);
     transition: 1s;
 }
 
 /* ARTICLE */
 article{
     padding: 20px;
-    height: 2000px;
     background-color: rgb(225, 225, 225);
     text-align: center;
+    border: #000000 solid 2px;
+    box-shadow: 0px 10px 0px rgba(0, 0, 0, 0.2);
+    border-radius: 5vh;
+    margin: 20px;
 }
-article div {
-    overflow: auto;
-    background-color: aquamarine;
+
+article .about, .skill, .project{
+    padding-top: 90px;
+}
+
+.pendidikan{
+    text-decoration: underline;
+    padding-top: 20px;
 }
 /* FOOTER */
 footer {
