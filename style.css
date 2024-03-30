@@ -16,8 +16,7 @@
 main {
     background-color: #000000;
     overflow-x: hidden;
-    margin: 5px;
-    border-radius: 5vh;
+    border-radius: 2vh;
 }
 @keyframes run-text {
     0% {
@@ -39,49 +38,42 @@ main h1 {
 header {
     height: 70px;
     display: flex;
-    align-items: center;
     justify-content: space-between;
     background: #00b5d5;
     color: #ffffff;
     transition: top 0.3s;
     width: 100%;
     top: 5px;
-    border: solid #ffffff 2px ;
+    border: solid #ffffff 2px;
 }
 
 /* NAVBAR */
+.navbar {
+    display: flex;
+}
 
 .link {
     display: flex;
     list-style: none;
+    align-items: center;
 }
 
 .link li {
-    margin: 20px 15px;
-    padding-left: 100px;
+    margin: 0 15px; /* Jarak antara item menu */
 }
 
 .link a {
     color: inherit;
     text-decoration: none;
-    padding: 20px;
-    margin: 10px;
     transition: 1s;
-}
-
-.logo {
-    display: block;
-    width: 60px;
-    height: auto;
 }
 
 header a:hover {
     color: #000000;
     text-decoration: overline;
-    padding: 20px;
-    margin: 10px;
     border-radius: 5vh;
     background-color: #ffffff;
+    padding: 0 5px;
     transition: 1s;
 }
 
@@ -123,11 +115,12 @@ section img:hover {
 
 .nama {
     font-size: 30px;
-    color: #000000;
+    color: #ffffff;
     transition: 1s;
 }
 
 .nama:hover{
+    color: #000000;
     text-decoration: line-through rgba(255, 0, 187, 0.538);
     transition: 1s;
 }
@@ -148,15 +141,32 @@ article .about, .skill, .project{
 }
 
 .pendidikan{
-    text-decoration: underline;
+    text-decoration: underline rgb(255, 0, 217);
     padding-top: 20px;
 }
+
 /* FOOTER */
-footer {
+.footer {
+    background-color: #00b5d5;
+    color: #fff;
+    padding: 20px 0;
+    border: 2px solid #000000 ;
+    border-radius: 2vh;
     text-align: center;
-    color: rgb(0, 0, 0);
-    background-color: rgb(132, 0, 255);
-    padding: 20px;
-    border: 2px solid rgb(0, 0, 0);
-    border-radius: 1vh;
+}
+
+.social-icon {
+    background-color: #ffffff;
+    color: #000000;
+    font-size: 24px;
+    padding: 10px 10px;
+    transition: color 0.3s ease;
+    border-radius: 10vh 10vh;
+    text-decoration: none;
+}
+
+.social-icon:hover {
+    color: #ffffff; /* Ubah warna sesuai warna media sosial */
+    background-color: blue;
+    border: 2px solid black;
 }
