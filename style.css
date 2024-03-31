@@ -136,15 +136,21 @@ article{
     margin: 20px;
 }
 
-article .about, .skill, .project{
-    padding-top: 90px;
+.skill {
+    border: 2px solid black;
+    padding: 10px;
+    display: block;
 }
 
-.pendidikan{
-    text-decoration: underline rgb(255, 0, 217);
-    padding-top: 20px;
+.lencana {
+    justify-content: space-around;
+    display: contents;
 }
 
+.lencana img {
+    height: 300px;
+    width: 300px;
+}
 /* FOOTER */
 .footer {
     background-color: #00b5d5;
