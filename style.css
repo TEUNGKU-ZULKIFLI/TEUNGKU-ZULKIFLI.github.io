@@ -101,10 +101,13 @@ section img {
     border-radius: 100%;
     border: 5px solid rgb(234, 0, 255);
     box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.637), 0.5;
+    transition: 1.5s;
 }
 
 section img:hover {
     box-shadow: 0 8px 90px 0 rgba(255, 0, 225, 0.651);
+    transform: scale(1.1);
+    transition: 1s;
 }
 
 .biodata {
@@ -136,10 +139,40 @@ article{
     margin: 20px;
 }
 
+.article h1 {
+    text-align: center;
+}
+
+.about {
+    font-size: 20px;
+    color: #000000;
+    text-align: left;
+    padding: 10px;
+    border: 2px solid black;
+    border-radius: 5vh;
+    background-color: #ffffff;
+}
+
+.schoolImage {
+    display: block;
+    width: 300px;
+    height: auto;
+    border: 2px solid black;
+    border-radius: 5vh;
+    transition: 1s;
+}
+
+.schoolImage:hover {
+    transform: scale(1.1);
+    transition: 1s;
+    box-shadow: 0 8px 90px 0 rgb(89, 255, 0)
+}
 .skill {
     border: 2px solid black;
+    border-radius: 5vh;
+    margin-top: 5%;
     padding: 10px;
-    display: block;
+    display: inline-block;
 }
 
 .lencana {
@@ -150,7 +183,34 @@ article{
 .lencana img {
     height: 300px;
     width: 300px;
+    border: 5px solid black;
+    border-radius: 100%;
+    transition: 1.5s;
 }
+
+.lencana img:hover {
+    transform: scale(1.1);
+    transition: 1s;
+    box-shadow: 0 8px 90px 0 rgba(0, 218, 222, 0.651);
+}
+
+.project {
+    border: 2px solid black;
+    border-radius: 5vh;
+    margin-top: 5%;
+    padding: 10px;
+}
+
+.DESKRIPSI {
+    font-size: 20px;
+    color: #000000;
+    text-align: center;
+    padding: 10px;
+    border: 2px solid black;
+    border-radius: 5vh;
+    background-color: #ffffff;
+}
+
 /* FOOTER */
 .footer {
     background-color: #00b5d5;
