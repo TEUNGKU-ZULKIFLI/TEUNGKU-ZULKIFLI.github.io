@@ -139,8 +139,10 @@ article{
     margin: 20px;
 }
 
-.article h1 {
+.bagian {
+    padding-top: 100px;
     text-align: center;
+    font-weight: 1000;
 }
 
 .about {
@@ -195,10 +197,30 @@ article{
 }
 
 .project {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
     border: 2px solid black;
     border-radius: 5vh;
     margin-top: 5%;
     padding: 10px;
+}
+
+.cardPoject {
+    border: 2px solid black;
+    border-radius: 3vh;
+    height: 100px;
+    width: auto;
+    padding: 10px;
+    background-color: rgb(230, 0, 255);
+    transition: 1s;
+}
+
+.cardPoject:hover {
+    background-color: rgb(127, 0, 117);
+    transition: 1s;
 }
 
 .DESKRIPSI {
