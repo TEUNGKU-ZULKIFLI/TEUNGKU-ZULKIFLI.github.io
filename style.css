@@ -1,260 +1,183 @@
-*{
+/* General Styles */
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
     font-weight: 700;
 }
-/*SPLINE*/
-.spline{
-    padding-bottom: 30px;
-    height: 487px;
-    width: auto;
-    border-radius: 100vh;
-}
-/*main*/
-main {
-    background-color: #000000;
-    overflow-x: hidden;
-    border-radius: 2vh;
-}
-@keyframes run-text {
-    0% {
-    transform: translateX(100%);
-    }
-    100% {
-    transform: translateX(-100%);
-    }
-}
 
-main h1 {
-    color: whitesmoke;
-    white-space: nowrap;
-    animation: run-text 10s linear infinite;
-    background-color: rgb(0, 0, 0);
-}
-
-/* HEADER */
-header {
-    height: 70px;
-    display: flex;
-    justify-content: space-between;
-    background: #00b5d5;
-    color: #ffffff;
-    transition: top 0.3s;
-    width: 100%;
-    top: 5px;
-    border: solid #ffffff 2px;
-}
-
-/* NAVBAR */
+/* Start Navbar Styles */
 .navbar {
-    display: flex;
-}
-
-.link {
-    display: flex;
-    list-style: none;
-    align-items: center;
-}
-
-.link li {
-    margin: 0 15px; /* Jarak antara item menu */
-}
-
-.link a {
-    color: inherit;
-    text-decoration: none;
-    transition: 1s;
-}
-
-header a:hover {
-    color: #000000;
-    text-decoration: overline;
-    border-radius: 5vh;
-    background-color: #ffffff;
-    padding: 0 5px;
-    transition: 1s;
-}
-
-.fixed-header {
     position: fixed;
-    top: 1;
-    width: 100%;
-    border: solid #000000 2px ;
-    border-radius: 5vh;
-}
-
-/* SECTION */
-section {
-    justify-content: center;
-    text-align: center;
-    background-color: rgb(225, 225, 225);
-    border: #000000 solid 2px;
-    box-shadow: 0px 10px 0px rgba(0, 0, 0, 0.2);
-    border-radius: 5vh;
-    margin: 20px;
-    padding: 10px 10px;
-}
-
-section img {
-    border-radius: 100%;
-    border: 5px solid rgb(234, 0, 255);
-    box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.637), 0.5;
-    transition: 1.5s;
-}
-
-section img:hover {
-    box-shadow: 0 8px 90px 0 rgba(255, 0, 225, 0.651);
-    transform: scale(1.1);
-    transition: 1s;
-}
-
-.biodata {
-    border: 1px solid rgb(0, 0, 0);
-    border-radius: 5vh;
-    background-color: aqua;
-}
-
-.nama {
-    font-size: 30px;
-    color: #ffffff;
-    transition: 1s;
-}
-
-.nama:hover{
-    color: #000000;
-    text-decoration: line-through rgba(255, 0, 187, 0.538);
-    transition: 1s;
-}
-
-/* ARTICLE */
-article{
     padding: 20px;
-    background-color: rgb(225, 225, 225);
-    text-align: center;
-    border: #000000 solid 2px;
-    box-shadow: 0px 10px 0px rgba(0, 0, 0, 0.2);
-    border-radius: 5vh;
-    margin: 20px;
-}
-
-.bagian {
-    padding-top: 100px;
-    text-align: center;
-    font-weight: 1000;
-}
-
-.about {
-    font-size: 20px;
-    color: #000000;
-    text-align: left;
-    padding: 10px;
-    border: 2px solid black;
-    border-radius: 5vh;
-    background-color: #ffffff;
-}
-
-.schoolImage {
-    display: block;
-    width: 300px;
-    height: auto;
-    border: 2px solid black;
-    border-radius: 5vh;
-    transition: 1s;
-}
-
-.schoolImage:hover {
-    transform: scale(1.1);
-    transition: 1s;
-    box-shadow: 0 8px 90px 0 rgb(89, 255, 0)
-}
-.skill {
-    border: 2px solid black;
-    border-radius: 5vh;
-    margin-top: 5%;
-    padding: 10px;
-    display: inline-block;
-}
-
-.lencana {
-    justify-content: space-around;
-    display: contents;
-}
-
-.lencana img {
-    height: 300px;
-    width: 300px;
-    border: 5px solid black;
-    border-radius: 100%;
-    transition: 1.5s;
-}
-
-.lencana img:hover {
-    transform: scale(1.1);
-    transition: 1s;
-    box-shadow: 0 8px 90px 0 rgba(0, 218, 222, 0.651);
-}
-
-.project {
+    margin: 0;
+    width: 99.9%;
+    top: 0;
+    background-color: #bb00ffd9;
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 10px;
     justify-content: center;
-    border: 2px solid black;
-    border-radius: 5vh;
-    margin-top: 5%;
-    padding: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.712);
+    z-index: 10;
 }
 
-.cardPoject {
-    border: 2px solid black;
-    border-radius: 3vh;
-    height: 100px;
-    width: auto;
-    padding: 10px;
-    background-color: rgb(230, 0, 255);
-    transition: 1s;
+.menu-list {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
 }
 
-.cardPoject:hover {
-    background-color: rgb(255, 0, 234);
-    transition: 1s;
+.menu-list li {
+    margin-right: 1.5rem;
 }
 
-.DESKRIPSI {
-    font-size: 20px;
-    color: #000000;
-    text-align: center;
-    padding: 10px;
-    border: 2px solid black;
-    border-radius: 5vh;
-    background-color: #ffffff;
-}
-
-/* FOOTER */
-.footer {
-    background-color: #00b5d5;
-    color: #fff;
-    padding: 20px 0;
-    border: 2px solid #000000 ;
-    border-radius: 2vh;
-    text-align: center;
-}
-
-.social-icon {
-    background-color: #ffffff;
-    color: #000000;
-    font-size: 24px;
-    padding: 10px 10px;
-    transition: color 0.3s ease;
-    border-radius: 10vh 10vh;
+.menu-list a {
     text-decoration: none;
+    color: white;
+    font-weight: bold;
+    transition: 1s;
 }
 
-.social-icon:hover {
-    color: #ffffff; /* Ubah warna sesuai warna media sosial */
-    background-color: blue;
-    border: 2px solid black;
+.menu-list a:hover {
+    color: #333;
+    background-color: azure;
+    border-radius: 5px;
+    transition: 0.3s;
 }
+/* End Navbar Styles */
+
+/* Start Main Styles */
+main {
+    margin-top: 50px;
+    padding: 2rem;
+}
+
+.deskripsi {
+    margin: 0;
+    padding: 65px;
+    padding-bottom: 10px;
+    text-align: center;
+}
+
+/* Start Section home */
+/* SPLINE Card Styles */
+.cardSpline {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.53);
+    overflow: hidden;
+    padding: 2rem;
+    text-align: center;
+}
+
+.spline {
+    height: 500px;
+    width: 100%;
+}
+/* End Section home*/
+
+/* Start Section about */
+.about {
+    display: block;
+    justify-content: center;
+    text-align: center;
+}
+
+/* photo */
+.profil img{
+    border-radius: 50%;
+    width: 400px;
+    height: 400px;
+    object-fit: cover;
+    border: 5px solid transparent; /* Initial border */
+    transition: 0.3s ease-in-out; /* Animasi perubahan warna border */
+}
+
+/* photo saat dihover */
+.profil img:hover {
+    transform: translateY(-10px);
+    transition: 0.3s ease-in-out;
+    border-color: #ee07ff; /* Warna border saat dihover */
+    box-shadow: 0 0 20px #ff07b0; /* Efek shadow saat dihover */
+}
+/* End Section about */
+
+/* Start Section statistik */
+.statistik {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 2rem;
+}
+
+.statistik img{
+    display: inline;
+    width: 30%;
+    border: 5px solid #000000;
+    border-radius: 99.9%;
+}
+/* End Section statistik */
+
+/* Start section article */
+/* Card Section */
+#card-section {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 2rem auto;
+}
+
+/* Card Styles */
+.card {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    overflow: hidden;
+    margin: 1rem;
+    flex: 1;
+    max-width: 300px;
+    text-align: center;
+    transition: transform 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.658);
+}
+
+.card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-bottom: 5px solid #c200d3;
+}
+
+.card h2 {
+    font-size: 1.5rem;
+    margin: 0.5rem 0;
+}
+
+.card p {
+    padding: 0 1rem;
+    font-size: 1rem;
+    color: #666;
+}
+
+.card button {
+    background-color: #c200d3;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    margin: 1rem 0;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.card button:hover {
+    background-color: #c100d38b;
+}
+/* End section article */
+
+/* End Main Styles */
