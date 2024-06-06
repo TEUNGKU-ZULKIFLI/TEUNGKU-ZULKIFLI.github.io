@@ -115,6 +115,13 @@ main {
     width: 30%;
     border: 5px solid #000000;
     border-radius: 99.9%;
+    transition: 1s;
+}
+
+.statistik img:hover{
+    transition: 1s;
+    transform: translateY(-20px);
+    box-shadow: 0 4px 8px rgb(0, 0, 0);
 }
 /* End Section statistik */
 
