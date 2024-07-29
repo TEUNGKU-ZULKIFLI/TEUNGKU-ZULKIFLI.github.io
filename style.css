@@ -187,7 +187,64 @@ main {
 }
 /* End section article */
 
+/* Start HIGHLIGHT PRODUCT */
+.homepage-section {
+    padding: 50px 0;
+    background-color: #f9f9f9;
+    border-radius: 3vh;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    overflow: hidden;
+}
+
+.carousel {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.highlight-item {
+    min-width: 100%;
+    box-sizing: border-box;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.highlight-content {
+    flex: 1 1 50%;
+}
+
+.highlight-title {
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+
+.highlight-description {
+    font-size: 1.2em;
+    margin-bottom: 20px;
+}
+
+.highlight-link {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #c200d3;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.highlight-link:hover {
+    background-color: #c100d38b;
+}
+/* End HIGHLIGHT PRODUCT */
 /* End Main Styles */
+
 /* Start Footer Styles */
 .footer {
     background-color: #333;
