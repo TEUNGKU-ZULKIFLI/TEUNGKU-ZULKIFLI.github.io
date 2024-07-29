@@ -188,58 +188,71 @@ main {
 /* End section article */
 
 /* Start HIGHLIGHT PRODUCT */
-.homepage-section {
-    padding: 50px 0;
-    background-color: #f9f9f9;
-    border-radius: 3vh;
+/* Bagian Kartu */
+.bagian-utama {
+    padding: 20px;
 }
 
-.container {
+.wadah {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 20px;
-    overflow: hidden;
 }
 
-.carousel {
+.kontainer-kartu {
     display: flex;
-    transition: transform 0.5s ease-in-out;
-}
-
-.highlight-item {
-    min-width: 100%;
-    box-sizing: border-box;
-    padding: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    gap: 20px;
     flex-wrap: wrap;
+    justify-content: center;
 }
 
-.highlight-content {
-    flex: 1 1 50%;
+.kartu {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    overflow: hidden;
+    margin: 1rem;
+    flex: 1;
+    max-width: 300px;
+    text-align: center;
+    transition: transform 0.3s;
 }
 
-.highlight-title {
-    font-size: 2em;
-    margin-bottom: 10px;
+.kartu:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.658);
 }
 
-.highlight-description {
-    font-size: 1.2em;
-    margin-bottom: 20px;
+.gambar-kartu {
+    height: 50%;
+    width: auto;
+    object-fit: cover;
+    border-bottom: 5px solid #c200d3;
 }
 
-.highlight-link {
+.judul-kartu {
+    font-size: 1.5rem;
+    margin: 0.5rem 0;
+}
+
+.deskripsi-kartu {
+    padding: 0 1rem;
+    font-size: 1rem;
+    color: #666;
+}
+
+.link-kartu {
     display: inline-block;
-    padding: 10px 20px;
-    background-color: #c200d3;
+    margin: 1rem 0;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
     color: #fff;
+    background-color: #c200d3;
     text-decoration: none;
     border-radius: 5px;
+    transition: background-color 0.3s;
 }
 
-.highlight-link:hover {
+.link-kartu:hover {
     background-color: #c100d38b;
 }
 /* End HIGHLIGHT PRODUCT */
