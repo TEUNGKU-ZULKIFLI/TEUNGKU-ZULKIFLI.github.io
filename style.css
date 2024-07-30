@@ -120,7 +120,7 @@ main {
 
 .statistik img:hover{
     transition: 1s;
-    transform: translateY(-20px);
+    scale: 1.1;
     box-shadow: 0 4px 8px rgb(0, 0, 0);
 }
 /* End Section statistik */
@@ -179,11 +179,13 @@ main {
     margin: 1rem 0;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: 0.3s;
 }
 
 .card button:hover {
     background-color: #c100d38b;
+    scale: 1.1;
+    transition: 0.3s;
 }
 /* End section article */
 
@@ -249,18 +251,20 @@ main {
     background-color: #c200d3;
     text-decoration: none;
     border-radius: 5px;
-    transition: background-color 0.3s;
+    transition: 0.3s;
 }
 
 .link-kartu:hover {
     background-color: #c100d38b;
+    scale: 1.1;
+    transition: 0.3s;
 }
 /* End HIGHLIGHT PRODUCT */
 /* End Main Styles */
 
 /* Start Footer Styles */
 .footer {
-    background-color: #333;
+    background-color: #bb00ffd9;
     color: white;
     text-align: center;
     padding: 2rem 0;
@@ -291,10 +295,14 @@ main {
 .footer-social img {
     width: 30px; /* Sesuaikan ukuran ikon sesuai kebutuhan */
     height: 30px;
-    transition: opacity 0.3s;
+    transition: 0.3s;
+    opacity : 0.5;
 }
 
 .footer-social img:hover {
-    opacity: 0.7;
+    opacity: 1;
+    transition: 0.3s;
+    scale: 1.1;
+    transform: translateY(-5px);
 }
 /* End Footer Styles */
