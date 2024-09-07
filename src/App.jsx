@@ -1,13 +1,14 @@
-import './App.css'
-import { Canvas } from '@react-three/fiber'
-import { Experience } from './components/Experience'
+import './App.css';
+import { Canvas } from '@react-three/fiber';
+import { Experience } from './components/Experience';
 
 function App() {
   return (
-    <Canvas >
+    <Canvas>
+      <color attach="background" args={['#4B0082']} />
       <Experience />
     </Canvas>
-  )
+  );
 }
 
-export default App
+export default App;
