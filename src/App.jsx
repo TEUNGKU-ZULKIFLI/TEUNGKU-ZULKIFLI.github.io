@@ -4,7 +4,7 @@ import { Experience } from './components/Experience'
 
 function App() {
   return (
-    <Canvas>
+    <Canvas >
       <Experience />
     </Canvas>
   )
