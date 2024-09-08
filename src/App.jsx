@@ -4,8 +4,8 @@ import { Experience } from './components/Experience';
 
 function App() {
   return (
-    <Canvas>
-      <color attach="background" args={['#4B0082']} />
+    <Canvas >
+      <color attach="background" args={['#3a0e4c']} />
       <Experience />
     </Canvas>
   );
