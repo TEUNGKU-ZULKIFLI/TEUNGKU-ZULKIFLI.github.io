@@ -1,19 +1,14 @@
-import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
-import { Model } from "./Model3D";
+import { OrbitControls } from "@react-three/drei";
+import { Home } from "./Home";
 
 export function Experience() {
     return (
         <>
-        <OrbitControls 
-        maxPolarAngle={Math.PI / 2}
-        minPolarAngle={Math.PI / 2}
-        enablePan={false}
-        enableZoom={false}
-        />
-        <PerspectiveCamera makeDefault position={[30, 10, 10]} />
-        <ambientLight intensity={0.5} color="#ffffff" />
+        <OrbitControls enabled={false} />
+        <ambientLight intensity={1} color="#ffffff" />
+        <pointLight intensity={100} color="#8A2BE2" position={[0, -1, 0]} />
         <directionalLight intensity={1} color="#ffffff" />
-        <Model />
+        <Home scale={0.19}/>
         </>
     );
 }
