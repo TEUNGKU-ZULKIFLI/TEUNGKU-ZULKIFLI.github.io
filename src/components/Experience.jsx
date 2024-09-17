@@ -1,13 +1,16 @@
 import React from "react";
 import { Room } from "/src/components/Room";
-import { OrbitControls } from "@react-three/drei";
+import { Environment, OrbitControls } from "@react-three/drei";
 
 export function Experience() {
-    
+
     return (
         <>
-        <OrbitControls />
-        <Room scale={0.3} />
+        <ambientLight intensity={0.5} />
+        <directionalLight intensity={0.5} />
+        <Environment preset='night' />
+        <OrbitControls enableRotate={true} enablePan={false} enableZoom={false} />
+        <Room />
         </>
     );
 }

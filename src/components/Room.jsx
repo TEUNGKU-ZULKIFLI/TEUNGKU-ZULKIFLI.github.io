@@ -1,15 +1,13 @@
 import React from 'react'
-import { Environment, useGLTF } from '@react-three/drei'
+import { useGLTF } from '@react-three/drei'
 
 export function Room(props) {
   const { nodes, materials } = useGLTF('./models/roomTeungku.gltf')
 
   return (
     <>
-      <directionalLight intensity={1} />
-      <hemisphereLight intensity={1} />
-      <Environment preset='night' />
-      <group {...props} dispose={null} position={[0, -3, 0]} rotate={[Math.PI / 18, 0, 0]}>
+    <group rotation={[Math.PI / 36, 0, 0]} >
+      <group {...props} dispose={null} position={[0, -3, 0]} scale={0.2} >
         <group name="Kursi" position={[-4.296, 3.8, 5.863]} rotation={[0, 0.713, 0]} scale={0.955} userData={{ name: 'Kursi' }}>
           <mesh name="chair_Cube026-Mesh" geometry={nodes['chair_Cube026-Mesh'].geometry} material={materials['795548']} />
           <mesh name="chair_Cube026-Mesh_1" geometry={nodes['chair_Cube026-Mesh_1'].geometry} material={materials.DD9944} />
@@ -52,8 +50,11 @@ export function Room(props) {
           <mesh name="TwistedTree_1" geometry={nodes.TwistedTree_1.geometry} material={materials['Bark_TwistedTree.001']} />
           <mesh name="TwistedTree_1_1" geometry={nodes.TwistedTree_1_1.geometry} material={materials['Leaves_TwistedTree.001']} />
         </group>
-        <mesh name="Lantai" geometry={nodes.Lantai.geometry} material={materials.BingkaiFoto} position={[1.34, 1.488, 1.185]} rotation={[-Math.PI, 0, -Math.PI]} scale={[12.69, 9.065, 12.69]} userData={{ name: 'Lantai' }} />
+        <mesh name="Lantai" geometry={nodes.Lantai.geometry} material={materials.BingkaiFoto} position={[1.34, 1.488, 1.185]} rotation={[-Math.PI, 0, -Math.PI]} scale={[12.69, 9.065, 12.69]} userData={{ name: 'Lantai' }} >
+          <pointLight intensity={20} color={'#D300FF'} />
+        </mesh>
       </group>
+    </group>
     </>
   )
 }
