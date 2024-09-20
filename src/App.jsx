@@ -1,17 +1,16 @@
 import React from 'react';
 import './App.css';
-import { Canvas } from '@react-three/fiber';
-import { ScrollControls } from '@react-three/drei';
 import Experience from './components/Experience';
+import { Canvas } from '@react-three/fiber';
+import { ContactShadows } from '@react-three/drei';
 
 
 function App() {
 
   return (
     <Canvas>
-      <ScrollControls pages={4} damping={0.5} >
-        <Experience />
-      </ScrollControls>
+      <Experience />
+      <ContactShadows position={[0, -3, 0]} opacity={4} scale={20} blur={3} far={10} />
     </Canvas>
   );
 }

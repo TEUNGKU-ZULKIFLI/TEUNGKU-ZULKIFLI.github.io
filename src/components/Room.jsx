@@ -6,8 +6,7 @@ export function Room(props) {
 
   return (
     <>
-    <group rotation={[Math.PI / 36, 0, 0]} >
-      <group {...props} dispose={null} position={[0, -3, 0]} scale={0.2} >
+      <group {...props} dispose={null} position={[-0.5, -3, 0]} scale={0.2} >
         <group name="Kursi" position={[-4.296, 3.8, 5.863]} rotation={[0, 0.713, 0]} scale={0.955} userData={{ name: 'Kursi' }}>
           <mesh name="chair_Cube026-Mesh" geometry={nodes['chair_Cube026-Mesh'].geometry} material={materials['795548']} />
           <mesh name="chair_Cube026-Mesh_1" geometry={nodes['chair_Cube026-Mesh_1'].geometry} material={materials.DD9944} />
@@ -54,7 +53,6 @@ export function Room(props) {
           <pointLight intensity={20} color={'#D300FF'} />
         </mesh>
       </group>
-    </group>
     </>
   )
 }
