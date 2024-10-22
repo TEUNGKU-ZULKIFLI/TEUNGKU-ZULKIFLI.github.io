@@ -27,11 +27,11 @@ body {
     flex-direction: column; /* Mengatur konten dalam kolom */
     justify-content: center;
     align-items: center;
-    height: 100vh; /* Mengisi seluruh tinggi jendela */
 }
 
 .container {
-    text-align: center; /* Memusatkan teks dalam container */
+    margin-top: 20%;
+    text-align: center;
 }
 
 #header-content h1 {
@@ -45,17 +45,17 @@ body {
 }
 
 .nav-container {
-    display: flex; /* Mengaktifkan flexbox untuk navbar */
-    justify-content: center; /* Memusatkan item di dalam navbar */
-    margin-top: 20px; /* Jarak atas navbar dari header */
-    background: rgba(255, 255, 255, 0.1); /* Latar belakang navbar */
+    position: absolute;
+    bottom: 2%;
+    display: flex;
+    background: rgba(255, 255, 255, 0.247); /* Latar belakang navbar */
     border-radius: 10px; /* Sudut membulat */
     padding: 10px; /* Padding di dalam navbar */
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Bayangan */
 }
 
 .nav-item {
-    margin: 0 15px; /* Jarak antar item navbar */
+    margin: 0 20px; /* Jarak antar item navbar */
 }
 
 .nav-item img {
@@ -65,7 +65,7 @@ body {
 }
 
 .nav-item a:hover img {
-    transform: scale(1.2); /* Memperbesar ikon saat hover */
+    transform: translateY(-50%) scale(1.5);
 }
 
 /* Style for the loading GIF */

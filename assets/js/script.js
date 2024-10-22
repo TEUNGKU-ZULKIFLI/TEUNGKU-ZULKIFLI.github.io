@@ -1,22 +1,22 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const navLinks = document.querySelectorAll('.nav-link');
     const loading = document.getElementById('loading');
 
-    // Event listener untuk setiap link
+    // Event listener for each link
     navLinks.forEach(link => {
-        link.addEventListener('click', function(event) {
-            event.preventDefault(); // Mencegah action default link
+        link.addEventListener('click', function (event) {
+            event.preventDefault(); // Prevent default link action
 
-            // Tampilkan GIF loading
+            // Show loading GIF
             loading.style.display = 'block';
 
-            // Simulasi pemuatan halaman dengan timeout
+            // Simulate page load with a timeout
             setTimeout(() => {
-                // Sembunyikan GIF setelah "pemuatan selesai"
+                // Hide loading GIF after "loading is done"
                 loading.style.display = 'none';
-                // Arahkan ke halaman atau lakukan action lainnya
-                // alert('Navigating to ' + link.dataset.link);
-            }, 8000); // Waktu tunggu 2 detik (bisa disesuaikan)
+                // Navigate to the link or perform other actions
+                window.location.href = link.href;
+            }, 8000);
         });
     });
 });
