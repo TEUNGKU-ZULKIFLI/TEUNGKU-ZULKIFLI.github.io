@@ -1,22 +1,53 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const navLinks = document.querySelectorAll('.nav-link');
-    const loading = document.getElementById('loading');
+    const aboutLink = document.querySelector('.nav-link[data-link="about"]');
+    const projectLink = document.querySelector('.nav-link[data-link="project"]');
+    const contactLink = document.querySelector('.nav-link[data-link="contact"]');
+    const aboutWindow = document.getElementById('about-window');
+    const projectWindow = document.getElementById('project-window');
+    const contactWindow = document.getElementById('contact-window');
 
-    // Event listener for each link
-    navLinks.forEach(link => {
-        link.addEventListener('click', function (event) {
-            event.preventDefault(); // Prevent default link action
+    // Function to show window
+    function showWindow(windowElement) {
+        hideAllWindows();
+        windowElement.style.display = 'block';
+        windowElement.classList.add('fade-in');
+    }
 
-            // Show loading GIF
-            loading.style.display = 'block';
+    // Function to hide all windows
+    function hideAllWindows() {
+        [aboutWindow, projectWindow, contactWindow].forEach(window => {
+            window.style.display = 'none';
+            window.classList.remove('fade-in');
+        });
+    }
 
-            // Simulate page load with a timeout
-            setTimeout(() => {
-                // Hide loading GIF after "loading is done"
-                loading.style.display = 'none';
-                // Navigate to the link or perform other actions
-                window.location.href = link.href;
-            }, 8000);
+    // Event listeners for navigation links
+    aboutLink.addEventListener('click', () => showWindow(aboutWindow));
+    projectLink.addEventListener('click', () => showWindow(projectWindow));
+    contactLink.addEventListener('click', () => showWindow(contactWindow));
+
+    // Event listeners for window controls
+    document.querySelectorAll('.close').forEach(closeBtn => {
+        closeBtn.addEventListener('click', hideAllWindows);
+    });
+
+    document.querySelectorAll('.minimize').forEach(minimizeBtn => {
+        minimizeBtn.addEventListener('click', (event) => {
+            const windowElement = event.target.closest('.app-window');
+            windowElement.style.display = 'none';
+        });
+    });
+
+    document.querySelectorAll('.fullscreen').forEach(fullscreenBtn => {
+        fullscreenBtn.addEventListener('click', (event) => {
+            const windowElement = event.target.closest('.app-window');
+            if (windowElement.classList.contains('fullscreen')) {
+                windowElement.style.width = '400px';
+                windowElement.classList.remove('fullscreen');
+            } else {
+                windowElement.style.width = '100vw';
+                windowElement.classList.add('fullscreen');
+            }
         });
     });
 });
