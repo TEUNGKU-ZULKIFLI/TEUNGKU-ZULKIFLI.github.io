@@ -7,14 +7,25 @@
 }
 
 @font-face {
+    font-family: 'FontTtd02';
+    src: url('../fonts/TheSignature-lgzdq.otf') format('opentype');
+}
+
+@font-face {
     font-family: 'Font3D';
     src: url('../fonts/BungeeShade-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Font3D02';
+    src: url('../fonts/ArshineExtruderight-4nZ99.otf') format('opentype');
 }
 
 @font-face {
     font-family: 'FontAstigmatic';
     src: url('../fonts/Righteous-Regular.ttf') format('truetype');
 }
+
 
 /* ===========================
    GLOBAL STYLES
@@ -47,7 +58,7 @@ body {
 }
 
 #header-content p {
-    font-family: 'FontTtd'; /* Special font for subtitle */
+    font-family: 'FontTtd02'; /* Special font for subtitle */
     font-size: 1.5rem; /* Subtitle size */
     margin-top: 10px; /* Spacing above the subtitle */
 }
@@ -103,7 +114,7 @@ body {
     padding: 10px; /* Padding inside header */
     background-color: #0078d7; /* Header color */
     color: #fff; /* Header text color */
-    font-family: 'Font3D'; /* Font for header */
+    font-family: 'Font3D02'; /* Font for header */
 }
 
 .window-controls span {
