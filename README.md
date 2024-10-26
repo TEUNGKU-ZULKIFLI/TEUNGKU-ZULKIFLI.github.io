@@ -5,19 +5,17 @@
 </p>
 
 ## Gambaran Umum
-Selamat datang di proyek **Portofolio Super Canggih** saya, di mana saya, sebagai **Web Developer | AI Puppet Master**, memperkenalkan diri dan keahlian saya! Saat ini, portofolio ini baru **10% selesai** dari rencana **99999%** (karena apa salahnya bermimpi besar, kan?). Jadi, masih dalam perjalanan panjang, tapi progress tetap jalan terus!
+Selamat datang di proyek **Portofolio Super Canggih** saya, di mana saya, sebagai **Web Developer | AI Puppet Master**, memperkenalkan diri dan keahlian saya! Saat ini, portofolio ini baru **20% selesai** dari rencana **99999%** (karena apa salahnya bermimpi besar, kan?). Jadi, masih dalam perjalanan panjang, tapi progress tetap jalan terus!
 
 ## Fitur (Rencana Masa Depan Cerah)
-- **Halaman Utama yang Keren (Landing Page)**: Di sini saya akan menyapa kalian dengan gaya keren di bagian hero.
-- **Navigasi ala Mac Taskbar**: Navbar bawah yang berasa lagi pakai macOS, tapi tanpa Apple logo (hihi).
 - **Objek 3D WOW!**: Rencana mau pakai canvas untuk elemen 3D yang bikin kalian betah scrolling.
 - **Font Kustom Mewah**: Yes, font lokal biar tampilannya makin unik dan keren, no font mainstream here!
 
 ## Progres
 - **Progress Terkini**:
-  - Udah bikin struktur dasar halaman landing. Baru dasar ya, tenang.
-  - Navbar bawah udah mulai cakep, lengkap dengan ikon keren (Home, About, Projects, Contact).
-  - Font lokal kaya `DancingScript`, `BungeeShade`, dan `Righteous` udah dipasang, biar kesannya artsy.
+  - Update html.
+  - Navbar bawah udah bisa menampilkan content seperti about, project, contact. walaupun masih kek ff (burik)
+  - Font lokal lagi supaya bervariasi ya kan.
 
 ## Apa Selanjutnya?
 - Tenang aja, ini baru awal! Saya bakal terus update project ini. Mungkin lama, tapi bakal totalitas kok. Jangan sampai ketinggalan versi yang lebih heboh nanti! Stay tuned!
