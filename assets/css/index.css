@@ -1,232 +1,58 @@
-/* ===========================
-   FONT FACES
-   =========================== */
-@font-face {
-    font-family: 'FontTtd';
-    src: url('../fonts/DancingScript-Medium.ttf') format('truetype');
-}
-
-@font-face {
-    font-family: 'FontTtd02';
-    src: url('../fonts/TheSignature-lgzdq.otf') format('opentype');
-}
-
-@font-face {
-    font-family: 'Font3D';
-    src: url('../fonts/BungeeShade-Regular.ttf') format('truetype');
-}
-
-@font-face {
-    font-family: 'Font3D02';
-    src: url('../fonts/ArshineExtruderight-4nZ99.otf') format('opentype');
-}
-
-@font-face {
-    font-family: 'FontAstigmatic';
-    src: url('../fonts/Righteous-Regular.ttf') format('truetype');
-}
-
-
-/* ===========================
-   GLOBAL STYLES
-   =========================== */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box; /* Ensures consistent sizing */
-}
-
+/* Reset & global */
 body {
-    font-family: 'FontAstigmatic', Arial, sans-serif;
-    background-color: #001f3f; /* Dark blue background */
-    color: #fff; /* White text */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f5f5f5;
+  color: #222;
 }
-
-/* ===========================
-   HEADER STYLES
-   =========================== */
 .container {
-    margin-top: 20%; /* Pushes the container down */
+  max-width: 800px;
+  margin: auto;
+  padding: 1rem;
 }
 
-#header-content h1 {
-    font-size: 2.5rem; /* Main header size */
+/* Navbar */
+nav {
+  background: #111;
+  color: #fff;
+  padding: 0.5rem 1rem;
+}
+nav a {
+  color: #fff;
+  margin-right: 1rem;
+  text-decoration: none;
+}
+nav a:hover {
+  text-decoration: underline;
 }
 
-#header-content p {
-    font-family: 'FontTtd02'; /* Special font for subtitle */
-    font-size: 1.5rem; /* Subtitle size */
-    margin-top: 10px; /* Spacing above the subtitle */
+/* Footer */
+footer {
+  background: #111;
+  color: #ccc;
+  text-align: center;
+  padding: 1rem;
+  margin-top: 2rem;
 }
 
-/* ===========================
-   NAVIGATION STYLES
-   =========================== */
-.nav-container {
-    position: fixed;
-    bottom: 2%; /* Fixed at the bottom */
-    display: flex;
-    background: rgba(255, 255, 255, 0.25); /* Semi-transparent background */
-    border-radius: 10px;
-    padding: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Shadow effect */
+/* Card style */
+.card {
+  background: #fff;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-.nav-item {
-    margin: 0 20px; /* Spacing between navigation items */
+/* Blog list */
+#posts-list li {
+  list-style: none;
+  margin-bottom: 0.5rem;
 }
-
-.nav-item img {
-    width: 40px; /* Icon size */
-    height: 40px;
-    transition: transform 0.3s ease; /* Smooth hover effect */
+#posts-list a {
+  text-decoration: none;
+  color: #0070f3;
 }
-
-.nav-item a:hover img {
-    transform: translateY(-5px) scale(1.2); /* Hover animation */
-}
-
-/* ===========================
-   APP WINDOW STYLES
-   =========================== */
-.app-window {
-    display: none; /* Hidden by default */
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%); /* Center the window */
-    width: 400px; /* Window width */
-    background-color: #fff; /* White background */
-    color: #000; /* Black text */
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Shadow effect */
-    z-index: 10; /* Stacking order */
-}
-
-.window-header {
-    display: flex;
-    justify-content: space-between; /* Space between title and controls */
-    align-items: center;
-    padding: 10px; /* Padding inside header */
-    background-color: #0078d7; /* Header color */
-    color: #fff; /* Header text color */
-    font-family: 'Font3D02'; /* Font for header */
-}
-
-.window-controls span {
-    cursor: pointer; /* Pointer cursor for controls */
-    margin-left: 8px; /* Spacing between controls */
-    font-weight: bold; /* Bold text */
-}
-
-.window-controls span:hover {
-    color: #d00; /* Red color on hover */
-}
-
-.window-content {
-    padding: 15px; /* Padding for window content */
-    font-family: 'FontAstigmatic'; /* Font for content */
-}
-
-.app-window.fade-in {
-    animation: fadeIn 0.3s ease-in-out; /* Fade-in animation */
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translate(-50%, -60%); } /* Start state */
-    to { opacity: 1; transform: translate(-50%, -50%); } /* End state */
-}
-
-/* ===========================
-   CONTENT STYLES
-   =========================== */
-.content h2 {
-    font-family: 'FontAstigmatic'; /* Font for section header */
-    color: #001f3f; /* Dark blue text */
-}
-
-.content p {
-    font-size: 18px; /* Paragraph font size */
-    color: #333; /* Dark gray text */
-}
-
-/* ===========================
-   PROFILE PICTURE STYLES
-   =========================== */
-.profile-pic {
-    float: left; /* Float left for text wrap */
-    margin-right: 20px; /* Spacing to the right */
-    border-radius: 50%; /* Circular profile picture */
-    width: 150px; /* Fixed width */
-    height: 150px; /* Fixed height */
-}
-
-/* ===========================
-   SOCIAL LINKS STYLES
-   =========================== */
-.social-links {
-    margin-top: 20px; /* Spacing above social links */
-}
-
-.social-links a {
-    font-family: 'Font3D'; /* Font for social links */
-    margin-right: 10px; /* Spacing between links */
-    text-decoration: none; /* Remove underline */
-    color: #0078d7; /* Link color */
-    font-size: 20px; /* Font size for links */
-    transition: color 0.3s ease; /* Smooth color transition */
-}
-
-.social-links a:hover {
-    color: #d00; /* Red color on hover */
-}
-
-/* ===========================
-   PROJECT CARDS STYLES
-   =========================== */
-.project-cards {
-    display: flex; /* Flex container for cards */
-    flex-wrap: wrap; /* Wrap to next line if needed */
-    justify-content: center; /* Center the cards */
-    margin-top: 20px; /* Spacing above cards */
-}
-
-.project-card {
-    background-color: #f8f9fa; /* Light gray background */
-    color: #333; /* Dark text color */
-    border-radius: 8px; /* Rounded corners */
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Light shadow */
-    margin: 10px; /* Spacing around each card */
-    padding: 20px; /* Inner padding */
-    width: 200px; /* Fixed width for cards */
-    transition: transform 0.3s ease; /* Smooth transform on hover */
-}
-
-.project-card h3 {
-    font-family: 'FontAstigmatic'; /* Font for project titles */
-    margin-bottom: 10px; /* Spacing below title */
-}
-
-.project-card p {
-    font-size: 14px; /* Font size for project description */
-    margin-bottom: 10px; /* Spacing below description */
-}
-
-.project-card a {
-    color: #0078d7; /* Link color */
-    text-decoration: none; /* Remove underline */
-    font-weight: bold; /* Bold text */
-    transition: color 0.3s ease; /* Smooth color transition */
-}
-
-.project-card a:hover {
-    color: #d00; /* Red color on hover */
-}
-
-.project-card:hover {
-    transform: translateY(-5px); /* Lift effect on hover */
+#posts-list a:hover {
+  text-decoration: underline;
 }

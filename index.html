@@ -1,128 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Teungku Zulkifli - Web Developer and AI Puppet Master">
-    <meta name="keywords" content="Teungku Zulkifli, Web Developer, AI Puppet Master">
-    <title>TEUNGKU</title>
-    <link rel="stylesheet" href="assets/css/index.css">
-    <link rel="icon" href="assets/img/Teungku.ico" type="image/ico">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Teungku Zulkifli — Home</title>
+
+  <!-- Favicon -->
+  <link rel="icon" href="assets/img/Teungku.ico" type="image/x-icon" />
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="assets/css/index.css" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Dancing+Script&display=swap" rel="stylesheet">
 </head>
-
 <body>
+  <!-- Navbar -->
+  <div id="navbar"></div>
 
-    <div class="container">
-        <header>
-            <div id="header-content">
-                <h1>Hi, I'm <span>TEUNGKU</span></h1>
-                <h2>Web Developer | AI Puppet Master</h2>
-                <p>KALEUH PAJOEH BUE ?</p>
-            </div>
-        </header>
-    </div>
+  <!-- Main content -->
+  <main class="container">
+    <section class="hero">
+      <!-- <img src="assets/img/HELLO.gif" alt="Hello Banner" class="hero-img" /> -->
+      <h1 class="hero-title">Hi, I'm <span class="highlight">Teungku Zulkifli</span></h1>
+      <p class="hero-subtitle">Welcome to my personal website 🚀</p>
+    </section>
 
-    <!-- ABOUT PAGE -->
-    <div id="about-window" class="app-window">
-        <div class="window-header">
-            <span class="window-title">ABOUT ME</span>
-            <div class="window-controls">
-                <span class="minimize">⛔</span>
-                <span class="fullscreen">🔳</span>
-                <span class="close">❌</span>
-            </div>
-        </div>
-        <div class="window-content">
-            <section class="content">
-                <div class="container-about">
-                    <img src="assets/img/Teungku.ico" class="profile-pic" alt="Teungku's Profile Picture">
-                    <h2>My Background</h2>
-                    <p>I am a web developer with a passion for creating beautiful and functional websites. I have
-                        experience in HTML, CSS, JavaScript, and various frameworks.</p>
-                    <h2>My Skills</h2>
-                    <p>HTML, CSS, JavaScript, React, Node.js, Winbox, XAMPP</p>
-                    <h2>My Hobbies</h2>
-                    <p>In my free time, I enjoy hiking, reading, and experimenting with new web technologies.</p>
-                    <div class="social-links">
-                        <a href="https://www.linkedin.com/in/teungku-zulkifli-3953612b7" target="_blank">LinkedIn</a>
-                        <a href="https://github.com/TEUNGKU-ZULKIFLI" target="_blank">GitHub</a>
-                    </div>
-                </div>
-            </section>
-        </div>
-    </div>
+    <section class="cards">
+      <div class="card">
+        <!-- <img src="assets/img/ABOUT-black.png" alt="About" class="card-img"> -->
+        <h2 class="card-title">About Me</h2>
+        <p class="card-text">Get to know more about me and my journey.</p>
+        <a href="about.html" class="btn">Read More</a>
+      </div>
 
-    <!-- PROJECT PAGE -->
-    <div id="project-window" class="app-window">
-        <div class="window-header">
-            <span class="window-title">MY PROJECT</span>
-            <div class="window-controls">
-                <span class="minimize">⛔</span>
-                <span class="fullscreen">🔳</span>
-                <span class="close">❌</span>
-            </div>
-        </div>
-        <div class="window-content">
-            <section class="content">
-                <h2>My Projects</h2>
-                <p>Here are some of the projects I've worked on:</p>
-                <div class="project-cards">
-                    <div class="project-card">
-                        <h3>ACEH TICKET TRAVEL CAR (ATTC)</h3>
-                        <p>SISTEM PEMESANAN TIKET MOBIL UNTUK ACEH PRIDE ☪️</p>
-                        <a href="https://github.com/TEUNGKU-ZULKIFLI/ACEH_TICKET_TRAVEL_CAR" target="_blank">View Project</a>
-                    </div>
-                    <div class="project-card">
-                        <h3>PROJECT FLUTTER</h3>
-                        <p>Beberapa project Flutter yang telah saya bangun.</p>
-                        <a href="https://github.com/TEUNGKU-ZULKIFLI/PROJECT-FLUTTER/blob/master/README.md" target="_blank">View Project</a>
-                    </div>
-                    <!-- <div class="project-card">
-                        <h3>TUTOR-TUTOR INSTALLASI APP & LAINNYA</h3>
-                        <p>Beberapa tutorial yang saya buat.</p>
-                        <a href="https://github.com/TEUNGKU-ZULKIFLI/installasi-recomended-byTEUNGKU" target="_blank">View Project</a>
-                    </div> -->
-                </div>
-            </section>
-        </div>
-    </div>
+      <div class="card">
+        <!-- <img src="assets/img/PROJECT-black.png" alt="Projects" class="card-img"> -->
+        <h2 class="card-title">Projects</h2>
+        <p class="card-text">Explore my works and what I’ve built.</p>
+        <a href="project.html" class="btn">See Projects</a>
+      </div>
 
+      <div class="card">
+        <!-- <img src="assets/img/CONNECT-black.png" alt="Connect" class="card-img"> -->
+        <h2 class="card-title">Connect</h2>
+        <p class="card-text">Let’s connect and collaborate together.</p>
+        <a href="connect.html" class="btn">Contact Me</a>
+      </div>
 
-    <!-- CONTACT PAGE -->
-    <div id="contact-window" class="app-window">
-        <div class="window-header">
-            <span class="window-title">CONTACT ME</span>
-            <div class="window-controls">
-                <span class="minimize">⛔</span>
-                <span class="fullscreen">🔳</span>
-                <span class="close">❌</span>
-            </div>
-        </div>
-        <div class="window-content">
-            <section class="content">
-                <h2>Get in Touch</h2>
-                <p>If you want to reach out, you can contact me through my social media or email.</p>
-            </section>
-        </div>
-    </div>
+      <div class="card">
+        <!-- <img src="assets/img/HOME.png" alt="Blog" class="card-img"> -->
+        <h2 class="card-title">Blog</h2>
+        <p class="card-text">Read my latest thoughts and tutorials.</p>
+        <a href="blog.html" class="btn">Visit Blog</a>
+      </div>
+    </section>
+  </main>
 
-    <div class="nav-container">
-        <div class="nav-item">
-            <a class="nav-link" data-link="home"><img src="assets/img/HOME.png" alt="Home"></a>
-        </div>
-        <div class="nav-item">
-            <a class="nav-link" data-link="about"><img src="assets/img/ABOUT-white.png" alt="About"></a>
-        </div>
-        <div class="nav-item">
-            <a class="nav-link" data-link="project"><img src="assets/img/PROJECT-white.png" alt="Projects"></a>
-        </div>
-        <div class="nav-item">
-            <a class="nav-link" data-link="contact"><img src="assets/img/CONNECT-white.png" alt="Contact"></a>
-        </div>
-    </div>
+  <!-- Footer -->
+  <div id="footer"></div>
 
-    <script src="assets/js/script.js" defer></script>
+  <!-- JS -->
+  <script src="assets/js/script.js"></script>
 </body>
-
 </html>
