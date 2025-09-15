@@ -1,3 +1,15 @@
 <footer class="site-footer">
-  <p>&copy; <span id="year"></span> Teungku Zulkifli — Built with ♥</p>
+  <div class="footer-container">
+    <p>&copy; <span id="year"></span> Teungku Zulkifli — Built with <span class="heart">♥</span></p>
+  </div>
 </footer>
+
+<script>
+  // Update year otomatis
+  document.addEventListener("DOMContentLoaded", () => {
+    const yearEl = document.getElementById("year");
+    if (yearEl) {
+      yearEl.textContent = new Date().getFullYear();
+    }
+  });
+</script>

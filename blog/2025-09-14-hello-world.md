@@ -10,20 +10,11 @@ tags: ["intro", "first-post"]
 Selamat datang di blog ini! 🎉
 
 Ini adalah postingan pertama.  
-Kamu bisa menulis konten di bawah ini dengan **Markdown**, misalnya:
-
-- List item
-- **Bold text**
-- *Italic text*
-- [Link contoh](https://teungku-zulkifli.github.io)
-
-> Kutipan motivasi juga bisa ditaruh di sini.
 
 ---
 
-## Sub Judul
-Konten lanjutan bisa kamu pecah dengan heading.  
+## Hello People 🧑🏻‍🎓
 
-```js
-// bahkan bisa taruh code snippet
-console.log("Hello Blog!");
+Testing
+
+**Kategori:** intro · first-post
