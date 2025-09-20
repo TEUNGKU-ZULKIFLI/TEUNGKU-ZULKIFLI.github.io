@@ -1,0 +1,171 @@
+/* === FASE 3: STYLING & TATA LETAK === */
+
+/* 1. GAYA GLOBAL & VARIABEL */
+
+/* Impor font dari Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+:root {
+    /* Palet Warna (Tema Gelap) - Ubah warna di sini untuk mengubah seluruh tema situs */
+    --bg-color: #1a1a1a;
+    --primary-color: #2c2c2c;
+    --accent-color: #007bff; /* Biru cerah sebagai aksen */
+    --text-color: #f0f0f0;
+    --secondary-text-color: #a0a0a0;
+}
+
+* {
+    /* Reset dasar untuk konsistensi */
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+/* 2. TATA LETAK UTAMA & KOMPONEN YANG DAPAT DIGUNAKAN KEMBALI */
+
+header {
+    background-color: var(--primary-color);
+    padding: 1rem 5%;
+    border-bottom: 1px solid #333;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+nav .logo {
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: var(--text-color);
+    text-decoration: none;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+}
+
+nav a {
+    color: var(--secondary-text-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+nav a:hover, nav a.active {
+    color: var(--accent-color);
+}
+
+main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 5%;
+}
+
+section {
+    padding: 4rem 0;
+    border-bottom: 1px solid #333;
+}
+
+section:last-child {
+    border-bottom: none;
+}
+
+footer {
+    text-align: center;
+    padding: 2rem 5%;
+    background-color: var(--primary-color);
+    color: var(--secondary-text-color);
+    font-size: 0.9rem;
+}
+
+.cta-button {
+    display: inline-block;
+    background-color: var(--accent-color);
+    color: #fff;
+    padding: 0.75rem 1.5rem;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: 600;
+    margin-top: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.cta-button:hover {
+    background-color: #0056b3;
+}
+
+/* 3. GAYA KHUSUS PER HALAMAN */
+
+/* Halaman Utama (index.html) */
+#home {
+    text-align: center;
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#home h1 {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+}
+
+#home p {
+    font-size: 1.2rem;
+    color: var(--secondary-text-color);
+}
+
+/* Halaman Proyek (projects.html) */
+.project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.project-card {
+    background-color: var(--primary-color);
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid #333;
+}
+
+.project-card h3 {
+    color: var(--accent-color);
+    margin-bottom: 0.5rem;
+}
+
+/* Halaman Blog (blog.html) */
+#articles-container {
+    margin-top: 2rem;
+}
+
+
+/* 4. DESAIN RESPONSIF (MOBILE-FIRST) */
+
+/* Aturan dasar sudah untuk mobile. Di bawah ini adalah penyesuaian untuk layar yang lebih besar. */
+@media (max-width: 768px) {
+    nav ul {
+        /* Nanti kita akan sembunyikan ini dengan JS dan ganti dengan ikon hamburger */
+        display: none; 
+    }
+    #home h1 {
+        font-size: 2.5rem;
+    }
+}
