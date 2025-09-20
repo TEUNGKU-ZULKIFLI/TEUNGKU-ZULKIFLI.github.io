@@ -9,15 +9,15 @@ Ini adalah roadmap dan checklist untuk membangun website portofolio teungku-zulk
 ----
 
 # ▶️ Fase 1: Fondasi & Struktur Folder 
-* [ ] Membuat semua struktur folder (_posts, assets, dan sub-foldernya).
+* [x] Membuat semua struktur folder (_posts, assets, dan sub-foldernya).
 
-* [ ] Membuat file-file kosong (index.html, projects.html, blog.html, main.style.css, main.script.js).
+* [x] Membuat file-file kosong (index.html, projects.html, blog.html, main.style.css, main.script.js).
 
-* [ ] Mengunduh marked.min.js dan menyimpannya di assets/js/lib/.
+* [x] Mengunduh marked.min.js dan menyimpannya di assets/js/lib/.
 
-* [ ] Mengisi file README.md ini.
+* [x] Mengisi file README.md ini.
 
-* [ ] Melakukan commit dan push pertama untuk struktur awal.
+* [x] Melakukan commit dan push pertama untuk struktur awal.
 
 # ⏳ Fase 2: Kerangka HTML (Estimasi: Sesi Berikutnya)
 * [ ] Membuat kerangka HTML5 dasar untuk index.html (termasuk seksi #home, #about, #contact).
