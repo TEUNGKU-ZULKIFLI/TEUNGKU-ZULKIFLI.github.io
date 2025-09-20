@@ -34,23 +34,23 @@ Ini adalah roadmap dan checklist untuk membangun website portofolio teungku-zulk
 
 ----
 
-# ⏳ Fase 3: Styling & Tata Letak (Estimasi: Sesi Berikutnya)
-* [ ] Mendefinisikan gaya global di main.style.css (CSS variables untuk warna, font, dll).
+# ✅ Fase 3: Styling & Tata Letak (Estimasi: Sesi Berikutnya)
+* [x] Mendefinisikan gaya global di main.style.css (CSS variables untuk warna, font, dll).
 
-* [ ] Mendesain dan menata letak header (navigasi) dan footer.
+* [x] Mendesain dan menata letak header (navigasi) dan footer.
 
-* [ ] Mendesain dan menata letak seksi-seksi di halaman utama (index.html).
+* [x] Mendesain dan menata letak seksi-seksi di halaman utama (index.html).
 
-* [ ] Mendesain tampilan galeri proyek (kartu proyek) di projects.html.
+* [x] Mendesain tampilan galeri proyek (kartu proyek) di projects.html.
 
-* [ ] Mendesain tampilan daftar artikel di blog.html.
+* [x] Mendesain tampilan daftar artikel di blog.html.
 
-* [ ] Menerapkan desain responsif (mobile-first) menggunakan media queries.
+* [x] Menerapkan desain responsif (mobile-first) menggunakan media queries.
 
-# ⏳ Fase 4: Fungsionalitas JavaScript (Estimasi: Sesi Berikutnya)
-* [ ] Membuat fungsi untuk mengambil dan menampilkan daftar artikel di blog.html.
+# ✅ Fase 4: Fungsionalitas JavaScript (Estimasi: Sesi Berikutnya)
+* [x] Membuat fungsi untuk mengambil dan menampilkan daftar artikel di blog.html.
 
-* [ ] Membuat fungsi untuk mengambil file .md, mem-parsingnya dengan marked.js, dan menampilkannya sebagai artikel tunggal.
+* [x] Membuat fungsi untuk mengambil file .md, mem-parsingnya dengan marked.js, dan menampilkannya sebagai artikel tunggal.
 
 * [ ] Menambahkan fungsionalitas untuk navigasi mobile (hamburger menu).
 
@@ -68,7 +68,7 @@ Ini adalah roadmap dan checklist untuk membangun website portofolio teungku-zulk
 # ⏳ Fase 6: Optimasi & Publikasi Final (Estimasi: Sesi Berikutnya)
 * [ ] Mengompres semua gambar untuk mempercepat waktu muat.
 
-* [ ] Memeriksa dan melengkapi tag <title> dan <meta name="description"> untuk SEO dasar.
+* [ ] Memeriksa dan melengkapi tag ```<title>``` dan ```<meta name="description">``` untuk SEO dasar.
 
 * [ ] Melakukan pengujian di berbagai browser (cross-browser testing).
 
