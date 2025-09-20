@@ -21,7 +21,7 @@ Ini adalah roadmap dan checklist untuk membangun website portofolio teungku-zulk
 
 ----
 
-# ✅ Fase 2: Kerangka HTML (Estimasi: Sesi Berikutnya)
+# ✅ Fase 2: Kerangka HTML
 * [x] Membuat kerangka HTML5 dasar untuk index.html (termasuk seksi #home, #about, #contact).
 
 * [x] Membuat kerangka HTML5 dasar untuk projects.html.
@@ -34,7 +34,7 @@ Ini adalah roadmap dan checklist untuk membangun website portofolio teungku-zulk
 
 ----
 
-# ✅ Fase 3: Styling & Tata Letak (Estimasi: Sesi Berikutnya)
+# ✅ Fase 3: Styling & Tata Letak
 * [x] Mendefinisikan gaya global di main.style.css (CSS variables untuk warna, font, dll).
 
 * [x] Mendesain dan menata letak header (navigasi) dan footer.
@@ -47,14 +47,18 @@ Ini adalah roadmap dan checklist untuk membangun website portofolio teungku-zulk
 
 * [x] Menerapkan desain responsif (mobile-first) menggunakan media queries.
 
-# ✅ Fase 4: Fungsionalitas JavaScript (Estimasi: Sesi Berikutnya)
+----
+
+# ✅ Fase 4: Fungsionalitas JavaScript
 * [x] Membuat fungsi untuk mengambil dan menampilkan daftar artikel di blog.html.
 
 * [x] Membuat fungsi untuk mengambil file .md, mem-parsingnya dengan marked.js, dan menampilkannya sebagai artikel tunggal.
 
-* [ ] Menambahkan fungsionalitas untuk navigasi mobile (hamburger menu).
+* [x] Menambahkan fungsionalitas untuk navigasi mobile (hamburger menu).
 
-* [ ] Menambahkan fungsionalitas smooth scroll untuk navigasi di index.html.
+* [x] Menambahkan fungsionalitas smooth scroll untuk navigasi di index.html.
+
+----
 
 # ⏳ Fase 5: Pengisian Konten Final (Estimasi: Sesi Berikutnya)
 * [ ] Mengisi halaman projects.html dengan konten proyek yang sebenarnya (gambar, deskripsi, link).

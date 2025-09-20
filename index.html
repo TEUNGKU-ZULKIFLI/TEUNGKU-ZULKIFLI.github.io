@@ -4,21 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TEUNGKU ZULKIFLI - Portofolio</title>
-    <!-- Link ke file CSS utama -->
     <link rel="stylesheet" href="assets/css/main.style.css">
 </head>
 <body>
-
-    <!-- Header & Navigasi Utama -->
     <header>
-        <nav>
-            <a href="#home" class="logo">Teungku Zulkifli</a>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="projects.html">Projects</a></li>
-                <li><a href="blog.html">Blog</a></li>
-            </ul>
-        </nav>
+<nav>
+    <a href="index.html" class="logo">Teungku Zulkifli</a>
+    <ul id="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="blog.html">Blog</a></li>
+    </ul>
+
+    <button id="hamburger-btn" aria-label="Toggle Menu">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+    </button>
+</nav>
     </header>
 
     <!-- Konten Utama Halaman -->
@@ -50,15 +51,10 @@
     <footer>
         <p>&copy; 2025 - Teungku Zulkifli. Dibuat dengan ❤️</p>
     </footer>
-
-    <!-- Script Section -->
-    <!-- Coba muat file lokal -->
     <script src="assets/js/lib/marked.min.js"></script> 
-    <!-- Logika Fallback ke CDN jika file lokal gagal dimuat -->
     <script>
       window.marked || document.write('<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"><\/script>')
     </script>
-    <!-- Link ke file JavaScript utama Anda -->
     <script src="assets/js/main.script.js" defer></script>
 </body>
 </html>

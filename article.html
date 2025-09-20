@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Artikel</title> <!-- Judul akan diubah oleh JS -->
+    <title>Artikel</title>
     <link rel="stylesheet" href="assets/css/main.style.css">
     <style>
-        /* Gaya tambahan khusus untuk halaman artikel */
         #article-content {
             background-color: var(--primary-color);
             padding: 2rem;
@@ -36,54 +35,30 @@
 </head>
 <body>
     <header>
-        <nav>
-            <a href="index.html" class="logo">Teungku Zulkifli</a>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="projects.html">Projects</a></li>
-                <li><a href="blog.html">Blog</a></li>
-            </ul>
-        </nav>
+<nav>
+    <a href="index.html" class="logo">Teungku Zulkifli</a>
+    <ul id="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="blog.html">Blog</a></li>
+    </ul>
+    <button id="hamburger-btn" aria-label="Toggle Menu">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+    </button>
+</nav>
     </header>
-
     <main>
         <article id="article-content">
             <p>Memuat konten artikel...</p>
         </article>
     </main>
-
     <footer>
         <p>&copy; 2025 - Teungku Zulkifli. Dibuat dengan ❤️</p>
     </footer>
-
     <script src="assets/js/lib/marked.min.js"></script> 
     <script>
       window.marked || document.write('<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"><\/script>')
     </script>
-    <script>
-        // Skrip khusus untuk halaman ini
-        document.addEventListener('DOMContentLoaded', function() {
-            const params = new URLSearchParams(window.location.search);
-            const postFile = params.get('post');
-
-            if (postFile) {
-                fetch(postFile)
-                    .then(response => response.text())
-                    .then(markdown => {
-                        const content = document.getElementById('article-content');
-                        content.innerHTML = marked.parse(markdown);
-                        // Ambil judul dari H1 pertama di markdown dan set sebagai judul halaman
-                        const firstHeading = content.querySelector('h1');
-                        if (firstHeading) {
-                            document.title = firstHeading.textContent;
-                        }
-                    })
-                    .catch(err => {
-                        console.error("Gagal memuat artikel:", err);
-                        document.getElementById('article-content').innerHTML = "<p>Gagal memuat artikel.</p>";
-                    });
-            }
-        });
-    </script>
+    <script src="assets/js/main.script.js" defer></script>
 </body>
 </html>
