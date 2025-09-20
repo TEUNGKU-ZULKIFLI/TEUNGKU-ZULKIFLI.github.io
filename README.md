@@ -1,93 +1,73 @@
-# 📌 ROADMAP DETAIL — Portfolio & Blog (Zero to Hero)
-## 🟢 Tahap 1 — Perencanaan & Desain (Fondasi)✅
-## 🟡 Tahap 2 — Implementasi Minimal (MVP Release)✅
-## 🟠 Tahap 3 — Optimisasi & Penyempurnaan
+# Roadmap Pembangunan Website Portofolio
+Ini adalah roadmap dan checklist untuk membangun website portofolio teungku-zulkifli.github.io dari nol.
 
-🎯 **Goal:** Rapi, nyaman dilihat, UX lebih baik.
+# ✅ Fase 0: Inisialisasi
+* [x] Membuat repositori GitHub teungku-zulkifli.github.io.
 
-### 🔹 Step 3.1 — Desain & CSS Responsive
+* [x] Menghubungkan repositori lokal dengan Git.
 
-* [ ] Buat **CSS global layout** (grid/flex, typography, spacing).
-* [ ] Tambah **media query** biar mobile-friendly.
-* [ ] Definisikan **color palette fix** (Primary = Purple, Secondary = Blue, Tertiary = Night/Dark).
-* [ ] Terapkan ke semua halaman (index, about, project, blog, connect).
+----
 
----
+# ▶️ Fase 1: Fondasi & Struktur Folder 
+* [ ] Membuat semua struktur folder (_posts, assets, dan sub-foldernya).
 
-### 🔹 Step 3.2 — Navigasi & Footer
+* [ ] Membuat file-file kosong (index.html, projects.html, blog.html, main.style.css, main.script.js).
 
-* [ ] **Navbar sticky** (selalu di atas, background transparan → solid saat scroll).
-* [ ] Tambah **active state** di menu (highlight halaman aktif).
-* [ ] Footer diperluas: kontak singkat + © + link GitHub.
+* [ ] Mengunduh marked.min.js dan menyimpannya di assets/js/lib/.
 
----
+* [ ] Mengisi file README.md ini.
 
-### 🔹 Step 3.3 — Blog UX
+* [ ] Melakukan commit dan push pertama untuk struktur awal.
 
-* [ ] Tambah **layout kartu (card style)** untuk daftar post:
+# ⏳ Fase 2: Kerangka HTML (Estimasi: Sesi Berikutnya)
+* [ ] Membuat kerangka HTML5 dasar untuk index.html (termasuk seksi #home, #about, #contact).
 
-  ```
-  [Thumbnail/Gambar] 
-  [Judul + Date] 
-  [Tags]
-  ```
-* [ ] Tambah **kategori/tag sistematis** (contoh: Tutorial, Trend, Tips, Project).
-* [ ] Buat **filter/sort** blog berdasarkan tag & date.
-* [ ] Atur typography konten blog (heading, paragraph, code block).
+* [ ] Membuat kerangka HTML5 dasar untuk projects.html.
 
----
+* [ ] Membuat kerangka HTML5 dasar untuk blog.html.
 
-### 🔹 Step 3.4 — About Page
+* [ ] Menambahkan semua link CSS dan JS (termasuk logika fallback CDN) di setiap file HTML.
 
-* [ ] Rapikan konten **Journey** (timeline sederhana).
-* [ ] Tambah section **Skills** (icon grid: HTML, CSS, JS, Git, dll).
-* [ ] Tambah section **Certificates** (list dengan link atau badge).
+* [ ] Membuat 1 file contoh artikel .md di dalam _posts/tutorials/.
 
----
+# ⏳ Fase 3: Styling & Tata Letak (Estimasi: Sesi Berikutnya)
+* [ ] Mendefinisikan gaya global di main.style.css (CSS variables untuk warna, font, dll).
 
-### 🔹 Step 3.5 — Project Showcase
+* [ ] Mendesain dan menata letak header (navigasi) dan footer.
 
-* [ ] Buat **grid card**:
+* [ ] Mendesain dan menata letak seksi-seksi di halaman utama (index.html).
 
-  * **Finished** (status selesai).
-  * **Ongoing** (sedang jalan).
-  * **Planned** (perkiraan ke depan).
-* [ ] Tiap card: \[Thumbnail] + \[Title] + \[Deskripsi singkat] + \[Link GitHub/demo].
+* [ ] Mendesain tampilan galeri proyek (kartu proyek) di projects.html.
 
----
+* [ ] Mendesain tampilan daftar artikel di blog.html.
 
-### 🔹 Step 3.6 — Connect Page
+* [ ] Menerapkan desain responsif (mobile-first) menggunakan media queries.
 
-* [ ] Tambah icon **Email, LinkedIn, GitHub** (pakai Feather/Lucide/FontAwesome).
-* [ ] Buat form sederhana (Name, Email, Message) → opsional, bisa pakai Formspree/EmailJS.
+# ⏳ Fase 4: Fungsionalitas JavaScript (Estimasi: Sesi Berikutnya)
+* [ ] Membuat fungsi untuk mengambil dan menampilkan daftar artikel di blog.html.
 
----
+* [ ] Membuat fungsi untuk mengambil file .md, mem-parsingnya dengan marked.js, dan menampilkannya sebagai artikel tunggal.
 
-### 🔹 Step 3.7 — Konsistensi & Testing
+* [ ] Menambahkan fungsionalitas untuk navigasi mobile (hamburger menu).
 
-* [ ] Pastikan semua **class/id naming selaras** (BEM / kebiasaan konsisten).
-* [ ] Testing di GitHub Pages (mobile + desktop).
-* [ ] Fix bug minor (misal blog list nggak load, atau navbar nabrak konten).
+* [ ] Menambahkan fungsionalitas smooth scroll untuk navigasi di index.html.
 
----
+# ⏳ Fase 5: Pengisian Konten Final (Estimasi: Sesi Berikutnya)
+* [ ] Mengisi halaman projects.html dengan konten proyek yang sebenarnya (gambar, deskripsi, link).
 
-## 🔵 Tahap 4 — Scaling & Automation
+* [ ] Menulis 2-3 artikel blog pertama di dalam folder _posts.
 
-🎯 **Goal:** Otomatisasi & workflow lebih gampang.
+* [ ] Memfinalisasi teks di seksi #about dan #contact.
 
-* Auto deploy ke GitHub Pages dengan GitHub Actions.
-* Tambah generator blog otomatis (misal: script buat konversi `.md` ke `.html` cache).
-* Optimisasi asset (minify CSS/JS, lazyload image).
+* [ ] Menambahkan foto profil profesional dan file CV/Resume (PDF).
 
----
+# ⏳ Fase 6: Optimasi & Publikasi Final (Estimasi: Sesi Berikutnya)
+* [ ] Mengompres semua gambar untuk mempercepat waktu muat.
 
-## 🟣 Tahap 5 — Future Upgrade (Optional)
+* [ ] Memeriksa dan melengkapi tag <title> dan <meta name="description"> untuk SEO dasar.
 
-🎯 **Goal:** Level up tampilan & fitur masa depan.
+* [ ] Melakukan pengujian di berbagai browser (cross-browser testing).
 
-* Tambah dark mode toggle.
-* Tambah search bar untuk blog.
-* Tambah analytics (misalnya Plausible/Umami).
-* Pindah ke framework (Next.js / Astro) kalau butuh scale besar.
+* [ ] Memvalidasi kode HTML menggunakan validator W3C.
 
----
+* [ ] Membagikan link portofolio!
