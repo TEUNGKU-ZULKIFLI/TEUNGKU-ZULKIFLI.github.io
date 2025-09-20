@@ -8,7 +8,7 @@ Ini adalah roadmap dan checklist untuk membangun website portofolio teungku-zulk
 
 ----
 
-# ▶️ Fase 1: Fondasi & Struktur Folder 
+# ✅ Fase 1: Fondasi & Struktur Folder 
 * [x] Membuat semua struktur folder (_posts, assets, dan sub-foldernya).
 
 * [x] Membuat file-file kosong (index.html, projects.html, blog.html, main.style.css, main.script.js).
@@ -19,16 +19,20 @@ Ini adalah roadmap dan checklist untuk membangun website portofolio teungku-zulk
 
 * [x] Melakukan commit dan push pertama untuk struktur awal.
 
-# ⏳ Fase 2: Kerangka HTML (Estimasi: Sesi Berikutnya)
-* [ ] Membuat kerangka HTML5 dasar untuk index.html (termasuk seksi #home, #about, #contact).
+----
 
-* [ ] Membuat kerangka HTML5 dasar untuk projects.html.
+# ✅ Fase 2: Kerangka HTML (Estimasi: Sesi Berikutnya)
+* [x] Membuat kerangka HTML5 dasar untuk index.html (termasuk seksi #home, #about, #contact).
 
-* [ ] Membuat kerangka HTML5 dasar untuk blog.html.
+* [x] Membuat kerangka HTML5 dasar untuk projects.html.
 
-* [ ] Menambahkan semua link CSS dan JS (termasuk logika fallback CDN) di setiap file HTML.
+* [x] Membuat kerangka HTML5 dasar untuk blog.html.
 
-* [ ] Membuat 1 file contoh artikel .md di dalam _posts/tutorials/.
+* [x] Menambahkan semua link CSS dan JS (termasuk logika fallback CDN) di setiap file HTML.
+
+* [x] Membuat 1 file contoh artikel .md di dalam _posts/tutorials/.
+
+----
 
 # ⏳ Fase 3: Styling & Tata Letak (Estimasi: Sesi Berikutnya)
 * [ ] Mendefinisikan gaya global di main.style.css (CSS variables untuk warna, font, dll).

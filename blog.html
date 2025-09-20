@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - TEUNGKU ZULKIFLI</title>
+    <link rel="stylesheet" href="assets/css/main.style.css">
+</head>
+<body>
+
+    <!-- Header & Navigasi Utama (Sama seperti index.html) -->
+    <header>
+        <nav>
+            <a href="index.html" class="logo">Teungku Zulkifli</a>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="blog.html">Blog</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Konten Utama Halaman -->
+    <main>
+        <section id="blog-list">
+            <h1>Blog & Catatan</h1>
+            <p>Tempat saya berbagi tutorial, catatan kuliah, dan hal-hal menarik lainnya.</p>
+
+            <!-- Daftar artikel akan dimuat oleh JavaScript di sini -->
+            <div id="articles-container">
+                <p>Memuat artikel...</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer (Sama seperti index.html) -->
+    <footer>
+        <p>&copy; 2025 - TEUNGKU ZULKIFLI. Dibuat dengan ❤️</p>
+    </footer>
+
+    <!-- Script Section (Sama seperti index.html) -->
+    <script src="assets/js/lib/marked.min.js"></script> 
+    <script>
+      window.marked || document.write('<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"><\/script>')
+    </script>
+    <script src="assets/js/main.script.js" defer></script>
+</body>
+</html>
