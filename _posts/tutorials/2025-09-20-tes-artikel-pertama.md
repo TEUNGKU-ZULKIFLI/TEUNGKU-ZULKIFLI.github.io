@@ -1,3 +1,10 @@
+---
+title: "Ini Adalah Judul Artikel Pertama Saya"
+date: "2025-09-20"
+category: "Tutorial"
+tags: ["markdown", "javascript", "testing"]
+---
+
 # Ini Adalah Judul Artikel Pertama Saya
 Ini adalah paragraf pembuka untuk artikel tes. Saya akan menggunakan file ini untuk memastikan marked.js bekerja dengan baik di Fase 4.
 
