@@ -1,13 +1,25 @@
 [
     {
-        "file": "_posts/tutorials/2025-09-20-tes-artikel-pertama.md",
-        "title": "Ini Adalah Judul Artikel Pertama Saya",
+        "file": "_posts/meta/2025-09-24-perjalanan-membangun-portofolio-ini.md",
+        "title": "Dari Nol ke Publikasi: Perjalanan Membangun Portofolio Ini",
+        "date": "2025-09-24",
+        "category": "Meta",
+        "tags": [
+            "\"web-development\"",
+            "\"vanilla-js\"",
+            "\"css-architecture\"",
+            "\"personal-project\""
+        ]
+    },
+    {
+        "file": "_posts/tutorials/2025-09-20-dasar-dasar-markdown.md",
+        "title": "Panduan Singkat: Dasar-Dasar Penulisan dengan Markdown",
         "date": "2025-09-20",
         "category": "Tutorial",
         "tags": [
             "\"markdown\"",
-            "\"javascript\"",
-            "\"testing\""
+            "\"web-basics\"",
+            "\"formatting\""
         ]
     }
 ]

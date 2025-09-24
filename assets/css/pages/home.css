@@ -1,0 +1,96 @@
+/* GAYA SPESIFIK: HALAMAN UTAMA (index.html) */
+/* File ini berisi semua gaya yang hanya berlaku untuk elemen unik di index.html */
+
+/* Seksi Hero */
+#home {
+    text-align: center;
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#home h1 {
+    font-size: 3rem;
+}
+
+#home p.subtitle {
+    font-size: 1.2rem;
+    color: var(--secondary-text-color);
+}
+
+/* Seksi Tentang Saya */
+.about-intro {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.profile-picture {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--accent-color);
+}
+
+.intro-text .subtitle {
+    font-size: 1.1rem;
+    color: var(--secondary-text-color);
+}
+
+.button-group {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.about-subsection {
+    margin-top: 2.5rem;
+}
+
+.about-subsection h3 {
+    color: var(--accent-color);
+    border-bottom: 2px solid var(--accent-color);
+    display: inline-block;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.skills-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.skills-list li {
+    background-color: var(--primary-color);
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    border: 1px solid #444;
+}
+
+.cert-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.small-text {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: var(--secondary-text-color);
+}
+
+/* Seksi Kontak */
+.contact-options {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-top: 2rem;
+}

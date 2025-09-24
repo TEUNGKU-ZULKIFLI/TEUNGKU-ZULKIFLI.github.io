@@ -1,0 +1,63 @@
+/* GAYA SPESIFIK: HALAMAN ARTIKEL */
+/* File ini bertanggung jawab untuk menata konten yang dihasilkan dari Markdown agar mudah dibaca. */
+
+#article-content {
+    background-color: var(--primary-color);
+    padding: 2rem 3rem; /* Padding lebih besar untuk ruang nafas */
+    border-radius: 8px;
+    max-width: 800px; /* Lebar optimal untuk membaca teks */
+    margin: 2rem auto; /* Pusatkan kontainer artikel */
+}
+
+/* Gaya untuk semua jenis heading di dalam artikel */
+#article-content h1, 
+#article-content h2, 
+#article-content h3 {
+    color: var(--accent-color);
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #444;
+    padding-bottom: 0.5rem;
+}
+
+#article-content p {
+    margin-bottom: 1rem;
+    line-height: 1.7; /* Jarak antar baris yang nyaman untuk dibaca */
+}
+
+/* Gaya untuk kode inline `seperti ini` */
+#article-content code {
+    background-color: #0d1117; /* Warna latar belakang seperti di GitHub */
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    font-family: monospace;
+}
+
+/* Gaya untuk blok kode yang lebih besar ``` ... ``` */
+#article-content pre {
+    background-color: #0d1117;
+    padding: 1rem;
+    border-radius: 8px;
+    overflow-x: auto; /* Tambahkan scroll horizontal jika kode terlalu panjang */
+}
+
+/* Pastikan kode di dalam <pre> tidak memiliki latar belakang ganda */
+#article-content pre code {
+    background-color: transparent;
+    padding: 0;
+}
+
+#article-content a {
+    color: var(--accent-color);
+    text-decoration: underline;
+}
+
+#article-content ul, 
+#article-content ol {
+    padding-left: 2rem;
+}
+
+#article-content li {
+    margin-bottom: 0.5rem;
+    line-height: 1.6;
+}

@@ -3,62 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Artikel</title>
+    <title>Artikel</title> <!-- Judul akan diubah oleh JS -->
+    
+    <!-- HANYA MEMANGGIL SATU FILE CSS INDUK -->
     <link rel="stylesheet" href="assets/css/main.style.css">
-    <style>
-        #article-content {
-            background-color: var(--primary-color);
-            padding: 2rem;
-            border-radius: 8px;
-        }
-        #article-content h1, #article-content h2 {
-            color: var(--accent-color);
-            margin-top: 1.5rem;
-            margin-bottom: 1rem;
-        }
-        #article-content p {
-            margin-bottom: 1rem;
-        }
-        #article-content code {
-            background-color: #000;
-            padding: 0.2rem 0.4rem;
-            border-radius: 4px;
-            font-family: monospace;
-        }
-        #article-content pre {
-            background-color: #000;
-            padding: 1rem;
-            border-radius: 8px;
-            overflow-x: auto;
-        }
-    </style>
 </head>
 <body>
     <header>
-<nav>
-    <a href="index.html" class="logo">Teungku Zulkifli</a>
-    <ul id="nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="projects.html">Projects</a></li>
-        <li><a href="blog.html">Blog</a></li>
-    </ul>
-    <button id="hamburger-btn" aria-label="Toggle Menu">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-    </button>
-</nav>
+        <nav>
+            <a href="index.html" class="logo">Teungku Zulkifli</a>
+            <ul id="nav-links">
+                <li><a data-lang="navHome" href="index.html#home">Beranda</a></li>
+                <li><a data-lang="navAbout" href="index.html#about">Tentang</a></li>
+                <li><a data-lang="navContact" href="index.html#contact">Kontak</a></li>
+                <li><a data-lang="navProjects" href="projects.html">Proyek</a></li>
+                <li><a data-lang="navBlog" href="blog.html">Blog</a></li>
+            </ul>
+<button id="hamburger-btn" aria-label="Toggle Menu">
+    <span></span>
+    <span></span>
+    <span></span>
+</button>
+        </nav>
     </header>
+
     <main>
         <article id="article-content">
             <p>Memuat konten artikel...</p>
         </article>
     </main>
+
     <footer>
         <p>&copy; 2025 - Teungku Zulkifli. Dibuat dengan ❤️</p>
     </footer>
+
+    <div class="floating-lang-switcher">
+        <div class="lang-options">
+            <button id="lang-id">ID</button>
+            <button id="lang-en">EN</button>
+        </div>
+        <button class="lang-globe-btn" aria-label="Pilih Bahasa">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+        </button>
+    </div>
+
     <script src="assets/js/lib/marked.min.js"></script> 
     <script>
       window.marked || document.write('<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"><\/script>')
     </script>
+    <script src="assets/js/languages.js"></script>
     <script src="assets/js/main.script.js" defer></script>
 </body>
 </html>

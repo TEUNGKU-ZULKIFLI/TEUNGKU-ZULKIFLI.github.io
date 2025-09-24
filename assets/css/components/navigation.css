@@ -1,0 +1,149 @@
+/* KOMPONEN: NAVIGASI & ELEMEN TERKAIT (FINAL) */
+/* File ini bertanggung jawab untuk semua gaya navigasi, termasuk animasi hamburger. */
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+nav .logo {
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: var(--text-color);
+    text-decoration: none;
+}
+nav ul {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    margin: 0;
+    padding: 0;
+}
+nav a {
+    color: var(--secondary-text-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+nav a:hover, nav a.active {
+    color: var(--accent-color);
+}
+
+/* === GAYA HAMBURGER MENU BARU DENGAN ANIMASI === */
+#hamburger-btn {
+    display: none; /* Sembunyikan di desktop */
+    width: 30px;
+    height: 22px;
+    position: relative;
+    cursor: pointer;
+    background: none;
+    border: none;
+    z-index: 1001;
+}
+
+#hamburger-btn span {
+    display: block;
+    position: absolute;
+    height: 3px;
+    width: 100%;
+    background: var(--text-color);
+    border-radius: 9px;
+    opacity: 1;
+    left: 0;
+    transform: rotate(0deg);
+    transition: .25s ease-in-out;
+}
+
+/* Posisi awal tiga garis */
+#hamburger-btn span:nth-child(1) { top: 0px; }
+#hamburger-btn span:nth-child(2) { top: 9px; }
+#hamburger-btn span:nth-child(3) { top: 18px; }
+
+/* Saat menu aktif (kelas .nav-active ditambahkan ke <ul>) */
+/* kita target tombol sibling-nya (#hamburger-btn) */
+ul#nav-links.nav-active + #hamburger-btn span:nth-child(1) {
+    top: 9px;
+    transform: rotate(135deg);
+}
+ul#nav-links.nav-active + #hamburger-btn span:nth-child(2) {
+    opacity: 0;
+    left: -60px;
+}
+ul#nav-links.nav-active + #hamburger-btn span:nth-child(3) {
+    top: 9px;
+    transform: rotate(-135deg);
+}
+
+/* Pengalih Bahasa Melayang */
+.floating-lang-switcher {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.lang-globe-btn {
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    transition: transform 0.3s ease;
+}
+
+.lang-globe-btn:hover {
+    transform: scale(1.1);
+}
+
+.lang-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    background-color: var(--primary-color);
+    padding: 0.5rem;
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+}
+
+.floating-lang-switcher:hover .lang-options {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.lang-options button {
+    background: none;
+    border: 1px solid #555;
+    border-radius: 5px;
+    color: var(--text-color);
+    cursor: pointer;
+    padding: 0.5rem;
+    width: 40px;
+    transition: background-color 0.3s ease;
+}
+
+.lang-options button:hover {
+    background-color: #444;
+}
+
+.lang-options button.active {
+    background-color: var(--accent-color);
+    color: white;
+    border-color: var(--accent-color);
+}

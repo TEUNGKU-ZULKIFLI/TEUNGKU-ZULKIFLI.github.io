@@ -1,205 +1,46 @@
-/* 1. GAYA GLOBAL & VARIABEL */
+/* === FILE INDUK CSS === */
+/* File ini bertindak sebagai manajer yang menggabungkan semua bagian CSS menjadi satu. */
+/* Urutan @import ini sangat penting untuk memastikan gaya diterapkan dengan benar. */
 
-/* Impor font dari Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+/* 1. Fondasi: Variabel, reset, font, dll. (Berlaku untuk semua halaman) */
+@import url('base.css');
 
-:root {
-    /* Palet Warna (Tema Gelap) - Ubah warna di sini untuk mengubah seluruh tema situs */
-    --bg-color: #1a1a1a;
-    --primary-color: #2c2c2c;
-    --accent-color: #007bff;
-    --text-color: #f0f0f0;
-    --secondary-text-color: #a0a0a0;
-}
+/* 2. Tata Letak Utama: Header, footer, main, section. (Berlaku untuk semua halaman) */
+@import url('layout.css');
 
-html, body {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    scroll-behavior: smooth;
-}
+/* 3. Komponen yang Dapat Digunakan Kembali */
+@import url('components/navigation.css'); /* Untuk semua halaman */
+@import url('components/buttons.css');    /* Untuk semua halaman */
+@import url('components/cards.css');      /* Untuk semua halaman */
 
-/* 2. TATA LETAK UTAMA & KOMPONEN YANG DAPAT DIGUNAKAN KEMBALI */
+/* 4. Gaya Spesifik per Halaman (Hanya akan aktif jika elemennya ada di halaman tersebut) */
+@import url('pages/home.css');      /* Gaya unik untuk seksi #home, #about, #contact di index.html */
+@import url('pages/projects.css');  /* Gaya untuk .project-grid di projects.html dan #articles-container di blog.html */
+@import url('pages/article.css');   /* Gaya untuk #article-content di article.html */
 
-header {
-    background-color: var(--primary-color);
-    padding: 1rem 5%;
-    border-bottom: 1px solid #333;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-}
-
-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-nav .logo {
-    font-weight: 700;
-    font-size: 1.5rem;
-    color: var(--text-color);
-    text-decoration: none;
-}
-
-nav ul {
-    list-style: none;
-    display: flex;
-    gap: 2rem;
-}
-
-nav a {
-    color: var(--secondary-text-color);
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-nav a:hover, nav a.active {
-    color: var(--accent-color);
-}
-
-main {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem 5%;
-}
-
-section {
-    padding: 4rem 0;
-    border-bottom: 1px solid #333;
-}
-
-section:last-child {
-    border-bottom: none;
-}
-
-footer {
-    text-align: center;
-    padding: 2rem 5%;
-    background-color: var(--primary-color);
-    color: var(--secondary-text-color);
-    font-size: 0.9rem;
-}
-
-.cta-button {
-    display: inline-block;
-    background-color: var(--accent-color);
-    color: #fff;
-    padding: 0.75rem 1.5rem;
-    border-radius: 5px;
-    text-decoration: none;
-    font-weight: 600;
-    margin-top: 1rem;
-    transition: background-color 0.3s ease;
-}
-
-.cta-button:hover {
-    background-color: #0056b3;
-}
-
-/* 3. GAYA KHUSUS PER HALAMAN */
-
-/* Halaman Utama (index.html) */
-#home {
-    text-align: center;
-    min-height: 80vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-#home h1 {
-    font-size: 3rem;
-    margin-bottom: 0.5rem;
-}
-
-#home p {
-    font-size: 1.2rem;
-    color: var(--secondary-text-color);
-}
-
-/* Halaman Proyek (projects.html) */
-.project-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    margin-top: 2rem;
-}
-
-.project-card {
-    background-color: var(--primary-color);
-    padding: 1.5rem;
-    border-radius: 8px;
-    border: 1px solid #333;
-}
-
-.project-card h3 {
-    color: var(--accent-color);
-    margin-bottom: 0.5rem;
-}
-
-/* Halaman Blog (blog.html) */
-#articles-container {
-    margin-top: 2rem;
-}
-
-
-/* 4. DESAIN RESPONSIF (MOBILE-FIRST) */
-
-/* Aturan dasar sudah untuk mobile. Di bawah ini adalah penyesuaian untuk layar yang lebih besar. */
+/* 5. Aturan Responsif (dijalankan terakhir agar bisa menimpa gaya sebelumnya) */
 @media (max-width: 768px) {
-    nav ul {
-        /* Nanti kita akan sembunyikan ini dengan JS dan ganti dengan ikon hamburger */
-        display: none; 
-    }
-    #home h1 {
-        font-size: 2.5rem;
-    }
-}
-
-/* 5. GAYA NAVIGASI MOBILE (LANJUTAN DARI FASE 3) */
-
-#hamburger-btn {
-    display: none; /* Sembunyikan di layar besar */
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    color: var(--text-color);
-}
-
-@media (max-width: 768px) {
-    /* Aturan untuk layar dengan lebar maksimal 768px */
-
+    /* Umum */
+    #home h1 { font-size: 2.5rem; }
+    
+    /* Navigasi Mobile */
+    nav ul { display: none; } /* Sembunyikan navigasi desktop */
     nav ul#nav-links {
-        display: none; /* Sembunyikan daftar link default */
+        display: none; /* Pastikan menu mobile juga tersembunyi awalnya */
         flex-direction: column;
         position: absolute;
-        top: 65px; /* Sesuaikan dengan tinggi header Anda */
+        top: 65px; 
         left: 0;
         width: 100%;
         background-color: var(--primary-color);
         padding: 1rem 0;
         border-bottom: 1px solid #333;
     }
-
-    nav ul#nav-links.nav-active {
-        display: flex; /* Tampilkan menu saat kelas 'nav-active' ditambahkan oleh JS */
-    }
-
-    nav ul#nav-links li {
-        text-align: center;
-        padding: 1rem 0;
-    }
-
-    #hamburger-btn {
-        display: block; /* Tampilkan tombol hamburger di mobile */
-    }
+    nav ul#nav-links.nav-active { display: flex; } /* Tampilkan saat aktif */
+    nav ul#nav-links li { text-align: center; padding: 1rem 0; }
+    #hamburger-btn { display: block; } /* Tampilkan tombol hamburger */
+    
+    /* Tata Letak Halaman Mobile */
+    .about-intro { flex-direction: column; text-align: center; }
+    .contact-options { grid-template-columns: 1fr; }
 }

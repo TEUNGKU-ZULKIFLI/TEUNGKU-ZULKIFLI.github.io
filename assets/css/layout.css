@@ -1,0 +1,35 @@
+/* 2. TATA LETAK UTAMA */
+/* File ini mendefinisikan struktur kerangka utama yang digunakan di semua halaman. */
+
+header {
+    background-color: var(--primary-color);
+    padding: 1rem 5%;
+    border-bottom: 1px solid #333;
+    position: sticky; /* Membuat header tetap di atas saat di-scroll */
+    top: 0;
+    z-index: 100; /* Pastikan header selalu di lapisan terdepan */
+}
+
+main {
+    max-width: 1200px; /* Batas lebar maksimum konten agar tidak terlalu lebar di layar besar */
+    margin: 0 auto; /* Pusatkan konten di tengah layar */
+    padding: 2rem 5%; /* Beri jarak dari tepi kiri dan kanan browser */
+}
+
+section {
+    padding: 4rem 0; /* Beri jarak vertikal antar seksi */
+    border-bottom: 1px solid #333; /* Garis pemisah antar seksi */
+}
+
+/* Hilangkan garis pemisah di seksi terakhir pada setiap halaman */
+section:last-child {
+    border-bottom: none;
+}
+
+footer {
+    text-align: center;
+    padding: 2rem 5%;
+    background-color: var(--primary-color);
+    color: var(--secondary-text-color);
+    font-size: 0.9rem;
+}

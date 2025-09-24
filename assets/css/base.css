@@ -1,0 +1,26 @@
+/* 1. GAYA GLOBAL & VARIABEL */
+/* File ini adalah fondasi untuk seluruh situs. */
+
+/* Impor font dari Google Fonts agar tersedia di mana-mana */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+/* :root adalah tempat kita menyimpan semua "variabel" desain */
+:root {
+    /* Palet Warna (Tema Gelap) - Ubah warna di sini untuk mengubah seluruh tema situs */
+    --bg-color: #1a1a1a;
+    --primary-color: #2c2c2c;
+    --accent-color: #007bff;
+    --text-color: #f0f0f0;
+    --secondary-text-color: #a0a0a0;
+}
+
+/* Aturan dasar yang berlaku untuk setiap halaman di situs */
+html, body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Trik standar agar penataan layout lebih mudah dan predictable */
+    font-family: 'Poppins', sans-serif; /* Font default untuk seluruh situs */
+    background-color: var(--bg-color); /* Warna latar belakang default */
+    color: var(--text-color); /* Warna teks default */
+    scroll-behavior: smooth; /* Mengaktifkan smooth scroll secara global */
+}

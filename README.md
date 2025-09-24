@@ -60,14 +60,16 @@ Ini adalah roadmap dan checklist untuk membangun website portofolio teungku-zulk
 
 ----
 
-# ⏳ Fase 5: Pengisian Konten Final (Estimasi: Sesi Berikutnya)
-* [ ] Mengisi halaman projects.html dengan konten proyek yang sebenarnya (gambar, deskripsi, link).
+# ✅ Fase 5: Pengisian Konten Final
+* [x] Mengisi halaman projects.html dengan konten proyek yang sebenarnya (gambar, deskripsi, link).
 
-* [ ] Menulis 2-3 artikel blog pertama di dalam folder _posts.
+* [x] Menulis 2-3 artikel blog pertama di dalam folder _posts.
 
-* [ ] Memfinalisasi teks di seksi #about dan #contact.
+* [x] Memfinalisasi teks di seksi #about dan #contact.
 
-* [ ] Menambahkan foto profil profesional dan file CV/Resume (PDF).
+* [x] Menambahkan foto profil profesional dan file CV/Resume (PDF).
+
+----
 
 # ⏳ Fase 6: Optimasi & Publikasi Final (Estimasi: Sesi Berikutnya)
 * [ ] Mengompres semua gambar untuk mempercepat waktu muat.

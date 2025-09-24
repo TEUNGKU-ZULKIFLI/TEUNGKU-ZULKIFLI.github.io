@@ -8,53 +8,127 @@
 </head>
 <body>
     <header>
-<nav>
-    <a href="index.html" class="logo">Teungku Zulkifli</a>
-    <ul id="nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="projects.html">Projects</a></li>
-        <li><a href="blog.html">Blog</a></li>
-    </ul>
-
-    <button id="hamburger-btn" aria-label="Toggle Menu">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-    </button>
-</nav>
+        <nav>
+            <a href="index.html" class="logo">Teungku Zulkifli</a>
+<ul id="nav-links">
+    <li><a data-lang="common.navHome" href="index.html#home">Beranda</a></li>
+    <li><a data-lang="common.navAbout" href="index.html#about">Tentang</a></li>
+    <li><a data-lang="common.navContact" href="index.html#contact">Kontak</a></li>
+    <li><a data-lang="common.navProjects" href="projects.html">Proyek</a></li>
+    <li><a data-lang="common.navBlog" href="blog.html">Blog</a></li>
+</ul>
+<button id="hamburger-btn" aria-label="Toggle Menu">
+    <span></span>
+    <span></span>
+    <span></span>
+</button>
+        </nav>
     </header>
 
-    <!-- Konten Utama Halaman -->
     <main>
-        <!-- Seksi #home - Hero Section -->
+        <!-- Seksi #home -->
         <section id="home">
-            <h1>Hi 👋, I'm TEUNGKU ZULKIFLI</h1>
-            <p>Kaleuh pajoeh 🍚bue?</p>
-            <a href="projects.html" class="cta-button">Lihat Proyek Saya</a>
+            <h1 data-lang="pages.home.heroTitle">Hi 👋, Saya TEUNGKU ZULKIFLI</h1>
+            <p data-lang="pages.home.heroSubtitle" class="subtitle">Mahasiswa Teknologi Komputer & Jaringan | Web & Mobile Developer</p>
+            <p data-lang="pages.home.heroPersonal" style="margin-top: 1rem; color: var(--secondary-text-color);">Kaleuh pajoeh 🍚bue?</p>
+            <a data-lang="pages.home.heroButton" href="projects.html" class="cta-button" style="margin-top: 2rem;">Lihat Proyek Saya</a>
         </section>
 
         <!-- Seksi #about -->
         <section id="about">
-            <h2>Tentang Saya</h2>
-            <h3>I come from Indonesia, currently studying D4 Computer Information Technology.</h3>
-            <p>🌱 I’m currently learning HTML,CSS,And other.</p>
-            <p>📝 I regularly write articles on <a href="https://teungku-zulkifli.blogspot.com"> BLOGSPOT</a></p>
-            <p>⚡ Fun fact I really enjoy coding while sitting at 'SABRI COFFEE' <a href="https://www.google.com/maps/place/Sabri+kupi/@5.1297247,97.1480573,17z/data=!3m1!4b1!4m6!3m5!1s0x304783f47c8193d9:0x9326c2ee28133518!8m2!3d5.1297247!4d97.1503035!16s%2Fg%2F11qp2g1264?entry=ttu">LOCATION</a></p>
+            <div class="about-intro">
+                <img src="assets/images/profile-picture.jpg" alt="Foto Profil Teungku Zulkifli" class="profile-picture">
+                <div class="intro-text">
+                    <h2 data-lang="pages.home.aboutTitle">Tentang Saya</h2>
+                    <p data-lang="pages.home.aboutIntro" class="subtitle">Mahasiswa Teknik Rekayasa Komputer dan Jaringan (IPK 3.62) dengan minat mendalam pada pengembangan web & mobile, jaringan, dan IoT. Saya terbiasa beradaptasi cepat dengan teknologi baru dan aktif memanfaatkan AI untuk mempercepat riset dan pengembangan solusi kreatif.</p>
+                    <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                        <a data-lang="pages.home.downloadCV_ID" href="docs/CV_TEUNGKU_ZULKIFLI_ID.pdf" class="cta-button" download>Unduh CV (ID)</a>
+                        <a data-lang="pages.home.downloadCV_EN" href="docs/CV_TEUNGKU_ZULKIFLI_EN.pdf" class="cta-button" download>Download CV (EN)</a>
+                    </div>
+                </div>
+            </div>
+            <div class="about-subsection">
+                <h3 data-lang="pages.home.philosophyTitle">Filosofi & Misi Saya</h3>
+                <p data-lang="pages.home.philosophyText">Misi saya adalah membangun solusi digital yang tidak hanya berfungsi, tetapi juga intuitif dan efisien. Saya percaya dalam memanfaatkan kekuatan otomasi dan AI untuk mempercepat proses pengembangan, memungkinkan saya untuk fokus pada pemecahan masalah inti dan menciptakan produk yang berdampak positif.</p>
+            </div>
+            <div class="about-subsection">
+                <h3 data-lang="pages.home.skillsTitle">Keahlian Teknis & Kompetensi</h3>
+                <p data-lang="pages.home.skillsText">Perjalanan saya di dunia teknologi didorong oleh rasa ingin tahu yang tak pernah padam. Berikut adalah beberapa keahlian yang saya kembangkan:</p>
+                <ul class="skills-list">
+                    <li>Flutter/Dart</li>
+                    <li>Laravel</li>
+                    <li>Docker</li>
+                    <li>Git & GitHub</li>
+                    <li>Administrasi Linux & Windows</li>
+                    <li>Instalasi Jaringan</li>
+                    <li>Problem Solving</li>
+                    <li>Kreativitas & Inovasi</li>
+                </ul>
+            </div>
+            <div class="about-subsection">
+                <h3 data-lang="pages.home.certsTitle">Validasi & Sertifikasi Unggulan</h3>
+                <p data-lang="pages.home.certsText">Saya percaya pada pembelajaran berkelanjutan dan validasi pengetahuan melalui sertifikasi yang diakui.</p>
+                <div class="cert-grid">
+                    <a href="https://www.dicoding.com/certificates/0LZ0668ORZ65" target="_blank" class="cert-card-link">
+                        <div class="cert-card">
+                            <h4>Belajar Dasar Pemrograman Web</h4>
+                            <p>Dikeluarkan oleh Dicoding</p>
+                        </div>
+                    </a>
+                    <a href="https://www.dicoding.com/certificates/0LZ04202RP65" target="_blank" class="cert-card-link">
+                        <div class="cert-card">
+                            <h4>Belajar Dasar Pemrograman JavaScript</h4>
+                            <p>Dikeluarkan oleh Dicoding</p>
+                        </div>
+                    </a>
+                </div>
+                <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--secondary-text-color);">*Sertifikat seminar dan workshop lainnya tersedia atas permintaan.</p>
+            </div>
         </section>
 
         <!-- Seksi #contact -->
         <section id="contact">
-            <h2>Hubungi Saya</h2>
-            <p>Anda bisa menghubungi saya melalui form di bawah ini atau melalui media sosial.</p>
+            <h2 data-lang="pages.home.contactTitle">Terhubung Dengan Saya</h2>
+            <p data-lang="pages.home.contactText">Saya selalu terbuka untuk diskusi, kolaborasi, atau sekadar menyapa. Pilih cara yang paling sesuai untuk Anda.</p>
+            <div class="contact-options">
+                <div class="contact-column">
+                    <h3 data-lang="pages.home.contactRecruiterTitle">Untuk Perekrut</h3>
+                    <p data-lang="pages.home.contactRecruiterText">Tertarik untuk menawarkan kesempatan? Saya siap untuk tantangan baru. Silakan hubungi saya melalui email.</p>
+                    <a href="mailto:teungkuzulkifli08@gmail.com" class="cta-button">Kirim Email</a>
+                </div>
+                <div class="contact-column">
+                    <h3 data-lang="pages.home.contactCollabTitle">Untuk Kolaborasi</h3>
+                    <p data-lang="pages.home.contactCollabText">Punya ide proyek yang menarik? Mari kita diskusikan bagaimana kita bisa bekerja sama. Lihat kode saya di GitHub.</p>
+                    <a href="https://github.com/TEUNGKU-ZULKIFLI" target="_blank" class="cta-button">Lihat GitHub</a>
+                </div>
+                <div class="contact-column">
+                    <h3 data-lang="pages.home.contactConnectTitle">Tetap Terhubung</h3>
+                    <p data-lang="pages.home.contactConnectText">Ikuti perjalanan profesional saya dan mari bertukar pikiran lebih lanjut melalui LinkedIn.</p>
+                    <a href="https://linkedin.com/in/teungku-zulkifli08" target="_blank" class="cta-button">LinkedIn</a>
+                </div>
+            </div>
         </section>
     </main>
 
-    <!-- Footer -->
     <footer>
         <p>&copy; 2025 - Teungku Zulkifli. Dibuat dengan ❤️</p>
     </footer>
-    <script src="assets/js/lib/marked.min.js"></script> 
+    
+    <div class="floating-lang-switcher">
+        <div class="lang-options">
+            <button id="lang-id">ID</button>
+            <button id="lang-en">EN</button>
+        </div>
+        <button class="lang-globe-btn" aria-label="Pilih Bahasa">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+        </button>
+    </div>
+
+    <script src="assets/js/lib/marked.min.js"></script>
     <script>
-      window.marked || document.write('<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"><\/script>')
+        window.marked || document.write('<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"><\/script>')
     </script>
+    <script src="assets/js/languages.js"></script>
     <script src="assets/js/main.script.js" defer></script>
 </body>
 </html>

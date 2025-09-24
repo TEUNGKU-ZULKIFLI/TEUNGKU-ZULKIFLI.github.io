@@ -1,0 +1,99 @@
+/* GAYA SPESIFIK: HALAMAN PROYEK & BLOG */
+/* File ini menata layout grid yang digunakan oleh projects.html dan blog.html, 
+   serta detail di dalam kartu proyek. */
+
+/* Tata letak grid utama untuk galeri */
+.project-grid, 
+#articles-container {
+    display: grid;
+    /* Trik responsif: buat kolom sebanyak mungkin dengan lebar minimal 320px */
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+/* Penataan konten di dalam kartu proyek */
+.tech-stack-wrapper {
+    margin-top: auto; /* Trik AJAIB: Mendorong blok ini ke bagian paling bawah kartu */
+    padding-top: 1rem; /* Beri sedikit jarak dari deskripsi di atasnya */
+}
+
+.tech-stack-label {
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: var(--secondary-text-color);
+    font-size: 0.9rem;
+}
+
+.tech-stack {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+/* Gaya untuk setiap tag teknologi */
+.tech-stack li {
+    background-color: #3e3e3e;
+    padding: 0.25rem 0.75rem;
+    border-radius: 15px; /* Membuatnya terlihat seperti 'pil' */
+    font-size: 0.8rem;
+}
+
+.project-links {
+    margin-top: 1.5rem;
+    display: flex;
+    gap: 1rem;
+}
+
+/* GAYA BARU UNTUK FILTER BLOG */
+#filter-container {
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #444; /* Garis batas bawah seperti ide Anda */
+}
+
+.filter-group {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap; /* Agar tombol pindah ke baris baru jika tidak muat */
+    gap: 0.75rem;
+}
+
+/* Jarak antara grup Kategori dan Tag */
+.filter-group:not(:last-child) {
+    margin-bottom: 1rem;
+}
+
+.filter-group strong {
+    margin-right: 0.5rem;
+    font-size: 1rem;
+    color: var(--text-color);
+}
+
+.filter-btn {
+    background-color: transparent; /* Latar belakang transparan untuk efek outline */
+    color: var(--secondary-text-color);
+    border: 1px solid #555;
+    padding: 0.5rem 1rem;
+    border-radius: 20px; /* Membuatnya seperti 'pil' atau tag GitHub */
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.filter-btn:hover {
+    background-color: #444;
+    color: var(--text-color);
+    border-color: #777;
+}
+
+/* Gaya untuk tombol yang sedang aktif */
+.filter-btn.active {
+    background-color: var(--accent-color);
+    color: white;
+    border-color: var(--accent-color);
+}

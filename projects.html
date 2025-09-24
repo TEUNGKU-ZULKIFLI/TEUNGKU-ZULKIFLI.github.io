@@ -3,58 +3,125 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Proyek - TEUNGKU ZULKIFLI</title>
+    <title data-lang="pages.projects.pageTitle">Proyek - TEUNGKU ZULKIFLI</title>
     <link rel="stylesheet" href="assets/css/main.style.css">
 </head>
 <body>
     <header>
-<nav>
-    <a href="index.html" class="logo">Teungku Zulkifli</a>
-    <ul id="nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="projects.html">Projects</a></li>
-        <li><a href="blog.html">Blog</a></li>
-    </ul>
-
-    <button id="hamburger-btn" aria-label="Toggle Menu">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-    </button>
-</nav>
+        <nav>
+            <a href="index.html" class="logo">Teungku Zulkifli</a>
+<ul id="nav-links">
+    <li><a data-lang="common.navHome" href="index.html#home">Beranda</a></li>
+    <li><a data-lang="common.navAbout" href="index.html#about">Tentang</a></li>
+    <li><a data-lang="common.navContact" href="index.html#contact">Kontak</a></li>
+    <li><a data-lang="common.navProjects" href="projects.html">Proyek</a></li>
+    <li><a data-lang="common.navBlog" href="blog.html">Blog</a></li>
+</ul>
+<button id="hamburger-btn" aria-label="Toggle Menu">
+    <span></span>
+    <span></span>
+    <span></span>
+</button>
+        </nav>
     </header>
 
-    <!-- Konten Utama Halaman -->
     <main>
         <section id="project-gallery">
-            <h1>Galeri Proyek</h1>
-            <p>Berikut adalah beberapa proyek yang pernah saya kerjakan dan eksplorasi yang sedang saya lakukan.</p>
+            <h1 data-lang="pages.projects.mainTitle">Galeri Proyek</h1>
+            <p data-lang="pages.projects.introText">Berikut adalah beberapa proyek pilihan yang menunjukkan perjalanan dan keahlian saya dalam pengembangan perangkat lunak.</p>
             
-            <!-- Nanti di sini kita akan isi dengan kartu-kartu proyek -->
             <div class="project-grid">
-                <!-- Contoh 1 kartu proyek (placeholder) -->
+
+                <!-- Proyek 1: Apok FinTrack -->
                 <div class="project-card">
-                    <h3>Apok FinTrack</h3>
-                    <p>Personal Finance Tracker built with Flutter
-                    Record your daily income & expenses, manage cards, view history, and analyze data with charts.</p>
+                    <!-- GAMBAR PROYEK -->
+                    <img src="https://placehold.co/100x100/2c2c2c/f0f0f0?text=Apok+FinTrack" alt="Apok FinTrack Screenshot" class="project-image">
+                    
+                    <!-- KONTEN TEKS -->
+                    <div class="project-content">
+                        <h3 data-lang="pages.projects.finTrackTitle">Apok FinTrack - Pelacak Keuangan</h3>
+                        <p data-lang="pages.projects.finTrackDesc">Aplikasi mobile untuk mencatat pendapatan & pengeluaran harian, mengelola kartu, melihat riwayat, dan menganalisis data dengan grafik.</p>
+                        
+                        <!-- DAFTAR TEKNOLOGI -->
+                        <div class="tech-stack-wrapper">
+                            <p class="tech-stack-label" data-lang="pages.projects.techStack">Teknologi:</p>
+                            <ul class="tech-stack">
+                                <li>Flutter</li>
+                                <li>Dart</li>
+                                <li>Sqflite</li>
+                            </ul>
+                        </div>
+
+                        <!-- TOMBOL AKSI (CTA) -->
+                        <div class="project-links">
+                            <a href="https://github.com/TEUNGKU-ZULKIFLI/finance_tracker" target="_blank" class="cta-button" data-lang="projectCodeButton">Lihat Kode</a>
+                        </div>
+                    </div>
                 </div>
-                <!-- Contoh 2 kartu proyek (placeholder) -->
+
+                <!-- Proyek 2: ATTC -->
                 <div class="project-card">
-                    <h3>ACEH TICKET TRAVEL CAR (ATTC)</h3>
-                    <p>Sistem Pemesanan Tiket Travel Mobil adalah aplikasi mobile yang memudahkan pengguna untuk memesan tiket perjalanan dengan mobil angkutan.
-                        Pengguna dapat memasukkan rute perjalanan yang diinginkan, dan sistem akan mencari apakah ada data valid dalam database.
-                        Jika ada, informasi pemesanan tiket akan ditampilkan; jika tidak, sistem akan memberi tahu bahwa tidak ada data yang sesuai.</p>
+                    <img src="https://placehold.co/100x100/2c2c2c/f0f0f0?text=ATTC" alt="ATTC Screenshot" class="project-image">
+                    <div class="project-content">
+                        <h3 data-lang="pages.projects.attcTitle">Aceh Ticket Travel Car (ATTC)</h3>
+                        <p data-lang="pages.projects.attcDesc">Platform mobile untuk reservasi tiket perjalanan mobil. Pengguna dapat mencari rute yang tersedia dan melihat informasi pemesanan.</p>
+                        <div class="tech-stack-wrapper">
+                            <p class="tech-stack-label" data-lang="pages.projects.techStack">Teknologi:</p>
+                            <ul class="tech-stack">
+                                <li>Flutter</li>
+                                <li>Dart</li>
+                                <li>MySQL</li>
+                            </ul>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/TEUNGKU-ZULKIFLI/ACEH_TICKET_TRAVEL_CAR" target="_blank" class="cta-button" data-lang="projectCodeButton">Lihat Kode</a>
+                        </div>
+                    </div>
                 </div>
+
+                <!-- Proyek 3: Smart Bin -->
+                <div class="project-card">
+                    <img src="https://placehold.co/100x100/2c2c2c/f0f0f0?text=Smart+Bin" alt="Smart Bin Screenshot" class="project-image">
+                    <div class="project-content">
+                        <h3 data-lang="pages.projects.smartBinTitle">Smart Bin - Tempat Sampah Pintar</h3>
+                        <p data-lang="pages.projects.smartBinDesc">Sistem tempat sampah pintar berbasis IoT yang terintegrasi dengan sensor untuk memonitor kapasitas dan mengirim notifikasi.</p>
+                        <div class="tech-stack-wrapper">
+                            <p class="tech-stack-label" data-lang="pages.projects.techStack">Teknologi:</p>
+                            <ul class="tech-stack">
+                                <li>Laravel</li>
+                                <li>Arduino</li>
+                                <li>PHP</li>
+                            </ul>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/TEUNGKU-ZULKIFLI/smartbin" target="_blank" class="cta-button" data-lang="projectCodeButton">Lihat Kode</a>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </section>
     </main>
 
-    <!-- Footer -->
     <footer>
         <p>&copy; 2025 - TEUNGKU ZULKIFLI. Dibuat dengan ❤️</p>
     </footer>
+    
+    <div class="floating-lang-switcher">
+        <div class="lang-options">
+            <button id="lang-id">ID</button>
+            <button id="lang-en">EN</button>
+        </div>
+        <button class="lang-globe-btn" aria-label="Pilih Bahasa">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+        </button>
+    </div>
+
     <script src="assets/js/lib/marked.min.js"></script> 
     <script>
       window.marked || document.write('<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"><\/script>')
     </script>
+    <script src="assets/js/languages.js"></script>
     <script src="assets/js/main.script.js" defer></script>
 </body>
 </html>

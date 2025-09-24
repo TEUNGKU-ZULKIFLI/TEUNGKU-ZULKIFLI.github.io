@@ -1,0 +1,25 @@
+/* KOMPONEN: TOMBOL */
+/* File ini berisi semua gaya untuk elemen tombol yang dapat digunakan kembali. */
+
+.cta-button {
+    display: inline-block;
+    background-color: var(--accent-color);
+    
+    /* PENTING: !important memastikan warna teks putih ini menimpa 
+       warna default dari tag <a> yang mungkin berwarna lain. */
+    color: #fff !important; 
+    
+    padding: 0.75rem 1.5rem;
+    border-radius: 5px;
+    text-decoration: none; /* Menghilangkan garis bawah dari link */
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+    border: none; /* Menghilangkan border default jika ini adalah tag <button> */
+    cursor: pointer;
+    text-align: center;
+}
+
+.cta-button:hover {
+    background-color: #0056b3; /* Warna biru yang sedikit lebih gelap saat di-hover */
+    color: #fff !important;
+}
