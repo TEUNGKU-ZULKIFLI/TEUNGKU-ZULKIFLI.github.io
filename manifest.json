@@ -1,5 +1,23 @@
 [
     {
+        "file": "_posts/kuliah/2025-09-25-debian7-setup-01-fondasi.md",
+        "title": "Konfigurasi Awal Debian 7 - Tahapan 01: Fondasi Server",
+        "date": "2025-09-25",
+        "category": "Kuliah",
+        "tags": [
+            "\"debian-server-series\"",
+            "\"debian-7\"",
+            "\"wheezy\"",
+            "\"linux\"",
+            "\"initial-setup\"",
+            "\"networking\"",
+            "\"security\"",
+            "\"sudo\"",
+            "\"vim\"",
+            "\"sysadmin\""
+        ]
+    },
+    {
         "file": "_posts/meta/2025-09-24-perjalanan-membangun-portofolio-ini.md",
         "title": "Dari Nol ke Publikasi: Perjalanan Membangun Portofolio Ini",
         "date": "2025-09-24",
