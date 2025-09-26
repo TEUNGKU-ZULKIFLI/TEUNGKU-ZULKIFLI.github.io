@@ -5,6 +5,10 @@ category: "Kuliah"
 tags: ["debian-server-series", "debian-7", "wheezy", "linux", "initial-setup", "networking", "security", "sudo", "vim", "sysadmin"]
 ---
 
+<!-- <iframe src="https://www.youtube.com/embed/ggZwSLdpRyQ?controls=0&modestbranding=1&rel=0&disablekb=1&autoplay=0" style="display:block;margin:auto;border:none;width:100%;max-width:960px;height:540px;" allow="autoplay; encrypted-media" allowfullscreen></iframe> -->
+
+<iframe src="https://www.youtube.com/embed/ggZwSLdpRyQ?controls=0&modestbranding=1&rel=0&disablekb=1&autoplay=0" style="display:block;margin:auto;border:none;width:100%;max-width:960px;height:540px;" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
 # Dokumentasi Konfigurasi Awal Server Debian 7 (TAHAPAN 01)
 **Catatan Perjalanan & Solusi Praktis untuk VM Debian 7.8.0 "Wheezy"**
 
