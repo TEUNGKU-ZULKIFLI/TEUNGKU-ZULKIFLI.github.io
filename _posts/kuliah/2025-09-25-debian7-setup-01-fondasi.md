@@ -422,8 +422,8 @@ vi /etc/apt/sources.list
 Hapus semua isinya, dan ganti dengan alamat "Gudang Arsip" yang benar ini:
 
 ```
-deb http://archive.debian.org/debian/ whezy main
-deb-src http://archive.debian.org/debian/ whezy main
+deb http://archive.debian.org/debian/ wheezy main
+deb-src http://archive.debian.org/debian/ wheezy main
 ```
 
 Simpan dan keluar dari `vi` (`Esc`, `:wq`).
