@@ -41,7 +41,7 @@ Mininet adalah simulator jaringan ringan berbasis Linux yang memungkinkan kita m
 - Bisa dari situs resmi atau link alternatif berikut:  
   [`Download Mininet VM`](https://drive.google.com/drive/folders/1_hwvg3CvoA8R4qGL6qFd5a371D6cQ_99)
 
-> [!WARNING]
+> ⚠️
 > Jika file yang kamu unduh berformat `.zip`, pastikan di dalamnya ada file `.vhd` atau `.vhdx`. Jika tidak, kamu perlu konversi terlebih dahulu.
 
 ---
@@ -61,8 +61,8 @@ Tambahkan dua adapter:
 - **Adapter 1**: pilih `Default Switch` → untuk akses internet.
 - **Adapter 2**: buat virtual switch baru bernama `HostOnlyMininet` → untuk komunikasi dengan host.
 
->[!CAUTION]
->**Adapter 2** untuk membuatnya lihat video!
+> 🛑
+> **Adapter 2** untuk membuatnya lihat video!
 
 ---
 
@@ -111,7 +111,7 @@ network:
       addresses: [192.168.20.1/24]
 ```
 
->[!WARNING]
+>⚠️
 > Gunakan **spasi**, bukan **tab**, saat menulis file YAML.
 
 Simpan dan keluar:
@@ -139,7 +139,7 @@ Pastikan:
 - Uji internet:  
   `ping google.com` atau `ping 8.8.8.8`
 
-> [!CAUTION]
+> 🛑
 >Jika gagal, ulangi langkah konfigurasi di **6.2**.
 
 ---
