@@ -1,5 +1,18 @@
 [
     {
+        "file": "_posts/kuliah/2025-10-10-mininet-setup-01.md",
+        "title": "Installasi Mininet VM - Tahapan 01: Setup Mininet VM",
+        "date": "2025-10-10",
+        "category": "Kuliah",
+        "tags": [
+            "\"mininet-series\"",
+            "\"HyperV\"",
+            "\"linux\"",
+            "\"initial-setup\"",
+            "\"networking\""
+        ]
+    },
+    {
         "file": "_posts/kuliah/2025-09-26-debian7-setup-02-fondasi.md",
         "title": "Konfigurasi Awal Debian 7 - Tahapan 02: Fondasi Server",
         "date": "2025-09-26",
