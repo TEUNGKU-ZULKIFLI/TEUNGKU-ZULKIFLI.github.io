@@ -1,5 +1,19 @@
 [
     {
+        "file": "_posts/kuliah/2025-10-20-mininet-setup-02.md",
+        "title": "Integrasi Mininet VM - Tahapan 02: Integrasi ONOS dengan Mininet VM",
+        "date": "2025-10-20",
+        "category": "Kuliah",
+        "tags": [
+            "\"mininet-series\"",
+            "\"HyperV\"",
+            "\"linux\"",
+            "\"initial-setup\"",
+            "\"networking\"",
+            "\"onos\""
+        ]
+    },
+    {
         "file": "_posts/kuliah/2025-10-10-mininet-setup-01.md",
         "title": "Installasi Mininet VM - Tahapan 01: Setup Mininet VM",
         "date": "2025-10-10",
