@@ -2,14 +2,12 @@
 title: "Konfigurasi Awal Debian 7 - Tahapan 01: Fondasi Server"
 date: "2025-09-25"
 category: "Kuliah"
-tags: ["debian-server-series", "debian-7", "wheezy", "linux", "initial-setup", "networking", "security", "sudo", "vim", "sysadmin"]
+tags: ["debian-server-series", "debian-7", "wheezy", "linux"]
 ---
-
-<!-- <iframe src="https://www.youtube.com/embed/ggZwSLdpRyQ?controls=0&modestbranding=1&rel=0&disablekb=1&autoplay=0" style="display:block;margin:auto;border:none;width:100%;max-width:960px;height:540px;" allow="autoplay; encrypted-media" allowfullscreen></iframe> -->
 
 <iframe src="https://www.youtube.com/embed/ggZwSLdpRyQ?controls=0&modestbranding=1&rel=0&disablekb=1&autoplay=0" style="display:block;margin:auto;border:none;width:100%;max-width:960px;height:540px;" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
-# Dokumentasi Konfigurasi Awal Server Debian 7 (TAHAPAN 01)
+# Dokumentasi Debian di Hyper-V (Part 2): Konfigurasi Dasar Server
 **Catatan Perjalanan & Solusi Praktis untuk VM Debian 7.8.0 "Wheezy"**
 
 ---
@@ -763,9 +761,9 @@ Sistem akan meminta PIN pribadi Anda: `[sudo] password for teungku:`. Masukkan k
 
 Jika Anda berhasil melihat daftar file di dalam direktori `/root`, maka misi Anda telah sukses besar\!
 
-#### **Kesimpulan Langkah 7 dan Penutup TAHAPAN 01**
+#### **Kesimpulan Langkah 7**
 
-🎉 **SELAMAT\! TAHAPAN 01 SELESAI\!** 🎉
+🎉 **SELAMAT\! TAHAPAN Konfigurasi Dasar Server SELESAI\!** 🎉
 
 Anda telah berhasil menyelesaikan semua 7 langkah konfigurasi awal. Server Anda kini memiliki fondasi yang kuat, aman, dan efisien, dikelola dengan cara yang profesional.
 
@@ -779,6 +777,6 @@ Mari kita lihat kembali pencapaian Anda:
   - ✅ **Editing Lebih Mudah**: `vim` dengan nomor baris dan warna membuat administrasi jadi menyenangkan.
   - ✅ **Manajemen Modern**: Anda sekarang menggunakan `sudo` untuk administrasi, yang merupakan praktik terbaik industri.
 
-Anda telah melakukan pekerjaan yang luar biasa. Server Anda siap untuk tugas-tugas yang lebih berat di **TAHAPAN 02**\!
+Anda telah melakukan pekerjaan yang luar biasa. Server Anda siap untuk tugas-tugas yang lebih berat di **TAHAPAN-TAHAPAN BRUTAL SELANJUTNYA**\!
 
 -----

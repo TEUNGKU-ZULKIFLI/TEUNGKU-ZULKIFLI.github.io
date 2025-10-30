@@ -1,5 +1,19 @@
 [
     {
+        "file": "_posts/kuliah/2025-10-30-mininet-setup-03.md",
+        "title": "Integrasi Mininet VM - Tahapan 03: Integrasi ONOS dengan Mininet VM",
+        "date": "2035-10-20",
+        "category": "Kuliah",
+        "tags": [
+            "\"mininet-series\"",
+            "\"HyperV\"",
+            "\"linux\"",
+            "\"initial-setup\"",
+            "\"networking\"",
+            "\"onos\""
+        ]
+    },
+    {
         "file": "_posts/kuliah/2025-10-20-mininet-setup-02.md",
         "title": "Integrasi Mininet VM - Tahapan 02: Integrasi ONOS dengan Mininet VM",
         "date": "2025-10-20",
@@ -27,6 +41,102 @@
         ]
     },
     {
+        "file": "_posts/kuliah/2025-10-04-debian7-setup-10-fondasi.md",
+        "title": "Konfigurasi Awal Debian 7 - Tahapan 10: Fondasi Server",
+        "date": "2025-10-04",
+        "category": "Kuliah",
+        "tags": [
+            "\"debian-server-series\"",
+            "\"debian-7\"",
+            "\"wheezy\"",
+            "\"linux\""
+        ]
+    },
+    {
+        "file": "_posts/kuliah/2025-10-03-debian7-setup-09-fondasi.md",
+        "title": "Konfigurasi Awal Debian 7 - Tahapan 09: Fondasi Server",
+        "date": "2025-10-03",
+        "category": "Kuliah",
+        "tags": [
+            "\"debian-server-series\"",
+            "\"debian-7\"",
+            "\"wheezy\"",
+            "\"linux\""
+        ]
+    },
+    {
+        "file": "_posts/kuliah/2025-10-02-debian7-setup-08-fondasi.md",
+        "title": "Konfigurasi Awal Debian 7 - Tahapan 08: Fondasi Server",
+        "date": "2025-10-02",
+        "category": "Kuliah",
+        "tags": [
+            "\"debian-server-series\"",
+            "\"debian-7\"",
+            "\"wheezy\"",
+            "\"linux\""
+        ]
+    },
+    {
+        "file": "_posts/kuliah/2025-10-01-debian7-setup-07-fondasi.md",
+        "title": "Konfigurasi Awal Debian 7 - Tahapan 07: Fondasi Server",
+        "date": "2025-10-01",
+        "category": "Kuliah",
+        "tags": [
+            "\"debian-server-series\"",
+            "\"debian-7\"",
+            "\"wheezy\"",
+            "\"linux\""
+        ]
+    },
+    {
+        "file": "_posts/kuliah/2025-09-30-debian7-setup-06-fondasi.md",
+        "title": "Konfigurasi Awal Debian 7 - Tahapan 06: Fondasi Server",
+        "date": "2025-09-30",
+        "category": "Kuliah",
+        "tags": [
+            "\"debian-server-series\"",
+            "\"debian-7\"",
+            "\"wheezy\"",
+            "\"linux\""
+        ]
+    },
+    {
+        "file": "_posts/kuliah/2025-09-29-debian7-setup-05-fondasi.md",
+        "title": "Konfigurasi Awal Debian 7 - Tahapan 05: Fondasi Server",
+        "date": "2025-09-29",
+        "category": "Kuliah",
+        "tags": [
+            "\"debian-server-series\"",
+            "\"debian-7\"",
+            "\"wheezy\"",
+            "\"linux\""
+        ]
+    },
+    {
+        "file": "_posts/kuliah/2025-09-28-debian7-setup-04-fondasi.md",
+        "title": "Konfigurasi Awal Debian 7 - Tahapan 04: Fondasi Server",
+        "date": "2025-09-28",
+        "category": "Kuliah",
+        "tags": [
+            "\"debian-server-series\"",
+            "\"debian-7\"",
+            "\"wheezy\"",
+            "\"linux\""
+        ]
+    },
+    {
+        "file": "_posts/kuliah/2025-09-27-debian7-setup-03-fondasi.md",
+        "title": "Konfigurasi Awal Debian 7 - Tahapan 03: Fondasi Server",
+        "date": "2025-09-27",
+        "category": "Kuliah",
+        "tags": [
+            "\"debian-server-series\"",
+            "\"debian-7\"",
+            "\"wheezy\"",
+            "\"linux\""
+        ]
+    },
+    {
         "file": "_posts/kuliah/2025-09-26-debian7-setup-02-fondasi.md",
         "title": "Konfigurasi Awal Debian 7 - Tahapan 02: Fondasi Server",
         "date": "2025-09-26",
@@ -35,13 +145,7 @@
             "\"debian-server-series\"",
             "\"debian-7\"",
             "\"wheezy\"",
-            "\"linux\"",
-            "\"initial-setup\"",
-            "\"dual-networking\"",
-            "\"NTP\"",
-            "\"DNS\"",
-            "\"SSH\"",
-            "\"DHCP\""
+            "\"linux\""
         ]
     },
     {
@@ -53,13 +157,19 @@
             "\"debian-server-series\"",
             "\"debian-7\"",
             "\"wheezy\"",
-            "\"linux\"",
-            "\"initial-setup\"",
-            "\"networking\"",
-            "\"security\"",
-            "\"sudo\"",
-            "\"vim\"",
-            "\"sysadmin\""
+            "\"linux\""
+        ]
+    },
+    {
+        "file": "_posts/kuliah/2025-09-24-debian7-setup-00-fondasi.md",
+        "title": "Konfigurasi Awal Debian 7 - Tahapan 00: Fondasi Server",
+        "date": "2025-09-24",
+        "category": "Kuliah",
+        "tags": [
+            "\"debian-server-series\"",
+            "\"debian-7\"",
+            "\"wheezy\"",
+            "\"linux\""
         ]
     },
     {

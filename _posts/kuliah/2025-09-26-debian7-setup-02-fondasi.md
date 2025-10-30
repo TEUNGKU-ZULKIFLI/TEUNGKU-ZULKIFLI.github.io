@@ -2,14 +2,12 @@
 title: "Konfigurasi Awal Debian 7 - Tahapan 02: Fondasi Server"
 date: "2025-09-26"
 category: "Kuliah"
-tags: ["debian-server-series", "debian-7", "wheezy", "linux", "initial-setup", "dual-networking", "NTP", "DNS", "SSH", "DHCP"]
+tags: ["debian-server-series", "debian-7", "wheezy", "linux"]
 ---
-
-<!-- <iframe src="https://www.youtube.com/embed/9q8slK0ADcQ?controls=0&modestbranding=1&rel=0&disablekb=1&autoplay=0" style="display:block;margin:auto;border:none;width:100%;max-width:960px;height:540px;" allow="autoplay; encrypted-media" allowfullscreen></iframe> -->
 
 <iframe src="https://www.youtube.com/embed/9q8slK0ADcQ?controls=0&modestbranding=1&rel=0&disablekb=1&autoplay=0" style="display:block;margin:auto;border:none;width:100%;max-width:960px;height:540px;" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
-# Dokumentasi Konfigurasi Awal Server Debian 7 (TAHAPAN 02)
+# Dokumentasi Debian di Hyper V (Part 3): Konfigurasi NTP, SSH, DNS, DHCP Server
 **Catatan Perjalanan & Solusi Praktis untuk VM Debian 7.8.0 "Wheezy"**
 
 ---
@@ -29,7 +27,7 @@ Proses ini tidak akan berjalan lancar tanpa sumber daya dan bantuan yang luar bi
 
 ---
 
-### **Panduan Lengkap - TAHAPAN 02 (Bagian 1 dari 5)**
+### **Panduan Lengkap - TAHAPAN Konfigurasi NTP, SSH, DNS, DHCP Server (Bagian 1 dari 5)**
 
 ## Langkah 8: Membangun Fondasi Jaringan Dual-Adapter
 
@@ -151,7 +149,7 @@ Jika ketiga tes ini berhasil, maka fondasi jaringan dual-adapter Anda telah diba
 
 -----
 
-### **Panduan Lengkap - TAHAPAN 02 (Bagian 2 dari 5)**
+### **Panduan Lengkap - TAHAPAN Konfigurasi NTP, SSH, DNS, DHCP Server (Bagian 2 dari 5)**
 
 ## Langkah 9: Sinkronisasi Waktu Server (NTP) 🕰️
 
@@ -243,7 +241,7 @@ Jika Anda sudah melihat tanda bintang `*` itu, berarti server Anda kini memiliki
 
 -----
 
-### **Panduan Lengkap - TAHAPAN 02 (Bagian 3 dari 5)**
+### **Panduan Lengkap - TAHAPAN Konfigurasi NTP, SSH, DNS, DHCP Server (Bagian 3 dari 5)**
 
 ## Langkah 10: Mengamankan Akses Jarak Jauh (SSH) 🔒
 
@@ -359,7 +357,7 @@ Jika ketiga tes ini memberikan hasil seperti yang diharapkan, berarti Anda telah
 
 -----
 
-### **Panduan Lengkap - TAHAPAN 02 (Bagian 4 dari 5)**
+### **Panduan Lengkap - TAHAPAN Konfigurasi NTP, SSH, DNS, DHCP Server (Bagian 4 dari 5)**
 
 ## Langkah 11: Menjadi "Buku Telepon" Jaringan (DNS Server) 📖
 
@@ -367,12 +365,12 @@ Jika ketiga tes ini memberikan hasil seperti yang diharapkan, berarti Anda telah
 
 Saat ini, untuk terhubung ke server kita via SSH, kita menggunakan alamat IP `192.168.10.1`. Ini sama seperti harus menghafal nomor telepon semua orang. Repot\!
 
-Tujuan kita adalah membangun **DNS (Domain Name System) Server** pribadi. Server ini akan bertindak sebagai "buku telepon" pintar untuk jaringan internal kita. Dengan begitu, kita bisa memanggil server kita dengan nama yang mudah diingat seperti `debian.teungku.edu` dan server akan otomatis menerjemahkannya ke `192.168.10.1`.
+Tujuan kita adalah membangun **DNS (Domain Name System) Server** pribadi. Server ini akan bertindak sebagai "buku telepon" pintar untuk jaringan internal kita. Dengan begitu, kita bisa memanggil server kita dengan nama yang mudah diingat seperti `debian.custom.csm` dan server akan otomatis menerjemahkannya ke `192.168.10.1`.
 
 Kita akan membangun dua fungsi utama:
 
-1.  **Forward Lookup:** Menerjemahkan **Nama** menjadi **IP** (misal: `debian.teungku.edu` -\> `192.168.10.1`).
-2.  **Reverse Lookup:** Menerjemahkan **IP** menjadi **Nama** (misal: `192.168.10.1` -\> `debian.teungku.edu`), seperti fitur "Caller ID".
+1.  **Forward Lookup:** Menerjemahkan **Nama** menjadi **IP** (misal: `debian.custom.csm` -\> `192.168.10.1`).
+2.  **Reverse Lookup:** Menerjemahkan **IP** menjadi **Nama** (misal: `192.168.10.1` -\> `debian.custom.csm`), seperti fitur "Caller ID".
 
 ### Langkah-langkah Eksekusi
 
@@ -397,9 +395,9 @@ Kita beritahu BIND9 "buku telepon" mana saja yang akan ia kelola.
 3.  Masukkan "daftar isi" berikut, yang mendefinisikan domain pribadi kita dan jaringan IP kita:
     ```
     // Zona untuk Forward Lookup (Nama => IP)
-    zone "teungku.edu" {
+    zone "custom.csm" {
         type master;
-        file "/etc/bind/db.teungku.edu";
+        file "/etc/bind/db.custom.csm";
     };
 
     // Zona untuk Reverse Lookup (IP => Nama)
@@ -410,22 +408,22 @@ Kita beritahu BIND9 "buku telepon" mana saja yang akan ia kelola.
     ```
 4.  Simpan dan keluar (`Esc`, `:wq`).
 
-**3. Mengisi "Buku Telepon" (Forward Zone File: `db.teungku.edu`)**
+**3. Mengisi "Buku Telepon" (Forward Zone File: `db.custom.csm`)**
 Saatnya menulis halaman utama buku telepon kita. Kita akan menyalin dari template `db.local` agar lebih aman.
 
 1.  Salin template:
     ```bash
-    sudo cp /etc/bind/db.local /etc/bind/db.teungku.edu
+    sudo cp /etc/bind/db.local /etc/bind/db.custom.csm
     ```
 2.  Buka dan edit file baru tersebut:
     ```bash
-    sudo vi /etc/bind/db.teungku.edu
+    sudo vi /etc/bind/db.custom.csm
     ```
 3.  Hapus semua isinya dan ganti dengan catatan A (Address) kita:
     ```
-    ; BIND data file for teungku.edu
+    ; BIND data file for custom.csm
     $TTL    604800
-    @   IN  SOA     debian.teungku.edu. root.teungku.edu. (
+    @   IN  SOA     debian.custom.csm. root.custom.csm. (
                           2      ; Serial
                      604800      ; Refresh
                       86400      ; Retry
@@ -433,7 +431,7 @@ Saatnya menulis halaman utama buku telepon kita. Kita akan menyalin dari templat
                      604800 )    ; Negative Cache TTL
     ;
     ; Name Servers
-        IN  NS      debian.teungku.edu.
+        IN  NS      debian.custom.csm.
 
     ; Host Addresses (Nama => IP)
     @       IN  A       192.168.10.1
@@ -444,7 +442,7 @@ Saatnya menulis halaman utama buku telepon kita. Kita akan menyalin dari templat
 
 **⚠️ PERINGATAN KETELITIAN:**
 
-  * **Tanda Titik (`.`)** di akhir nama domain lengkap (seperti `debian.teungku.edu.`) **WAJIB ADA**.
+  * **Tanda Titik (`.`)** di akhir nama domain lengkap (seperti `debian.custom.csm.`) **WAJIB ADA**.
   * **Serial Number** harus dinaikkan setiap kali Anda mengedit file ini. Format `YYYYMMDDnn` adalah yang terbaik (Tahun-Tanggal-Bulan-RevisiKe).
 
 **4. Mengisi "Buku Telepon Terbalik" (Reverse Zone File: `db.10.168.192`)**
@@ -462,7 +460,7 @@ Sekarang kita buat halaman "Caller ID". Kita salin dari template `db.127`.
     ```
     ; BIND reverse data file for 192.168.10.x network
     $TTL    604800
-    @   IN  SOA     debian.teungku.edu. root.teungku.edu. (
+    @   IN  SOA     debian.custom.csm. root.custom.csm. (
                           1      ; Serial
                      604800      ; Refresh
                       86400      ; Retry
@@ -470,10 +468,10 @@ Sekarang kita buat halaman "Caller ID". Kita salin dari template `db.127`.
                      604800 )    ; Negative Cache TTL
     ;
     ; Name Servers
-        IN  NS      debian.teungku.edu.
+        IN  NS      debian.custom.csm.
 
     ; Pointer Records (IP => Nama)
-    1   IN  PTR     debian.teungku.edu.
+    1   IN  PTR     debian.custom.csm.
     ```
 4.  Simpan dan keluar. Angka `1` di `PTR record` adalah angka terakhir dari IP server kita (`192.168.10.1`).
 
@@ -486,7 +484,7 @@ Sebelum dinyalakan, kita periksa semua pekerjaan kita.
     ```
 2.  Cek file forward zone (harus berakhir `OK`):
     ```bash
-    sudo named-checkzone teungku.edu /etc/bind/db.teungku.edu
+    sudo named-checkzone custom.csm /etc/bind/db.custom.csm
     ```
 3.  Cek file reverse zone (harus berakhir `OK`):
     ```bash
@@ -514,10 +512,10 @@ sudo vi /etc/resolv.conf
   * **Tes Forward (Nama -\> IP):**
 
     ```bash
-    dig debian.teungku.edu
+    dig debian.custom.csm
     ```
 
-      * **Hasil Sukses:** Di `ANSWER SECTION`, Anda akan melihat `debian.teungku.edu. ... A 192.168.10.1`.
+      * **Hasil Sukses:** Di `ANSWER SECTION`, Anda akan melihat `debian.custom.csm. ... A 192.168.10.1`.
 
   * **Tes Reverse (IP -\> Nama):**
 
@@ -525,13 +523,13 @@ sudo vi /etc/resolv.conf
     dig -x 192.168.10.1
     ```
 
-      * **Hasil Sukses:** Di `ANSWER SECTION`, Anda akan melihat `... PTR debian.teungku.edu.`.
+      * **Hasil Sukses:** Di `ANSWER SECTION`, Anda akan melihat `... PTR debian.custom.csm.`.
 
 Jika kedua tes `dig` ini berhasil, Anda baru saja membangun dan mengkonfigurasi sebuah DNS Server fungsional dari nol\!
 
 -----
 
-### **Panduan Lengkap - TAHAPAN 02 (Bagian 5 dari 5)**
+### **Panduan Lengkap - TAHAPAN Konfigurasi NTP, SSH, DNS, DHCP Server (Bagian 5 dari 5)**
 
 ## Langkah 12: Menjadi "Manajer Alamat IP" (DHCP Server) 👔
 
@@ -588,12 +586,12 @@ Sekarang kita akan menulis aturan main untuk DHCP server: siapa yang dilayani, a
     ```bash
     sudo vi /etc/dhcp/dhcpd.conf
     ```
-3.  Tambahkan blok konfigurasi bersih kita di bagian bawah file (abaikan contoh-contoh yang sudah ada). Gunakan konfigurasi yang sudah kita rancang untuk jaringan `teungku.edu`:
+3.  Tambahkan blok konfigurasi bersih kita di bagian bawah file (abaikan contoh-contoh yang sudah ada). Gunakan konfigurasi yang sudah kita rancang untuk jaringan `custom.csm`:
     ```
-    # --- Konfigurasi DHCP untuk Jaringan Internal teungku.edu ---
+    # --- Konfigurasi DHCP untuk Jaringan Internal custom.csm ---
 
     # Menginformasikan nama domain dan alamat server DNS ke klien
-    option domain-name "teungku.edu";
+    option domain-name "custom.csm";
     option domain-name-servers 192.168.10.1;
 
     # Waktu sewa alamat IP (dalam detik)
@@ -640,8 +638,8 @@ Cara termudah untuk melakukan ini adalah:
 Anda akan melihat VM baru tersebut secara ajaib mendapatkan:
 
   * Alamat IP di antara `192.168.10.100` dan `192.168.10.200`.
-  * Jika Anda memeriksa file `/etc/resolv.conf` di VM baru itu, Anda akan melihat `nameserver 192.168.10.1` dan `search teungku.edu` sudah terisi otomatis\!
+  * Jika Anda memeriksa file `/etc/resolv.conf` di VM baru itu, Anda akan melihat `nameserver 192.168.10.1` dan `search custom.csm` sudah terisi otomatis\!
 
 Jika ini terjadi, berarti server DHCP Anda bekerja dengan sempurna dan telah berhasil mengintegrasikan seluruh layanan jaringan yang telah kita bangun.
 
-🎉 **SELAMAT\! TAHAPAN 02 SELESAI\!** 🎉
+🎉 **SELAMAT\! TAHAPAN Konfigurasi NTP, SSH, DNS, DHCP Server SELESAI\!** 🎉
