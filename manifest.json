@@ -14,6 +14,16 @@
         ]
     },
     {
+        "file": "_posts/life-hacks/2025-10-31-junction&symboliclink.md",
+        "title": "Lifehack Windows: Part-01",
+        "date": "2025-10-31",
+        "category": "LifeHack",
+        "tags": [
+            "\"lifehack-win-series\"",
+            "\"Windows11\""
+        ]
+    },
+    {
         "file": "_posts/kuliah/2025-10-20-mininet-setup-02.md",
         "title": "Integrasi Mininet VM - Tahapan 02: Integrasi ONOS dengan Mininet VM",
         "date": "2025-10-20",
