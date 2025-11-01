@@ -27,4 +27,4 @@ Proses ini tidak akan berjalan lancar tanpa sumber daya dan bantuan yang luar bi
 
 ---
 
-### **Panduan Lengkap - Debian di Hyper V (Part 6): Install dan Konfigurasi DHCP Server pada Windows 7
+### **Panduan Lengkap - Debian di Hyper V (Part 6): Install dan Konfigurasi DHCP Server pada Windows 7**
