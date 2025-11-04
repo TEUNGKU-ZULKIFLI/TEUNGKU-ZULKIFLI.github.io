@@ -5,9 +5,9 @@ category: "Kuliah"
 tags: ["debian-server-series", "debian-7", "wheezy", "linux"]
 ---
 
-<iframe src="https://www.youtube.com/embed/~~~?controls=0&modestbranding=1&rel=0&disablekb=1&autoplay=0" style="display:block;margin:auto;border:none;width:100%;max-width:960px;height:540px;" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+<iframe src="https://www.youtube.com/embed/sfyh6qfrUC4?controls=0&modestbranding=1&rel=0&disablekb=1&autoplay=0" style="display:block;margin:auto;border:none;width:100%;max-width:960px;height:540px;" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
-# Dokumentasi Debian di Hyper V (Part 9): Install dan Konfigurasi Database Mysql
+# Dokumentasi Debian di Hyper V (Part 9): Install dan Konfigurasi Database Mysql & PhpMyAdmin
 **Catatan Perjalanan & Solusi Praktis untuk VM Debian 7.8.0 "Wheezy"**
 
 ---
@@ -27,4 +27,4 @@ Proses ini tidak akan berjalan lancar tanpa sumber daya dan bantuan yang luar bi
 
 ---
 
-### **Panduan Lengkap - Debian di Hyper V (Part 9): Install dan Konfigurasi Database Mysql**
+### **Panduan Lengkap - Debian di Hyper V (Part 9): Install dan Konfigurasi Database Mysql & PhpMyAdmin**

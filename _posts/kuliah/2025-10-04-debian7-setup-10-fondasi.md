@@ -5,7 +5,7 @@ category: "Kuliah"
 tags: ["debian-server-series", "debian-7", "wheezy", "linux"]
 ---
 
-<iframe src="https://www.youtube.com/embed/~~~?controls=0&modestbranding=1&rel=0&disablekb=1&autoplay=0" style="display:block;margin:auto;border:none;width:100%;max-width:960px;height:540px;" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+<iframe src="https://www.youtube.com/embed/JI25CTbgnis?controls=0&modestbranding=1&rel=0&disablekb=1&autoplay=0" style="display:block;margin:auto;border:none;width:100%;max-width:960px;height:540px;" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
 # Dokumentasi Debian di Hyper V (Part 11): Install dan Konfigurasi Samba Server
 **Catatan Perjalanan & Solusi Praktis untuk VM Debian 7.8.0 "Wheezy"**

@@ -7,7 +7,7 @@ tags: ["mininet-series", "HyperV", "linux", "initial-setup", "networking"]
 
 <iframe src="https://www.youtube.com/embed/KYJy2arn2u4?controls=0&modestbranding=1&rel=0&disablekb=1&autoplay=0" style="display:block;margin:auto;border:none;width:100%;max-width:960px;height:540px;" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
-# 🧠 Panduan Lengkap Setup Mininet VM di Hyper-V (Windows 11)
+# 🧠 Panduan Lengkap Mininet di Hyper-V (Part 1): Instalasi & Konfigurasi Dual Adapter
 
 ## 🚀 Pendahuluan
 Mininet adalah simulator jaringan ringan berbasis Linux yang memungkinkan kita membuat topologi jaringan virtual untuk belajar dan menguji protokol seperti OpenFlow. Cocok untuk pelajar, peneliti, dan pengembang jaringan.
