@@ -1,5 +1,19 @@
 [
     {
+        "file": "_posts/kuliah/2025-11-02-mininet-setup-05.md",
+        "title": "Integrasi Mininet VM - Tahapan 04: Topology Linear Custom",
+        "date": "2035-11-01",
+        "category": "Kuliah",
+        "tags": [
+            "\"mininet-series\"",
+            "\"HyperV\"",
+            "\"linux\"",
+            "\"initial-setup\"",
+            "\"networking\"",
+            "\"onos\""
+        ]
+    },
+    {
         "file": "_posts/kuliah/2025-11-01-mininet-setup-04.md",
         "title": "Integrasi Mininet VM - Tahapan 04: Topology Tree Custom",
         "date": "2035-10-31",
@@ -52,6 +66,30 @@
         ]
     },
     {
+        "file": "_posts/kuliah/2025-10-11-debian7-setup-17-fondasi.md",
+        "title": "+++",
+        "date": "2025-10-11",
+        "category": "Kuliah",
+        "tags": [
+            "\"debian-server-series\"",
+            "\"debian-7\"",
+            "\"wheezy\"",
+            "\"linux\""
+        ]
+    },
+    {
+        "file": "_posts/kuliah/2025-10-10-debian7-setup-16-fondasi.md",
+        "title": "+++",
+        "date": "2025-10-10",
+        "category": "Kuliah",
+        "tags": [
+            "\"debian-server-series\"",
+            "\"debian-7\"",
+            "\"wheezy\"",
+            "\"linux\""
+        ]
+    },
+    {
         "file": "_posts/kuliah/2025-10-10-mininet-setup-01.md",
         "title": "Installasi Mininet VM - Tahapan 01: Setup Mininet VM",
         "date": "2025-10-10",
@@ -65,8 +103,68 @@
         ]
     },
     {
+        "file": "_posts/kuliah/2025-10-09-debian7-setup-15-fondasi.md",
+        "title": "(Part 16): Install & Konfigurasi Polisi Konten SquidGuard",
+        "date": "2025-10-09",
+        "category": "Kuliah",
+        "tags": [
+            "\"debian-server-series\"",
+            "\"debian-7\"",
+            "\"wheezy\"",
+            "\"linux\""
+        ]
+    },
+    {
+        "file": "_posts/kuliah/2025-10-08-debian7-setup-14-fondasi.md",
+        "title": "(Part 15): Install & Konfigurasi Proxy Squid3",
+        "date": "2025-10-08",
+        "category": "Kuliah",
+        "tags": [
+            "\"debian-server-series\"",
+            "\"debian-7\"",
+            "\"wheezy\"",
+            "\"linux\""
+        ]
+    },
+    {
+        "file": "_posts/kuliah/2025-10-07-debian7-setup-13-fondasi.md",
+        "title": "(Part 14): Konfigurasi User Dir",
+        "date": "2025-10-07",
+        "category": "Kuliah",
+        "tags": [
+            "\"debian-server-series\"",
+            "\"debian-7\"",
+            "\"wheezy\"",
+            "\"linux\""
+        ]
+    },
+    {
+        "file": "_posts/kuliah/2025-10-06-debian7-setup-12-fondasi.md",
+        "title": "(Part 13): Konfigurasi SSL",
+        "date": "2025-10-06",
+        "category": "Kuliah",
+        "tags": [
+            "\"debian-server-series\"",
+            "\"debian-7\"",
+            "\"wheezy\"",
+            "\"linux\""
+        ]
+    },
+    {
+        "file": "_posts/kuliah/2025-10-05-debian7-setup-11-fondasi.md",
+        "title": "(Part 12): Konfigurasi Hosting",
+        "date": "2025-10-05",
+        "category": "Kuliah",
+        "tags": [
+            "\"debian-server-series\"",
+            "\"debian-7\"",
+            "\"wheezy\"",
+            "\"linux\""
+        ]
+    },
+    {
         "file": "_posts/kuliah/2025-10-04-debian7-setup-10-fondasi.md",
-        "title": "Konfigurasi Awal Debian 7 - Tahapan 10: Fondasi Server",
+        "title": "(Part 11): Install dan Konfigurasi Samba Server",
         "date": "2025-10-04",
         "category": "Kuliah",
         "tags": [
@@ -78,7 +176,7 @@
     },
     {
         "file": "_posts/kuliah/2025-10-03-debian7-setup-09-fondasi.md",
-        "title": "Konfigurasi Awal Debian 7 - Tahapan 09: Fondasi Server",
+        "title": "(Part 10): Install dan Konfigurasi Mail Server",
         "date": "2025-10-03",
         "category": "Kuliah",
         "tags": [
@@ -90,7 +188,7 @@
     },
     {
         "file": "_posts/kuliah/2025-10-02-debian7-setup-08-fondasi.md",
-        "title": "Konfigurasi Awal Debian 7 - Tahapan 08: Fondasi Server",
+        "title": "(Part 9): Install dan Konfigurasi Database Mysql & PhpMyAdmin",
         "date": "2025-10-02",
         "category": "Kuliah",
         "tags": [
@@ -102,7 +200,7 @@
     },
     {
         "file": "_posts/kuliah/2025-10-01-debian7-setup-07-fondasi.md",
-        "title": "Konfigurasi Awal Debian 7 - Tahapan 07: Fondasi Server",
+        "title": "(Part 8): Tranfer File Aman Antara VSFTPD dengan SFTP",
         "date": "2025-10-01",
         "category": "Kuliah",
         "tags": [
@@ -114,7 +212,7 @@
     },
     {
         "file": "_posts/kuliah/2025-09-30-debian7-setup-06-fondasi.md",
-        "title": "Konfigurasi Awal Debian 7 - Tahapan 06: Fondasi Server",
+        "title": "(Part 7): Konfigurasi NAT Router Sharing Internet",
         "date": "2025-09-30",
         "category": "Kuliah",
         "tags": [
@@ -126,7 +224,7 @@
     },
     {
         "file": "_posts/kuliah/2025-09-29-debian7-setup-05-fondasi.md",
-        "title": "Konfigurasi Awal Debian 7 - Tahapan 05: Fondasi Server",
+        "title": "(Part 6): Install dan Konfigurasi DHCP Server pada Windows 7",
         "date": "2025-09-29",
         "category": "Kuliah",
         "tags": [
@@ -138,7 +236,7 @@
     },
     {
         "file": "_posts/kuliah/2025-09-28-debian7-setup-04-fondasi.md",
-        "title": "Konfigurasi Awal Debian 7 - Tahapan 04: Fondasi Server",
+        "title": "(Part 5): Konfigurasi Web Server, Apache2, Perl2, Php5",
         "date": "2025-09-28",
         "category": "Kuliah",
         "tags": [
@@ -150,7 +248,7 @@
     },
     {
         "file": "_posts/kuliah/2025-09-27-debian7-setup-03-fondasi.md",
-        "title": "Konfigurasi Awal Debian 7 - Tahapan 03: Fondasi Server",
+        "title": "(Part 4): Konfigurasi Bridge Adapter",
         "date": "2025-09-27",
         "category": "Kuliah",
         "tags": [
@@ -162,7 +260,7 @@
     },
     {
         "file": "_posts/kuliah/2025-09-26-debian7-setup-02-fondasi.md",
-        "title": "Konfigurasi Awal Debian 7 - Tahapan 02: Fondasi Server",
+        "title": "(Part 3): Konfigurasi NTP, SSH, DNS, DHCP Server",
         "date": "2025-09-26",
         "category": "Kuliah",
         "tags": [
@@ -174,7 +272,7 @@
     },
     {
         "file": "_posts/kuliah/2025-09-25-debian7-setup-01-fondasi.md",
-        "title": "Konfigurasi Awal Debian 7 - Tahapan 01: Fondasi Server",
+        "title": "(Part 2): Konfigurasi Dasar Server",
         "date": "2025-09-25",
         "category": "Kuliah",
         "tags": [
@@ -186,7 +284,7 @@
     },
     {
         "file": "_posts/kuliah/2025-09-24-debian7-setup-00-fondasi.md",
-        "title": "Konfigurasi Awal Debian 7 - Tahapan 00: Fondasi Server",
+        "title": "(Part 1): Instalasi Server dari Awal",
         "date": "2025-09-24",
         "category": "Kuliah",
         "tags": [

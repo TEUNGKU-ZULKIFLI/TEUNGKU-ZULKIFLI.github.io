@@ -1,5 +1,5 @@
 ---
-title: "Konfigurasi Awal Debian 7 - Tahapan 00: Fondasi Server"
+title: "(Part 1): Instalasi Server dari Awal"
 date: "2025-09-24"
 category: "Kuliah"
 tags: ["debian-server-series", "debian-7", "wheezy", "linux"]

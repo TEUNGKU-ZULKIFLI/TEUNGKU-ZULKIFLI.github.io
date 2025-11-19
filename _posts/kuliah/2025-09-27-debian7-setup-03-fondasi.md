@@ -1,5 +1,5 @@
 ---
-title: "Konfigurasi Awal Debian 7 - Tahapan 03: Fondasi Server"
+title: "(Part 4): Konfigurasi Bridge Adapter"
 date: "2025-09-27"
 category: "Kuliah"
 tags: ["debian-server-series", "debian-7", "wheezy", "linux"]

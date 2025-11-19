@@ -93,7 +93,7 @@ Tekan `Ctrl + X` untuk keluar dari nano.
 
 `def __init__( self ):`: Ini adalah fungsi "konstruktor" atau "cetakan utama". Semua perintah untuk addHost atau addSwitch akan diletakkan di dalam sini.
 
-`topos = { ... }`: Ini adalah "daftar isi" untuk Mininet. Baris ini memberitahu Mininet, "Jika seseorang menjalankan perintah `--topo mytopo`, tolong gunakan kelas TreeTopo yang ada di file ini."
+`topos = { ... }`: Ini adalah "daftar isi" untuk Mininet. Baris ini memberitahu Mininet, "Jika seseorang menjalankan perintah `--topo mytree`, tolong gunakan kelas TreeTopo yang ada di file ini."
 
 ### **Tahap 2: Membangun Arsitektur Pohon (Nodes & Links)**
 

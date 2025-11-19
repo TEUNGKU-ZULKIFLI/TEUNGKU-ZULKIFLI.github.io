@@ -1,5 +1,5 @@
 ---
-title: "Konfigurasi Awal Debian 7 - Tahapan 08: Fondasi Server"
+title: "(Part 9): Install dan Konfigurasi Database Mysql & PhpMyAdmin"
 date: "2025-10-02"
 category: "Kuliah"
 tags: ["debian-server-series", "debian-7", "wheezy", "linux"]

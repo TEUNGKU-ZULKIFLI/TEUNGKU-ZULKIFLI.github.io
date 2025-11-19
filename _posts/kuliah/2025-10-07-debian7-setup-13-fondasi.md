@@ -1,13 +1,13 @@
 ---
-title: "(Part 7): Konfigurasi NAT Router Sharing Internet"
-date: "2025-09-30"
+title: "(Part 14): Konfigurasi User Dir"
+date: "2025-10-07"
 category: "Kuliah"
 tags: ["debian-server-series", "debian-7", "wheezy", "linux"]
 ---
 
-<iframe src="https://www.youtube.com/embed/nznAZGlkP48?controls=0&modestbranding=1&rel=0&disablekb=1&autoplay=0" style="display:block;margin:auto;border:none;width:100%;max-width:960px;height:540px;" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+<iframe src="https://www.youtube.com/embed/JI25CTbgnis?controls=0&modestbranding=1&rel=0&disablekb=1&autoplay=0" style="display:block;margin:auto;border:none;width:100%;max-width:960px;height:540px;" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
-# Dokumentasi Debian di Hyper V (Part 7): Konfigurasi NAT Router Sharing Internet
+# Dokumentasi Debian di Hyper V (Part 14): Konfigurasi User Dir
 **Catatan Perjalanan & Solusi Praktis untuk VM Debian 7.8.0 "Wheezy"**
 
 ---
@@ -27,4 +27,4 @@ Proses ini tidak akan berjalan lancar tanpa sumber daya dan bantuan yang luar bi
 
 ---
 
-### **Panduan Lengkap - Debian di Hyper V (Part 7): Konfigurasi NAT Router Sharing Internet**
+### **Panduan Lengkap - Debian di Hyper V (Part 14): Konfigurasi User Dir**

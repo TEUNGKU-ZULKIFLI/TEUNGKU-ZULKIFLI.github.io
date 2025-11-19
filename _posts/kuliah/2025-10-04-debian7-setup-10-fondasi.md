@@ -1,5 +1,5 @@
 ---
-title: "Konfigurasi Awal Debian 7 - Tahapan 10: Fondasi Server"
+title: "(Part 11): Install dan Konfigurasi Samba Server"
 date: "2025-10-04"
 category: "Kuliah"
 tags: ["debian-server-series", "debian-7", "wheezy", "linux"]

@@ -1,5 +1,5 @@
 ---
-title: "Konfigurasi Awal Debian 7 - Tahapan 04: Fondasi Server"
+title: "(Part 5): Konfigurasi Web Server, Apache2, Perl2, Php5"
 date: "2025-09-28"
 category: "Kuliah"
 tags: ["debian-server-series", "debian-7", "wheezy", "linux"]

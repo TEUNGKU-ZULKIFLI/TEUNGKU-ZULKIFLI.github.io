@@ -1,5 +1,5 @@
 ---
-title: "Konfigurasi Awal Debian 7 - Tahapan 02: Fondasi Server"
+title: "(Part 3): Konfigurasi NTP, SSH, DNS, DHCP Server"
 date: "2025-09-26"
 category: "Kuliah"
 tags: ["debian-server-series", "debian-7", "wheezy", "linux"]
