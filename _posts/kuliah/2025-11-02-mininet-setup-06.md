@@ -115,7 +115,7 @@ docker run -d -p 6653:6653 -p 8181:8181 -p 8101:8101 -e ONOS_APPS=drivers,openfl
 
 #### **Langkah 2: Jalankan Topologi Mininet**
 ```bash
-sudo mn --custom ~/mininet/custom/vpls..py --topo urgent --switch ovs,protocols=OpenFlow14 --controller remote,ip=127.0.0.1,port=6653
+sudo mn --custom ~/mininet/custom/vpls.py --topo urgent --switch ovs,protocols=OpenFlow14 --controller remote,ip=127.0.0.1,port=6653
 ```
 
 - *Cek `links` di mininet, pastikan ada 10 item OK. Jalankan `pingall` -> Harus `100% Dropped`.*
