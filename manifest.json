@@ -1,8 +1,8 @@
 [
     {
-        "file": "_posts/kuliah/2025-11-02-mininet-setup-05.md",
-        "title": "Integrasi Mininet VM - Tahapan 04: Topology Linear Custom",
-        "date": "2035-11-01",
+        "file": "_posts/kuliah/2025-11-02-mininet-setup-06.md",
+        "title": "Tahapan 06: Topology VPLS EZ",
+        "date": "2025-11-02",
         "category": "Kuliah",
         "tags": [
             "\"mininet-series\"",
@@ -14,9 +14,9 @@
         ]
     },
     {
-        "file": "_posts/kuliah/2025-11-01-mininet-setup-04.md",
-        "title": "Integrasi Mininet VM - Tahapan 04: Topology Tree Custom",
-        "date": "2035-10-31",
+        "file": "_posts/kuliah/2025-11-01-mininet-setup-05.md",
+        "title": "Tahapan 05: Topology Linear Custom",
+        "date": "2025-11-01",
         "category": "Kuliah",
         "tags": [
             "\"mininet-series\"",
@@ -28,9 +28,9 @@
         ]
     },
     {
-        "file": "_posts/kuliah/2025-10-30-mininet-setup-03.md",
-        "title": "Integrasi Mininet VM - Tahapan 03: Topology Single Custom",
-        "date": "2035-10-30",
+        "file": "_posts/kuliah/2025-10-31-mininet-setup-04.md",
+        "title": "Tahapan 04: Topology Tree Custom",
+        "date": "2025-10-31",
         "category": "Kuliah",
         "tags": [
             "\"mininet-series\"",
@@ -49,6 +49,20 @@
         "tags": [
             "\"lifehack-win-series\"",
             "\"Windows11\""
+        ]
+    },
+    {
+        "file": "_posts/kuliah/2025-10-30-mininet-setup-03.md",
+        "title": "Tahapan 03: Topology Single Custom",
+        "date": "2025-10-30",
+        "category": "Kuliah",
+        "tags": [
+            "\"mininet-series\"",
+            "\"HyperV\"",
+            "\"linux\"",
+            "\"initial-setup\"",
+            "\"networking\"",
+            "\"onos\""
         ]
     },
     {

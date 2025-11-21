@@ -1,6 +1,6 @@
 ---
-title: "Integrasi Mininet VM - Tahapan 03: Topology Single Custom"
-date: "2035-10-30"
+title: "Tahapan 03: Topology Single Custom"
+date: "2025-10-30"
 category: "Kuliah"
 tags: ["mininet-series", "HyperV", "linux", "initial-setup", "networking", "onos"]
 ---
