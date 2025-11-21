@@ -115,7 +115,7 @@ docker run -d -p 6653:6653 -p 8181:8181 -p 8101:8101 -e ONOS_APPS=drivers,openfl
 
 #### **Langkah 2: Jalankan Topologi Mininet**
 ```bash
-sudo mn --custom ~/mininet/custom/vpls_urgent.py --topo urgent --switch ovs,protocols=OpenFlow14 --controller remote,ip=127.0.0.1,port=6653
+sudo mn --custom ~/mininet/custom/vpls..py --topo urgent --switch ovs,protocols=OpenFlow14 --controller remote,ip=127.0.0.1,port=6653
 ```
 
 - *Cek `links` di mininet, pastikan ada 10 item OK. Jalankan `pingall` -> Harus `100% Dropped`.*
@@ -177,17 +177,17 @@ vpls create VPLS2
 ```
 
 #### **Langkah 8: Daftarkan Interface ke VPLS**
-##### **VPLS1: h1, h2, h5 (Satu Grup)**
+##### **VPLS1: h1, h3, h4 (Satu Grup)**
 ```bash
 vpls add-if VPLS1 h1
-vpls add-if VPLS1 h2
-vpls add-if VPLS1 h5
+vpls add-if VPLS1 h3
+vpls add-if VPLS1 h4
 ```
 
-##### **VPLS2: h3, h4 (Satu Grup)**
+##### **VPLS2: h2, h5 (Satu Grup)**
 ```bash
-vpls add-if VPLS2 h3
-vpls add-if VPLS2 h4
+vpls add-if VPLS2 h2
+vpls add-if VPLS2 h5
 ```
 
 ##### **Dan Melihat Hasil add Interface tersebut pada tiap" VPLS**
@@ -241,10 +241,10 @@ h1 ping -c5 h5
 #### **Pokonya mah kek gini kira"**
 `h1` <-> `h2` : SUKSES (VPLS1)
 
-`h1` <->` h5` : SUKSES (VPLS1)
+`h1` <->` h4` : SUKSES (VPLS1)
 
-`h3` <-> `h4` : SUKSES (VPLS2)
+`h2` <-> `h5` : SUKSES (VPLS2)
 
-`h1` <-> `h3` : GAGAL (Beda VPLS)
+`h1` <-> `h2` : GAGAL (Beda VPLS)
 
 ### **🥳 Selamat Kamu sudah Berhasil mengonfigurasikan VPLS dalam sebuah Topo**
