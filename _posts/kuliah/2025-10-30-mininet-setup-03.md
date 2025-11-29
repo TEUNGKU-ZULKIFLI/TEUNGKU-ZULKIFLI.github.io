@@ -2,7 +2,7 @@
 title: "Tahapan 03: Topology Single Custom"
 date: "2025-10-30"
 category: "Kuliah"
-tags: ["mininet-series", "HyperV", "linux", "initial-setup", "networking", "onos"]
+tags: ["mininet-series"]
 ---
 
 <iframe src="https://www.youtube.com/embed/T4xLQfwhbFA?controls=0&modestbranding=1&rel=0&disablekb=1&autoplay=0" style="display:block;margin:auto;border:none;width:100%;max-width:960px;height:540px;" allow="autoplay; encrypted-media" allowfullscreen></iframe>

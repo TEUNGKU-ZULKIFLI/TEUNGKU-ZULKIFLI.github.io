@@ -2,7 +2,7 @@
 title: "(Part 3): Konfigurasi NTP, SSH, DNS, DHCP Server"
 date: "2025-09-26"
 category: "Kuliah"
-tags: ["debian-server-series", "debian-7", "wheezy", "linux"]
+tags: ["debian-server-series"]
 ---
 
 <iframe src="https://www.youtube.com/embed/9q8slK0ADcQ?controls=0&modestbranding=1&rel=0&disablekb=1&autoplay=0" style="display:block;margin:auto;border:none;width:100%;max-width:960px;height:540px;" allow="autoplay; encrypted-media" allowfullscreen></iframe>

@@ -2,7 +2,7 @@
 title: "(Part 16): Install & Konfigurasi Polisi Konten SquidGuard"
 date: "2025-10-09"
 category: "Kuliah"
-tags: ["debian-server-series", "debian-7", "wheezy", "linux"]
+tags: ["debian-server-series"]
 ---
 
 <iframe src="https://www.youtube.com/embed/l5C7JbDvJos?controls=0&modestbranding=1&rel=0&disablekb=1&autoplay=0" style="display:block;margin:auto;border:none;width:100%;max-width:960px;height:540px;" allow="autoplay; encrypted-media" allowfullscreen></iframe>

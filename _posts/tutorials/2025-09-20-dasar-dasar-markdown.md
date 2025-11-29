@@ -2,7 +2,7 @@
 title: "Panduan Singkat: Dasar-Dasar Penulisan dengan Markdown"
 date: "2025-09-20"
 category: "Tutorial"
-tags: ["markdown", "web-basics", "formatting"]
+tags: ["tutorials-series"]
 ---
 
 # Memahami Dasar-Dasar Markdown

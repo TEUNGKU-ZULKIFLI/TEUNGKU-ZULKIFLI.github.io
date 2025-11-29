@@ -1,13 +1,13 @@
 ---
-title: "+++"
+title: "(Part 17): Installasi & Konfigurasi Bashrc, HTOP, MC, GUI"
 date: "2025-10-10"
 category: "Kuliah"
-tags: ["debian-server-series", "debian-7", "wheezy", "linux"]
+tags: ["debian-server-series"]
 ---
 
-<iframe src="https://www.youtube.com/embed/xxx?controls=0&modestbranding=1&rel=0&disablekb=1&autoplay=0" style="display:block;margin:auto;border:none;width:100%;max-width:960px;height:540px;" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+<iframe src="https://www.youtube.com/embed/XEOexJIa41Q?controls=0&modestbranding=1&rel=0&disablekb=1&autoplay=0" style="display:block;margin:auto;border:none;width:100%;max-width:960px;height:540px;" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
-# Dokumentasi Debian di Hyper V +++
+# Dokumentasi Debian di Hyper V (Part 17): Installasi & Konfigurasi Bashrc, HTOP, MC, GUI
 **Catatan Perjalanan & Solusi Praktis untuk VM Debian 7.8.0 "Wheezy"**
 
 ---
@@ -27,4 +27,4 @@ Proses ini tidak akan berjalan lancar tanpa sumber daya dan bantuan yang luar bi
 
 ---
 
-### **Panduan Lengkap - Debian di Hyper V +++**
+### **Panduan Lengkap - Debian di Hyper V (Part 17): Installasi & Konfigurasi Bashrc, HTOP, MC, GUI**

@@ -2,7 +2,7 @@
 title: "Installasi Mininet VM - Tahapan 01: Setup Mininet VM"
 date: "2025-10-10"
 category: "Kuliah"
-tags: ["mininet-series", "HyperV", "linux", "initial-setup", "networking"]
+tags: ["mininet-series"]
 ---
 
 <iframe src="https://www.youtube.com/embed/KYJy2arn2u4?controls=0&modestbranding=1&rel=0&disablekb=1&autoplay=0" style="display:block;margin:auto;border:none;width:100%;max-width:960px;height:540px;" allow="autoplay; encrypted-media" allowfullscreen></iframe>

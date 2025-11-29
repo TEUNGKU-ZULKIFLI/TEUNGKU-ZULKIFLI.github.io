@@ -2,7 +2,7 @@
 title: "Dari Nol ke Publikasi: Perjalanan Membangun Portofolio Ini"
 date: "2025-09-24"
 category: "Meta"
-tags: ["web-development", "vanilla-js", "css-architecture", "personal-project"]
+tags: ["personal-project"]
 ---
 
 # Latar Belakang & Tujuan
