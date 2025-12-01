@@ -54,15 +54,6 @@
         ]
     },
     {
-        "file": "_posts/kuliah/2025-10-11-debian7-setup-17-fondasi.md",
-        "title": "+++",
-        "date": "2025-10-11",
-        "category": "Kuliah",
-        "tags": [
-            "\"debian-server-series\""
-        ]
-    },
-    {
         "file": "_posts/kuliah/2025-10-10-debian7-setup-16-fondasi.md",
         "title": "(Part 17): Installasi & Konfigurasi Bashrc, HTOP, MC, GUI",
         "date": "2025-10-10",
@@ -232,6 +223,17 @@
         "tags": [
             "\"personal-project\""
         ]
+    },
+    {
+        "file": "_posts/kuliah/2025-09-23-debian7.md",
+        "title": "The Server Journey: Debian 7 Legacy",
+        "author": "Teungku",
+        "date": "2025-09-23",
+        "category": "Kuliah",
+        "tags": [
+            "\"debian-server-series\""
+        ],
+        "status": "Completed"
     },
     {
         "file": "_posts/tutorials/2025-09-20-dasar-dasar-markdown.md",

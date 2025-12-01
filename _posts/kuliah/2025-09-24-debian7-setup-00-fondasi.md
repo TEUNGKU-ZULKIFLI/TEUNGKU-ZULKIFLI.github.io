@@ -29,68 +29,149 @@ Proses ini tidak akan berjalan lancar tanpa sumber daya dan bantuan yang luar bi
 
 ---
 
-### **Panduan Lengkap - Debian di Hyper-V (Part 1): Instalasi Server dari Awal**
+# 📖 BAB 1: THE GENESIS (Pondasi Kehidupan Server)
 
-#### **Persiapan Bahan**
+## (Part 1) Instalasi Server dari Awal: Membangkitkan "The Legend" Debian 7
 
-##### **Unduh iso Debian Wheezy**
-###### [Debian Wheezy](https://www.debian.org/releases/wheezy/)
+### 🏷️ TAGLINE
 
-#### **Setup Virtual Mechine pada Platform Virtualisasi**
-##### **New Virtual Mechine**
-- **Specify Name and Location**</br>
-Penamaan Mechine bisa apa saja dan disini `Debian VM`
-- **Specify Generation**</br>
-Untuk Generasi disini `Generation 1`
-- **Assign Memory**</br>
-Untuk Memory saya set disini `1024` atau `1 Ram`
-- **Configure Networking**</br>
-Untuk Adapter Jaringan Saya Lewatkan saja dulu untuk nantinya kita setup
-- **Connect Virtual Hard Disk**</br>
-Dan untuk Hard Disk sendiri saya set `15 Gb`
-- **Installation Options**</br>
-Kemudian untuk Installasi Disini Later saja pas udah bisa `boot`
+*"Membangun Fondasi yang Kokoh di atas Tanah Virtual"*
 
-##### **Setup Mechine**
-- **Kemudian setelah Mechine jadi `klik kanan` dan `Settings`**</br>
-dengan pertama pastikan ISO debian sudah dimasukkan kebagian `CD` atau `DVD Drive`</br>
-juga bagian `Network Adapter` bisa set jadi `NAT` atau `Bridge` yang penting nantinya bisa akses Internet.</br>
-- **Setelah `Settings` jangan lupa untuk `Apply` dan `Save`**.
+-----
 
-#### **Install OS Debian**
-- **Pertama** akan disuguhkan dengan tampilan `GUI` yang menampilkan `Installer boot Menu`, dan kita pilih saja `Install`, jika mau yang `Graphical Install` juga boleh sih.
-- **Kedua** Pilih bahasa saran saya `English` karena kalau `Indo` agak belum familiar `ex:` `Refresh` `=>` `Segarkan`.
-- **Ketiga** Lokasi ini pilih `Other` dan `Asia` kemudian `Indonesia`.
-- **Keempat** `Locale` atau `Format Tanggal` pilih saja `United States`.
-- **Kelima** `Keyboard` pilih saja `America English`.
-- **Keenam** `Hostname` biarkan Default saja `Debian`.
-- **Ketujuh**`Domain Server` Kosongin saja atau mau isi juga gak apa-apa.
-- **Kedelapan** `Password Root` ini adalah password saat masuk root saran saya samain ama `User` nantinya dan simple saja.
-- **Kesembilan** `Full name user` dan ini adalah nama `User` isi saja nama sendiri dengan `satu-dua` kata saja.
-- **Kesepuluh** `Username for account` biarkan default saja.
-- **Kesebelas** `Password` nah ini isiin sama dengan pasword `root` yang tadi saja.
-- **Kedua belas** `Password` yang ini cuma isiin lagi untuk `Konfirmasi` saja.
-- **Ketiga belas** `Time Zone` pilih saja sesuai daerah (`Wib`, `Wita` `Wit`).
-- **Keempat belas** `Partision Disk` inimah antara 2 `Guided - use entire disk` dan `Guided - use entire disk and set up LVM` untuk konfigurasi Virtual dengan KVM, kedepannya pilih `LVM`.
-- **Kelima belas** `Partitions Scheme` pilih yang recomended itu.
-- **Keenam belas** `Finish Partitions` untuk mengakhiri setup Disk.
-- **Ketujuh belas** `Write the changes to Disk?` pilih `Yes` karena itu mengizinkan menulis dipartisi yang kita setup sebelumnya itu.
-- **Kedelapan belas** `Scan` pilih saja `No`.
-- **Kesembilan belas** `Use a network Mirror` pilih saja `No`.
-- **KeDua puluh** `Error Cannot Acces Repo` ini eror dan pilih saya `Continue`.
-- **KeDua puluh satu** `Survey` pilih `No` saja itu katanya mau ikut partisipasi isi survey?.
-- **KeDua puluh dua** `Choose software to Install` saran saya cuma satu aja `Standard System Untilities` aja.
-- **KeDua puluh tiga** `Install Boot Loader` pilih `Yes` dan `Enter`.
-- **KeDua puluh empat** `Finish Installer` pilih saja `Continue`.
+### ☕ KONSEP "WARUNG KOPI" (Analogi)
 
-#### **Testing Mechine**
-##### **First View**
-- **Setelah** Perjalanan tadi `Installasi OS` nah sekarang akan disuguhkan dengan Tampilan terminal dengan 
+Bayangkan Anda ingin belajar menjadi mekanik mobil handal.
+Alih-alih langsung belajar di mobil Tesla yang serba otomatis (Debian 12/Ubuntu terbaru), kita akan belajar membongkar **Toyota Kijang Kapsul tahun 90-an (Debian 7 Wheezy)**.
+
+Kenapa? Karena mobil tua memaksa kita mengerti mesin secara manual. Tidak ada sensor canggih, tidak ada bantuan AI. Jika Anda bisa menyetir mobil tua ini, Anda bisa menyetir mobil apa saja di masa depan.
+
+Dan karena kita tidak punya "Garasi Fisik" (Server Fisik), kita akan menggunakan **Hyper-V / VMware** sebagai "Simulator Bengkel" kita. Aman, gratis, dan kalau meledak, tinggal *delete* dan buat baru\!
+
+-----
+
+### 🎯 MISI OPERASI
+
+Dalam misi pertama ini, target kita sederhana tapi krusial:
+
+1.  Merakit "Mesin Virtual" (CPU, RAM, HDD).
+2.  Menginstal Nyawa (OS Debian 7) ke dalam mesin tersebut.
+3.  Berhasil Login ke layar hitam legendaris (CLI).
+
+-----
+
+### 🛠️ PERSIAPAN BAHAN (Mise en Place)
+
+Jangan perang tanpa senjata. Siapkan ini di laptop Anda:
+
+1.  **Platform Virtualisasi:** Hyper-V (Bawaan Windows) atau VMware Workstation.
+2.  **Bahan Bakar Utama:** File ISO [Debian 7 (Wheezy)](https://www.google.com/search?q=https://archive.debian.org/debian/dists/wheezy/main/installer-amd64/current/images/netboot/mini.iso) *(Catatan: Karena ini versi lawas, pastikan link unduhnya valid dari archive).*
+3.  **Kopi/Snack:** Wajib. Instalasi butuh waktu menunggu.
+
+-----
+
+### 💻 LANGKAH EKSEKUSI (The Action)
+
+#### TAHAP A: Merakit Hardware Virtual (Hyper-V/VMware)
+
+Kita perlu membuat "Wadah" komputer kosong dulu.
+
+1.  **New Virtual Machine:** Beri nama keren, misal `Debian 7 Server`.
+2.  **Generation:** Pilih **Generation 1** (Paling kompatibel untuk OS lawas).
+3.  **RAM (Memory):** Cukup **1024 MB (1 GB)**. Linux tanpa grafis itu sangat ringan\!
+4.  **Network:** Pilih **NAT** atau **Bridge** (agar nanti bisa dicolok internet).
+5.  **Hard Disk:** Alokasikan **15 GB** - 20 GB. (Cukup untuk lab ini).
+6.  **Instalasi Media:** Arahkan ke file **ISO Debian 7** yang sudah diunduh.
+
+> **💡 Tips Pro:** Jangan lupa masuk ke *Settings* VM Anda, pastikan urutan *Boot*-nya dimulai dari CD/DVD (ISO) dulu, baru Hard Disk.
+
+-----
+
+#### TAHAP B: Proses Instalasi OS (Langkah Demi Langkah)
+
+Nyalakan VM (`Start`), dan ikuti panduan "Satu Jalur" ini. Jika tidak disebutkan, biarkan *Default*.
+
+**1. The Greeting:**
+
+  * Pilih **Install** (Teks biasa) saja. Tidak perlu *Graphical Install* biar terasa "Hacker"-nya.
+
+**2. Bahasa & Lokasi (Penting\!):**
+
+  * **Language:** `English` (Wajib\! Jangan pakai Indo, nanti bingung membedakan *error log*).
+  * **Location:** `Other` -\> `Asia` -\> `Indonesia`.
+  * **Locales:** `United States - en_US.UTF-8`.
+  * **Keyboard:** `American English`.
+
+**3. Jaringan & Identitas:**
+
+  * **Hostname:** `debian` (atau nama unik server Anda).
+  * **Domain Name:** Kosongkan saja (tekan Enter).
+
+**4. Kunci Rahasia (User & Password):**
+
+  * **Root Password:** Masukkan password admin tertinggi. *Saran Lab:* Buat simpel saja (misal: `123` atau samakan dengan user) agar tidak lupa.
+  * **Full Name:** Isi nama Anda (misal: `Teungku`).
+  * **Username:** Biarkan default (misal: `teungku`).
+  * **User Password:** Masukkan password untuk user biasa.
+
+**5. Waktu & Partisi (The Disk):**
+
+  * **Timezone:** Pilih sesuai lokasi (`Western` untuk WIB).
+  * **Partition Method:** `Guided - use entire disk` (Paling aman untuk pemula).
+  * **Select Disk:** Tekan Enter pada disk virtual 15GB Anda.
+  * **Scheme:** `All files in one partition` (Recommended for new users).
+  * **Finish:** Pilih `Finish partitioning and write changes to disk`.
+  * **Confirm:** Pilih **YES** (Ini poin *no return*, data akan ditulis).
+
+**6. Instalasi Paket (The Core):**
+
+  * **Scan another CD?** `No`.
+  * **Use Network Mirror?** `No` (PENTING\! Karena repo Debian 7 sudah mati/archive, ini akan error kalau di-Yes-kan).
+  * **Participate Survey?** `No`.
+  * **Software Selection (KRUSIAL):**
+      * Hapus centang pada *Desktop Environment*.
+      * Hapus centang pada *Print Server*.
+      * **Pastikan HANYA mencentang:** `Standard System Utilities`.
+      * *(Kita ingin server bersih/barebone, kita instal sisanya nanti secara manual).*
+
+**7. Sentuhan Terakhir:**
+
+  * **Install GRUB Boot Loader?** `Yes`.
+  * **Finish Installation:** `Continue`. Mesin akan Reboot.
+
+-----
+
+### 🚧 POJOK "BENANG MERAH" (Real Case Study)
+
+Di tahap ini, Anda mungkin panik saat melihat pesan error:
+
+> *"Bad Archive Mirror"* atau *"Cannot Access Repository"*
+
+**Tenang, itu BUKAN salah Anda.**
+Ingat, kita memakai Debian 7 (Rilis tahun 2013). Server penyimpanan paket (Repository) resminya sudah dipindahkan ke museum digital (Archive). Installer mencoba menghubungi server yang sudah mati.
+
+**Solusinya?** Lewati saja langkah *Network Mirror* saat instalasi (pilih `No`). Kita akan memperbaiki alamat repositori ini secara manual di **Part 2** nanti. *It's part of the game\!*
+
+-----
+
+### 📸 MOMEN "KA-BOOM\!" (Verification)
+
+Setelah reboot, Anda tidak akan melihat Desktop cantik. Anda akan melihat layar hitam dengan kursor berkedip. Inilah wajah asli server.
+
+Jika Anda melihat ini:
+
 ```bash
-debian login:
-Password:
-```
-- **Sekarang coba login dengan user yang setup pada installasi sebelumnya**.
-- **Dan juga coba login dengan root yang tentunya setup pada installasi sebelumnya juga**.
+Debian GNU/Linux 7 debian tty1
 
-#### **Dan See you bye bye**
+debian login: _
+```
+
+**SELAMAT\! 🥳**
+Misi Part 1 Sukses Besar\! Coba login:
+
+1.  Ketik username: `root`
+2.  Ketik password: (password yang Anda buat tadi, tidak akan muncul bintangnya/invisible).
+
+Jika muncul prompt: `root@debian:~#`, berarti Anda resmi menjadi pemilik Server Linux.
+
+**Next Step:** Server ini masih "polos" dan belum punya koneksi ke gudang aplikasi yang benar. Kita akan perbaiki "Jantung"-nya di Part 2.

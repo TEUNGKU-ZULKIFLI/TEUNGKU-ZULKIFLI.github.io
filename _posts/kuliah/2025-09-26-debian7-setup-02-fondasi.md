@@ -27,619 +27,577 @@ Proses ini tidak akan berjalan lancar tanpa sumber daya dan bantuan yang luar bi
 
 ---
 
-### **Panduan Lengkap - TAHAPAN Konfigurasi NTP, SSH, DNS, DHCP Server (Bagian 1 dari 5)**
+# 📖 BAB 1: THE GENESIS (Lanjutan)
 
-## Langkah 8: Membangun Fondasi Jaringan Dual-Adapter
+## (Part 3) Identitas Server: Segmen 1
 
-### Tujuan
+**(Network Architecture & NTP)**
 
-Misi kita di langkah ini adalah mengubah server kita dari yang tadinya memiliki satu "pintu" biasa, menjadi sebuah "pos jaga" canggih dengan dua gerbang terpisah:
+### 🏷️ TAGLINE
 
-1.  **Gerbang Depan (NAT / `eth1`):** Gerbang ini menghadap ke internet. Fungsinya untuk mengambil update, sinkronisasi waktu, dan semua kebutuhan server untuk "melihat dunia luar".
-2.  **Gerbang Belakang (Host-Only / `eth0`):** Ini adalah gerbang pribadi, aman, dan rahasia yang hanya menghubungkan server dengan komputer Host (laptop/PC) kita. Semua aktivitas manajemen (seperti SSH) akan kita lakukan lewat gerbang ini.
-
-Tujuannya adalah untuk meningkatkan keamanan secara drastis dan membangun arsitektur jaringan yang lebih realistis dan profesional.
-
-### Langkah-langkah Eksekusi
-
-**Langkah 0: Persiapan di Luar VM (Konfigurasi Jaringan Host-Only)**
-
-Sebelum memberi alamat pada "Gerbang Belakang" kita, kita harus pastikan "jalan pribadi" menuju gerbang itu sudah dibangun di komputer Host. (Kita menggunakan IP `192.168.10.x` sesuai diskusi kita).
-
-1.  Buka aplikasi **VirtualBox/VMWare/Hiper-V** (jendela utamanya).
-2.  Klik `File` \> `Host Network Manager`.
-3.  Pilih adapter yang ada (misal, `vboxnet0`), lalu klik `Properties`.
-4.  Di tab **Adapter**, atur:
-      * **IPv4 Address:** `192.168.10.10` (Ini alamat untuk komputer Host Anda di jaringan ini).
-      * **IPv4 Network Mask:** `255.255.255.0`.
-5.  Pindah ke tab **DHCP Server** dan **pastikan "Enable Server" TIDAK DICENTANG**. Kita ingin kendali penuh atas IP di jaringan ini.
-6.  Klik `Apply` lalu `Close`.
-
-**Langkah 1: Memasang "Dua Gerbang" di VM**
-
-1.  Matikan VM Debian Anda secara aman dengan perintah `sudo shutdown -h now`.
-2.  Di jendela utama VirtualBox/VMWare/Hiper-V, pilih VM Anda, klik **Settings \> Network**.
-3.  Atur **Adapter 1**:
-      * **Enable Network Adapter**: ✅ (Centang)
-      * **Attached to**: `Host-only Adapter`
-      * **Name**: Pilih nama adapter yang tadi kita siapkan (misal, `vboxnet0`).
-4.  Pindah ke tab **Adapter 2**:
-      * **Enable Network Adapter**: ✅ (Centang)
-      * **Attached to**: `NAT`
-5.  Klik **OK**.
-
-**Langkah 2: Mengkonfigurasi "Peta Jaringan" di Debian**
-
-1.  Nyalakan kembali VM Anda dan login (sebagai `teungku`, lalu `sudo su -`).
-
-2.  Buat backup konfigurasi jaringan Anda:
-
-    ```bash
-    sudo cp /etc/network/interfaces /etc/network/interfaces.dual.backup
-    ```
-
-3.  Buka file konfigurasi:
-
-    ```bash
-    sudo nano /etc/network/interfaces
-    ```
-
-4.  Hapus semua isi file tersebut, lalu ganti dengan "peta jaringan" final kita di bawah ini. Inilah codingan yang Anda minta:
-
-    ```
-    # File Konfigurasi Jaringan Dual Adapter
-
-    # Antarmuka loopback (wajib ada)
-    auto lo
-    iface lo inet loopback
-
-    # Antarmuka #1: Gerbang Belakang (Host-Only)
-    # Jalur pribadi & aman untuk manajemen server.
-    allow-hotplug eth0
-    iface eth0 inet static
-        address 192.168.10.1
-        netmask 255.255.255.0
-
-    # Antarmuka #2: Gerbang Depan (NAT)
-    # Jalur untuk koneksi keluar ke internet.
-    allow-hotplug eth1
-    iface eth1 inet dhcp
-    ```
-
-5.  Simpan dan keluar (`Ctrl + o`, `Enter`, `Ctrl + x`).
-
-6.  Terapkan peta baru ini dengan me-restart seluruh layanan jaringan:
-
-    ```bash
-    sudo /etc/init.d/networking restart
-    ```
-
-### Verifikasi
-
-Setelah semua langkah di atas selesai, saatnya melakukan inspeksi kualitas untuk memastikan kedua gerbang berfungsi sempurna.
-
-  * **Tes 1: Koneksi Internet (Gerbang Depan)**
-    Jalankan dari dalam VM Debian untuk memastikan `eth1` (NAT) bekerja:
-
-    ```bash
-    ping -c 4 google.com
-    ```
-
-      * **Hasil Sukses:** Anda mendapat balasan (`reply from...`) dan `0% packet loss`.
-
-  * **Tes 2: Koneksi Manajemen (Gerbang Belakang, Arah Masuk)**
-    Jalankan dari **Command Prompt (cmd) atau PowerShell di komputer Host/laptop Anda** untuk memastikan Anda bisa "mengetuk" pintu gerbang belakang:
-
-    ```bash
-    ping 192.168.10.1
-    ```
-
-      * **Hasil Sukses:** Anda mendapat balasan dari IP tersebut.
-
-  * **Tes 3: Koneksi Balik (Gerbang Belakang, Arah Keluar)**
-    Jalankan dari dalam VM Debian untuk memastikan server bisa "melihat" komputer Host Anda:
-
-    ```bash
-    ping -c 4 192.168.10.10
-    ```
-
-      * **Hasil Sukses:** Anda mendapat balasan dari IP Host Anda.
-
-Jika ketiga tes ini berhasil, maka fondasi jaringan dual-adapter Anda telah dibangun dengan sempurna dan siap untuk langkah selanjutnya\!
+*"Membangun Dua Wajah dan Menyamakan Jam Tangan"*
 
 -----
 
-### **Panduan Lengkap - TAHAPAN Konfigurasi NTP, SSH, DNS, DHCP Server (Bagian 2 dari 5)**
+### ☕ KONSEP "WARUNG KOPI" (Analogi)
 
-## Langkah 9: Sinkronisasi Waktu Server (NTP) 🕰️
+1.  **Dual Adapter (Wajah Ganda):**
+    Bayangkan server Anda adalah sebuah **Ruko (Rumah Toko)**.
 
-### Tujuan
+      * **Pintu Depan (NAT/eth1):** Menghadap jalan raya (Internet). Kurir paket (Update/Download) masuk lewat sini.
+      * **Pintu Belakang (Host-Only/eth0):** Menghadap ke garasi pribadi (Laptop Anda). Hanya Anda (Admin) yang boleh masuk lewat sini untuk ngopi dan kerja. Aman dari maling jalan raya\!
 
-Setiap server adalah seorang pencatat sejarah. Semua kejadian, baik itu login yang berhasil, upaya hacking yang gagal, atau error pada aplikasi, semuanya dicatat dalam file **log**. Catatan ini tidak ada gunanya jika stempel waktunya salah.
-
-Tujuan dari langkah ini adalah memasang "jam tangan atom" pada server kita. Kita akan menggunakan **NTP (Network Time Protocol)** untuk memastikan jam server secara otomatis dan terus-menerus sinkron dengan jam paling akurat di dunia. Waktu yang presisi sangat krusial untuk:
-
-  * **Keakuratan Log:** Bukti digital yang andal untuk analisis keamanan dan troubleshooting.
-  * **Penjadwalan Tugas (Cron):** Agar semua skrip dan pekerjaan otomatis berjalan tepat pada waktunya.
-  * **Sertifikat Keamanan (SSL):** Proses enkripsi dan validasi sertifikat sangat bergantung pada waktu yang akurat.
-
-### Langkah-langkah Eksekusi
-
-**1. Instalasi Paket NTP**
-
-Pertama, kita instal perangkat lunak `ntp`. Sistem akan secara otomatis menggunakan "Gerbang Depan" (`eth1` - NAT) untuk terhubung ke internet dan mengunduh paket ini.
-
-```bash
-sudo aptitude -y install ntp
-```
-
-**2. Konfigurasi Server Waktu (Pro-Level)**
-
-Secara default, Debian akan menggunakan server waktu miliknya. Kita akan tingkatkan ini dengan menunjuk langsung ke server-server di regional kita (Asia/Indonesia) untuk mendapatkan koneksi yang lebih cepat dan lebih andal.
-
-1.  Buat salinan keamanan dari file konfigurasi:
-    ```bash
-    sudo cp /etc/ntp.conf /etc/ntp.conf.backup
-    ```
-2.  Buka file konfigurasi `ntp`:
-    ```bash
-    sudo nano /etc/ntp.conf
-    ```
-3.  Cari blok server default yang terlihat seperti ini:
-    ```
-    server 0.debian.pool.ntp.org iburst
-    server 1.debian.pool.ntp.org iburst
-    ...
-    ```
-4.  Nonaktifkan semua baris `server debian` tersebut dengan menambahkan tanda pagar (`#`) di depannya.
-5.  Di bawahnya, tambahkan blok server baru kita yang lebih optimal:
-    ```
-    # Menggunakan server pool regional untuk performa lebih baik
-    # Server pool Indonesia untuk latensi rendah
-    server 0.id.pool.ntp.org iburst
-    server 1.id.pool.ntp.org iburst
-
-    # Server pool Asia sebagai cadangan
-    server 2.asia.pool.ntp.org iburst
-    server 3.asia.pool.ntp.org iburst
-    ```
-6.  Simpan dan keluar dari `nano` (`Ctrl + o`, `Enter`, `Ctrl + x`).
-
-**3. Restart Layanan NTP**
-
-Agar server membaca "jadwal" baru kita, restart layanannya:
-
-```bash
-sudo /etc/init.d/ntp restart
-```
-
-Pastikan Anda melihat pesan `[ ok ]` yang menandakan layanan berhasil di-restart.
-
-### Verifikasi
-
-Sinkronisasi waktu tidak terjadi dalam sekejap. Server perlu "berkenalan" dan menghitung perbedaan waktu dengan server-server di internet. Proses ini bisa memakan waktu satu atau dua menit.
-
-1.  Jalankan perintah berikut untuk melihat status "perkenalan":
-    ```bash
-    ntpq -p
-    ```
-2.  **Tunggu sekitar satu menit**, lalu jalankan lagi perintah `ntpq -p`.
-
-**Tanda Kesuksesan Mutlak:**
-Anda mencari **tanda bintang (`*`)** yang muncul di paling kiri dari salah satu alamat server. Tanda bintang itu berarti: *"Misi berhasil\! Saya sudah memilih server ini sebagai sumber waktu utama saya dan sekarang jam saya sudah sinkron."*
-
-Contoh output yang sukses:
-
-```
-     remote           refid      st t when poll reach   delay   offset  jitter
-==============================================================================
-*ntp.gwb.net.id  .GPS.            1 u   22   64  377   25.867   -0.564   1.234
-+pad-zego.cenai  193.79.237.14    2 u   21   64  377   14.485   -1.129   0.876
-```
-
-Jika Anda sudah melihat tanda bintang `*` itu, berarti server Anda kini memiliki jam dengan presisi kelas dunia\!
+2.  **NTP (Network Time Protocol):**
+    Pernah nonton film perampokan bank? *"Samakan jam tangan kita... 3, 2, 1, Mark\!"*
+    Server butuh jam yang presisi. Kalau jam server ngaco (telat 5 menit saja), log keamanan jadi tidak valid, dan sertifikat SSL akan dianggap palsu. NTP adalah cara server mencocokkan jam tangannya dengan Jam Atom Dunia secara otomatis.
 
 -----
 
-### **Panduan Lengkap - TAHAPAN Konfigurasi NTP, SSH, DNS, DHCP Server (Bagian 3 dari 5)**
+### 🎯 MISI OPERASI (Segmen 1)
 
-## Langkah 10: Mengamankan Akses Jarak Jauh (SSH) 🔒
+1.  Memasang dua kartu jaringan: **Host-Only** (untuk manajemen) dan **NAT** (untuk internet).
+2.  Menginstal **NTP** agar waktu server akurat.
 
-### Tujuan
+-----
 
-SSH adalah "pintu masuk" utama kita untuk mengelola server dari jarak jauh. Secara default, pintu ini menggunakan kunci standar (port 22) dan mengizinkan "Tamu VVIP" (`root`) untuk mencoba masuk. Ini membuatnya menjadi target empuk bagi bot-bot jahat di internet yang kerjaannya hanya mencoba mendobrak pintu-pintu standar.
+### 🛠️ PERSIAPAN
 
-Misi kita di langkah ini adalah mengubah pintu standar kita menjadi **pintu baja tersembunyi yang hanya bisa diakses lewat jalur rahasia**:
+  * Matikan dulu VM Debian Anda (`shutdown -h now`).
+  * Siapkan kopi, kita mainan konfigurasi IP lagi.
 
-1.  **Memindahkan Pintu:** Kita akan memindahkan port SSH dari nomor 22 yang diketahui semua orang ke nomor acak yang hanya kita yang tahu.
-2.  **Melarang Tamu VVIP:** Kita akan melarang `root` untuk login via SSH. Semua admin harus masuk sebagai pengguna biasa (`teungku`) dan menggunakan `sudo`. Ini adalah praktik keamanan fundamental.
-3.  **Menyembunyikan Pintu:** Ini adalah keuntungan utama dari setup dual-adapter kita. Kita akan membuat pintu SSH ini **hanya terlihat** dari "Gerbang Belakang" (`eth0` - Host-Only) dan sama sekali tidak bisa diakses dari "Gerbang Depan" (`eth1` - Internet).
+-----
 
-### Langkah-langkah Eksekusi
+### 💻 LANGKAH EKSEKUSI (Segmen 1)
 
-**🥇. Install Package SSH**
+#### TAHAP A: Setup Hardware Virtual (Di VirtualBox/Hyper-V)
 
-Sebelum kita memulai kita install package sshnya.
+Sebelum menyalakan server, kita pasang kabelnya dulu.
+
+**1. Setting Adapter di Host (Laptop Anda):**
+
+  * Buka Network Manager di VirtualBox/VMware.
+  * Pastikan ada adapter **Host-Only**.
+  * Set IP Host (Laptop) Anda jadi: `192.168.10.10` (Agar satu jaringan dengan server nanti).
+  * **PENTING:** Matikan DHCP Server bawaan VirtualBox/VMware\! Kita mau server Debian yang jadi bos DHCP nanti.
+
+**2. Setting Adapter di VM Debian:**
+
+  * Buka Settings VM Debian -\> Network.
+  * **Adapter 1:** Ubah ke **Host-only Adapter**. (Ini jadi `eth0`).
+  * **Adapter 2:** Ubah ke **NAT**. (Ini jadi `eth1`).
+  * *Nyalakan VM Anda sekarang.*
+
+-----
+
+#### TAHAP B: Konfigurasi "Peta Jaringan" (Interfaces)
+
+Login sebagai user biasa, lalu masuk mode admin (`sudo su` atau `su`).
+
+**1. Edit File Network:**
 
 ```bash
-aptitude -y install ssh
+nano /etc/network/interfaces
 ```
 
-**1. Buat Salinan Keamanan (Wajib\!)**
-
-Sebelum kita menyentuh file konfigurasi sepenting ini, backup adalah langkah pertama yang tidak bisa ditawar.
+**2. Masukkan Konfigurasi Wajah Ganda:**
+Hapus isinya (atau sesuaikan) menjadi seperti ini:
 
 ```bash
-sudo cp /etc/ssh/sshd_config /etc/ssh/sshd_config.backup
+# Loopback (Wajib ada)
+auto lo
+iface lo inet loopback
+
+# Wajah 1: Pintu Belakang (Manajemen Lokal)
+# Hubungkan ke Laptop via Host-Only
+allow-hotplug eth0
+iface eth0 inet static
+    address 192.168.10.1
+    netmask 255.255.255.0
+
+# Wajah 2: Pintu Depan (Internet)
+# Minta IP otomatis ke Router Virtual via NAT
+allow-hotplug eth1
+iface eth1 inet dhcp
 ```
 
-**2. Mengedit "Buku Peraturan" SSH**
+Simpan (`Ctrl+O`) dan keluar.
 
-Buka file konfigurasi utama SSH dengan `vim`. Di dalam `vim`, Anda bisa mencari teks dengan cepat menggunakan tombol `/` (misal: `/Port` lalu `Enter`).
+**3. Restart Network:**
 
 ```bash
-sudo vi /etc/ssh/sshd_config
+/etc/init.d/networking restart
 ```
 
-Cari dan ubah tiga baris berikut:
+**4. Verifikasi Koneksi:**
 
-**A. Mengubah Port**
+  * Cek Internet: `ping google.com` (Harus reply).
+  * Cek Lokal: `ping 192.168.10.10` (Harus reply ke Laptop Anda).
 
-  * **Cari:** Baris `#Port 22`.
-  * **Aksi:** Hapus tanda pagar (`#`) dan ganti `22` dengan nomor port pilihan Anda (antara 1024-65535). Kita akan gunakan `2280` sebagai contoh.
-  * **Hasil Akhir:**
-    ```
+-----
+
+#### TAHAP C: Menyamakan Jam (NTP Setup)
+
+**1. Instal NTP:**
+
+```bash
+apt-get install ntp -y
+```
+
+**2. Arahkan ke Server Indonesia (Agar Presisi):**
+
+```bash
+nano /etc/ntp.conf
+```
+
+Cari baris `server 0.debian.pool...` dst. Beri tanda `#` di depannya (matikan).
+Ganti dengan server lokal Indonesia:
+
+```bash
+# Server NTP Indonesia
+server 0.id.pool.ntp.org iburst
+server 1.id.pool.ntp.org iburst
+server 2.asia.pool.ntp.org iburst
+```
+
+Simpan dan keluar.
+
+**3. Restart NTP:**
+
+```bash
+/etc/init.d/ntp restart
+```
+
+-----
+
+### 🚧 POJOK "BENANG MERAH" (Real Case Study)
+
+**Kasus:** Internet jalan (`ping google` aman), tapi tidak bisa ping ke Laptop (`192.168.10.10`).
+**Penyebab:** Firewall di Windows (Laptop) Anda memblokir ping masuk\!
+**Solusi:** Matikan sementara Windows Firewall atau buat rule *ICMP Allow*. Atau, coba sebaliknya: Ping dari Laptop ke Server (`ping 192.168.10.1`). Kalau reply, berarti aman\!
+
+-----
+
+### 📸 MOMEN "KA-BOOM\!" (Verification Segmen 1)
+
+1.  **Cek Waktu:**
+    Ketik: `ntpq -p`
+
+      * **Hasil:** Anda akan melihat daftar server (`.id.pool.ntp.org`). Tunggu beberapa menit, jika ada tanda bintang `*` di sebelah kirinya, berarti jam sudah sinkron akurat\!
+
+2.  **Cek IP:**
+    Ketik: `ifconfig`
+
+      * **Hasil:**
+          * `eth0`: `192.168.10.1` (Siap untuk manajemen).
+          * `eth1`: `10.0.x.x` (Siap untuk internet).
+
+-----
+
+*(Segmen 1 Selesai. Lanjut ke Segmen 2: Kita akan mengamankan pintu manajemen ini dengan SSH Custom...)*
+
+Sekarang kita masuk ke **Segmen 2**. Ini adalah bagian favorit saya karena kita akan bermain layaknya agen rahasia: **Menyembunyikan pintu masuk server.**
+
+Di Segmen 1, kita sudah membuat "Pintu Belakang" (Host-Only Adapter). Di Segmen 2 ini, kita akan memasang kunci digital super aman di pintu tersebut.
+
+-----
+
+# 📖 BAB 1: THE GENESIS (Lanjutan)
+
+## (Part 3) Identitas Server: Segmen 2
+
+**(SSH Security & Remote Access)**
+
+### 🏷️ TAGLINE
+
+*"Membangun Pintu Rahasia dan Membuang Kunci Cadangan"*
+
+-----
+
+### ☕ KONSEP "WARUNG KOPI" (Analogi)
+
+Bayangkan server Anda adalah sebuah **Brankas Bank**.
+
+1.  **Port 22 (Default SSH):** Ini seperti menempelkan tulisan besar "LUBANG KUNCI DI SINI" di pintu brankas. Semua maling (bot/hacker) tahu ke mana harus mencongkel. Kita akan pindahkan lubang kuncinya ke tempat tersembunyi (**Custom Port 2280**).
+2.  **Root Login:** Ini seperti memperbolehkan penggunaan "Kunci Master" dari luar gedung. Kalau kunci ini dicuri, tamatlah riwayat bank. Kita akan melarang kunci master dipakai dari jauh. Admin harus masuk pakai kunci karyawan biasa (**User**), baru boleh buka brankas di dalam (**Sudo**).
+3.  **Listen Address:** Kita akan memaksa pintu ini hanya muncul di "Lorong Pribadi" (IP 192.168.10.1), bukan di jalan raya internet.
+
+-----
+
+### 🎯 MISI OPERASI (Segmen 2)
+
+1.  Menginstal paket **OpenSSH Server**.
+2.  Mengganti Port standar (22) menjadi Port rahasia (**2280**).
+3.  Mematikan izin login **Root**.
+4.  Membatasi akses hanya dari jaringan lokal (Host-Only).
+
+-----
+
+### 🛠️ PERSIAPAN
+
+  * Masih login di terminal Debian (bisa lewat Console VirtualBox/VMware).
+  * Pastikan IP `eth0` sudah `192.168.10.1` (Hasil Segmen 1).
+
+-----
+
+### 💻 LANGKAH EKSEKUSI (Segmen 2)
+
+#### TAHAP A: Instalasi & Backup
+
+**1. Instal Paket SSH:**
+Agar kita bisa me-remote server ini dari Windows (putty/cmd).
+
+```bash
+apt-get install ssh -y
+```
+
+**2. Backup Konfigurasi (SOP Wajib):**
+Sebelum mengacak-acak keamanan, simpan file aslinya.
+
+```bash
+cp /etc/ssh/sshd_config /etc/ssh/sshd_config.backup
+```
+
+-----
+
+#### TAHAP B: Modifikasi "Buku Peraturan" SSH
+
+Kita edit konfigurasi utamanya.
+
+**1. Buka File Config:**
+
+```bash
+nano /etc/ssh/sshd_config
+```
+
+**2. Terapkan 3 Aturan Emas:**
+Cari baris-baris di bawah ini, hilangkan tanda `#` jika ada, dan ubah nilainya:
+
+  * **Aturan 1: Ganti Port**
+    Cari `Port 22`. Ubah menjadi:
+
+    ```bash
     Port 2280
     ```
 
-**B. Melarang `root` Login**
+    *(Angka 2280 itu acak, Anda boleh pilih angka lain antara 1024-65535, tapi ingat angkanya\!)*
 
-  * **Cari:** Baris yang kemungkinan `PermitRootLogin yes`.
-  * **Aksi:** Ganti `yes` menjadi `no`.
-  * **Hasil Akhir:**
-    ```
-    PermitRootLogin no
-    ```
+  * **Aturan 2: Batasi Alamat (Listen Address)**
+    Cari `ListenAddress 0.0.0.0` (Dengar dari semua arah). Ubah menjadi IP lokal kita:
 
-**C. Mengatur Alamat IP Pendengar (Paling Penting\!)**
-
-  * **Cari:** Baris `#ListenAddress 0.0.0.0`.
-  * **Aksi:** Hapus tanda pagar (`#`) dan ganti `0.0.0.0` (artinya "dengarkan di semua alamat") dengan alamat IP "Gerbang Belakang" (`eth0`) kita.
-  * **Hasil Akhir:**
-    ```
+    ```bash
     ListenAddress 192.168.10.1
     ```
 
-Setelah ketiga perubahan selesai, simpan dan keluar (`Esc`, `:wq`).
+    *(Artinya: SSH tidak akan melayani permintaan dari internet/eth1).*
 
-**3. Restart Layanan SSH**
+  * **Aturan 3: Matikan Root (PermitRootLogin)**
+    Cari `PermitRootLogin yes`. Ubah menjadi:
 
-Terapkan aturan baru kita dengan me-restart layanan SSH.
+    ```bash
+    PermitRootLogin no
+    ```
+
+**3. Simpan dan Keluar:**
+`Ctrl+O`, `Enter`, `Ctrl+X`.
+
+**4. Restart Layanan SSH:**
 
 ```bash
-sudo /etc/init.d/ssh restart
+/etc/init.d/ssh restart
 ```
-
-**⚠️ PERINGATAN PENTING:** Jika ada kesalahan ketik di file konfigurasi, layanan SSH bisa gagal启动 (start). **JANGAN PANIK\!** Keuntungan kita adalah kita masih punya akses langsung ke server melalui konsol VirtualBox. Jika SSH tidak bisa diakses setelah ini, cukup login lewat konsol VirtualBox, perbaiki file `sshd_config` dengan `vi`, lalu restart lagi layanannya.
-
-### Verifikasi
-
-Saatnya menjadi "penguji keamanan". Buka **PowerShell atau Terminal di komputer Host Anda** (laptop/PC) dan lakukan tiga tes berikut.
-
-  * **Tes 1: Coba Masuk Lewat Pintu Lama (Harus GAGAL)**
-    Coba hubungi server di port 22 yang lama.
-
-    ```powershell
-    ssh teungku@192.168.10.1 -p 22
-    ```
-
-      * **Hasil Sukses:** Perintah ini akan gagal dengan pesan `Connection refused` atau `timeout`. Ini membuktikan pintu lama sudah berhasil kita tutup.
-
-  * **Tes 2: Coba Masuk sebagai `root` (Harus GAGAL)**
-    Coba masuk sebagai `root` melalui pintu baru kita.
-
-    ```powershell
-    ssh root@192.168.10.1 -p 2280
-    ```
-
-      * **Hasil Sukses:** Server akan langsung menolak koneksi, seringkali dengan pesan `Permission denied`. Ini membuktikan `root` tidak bisa lagi masuk dari luar.
-
-  * **Tes 3: Masuk Lewat Jalur Rahasia (Harus SUKSES)**
-    Ini adalah cara masuk kita yang baru, aman, dan benar.
-
-    ```powershell
-    ssh teungku@192.168.10.1 -p 2280
-    ```
-
-      * **Hasil Sukses:** Anda akan diminta memasukkan kata sandi untuk **`teungku`**, dan setelah itu Anda akan berhasil login\!
-
-Jika ketiga tes ini memberikan hasil seperti yang diharapkan, berarti Anda telah berhasil membangun benteng digital yang kokoh untuk server Anda.
 
 -----
 
-### **Panduan Lengkap - TAHAPAN Konfigurasi NTP, SSH, DNS, DHCP Server (Bagian 4 dari 5)**
+### 🚧 POJOK "BENANG MERAH" (Real Case Study)
 
-## Langkah 11: Menjadi "Buku Telepon" Jaringan (DNS Server) 📖
+**Kasus:** "Mas, saya habis ganti port dan restart SSH, kok saya **nggak bisa masuk** lagi pakai Putty?"
 
-### Tujuan
+**Penyebab:**
 
-Saat ini, untuk terhubung ke server kita via SSH, kita menggunakan alamat IP `192.168.10.1`. Ini sama seperti harus menghafal nomor telepon semua orang. Repot\!
+1.  Lupa ganti nomor port di Putty (masih pakai 22, padahal sudah jadi 2280).
+2.  Salah ketik IP di `ListenAddress` (Typo itu mematikan\!).
 
-Tujuan kita adalah membangun **DNS (Domain Name System) Server** pribadi. Server ini akan bertindak sebagai "buku telepon" pintar untuk jaringan internal kita. Dengan begitu, kita bisa memanggil server kita dengan nama yang mudah diingat seperti `debian.custom.csm` dan server akan otomatis menerjemahkannya ke `192.168.10.1`.
-
-Kita akan membangun dua fungsi utama:
-
-1.  **Forward Lookup:** Menerjemahkan **Nama** menjadi **IP** (misal: `debian.custom.csm` -\> `192.168.10.1`).
-2.  **Reverse Lookup:** Menerjemahkan **IP** menjadi **Nama** (misal: `192.168.10.1` -\> `debian.custom.csm`), seperti fitur "Caller ID".
-
-### Langkah-langkah Eksekusi
-
-**1. Instalasi BIND9**
-Pertama, kita instal perangkat lunak DNS server standar industri, `BIND9`.
-
-```bash
-sudo aptitude -y install bind9
-```
-
-**2. Konfigurasi "Daftar Isi" (`named.conf.local`)**
-Kita beritahu BIND9 "buku telepon" mana saja yang akan ia kelola.
-
-1.  Backup file konfigurasi:
-    ```bash
-    sudo cp /etc/bind/named.conf.local /etc/bind/named.conf.local.backup
-    ```
-2.  Buka file tersebut:
-    ```bash
-    sudo vi /etc/bind/named.conf.local
-    ```
-3.  Masukkan "daftar isi" berikut, yang mendefinisikan domain pribadi kita dan jaringan IP kita:
-    ```
-    // Zona untuk Forward Lookup (Nama => IP)
-    zone "custom.csm" {
-        type master;
-        file "/etc/bind/db.custom.csm";
-    };
-
-    // Zona untuk Reverse Lookup (IP => Nama)
-    zone "10.168.192.in-addr.arpa" {
-        type master;
-        file "/etc/bind/db.10.168.192";
-    };
-    ```
-4.  Simpan dan keluar (`Esc`, `:wq`).
-
-**3. Mengisi "Buku Telepon" (Forward Zone File: `db.custom.csm`)**
-Saatnya menulis halaman utama buku telepon kita. Kita akan menyalin dari template `db.local` agar lebih aman.
-
-1.  Salin template:
-    ```bash
-    sudo cp /etc/bind/db.local /etc/bind/db.custom.csm
-    ```
-2.  Buka dan edit file baru tersebut:
-    ```bash
-    sudo vi /etc/bind/db.custom.csm
-    ```
-3.  Hapus semua isinya dan ganti dengan catatan A (Address) kita:
-    ```
-    ; BIND data file for custom.csm
-    $TTL    604800
-    @   IN  SOA     debian.custom.csm. root.custom.csm. (
-                          2      ; Serial
-                     604800      ; Refresh
-                      86400      ; Retry
-                    2419200      ; Expire
-                     604800 )    ; Negative Cache TTL
-    ;
-    ; Name Servers
-        IN  NS      debian.custom.csm.
-
-    ; Host Addresses (Nama => IP)
-    @       IN  A       192.168.10.1
-    debian  IN  A       192.168.10.1
-    www     IN  A       192.168.10.1
-    ```
-4.  Simpan dan keluar.
-
-**⚠️ PERINGATAN KETELITIAN:**
-
-  * **Tanda Titik (`.`)** di akhir nama domain lengkap (seperti `debian.custom.csm.`) **WAJIB ADA**.
-  * **Serial Number** harus dinaikkan setiap kali Anda mengedit file ini. Format `YYYYMMDDnn` adalah yang terbaik (Tahun-Tanggal-Bulan-RevisiKe).
-
-**4. Mengisi "Buku Telepon Terbalik" (Reverse Zone File: `db.10.168.192`)**
-Sekarang kita buat halaman "Caller ID". Kita salin dari template `db.127`.
-
-1.  Salin template:
-    ```bash
-    sudo cp /etc/bind/db.127 /etc/bind/db.10.168.192
-    ```
-2.  Buka dan edit file baru:
-    ```bash
-    sudo vi /etc/bind/db.10.168.192
-    ```
-3.  Hapus isinya dan ganti dengan catatan PTR (Pointer) kita:
-    ```
-    ; BIND reverse data file for 192.168.10.x network
-    $TTL    604800
-    @   IN  SOA     debian.custom.csm. root.custom.csm. (
-                          1      ; Serial
-                     604800      ; Refresh
-                      86400      ; Retry
-                    2419200      ; Expire
-                     604800 )    ; Negative Cache TTL
-    ;
-    ; Name Servers
-        IN  NS      debian.custom.csm.
-
-    ; Pointer Records (IP => Nama)
-    1   IN  PTR     debian.custom.csm.
-    ```
-4.  Simpan dan keluar. Angka `1` di `PTR record` adalah angka terakhir dari IP server kita (`192.168.10.1`).
-
-**5. Pengecekan Sintaks & Menyalakan Mesin**
-Sebelum dinyalakan, kita periksa semua pekerjaan kita.
-
-1.  Cek file konfigurasi utama (jika tidak ada output, berarti bagus):
-    ```bash
-    sudo named-checkconf
-    ```
-2.  Cek file forward zone (harus berakhir `OK`):
-    ```bash
-    sudo named-checkzone custom.csm /etc/bind/db.custom.csm
-    ```
-3.  Cek file reverse zone (harus berakhir `OK`):
-    ```bash
-    sudo named-checkzone 10.168.192.in-addr.arpa /etc/bind/db.10.168.192
-    ```
-4.  Jika semua aman, restart BIND9:
-    ```bash
-    sudo /etc/init.d/bind9 restart
-    ```
-
-### Verifikasi
-
-Terakhir, kita uji apakah "buku telepon" kita benar-benar berfungsi.
-
-**1. Arahkan Server ke Dirinya Sendiri**
-Edit file `/etc/resolv.conf` dan pastikan `nameserver 192.168.10.1` ada di **baris paling atas**.
-
-```bash
-sudo vi /etc/resolv.conf
-```
-
-**2. Interogasi Server dengan `dig`**
-`dig` adalah alat detektif DNS kita. Jika belum ada, instal dengan `sudo aptitude -y install dnsutils`.
-
-  * **Tes Forward (Nama -\> IP):**
-
-    ```bash
-    dig debian.custom.csm
-    ```
-
-      * **Hasil Sukses:** Di `ANSWER SECTION`, Anda akan melihat `debian.custom.csm. ... A 192.168.10.1`.
-
-  * **Tes Reverse (IP -\> Nama):**
-
-    ```bash
-    dig -x 192.168.10.1
-    ```
-
-      * **Hasil Sukses:** Di `ANSWER SECTION`, Anda akan melihat `... PTR debian.custom.csm.`.
-
-Jika kedua tes `dig` ini berhasil, Anda baru saja membangun dan mengkonfigurasi sebuah DNS Server fungsional dari nol\!
+**Solusi Penyelamatan:**
+Jangan panik\! Anda tidak terkunci total. Kembali ke jendela **VirtualBox/VMware** (Console Fisik). Login langsung di layar hitam itu, edit lagi file config-nya, perbaiki typo, restart service, dan coba lagi.
+*Inilah gunanya punya akses fisik (Console) vs akses remote (SSH).*
 
 -----
 
-### **Panduan Lengkap - TAHAPAN Konfigurasi NTP, SSH, DNS, DHCP Server (Bagian 5 dari 5)**
+### 📸 MOMEN "KA-BOOM\!" (Verification Segmen 2)
 
-## Langkah 12: Menjadi "Manajer Alamat IP" (DHCP Server) 👔
+Sekarang kita tinggalkan layar hitam Debian, kita pindah ke **Windows (Laptop Host)** Anda. Kita akan coba membobol server sendiri.
 
-### Tujuan
+Buka **CMD** atau **PowerShell** di Windows.
 
-Setelah membangun "buku telepon" (DNS) yang canggih, kini saatnya kita menyewa seorang "resepsionis" yang akan membagikan buku telepon tersebut ke semua "tamu" (klien) di jaringan kita secara otomatis. Inilah peran **DHCP (Dynamic Host Configuration Protocol) Server**.
+**1. Tes Masuk Pintu Lama (Harus GAGAL):**
 
-Tujuan kita adalah membuat server Debian kita mampu:
-
-1.  **Memberikan Alamat IP Otomatis:** Setiap perangkat baru yang terhubung ke jaringan Host-Only kita akan langsung diberi alamat IP tanpa perlu pengaturan manual.
-2.  **Memberi Arah (Gateway & DNS):** Selain IP, server kita juga akan memberitahu setiap klien, "Pintu keluar ke internet ada di `192.168.10.1`" dan "Buku telepon jaringan ada di `192.168.10.1`."
-3.  **Menciptakan Sinergi:** Ini adalah langkah yang mengikat semua kerja keras kita. Server DHCP akan "mempromosikan" server DNS yang baru saja kita bangun, menciptakan ekosistem jaringan internal yang cerdas dan mandiri.
-
-### Langkah-langkah Eksekusi
-
-**1. Instalasi Paket DHCP Server**
-
-Pertama, kita instal perangkat lunak `isc-dhcp-server`.
-
-```bash
-sudo aptitude -y install isc-dhcp-server
+```cmd
+ssh teungku@192.168.10.1
 ```
 
-**⚠️ PERHATIAN: INSTALASI AKAN GAGAL DI AKHIR\!**
-Jangan khawatir saat melihat pesan `[fail]` di akhir proses instalasi. Ini **100% normal**. Server DHCP mencoba berjalan sebelum kita memberitahunya di "pintu" mana ia harus bertugas.
+  * **Hasil:** `Connection refused`. (Mantap\! Pintu standar sudah ditembok).
 
-**2. Menentukan Wilayah Kerja (Antarmuka Jaringan)**
+**2. Tes Masuk Pakai Root (Harus GAGAL):**
 
-Langkah paling krusial adalah memberitahu DHCP server agar ia **hanya** melayani permintaan di "Gerbang Belakang" (`eth0` - Host-Only) dan tidak di tempat lain.
-
-1.  Buat salinan keamanan:
-    ```bash
-    sudo cp /etc/default/isc-dhcp-server /etc/default/isc-dhcp-server.backup
-    ```
-2.  Buka file konfigurasi antarmuka:
-    ```bash
-    sudo vi /etc/default/isc-dhcp-server
-    ```
-3.  Cari baris `INTERFACES=""` dan ubah menjadi:
-    ```
-    INTERFACES="eth0"
-    ```
-4.  Simpan dan keluar (`Esc`, `:wq`).
-
-**3. Membuat "Buku Peraturan" Resepsionis (`dhcpd.conf`)**
-
-Sekarang kita akan menulis aturan main untuk DHCP server: siapa yang dilayani, alamat apa yang diberikan, dan informasi apa yang dibagikan.
-
-1.  Buat salinan keamanan:
-    ```bash
-    sudo cp /etc/dhcp/dhcpd.conf /etc/dhcp/dhcpd.conf.backup
-    ```
-2.  Buka file konfigurasi utama:
-    ```bash
-    sudo vi /etc/dhcp/dhcpd.conf
-    ```
-3.  Tambahkan blok konfigurasi bersih kita di bagian bawah file (abaikan contoh-contoh yang sudah ada). Gunakan konfigurasi yang sudah kita rancang untuk jaringan `custom.csm`:
-    ```
-    # --- Konfigurasi DHCP untuk Jaringan Internal custom.csm ---
-
-    # Menginformasikan nama domain dan alamat server DNS ke klien
-    option domain-name "custom.csm";
-    option domain-name-servers 192.168.10.1;
-
-    # Waktu sewa alamat IP (dalam detik)
-    default-lease-time 600;
-    max-lease-time 7200;
-
-    # Menegaskan bahwa server ini adalah otoritas resmi untuk jaringan ini
-    authoritative;
-
-    # Blok konfigurasi spesifik untuk jaringan 192.168.10.0/24
-    subnet 192.168.10.0 netmask 255.255.255.0 {
-      # Rentang alamat IP yang boleh "disewakan" ke klien
-      range 192.168.10.100 192.168.10.200;
-      # Memberitahu klien di mana letak Gateway
-      option routers 192.168.10.1;
-      # Memberitahu alamat broadcast
-      option broadcast-address 192.168.10.255;
-    }
-    ```
-4.  Simpan dan keluar.
-
-**4. Menyalakan Layanan DHCP**
-
-Setelah semua aturan dibuat, saatnya menyalakan "resepsionis" kita. Kali ini, ia akan berjalan dengan sukses.
-
-```bash
-sudo /etc/init.d/isc-dhcp-server start
+```cmd
+ssh root@192.168.10.1 -p 2280
 ```
 
-Anda harus melihat pesan `[ ok ] Starting ISC DHCP server: dhcpd.` sebagai tanda keberhasilan.
+  * **Hasil:** `Permission denied`. (Mantap\! Bos besar dilarang masuk langsung).
 
-### Verifikasi
+**3. Tes Masuk Jalur Rahasia (Harus SUKSES):**
 
-Bagaimana cara tahu "resepsionis" kita bekerja? Cara terbaik adalah dengan **mendatangkan "tamu" baru** dan melihat apakah ia dilayani secara otomatis.
+```cmd
+ssh teungku@192.168.10.1 -p 2280
+```
 
-Cara termudah untuk melakukan ini adalah:
+*(Ganti `teungku` dengan user Anda)*
 
-1.  **Buat VM baru yang sederhana** (misalnya, Debian atau Ubuntu versi ringan dengan setting *default*).
-2.  Atur adapter jaringan **satu-satunya** di VM baru tersebut ke mode **Host-Only** (sama seperti `eth0` server kita).
-3.  Nyalakan VM baru tersebut.
-4.  Setelah boot, buka terminal di VM baru dan jalankan perintah `ifconfig` atau `ip a`.
+  * **Hasil:** Diminta password user teungku -\> Masuk\! -\> Prompt berubah jadi `teungku@debian:~$`.
 
-**Tanda Kesuksesan Mutlak:**
-Anda akan melihat VM baru tersebut secara ajaib mendapatkan:
+**BONUS:**
+Jika berhasil, mulai sekarang Anda bisa membuang jendela VirtualBox yang sempit itu. Gunakan **Putty** atau **VS Code Remote SSH** dengan Port 2280 untuk mengerjakan part-part selanjutnya. Jauh lebih nyaman, bisa copy-paste\!
 
-  * Alamat IP di antara `192.168.10.100` dan `192.168.10.200`.
-  * Jika Anda memeriksa file `/etc/resolv.conf` di VM baru itu, Anda akan melihat `nameserver 192.168.10.1` dan `search custom.csm` sudah terisi otomatis\!
+-----
 
-Jika ini terjadi, berarti server DHCP Anda bekerja dengan sempurna dan telah berhasil mengintegrasikan seluruh layanan jaringan yang telah kita bangun.
+*(Segmen 2 Selesai. Kita lanjut ke Final Boss\!  Part 3 di Segmen 3: DNS Server BIND9...)*
 
-🎉 **SELAMAT\! TAHAPAN Konfigurasi NTP, SSH, DNS, DHCP Server SELESAI\!** 🎉
+Siap\! Ini adalah **Final Boss** dari Part 3.
+
+Konfigurasi DNS BIND9 terkenal sebagai salah satu konfigurasi yang paling *tricky* (menjebak) karena salah satu titik (`.`) atau titik koma (`;`) saja bisa membuat service gagal start.
+
+Tapi tenang, kita akan membuatnya menjadi masuk akal dan mudah diikuti.
+
+-----
+
+# 📖 BAB 1: THE GENESIS (Lanjutan)
+
+## (Part 3) Identitas Server: Segmen 3
+
+**(DNS Server BIND9)**
+
+### 🏷️ TAGLINE
+
+*"Membangun Buku Telepon Digital & Stop Menghafal Angka"*
+
+-----
+
+### ☕ KONSEP "WARUNG KOPI" (Analogi)
+
+Di dunia nyata, apakah Anda menghafal nomor HP teman Anda (misal: `0812-3456-7890`)? Tentu tidak. Anda menyimpan nomor itu dengan nama **"Budi"**. Saat mau nelpon, Anda cari "Budi", dan HP Anda otomatis menelpon nomornya.
+
+Itulah **DNS (Domain Name System)**.
+
+1.  **Forward Lookup:** Kita tanya "Siapa IP dari `debian.teungku.edu`?" -\> DNS jawab `192.168.10.1`.
+2.  **Reverse Lookup:** Kita tanya "Siapa pemilik IP `192.168.10.1`?" -\> DNS jawab `debian.teungku.edu` (Seperti fitur Caller ID).
+
+Tanpa DNS, kita harus mengetik IP Address untuk mengakses website atau kirim email. Dengan DNS, kita punya identitas keren: `teungku.edu`.
+
+-----
+
+### 🎯 MISI OPERASI (Segmen 3)
+
+1.  Menginstal **BIND9** (Software DNS Paling Populer).
+2.  Membuat Domain Lokal bernama **`teungku.edu`**.
+3.  Mengatur agar server bisa dipanggil dengan nama, bukan cuma angka.
+
+-----
+
+### 🛠️ PERSIAPAN
+
+  * **Fokus Tinggi:** Konfigurasi ini sensitif terhadap *typo*.
+  * Pastikan IP Server sudah statis di `192.168.10.1`.
+
+-----
+
+### 💻 LANGKAH EKSEKUSI (Segmen 3)
+
+#### TAHAP A: Instalasi Paket
+
+Kita butuh `bind9` (servernya) dan `dnsutils` (alat tes/dig).
+
+```bash
+apt-get install bind9 dnsutils -y
+```
+
+-----
+
+#### TAHAP B: Mendaftarkan Zona (Daftar Isi)
+
+Kita harus memberitahu BIND9 bahwa kita adalah penguasa dari domain `teungku.edu`.
+
+**1. Edit File Zona Lokal:**
+
+```bash
+nano /etc/bind/named.conf.local
+```
+
+**2. Tambahkan Konfigurasi Ini:**
+(Taruh di bawah, jangan hapus yang sudah ada).
+
+```bash
+# Zona Maju (Nama ke IP)
+zone "teungku.edu" {
+    type master;
+    file "/etc/bind/db.teungku.edu";
+};
+
+# Zona Mundur (IP ke Nama)
+# Angka IP dibalik: 192.168.10.x menjadi 10.168.192
+zone "10.168.192.in-addr.arpa" {
+    type master;
+    file "/etc/bind/db.192";
+};
+```
+
+Simpan (`Ctrl+O`) dan keluar.
+
+-----
+
+#### TAHAP C: Membuat File Database (Isi Buku Telepon)
+
+Sekarang kita buat file aslinya.
+
+**1. Buat File Forward (`db.teungku.edu`):**
+Kita copy dari template agar tidak ngetik dari nol.
+
+```bash
+cp /etc/bind/db.local /etc/bind/db.teungku.edu
+nano /etc/bind/db.teungku.edu
+```
+
+**2. Edit Isinya (Hati-hati Titik\!):**
+Ubah `localhost.` menjadi `debian.teungku.edu.` (Ingat titik di akhir\!).
+Ubah IP `127.0.0.1` menjadi `192.168.10.1`.
+
+Hasil akhirnya harus persis seperti ini:
+
+```bash
+; Forward Zone untuk teungku.edu
+$TTL    604800
+@       IN      SOA     debian.teungku.edu. root.teungku.edu. (
+                              2         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@       IN      NS      debian.teungku.edu.
+@       IN      A       192.168.10.1    ; IP Domain Utama
+debian  IN      A       192.168.10.1    ; Subdomain debian
+www     IN      A       192.168.10.1    ; Subdomain www
+```
+
+Simpan dan keluar.
+
+**3. Buat File Reverse (`db.192`):**
+Copy dari template angka.
+
+```bash
+cp /etc/bind/db.127 /etc/bind/db.192
+nano /etc/bind/db.192
+```
+
+**4. Edit Isinya:**
+Ubah `localhost.` menjadi `debian.teungku.edu.`
+Pada bagian paling bawah, ganti angka `1.0.0` menjadi `1` (Digit terakhir IP server kita).
+
+Hasil akhirnya:
+
+```bash
+; Reverse Zone
+$TTL    604800
+@       IN      SOA     debian.teungku.edu. root.teungku.edu. (
+                              1         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@       IN      NS      debian.teungku.edu.
+1       IN      PTR     debian.teungku.edu.
+```
+
+Simpan dan keluar.
+
+-----
+
+#### TAHAP D: Aktivasi & Pengecekan
+
+**1. Restart BIND9:**
+
+```bash
+/etc/init.d/bind9 restart
+```
+
+*Pastikan muncul `[ ok ]`. Jika `[ fail ]`, cek Pojok Benang Merah\!*
+
+**2. Arahkan Server ke Dirinya Sendiri:**
+Agar server Debian menggunakan DNS-nya sendiri untuk bertanya.
+
+```bash
+nano /etc/resolv.conf
+```
+
+Pastikan baris paling atas adalah:
+
+```bash
+nameserver 192.168.10.1
+search teungku.edu
+```
+
+-----
+
+### 🚧 POJOK "BENANG MERAH" (Real Case Study)
+
+**Masalah:** `[FAIL] Starting domain name service... bind9 failed!`
+**Penyebab Paling Umum:**
+
+1.  **Kurang Titik (.):** Menulis `debian.teungku.edu` tanpa titik di akhir (`.`) di dalam file `db.*`.
+2.  **Kurang Titik Koma (;):** Di file `named.conf.local`, setiap baris dalam kurung kurawal `{}` harus diakhiri titik koma `;`.
+
+**Cara Detektif (Debugging):**
+Gunakan perintah ini untuk mencari letak kesalahan:
+
+```bash
+named-checkconf -z
+```
+
+Ini akan memberitahu Anda: *"Error on line 12: missing semicolon"*. Sangat membantu\!
+
+-----
+
+### 📸 MOMEN "KA-BOOM\!" (Verification Segmen 3)
+
+Mari kita uji apakah "Buku Telepon" kita berfungsi. Gunakan perintah `nslookup` atau `dig`.
+
+**1. Tes Panggil Nama:**
+
+```bash
+nslookup debian.teungku.edu
+```
+
+  * **Hasil:**
+    ```
+    Server:     192.168.10.1
+    Name:       debian.teungku.edu
+    Address:    192.168.10.1
+    ```
+
+**2. Tes Panggil Nomor (Reverse):**
+
+```bash
+nslookup 192.168.10.1
+```
+
+  * **Hasil:** `1.10.168.192.in-addr.arpa name = debian.teungku.edu.`
+
+**3. Tes Ping:**
+
+```bash
+ping debian.teungku.edu
+```
+
+  * **Hasil:** `PING debian.teungku.edu (192.168.10.1)...`
+
+Jika `ping` berhasil merespons dari nama domain, **SELAMAT\!** Server Anda sekarang punya identitas resmi. Anda tidak perlu lagi mengingat IP Address.
