@@ -65,7 +65,7 @@ Di Part 15 ini, kita fokus pada **Pondasi Proxy-nya dulu (Squid3)**. Kita akan m
     Biasanya, Anda harus setting browser: *"Gunakan Proxy 192.168.10.1"*. Itu ribet.
     **Transparent Proxy** itu licik. Anda merasa jalan langsung ke toko, tapi di tengah jalan, Router (IPTables) membelokkan Anda paksa ke Pos Satpam tanpa Anda sadari.
 
-![Transparent Proxy](https://encrypted-tbn0.gstatic.com/licensed-image?q=tbn:ANd9GcQ5ztolMOI-9LSw3HJU2GPJNriv_QMikPENNmS-MTfxrHK2IGfdSRl4C5wZx3lCVrh4linG4XQn8FFB3EVOlJ31A_IaC06xM3QRUCl-drH6MgTNeIw)
+<img src="https://encrypted-tbn0.gstatic.com/licensed-image?q=tbn:ANd9GcQ5ztolMOI-9LSw3HJU2GPJNriv_QMikPENNmS-MTfxrHK2IGfdSRl4C5wZx3lCVrh4linG4XQn8FFB3EVOlJ31A_IaC06xM3QRUCl-drH6MgTNeIw" width="400">
 
 -----
 

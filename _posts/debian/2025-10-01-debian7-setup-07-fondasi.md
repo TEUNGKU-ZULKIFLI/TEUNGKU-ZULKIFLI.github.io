@@ -27,7 +27,7 @@ Proses ini tidak akan berjalan lancar tanpa sumber daya dan bantuan yang luar bi
 
 -----
 
-Siap\! Ini adalah **kepingan terakhir** dari puzzle **BAB 2**.
+Ini adalah **kepingan terakhir** dari puzzle **BAB 2**.
 
 Kita sudah punya Router, DHCP, dan Samba. Samba itu enak untuk *lokal* (LAN), tapi kalau kita bicara soal upload file website atau transfer lewat internet yang lebih luas, protokol standarnya adalah **FTP**.
 

@@ -50,7 +50,7 @@ Jika Windows ingin mengambil file di perut Linux, mereka tidak akan paham bahasa
 Di sinilah **SAMBA** berperan. Samba adalah **Penerjemah (Diplomat)**.
 Dia membuat folder di Linux terlihat seolah-olah itu adalah folder biasa di Windows Explorer ("Network Place"). Jadi, user Windows bisa *drag-and-drop* file ke server Linux tanpa perlu tahu perintah rumit.
 
-![Network Place](https://encrypted-tbn2.gstatic.com/licensed-image?q=tbn:ANd9GcTXppyDO6VywO8TF08owCpsarvVUuXLrpmnqi4mok6o7wmtDwLlRs4J08xCaC4cdXNXtJnJVv7bnt2TSp0ulKiY6RDdGwupgVVZEKfRWs-WCYlcYW0)
+<img src="https://encrypted-tbn2.gstatic.com/licensed-image?q=tbn:ANd9GcTXppyDO6VywO8TF08owCpsarvVUuXLrpmnqi4mok6o7wmtDwLlRs4J08xCaC4cdXNXtJnJVv7bnt2TSp0ulKiY6RDdGwupgVVZEKfRWs-WCYlcYW0" width="400">
 
 -----
 

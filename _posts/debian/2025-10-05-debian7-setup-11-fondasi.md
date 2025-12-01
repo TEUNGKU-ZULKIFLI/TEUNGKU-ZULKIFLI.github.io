@@ -5,7 +5,7 @@ category: "Course"
 tags: ["debian-server-series"]
 ---
 
-<iframe src="https://www.youtube.com/embed/JI25CTbgnis?controls=0&modestbranding=1&rel=0&disablekb=1&autoplay=0" style="display:block;margin:auto;border:none;width:100%;max-width:960px;height:540px;" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+<iframe src="https://www.youtube.com/embed/aHwVLrsRfr0?controls=0&modestbranding=1&rel=0&disablekb=1&autoplay=0" style="display:block;margin:auto;border:none;width:100%;max-width:960px;height:540px;" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
 # Dokumentasi Debian di Hyper V (Part 12): Konfigurasi Hosting
 **Catatan Perjalanan & Solusi Praktis untuk VM Debian 7.8.0 "Wheezy"**
@@ -66,7 +66,7 @@ Saat ini, Mall itu cuma punya satu penyewa besar, yaitu `www.teungku.edu`. Pengu
 
 Satpam Mall (Apache) akan bekerja lebih pintar. Dia tidak cuma melihat alamat gedung, tapi dia akan bertanya ke pengunjung: *"Kamu mau ke toko yang mana?"*. Kalau pengunjung jawab "Blog", satpam akan mengantar ke Lantai 2.
 
-![Satpam Mall](https://encrypted-tbn2.gstatic.com/licensed-image?q=tbn:ANd9GcQdS5sdu4X1IZQoDzBuqM2VcSGeglx3-ha8BZNz495PVD1wWhYWu9xAKhDMeM0JUQiH-x_NeFC0a_KdW5ZiFJBlcGnxV5vg940gXdnXrWI1UB0ozbY)
+<img src="https://encrypted-tbn2.gstatic.com/licensed-image?q=tbn:ANd9GcQdS5sdu4X1IZQoDzBuqM2VcSGeglx3-ha8BZNz495PVD1wWhYWu9xAKhDMeM0JUQiH-x_NeFC0a_KdW5ZiFJBlcGnxV5vg940gXdnXrWI1UB0ozbY" width="400">
 
 -----
 

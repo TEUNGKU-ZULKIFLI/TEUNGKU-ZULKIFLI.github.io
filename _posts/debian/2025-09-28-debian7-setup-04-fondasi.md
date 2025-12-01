@@ -391,7 +391,7 @@ Chef itu bernama **PHP**. Tanpa PHP, web server hanyalah pengantar surat. Dengan
 
 # 📖 BAB 3: WEB HOSTING MASTER
 
-## (Part 5) Membangun Web Server: Segmen 3/3
+## (Part 5) Membangun Web Server: Segmen 3
 
 **(PHP 5 Integration)**
 

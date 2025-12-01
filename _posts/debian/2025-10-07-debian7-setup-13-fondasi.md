@@ -5,7 +5,7 @@ category: "Course"
 tags: ["debian-server-series"]
 ---
 
-<iframe src="https://www.youtube.com/embed/JI25CTbgnis?controls=0&modestbranding=1&rel=0&disablekb=1&autoplay=0" style="display:block;margin:auto;border:none;width:100%;max-width:960px;height:540px;" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+<iframe src="https://www.youtube.com/embed/W96IMb0NYEQ?controls=0&modestbranding=1&rel=0&disablekb=1&autoplay=0" style="display:block;margin:auto;border:none;width:100%;max-width:960px;height:540px;" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
 # Dokumentasi Debian di Hyper V (Part 14): Konfigurasi User Dir
 **Catatan Perjalanan & Solusi Praktis untuk VM Debian 7.8.0 "Wheezy"**

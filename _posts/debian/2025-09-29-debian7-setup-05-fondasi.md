@@ -196,7 +196,8 @@ Simpan dan keluar.
 Server sudah siap. Sekarang kita nyalakan komputer tamu (Windows 7).
 Tugas kita cuma satu: Pastikan kabel Windows 7 dicolok ke **Terminal Kuningan (`br0`/Host-Only)** yang sama dengan server. Kalau colokannya beda, ya sinyalnya nggak nyampe.
 
-![DNS Forwarding](https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcSEe1Fp1OwU5_jrYX356ZH3Q8t-VmuV4OAulHMdfrfepSarj8qzXpA9sPZ28VmxquwDm9n1IzMPmUL2jY_wY66TN7ZozCsMd_vv-4MpBEkkTKbV4Ds)
+<img src="https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcSEe1Fp1OwU5_jrYX356ZH3Q8t-VmuV4OAulHMdfrfepSarj8qzXpA9sPZ28VmxquwDm9n1IzMPmUL2jY_wY66TN7ZozCsMd_vv-4MpBEkkTKbV4Ds" width="400">
+
 -----
 
 ### 🎯 MISI OPERASI (Segmen 2)

@@ -191,7 +191,7 @@ Di Part 3, Server kita punya "Buku Telepon Lokal" (`teungku.edu`). Tapi kalau Wi
 Solusinya: **DNS Forwarding**.
 Kita ajarkan Server: *"Eh, kalau kamu nggak tau jawabannya, jangan diam aja. Teruskan (Forward) pertanyaan itu ke Guru Besar (Google DNS 8.8.8.8). Nanti kalau Google jawab, baru kamu kasih tau ke Windows 7."*
 
-[Image of DNS forwarding diagram]
+<img src="https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcSEe1Fp1OwU5_jrYX356ZH3Q8t-VmuV4OAulHMdfrfepSarj8qzXpA9sPZ28VmxquwDm9n1IzMPmUL2jY_wY66TN7ZozCsMd_vv-4MpBEkkTKbV4Ds" width="400">
 
 -----
 

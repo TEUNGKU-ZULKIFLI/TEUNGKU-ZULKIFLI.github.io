@@ -65,7 +65,7 @@ Untuk mengirim email, kita butuh 3 komponen utama:
 
 Di Segmen 1 ini, kita akan memasang Papan Petunjuk (DNS) dan merekrut Pak Pos (Postfix).
 
-![Papan Petunjuk](https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcRrCt3swTegCVt0LVpuZ2CewEU4nB3_AAyHhlKqxrc5Z0nVax91jhgr24BDb7gs8oxjW7Tje9ufnjFXFR5jMVnfKcwMao6MY9DUJTEaDEGFw80mako)
+<img src="https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcRrCt3swTegCVt0LVpuZ2CewEU4nB3_AAyHhlKqxrc5Z0nVax91jhgr24BDb7gs8oxjW7Tje9ufnjFXFR5jMVnfKcwMao6MY9DUJTEaDEGFw80mako" width="400">
 
 -----
 
@@ -248,7 +248,7 @@ Tanpa Dovecot, surat cuma numpuk di gudang Postfix dan user tidak bisa mengambil
   * **POP3:** Surat diambil, dibawa pulang, lalu *dibakar* salinannya di server. (Hemat storage server, tapi surat cuma ada di satu HP).
   * **IMAP:** Surat dibaca di server. (Surat tetap ada di server, bisa dibaca dari HP, Laptop, Tablet secara bersamaan). Kita akan aktifkan keduanya.
 
-![Papan Petunjuk](https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcQqgET3s_FxPSGds9y5i05HLBgyXHpZ8bnS6iM7LliJHakt0y2IHPrV7Fmpywp-YGbXO9jx5roid_4ZLUcH49h3SuuhCLWpcA5G4fyiAJFRnjUfrBg)
+<img src="https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcQqgET3s_FxPSGds9y5i05HLBgyXHpZ8bnS6iM7LliJHakt0y2IHPrV7Fmpywp-YGbXO9jx5roid_4ZLUcH49h3SuuhCLWpcA5G4fyiAJFRnjUfrBg" width="400">
 
 -----
 
