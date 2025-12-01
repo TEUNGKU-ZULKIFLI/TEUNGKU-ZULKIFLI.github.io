@@ -1,7 +1,7 @@
 ---
 title: "Tahapan 06: Topology VPLS EZ"
 date: "2025-11-02"
-category: "Kuliah"
+category: "Course"
 tags: ["mininet-series"]
 ---
 

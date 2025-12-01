@@ -1,7 +1,7 @@
 ---
 title: "(Part 7): Konfigurasi NAT Router Sharing Internet"
 date: "2025-09-30"
-category: "Kuliah"
+category: "Course"
 tags: ["debian-server-series"]
 ---
 

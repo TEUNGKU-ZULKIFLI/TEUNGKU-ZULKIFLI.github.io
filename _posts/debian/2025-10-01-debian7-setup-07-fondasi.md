@@ -1,7 +1,7 @@
 ---
 title: "(Part 8): Tranfer File Aman Antara VSFTPD dengan SFTP"
 date: "2025-10-01"
-category: "Kuliah"
+category: "Course"
 tags: ["debian-server-series"]
 ---
 

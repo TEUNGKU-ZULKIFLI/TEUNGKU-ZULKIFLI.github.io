@@ -1,27 +1,18 @@
 [
     {
-        "file": "_posts/kuliah/2025-11-02-mininet-setup-06.md",
+        "file": "_posts/mininet/2025-11-02-mininet-setup-06.md",
         "title": "Tahapan 06: Topology VPLS EZ",
         "date": "2025-11-02",
-        "category": "Kuliah",
+        "category": "Course",
         "tags": [
             "\"mininet-series\""
         ]
     },
     {
-        "file": "_posts/kuliah/2025-11-01-mininet-setup-05.md",
+        "file": "_posts/mininet/2025-11-01-mininet-setup-05.md",
         "title": "Tahapan 05: Topology Linear Custom",
         "date": "2025-11-01",
-        "category": "Kuliah",
-        "tags": [
-            "\"mininet-series\""
-        ]
-    },
-    {
-        "file": "_posts/kuliah/2025-10-31-mininet-setup-04.md",
-        "title": "Tahapan 04: Topology Tree Custom",
-        "date": "2025-10-31",
-        "category": "Kuliah",
+        "category": "Course",
         "tags": [
             "\"mininet-series\""
         ]
@@ -36,181 +27,190 @@
         ]
     },
     {
-        "file": "_posts/kuliah/2025-10-30-mininet-setup-03.md",
+        "file": "_posts/mininet/2025-10-31-mininet-setup-04.md",
+        "title": "Tahapan 04: Topology Tree Custom",
+        "date": "2025-10-31",
+        "category": "Course",
+        "tags": [
+            "\"mininet-series\""
+        ]
+    },
+    {
+        "file": "_posts/mininet/2025-10-30-mininet-setup-03.md",
         "title": "Tahapan 03: Topology Single Custom",
         "date": "2025-10-30",
-        "category": "Kuliah",
+        "category": "Course",
         "tags": [
             "\"mininet-series\""
         ]
     },
     {
-        "file": "_posts/kuliah/2025-10-20-mininet-setup-02.md",
+        "file": "_posts/mininet/2025-10-20-mininet-setup-02.md",
         "title": "Integrasi Mininet VM - Tahapan 02: Integrasi ONOS dengan Mininet VM",
         "date": "2025-10-20",
-        "category": "Kuliah",
+        "category": "Course",
         "tags": [
             "\"mininet-series\""
         ]
     },
     {
-        "file": "_posts/kuliah/2025-10-10-debian7-setup-16-fondasi.md",
+        "file": "_posts/debian/2025-10-10-debian7-setup-16-fondasi.md",
         "title": "(Part 17): Installasi & Konfigurasi Bashrc, HTOP, MC, GUI",
         "date": "2025-10-10",
-        "category": "Kuliah",
+        "category": "Course",
         "tags": [
             "\"debian-server-series\""
         ]
     },
     {
-        "file": "_posts/kuliah/2025-10-10-mininet-setup-01.md",
+        "file": "_posts/mininet/2025-10-10-mininet-setup-01.md",
         "title": "Installasi Mininet VM - Tahapan 01: Setup Mininet VM",
         "date": "2025-10-10",
-        "category": "Kuliah",
+        "category": "Course",
         "tags": [
             "\"mininet-series\""
         ]
     },
     {
-        "file": "_posts/kuliah/2025-10-09-debian7-setup-15-fondasi.md",
+        "file": "_posts/debian/2025-10-09-debian7-setup-15-fondasi.md",
         "title": "(Part 16): Install & Konfigurasi Polisi Konten SquidGuard",
         "date": "2025-10-09",
-        "category": "Kuliah",
+        "category": "Course",
         "tags": [
             "\"debian-server-series\""
         ]
     },
     {
-        "file": "_posts/kuliah/2025-10-08-debian7-setup-14-fondasi.md",
+        "file": "_posts/debian/2025-10-08-debian7-setup-14-fondasi.md",
         "title": "(Part 15): Install & Konfigurasi Proxy Squid3",
         "date": "2025-10-08",
-        "category": "Kuliah",
+        "category": "Course",
         "tags": [
             "\"debian-server-series\""
         ]
     },
     {
-        "file": "_posts/kuliah/2025-10-07-debian7-setup-13-fondasi.md",
+        "file": "_posts/debian/2025-10-07-debian7-setup-13-fondasi.md",
         "title": "(Part 14): Konfigurasi User Dir",
         "date": "2025-10-07",
-        "category": "Kuliah",
+        "category": "Course",
         "tags": [
             "\"debian-server-series\""
         ]
     },
     {
-        "file": "_posts/kuliah/2025-10-06-debian7-setup-12-fondasi.md",
+        "file": "_posts/debian/2025-10-06-debian7-setup-12-fondasi.md",
         "title": "(Part 13): Konfigurasi SSL",
         "date": "2025-10-06",
-        "category": "Kuliah",
+        "category": "Course",
         "tags": [
             "\"debian-server-series\""
         ]
     },
     {
-        "file": "_posts/kuliah/2025-10-05-debian7-setup-11-fondasi.md",
+        "file": "_posts/debian/2025-10-05-debian7-setup-11-fondasi.md",
         "title": "(Part 12): Konfigurasi Hosting",
         "date": "2025-10-05",
-        "category": "Kuliah",
+        "category": "Course",
         "tags": [
             "\"debian-server-series\""
         ]
     },
     {
-        "file": "_posts/kuliah/2025-10-04-debian7-setup-10-fondasi.md",
+        "file": "_posts/debian/2025-10-04-debian7-setup-10-fondasi.md",
         "title": "(Part 11): Install dan Konfigurasi Samba Server",
         "date": "2025-10-04",
-        "category": "Kuliah",
+        "category": "Course",
         "tags": [
             "\"debian-server-series\""
         ]
     },
     {
-        "file": "_posts/kuliah/2025-10-03-debian7-setup-09-fondasi.md",
+        "file": "_posts/debian/2025-10-03-debian7-setup-09-fondasi.md",
         "title": "(Part 10): Install dan Konfigurasi Mail Server",
         "date": "2025-10-03",
-        "category": "Kuliah",
+        "category": "Course",
         "tags": [
             "\"debian-server-series\""
         ]
     },
     {
-        "file": "_posts/kuliah/2025-10-02-debian7-setup-08-fondasi.md",
+        "file": "_posts/debian/2025-10-02-debian7-setup-08-fondasi.md",
         "title": "(Part 9): Install dan Konfigurasi Database Mysql & PhpMyAdmin",
         "date": "2025-10-02",
-        "category": "Kuliah",
+        "category": "Course",
         "tags": [
             "\"debian-server-series\""
         ]
     },
     {
-        "file": "_posts/kuliah/2025-10-01-debian7-setup-07-fondasi.md",
+        "file": "_posts/debian/2025-10-01-debian7-setup-07-fondasi.md",
         "title": "(Part 8): Tranfer File Aman Antara VSFTPD dengan SFTP",
         "date": "2025-10-01",
-        "category": "Kuliah",
+        "category": "Course",
         "tags": [
             "\"debian-server-series\""
         ]
     },
     {
-        "file": "_posts/kuliah/2025-09-30-debian7-setup-06-fondasi.md",
+        "file": "_posts/debian/2025-09-30-debian7-setup-06-fondasi.md",
         "title": "(Part 7): Konfigurasi NAT Router Sharing Internet",
         "date": "2025-09-30",
-        "category": "Kuliah",
+        "category": "Course",
         "tags": [
             "\"debian-server-series\""
         ]
     },
     {
-        "file": "_posts/kuliah/2025-09-29-debian7-setup-05-fondasi.md",
+        "file": "_posts/debian/2025-09-29-debian7-setup-05-fondasi.md",
         "title": "(Part 6): Install dan Konfigurasi DHCP Server pada Windows 7",
         "date": "2025-09-29",
-        "category": "Kuliah",
+        "category": "Course",
         "tags": [
             "\"debian-server-series\""
         ]
     },
     {
-        "file": "_posts/kuliah/2025-09-28-debian7-setup-04-fondasi.md",
+        "file": "_posts/debian/2025-09-28-debian7-setup-04-fondasi.md",
         "title": "(Part 5): Konfigurasi Web Server, Apache2, Perl2, Php5",
         "date": "2025-09-28",
-        "category": "Kuliah",
+        "category": "Course",
         "tags": [
             "\"debian-server-series\""
         ]
     },
     {
-        "file": "_posts/kuliah/2025-09-27-debian7-setup-03-fondasi.md",
+        "file": "_posts/debian/2025-09-27-debian7-setup-03-fondasi.md",
         "title": "(Part 4): Konfigurasi Bridge Adapter",
         "date": "2025-09-27",
-        "category": "Kuliah",
+        "category": "Course",
         "tags": [
             "\"debian-server-series\""
         ]
     },
     {
-        "file": "_posts/kuliah/2025-09-26-debian7-setup-02-fondasi.md",
+        "file": "_posts/debian/2025-09-26-debian7-setup-02-fondasi.md",
         "title": "(Part 3): Konfigurasi NTP, SSH, DNS, DHCP Server",
         "date": "2025-09-26",
-        "category": "Kuliah",
+        "category": "Course",
         "tags": [
             "\"debian-server-series\""
         ]
     },
     {
-        "file": "_posts/kuliah/2025-09-25-debian7-setup-01-fondasi.md",
+        "file": "_posts/debian/2025-09-25-debian7-setup-01-fondasi.md",
         "title": "(Part 2): Konfigurasi Dasar Server",
         "date": "2025-09-25",
-        "category": "Kuliah",
+        "category": "Course",
         "tags": [
             "\"debian-server-series\""
         ]
     },
     {
-        "file": "_posts/kuliah/2025-09-24-debian7-setup-00-fondasi.md",
+        "file": "_posts/debian/2025-09-24-debian7-setup-00-fondasi.md",
         "title": "(Part 1): Instalasi Server dari Awal",
         "date": "2025-09-24",
-        "category": "Kuliah",
+        "category": "Course",
         "tags": [
             "\"debian-server-series\""
         ]
@@ -225,11 +225,11 @@
         ]
     },
     {
-        "file": "_posts/kuliah/2025-09-23-debian7.md",
+        "file": "_posts/debian/2025-09-23-debian7.md",
         "title": "The Server Journey: Debian 7 Legacy",
         "author": "Teungku",
         "date": "2025-09-23",
-        "category": "Kuliah",
+        "category": "Course",
         "tags": [
             "\"debian-server-series\""
         ],
@@ -245,15 +245,15 @@
         ]
     },
     {
-        "file": "_posts/course/2025-11-28-gns3-stage1.md"
+        "file": "_posts/gns3/2025-11-28-gns3-stage1.md"
     },
     {
-        "file": "_posts/course/2025-11-29-gns3-stage2.md"
+        "file": "_posts/gns3/2025-11-29-gns3-stage2.md"
     },
     {
-        "file": "_posts/course/2025-11-30-gns3-stage3.md"
+        "file": "_posts/gns3/2025-11-30-gns3-stage3.md"
     },
     {
-        "file": "_posts/course/2025-12-01-gns3-stage4.md"
+        "file": "_posts/gns3/2025-12-01-gns3-stage4.md"
     }
 ]

@@ -1,7 +1,7 @@
 ---
 title: "(Part 16): Install & Konfigurasi Polisi Konten SquidGuard"
 date: "2025-10-09"
-category: "Kuliah"
+category: "Course"
 tags: ["debian-server-series"]
 ---
 

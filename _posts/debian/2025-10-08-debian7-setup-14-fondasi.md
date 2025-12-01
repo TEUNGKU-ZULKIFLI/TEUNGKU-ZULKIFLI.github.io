@@ -1,7 +1,7 @@
 ---
 title: "(Part 15): Install & Konfigurasi Proxy Squid3"
 date: "2025-10-08"
-category: "Kuliah"
+category: "Course"
 tags: ["debian-server-series"]
 ---
 

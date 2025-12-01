@@ -1,7 +1,7 @@
 ---
 title: "(Part 6): Install dan Konfigurasi DHCP Server pada Windows 7"
 date: "2025-09-29"
-category: "Kuliah"
+category: "Course"
 tags: ["debian-server-series"]
 ---
 

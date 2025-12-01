@@ -1,7 +1,7 @@
 ---
 title: "(Part 5): Konfigurasi Web Server, Apache2, Perl2, Php5"
 date: "2025-09-28"
-category: "Kuliah"
+category: "Course"
 tags: ["debian-server-series"]
 ---
 

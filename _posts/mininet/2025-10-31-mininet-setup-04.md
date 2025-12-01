@@ -1,7 +1,7 @@
 ---
 title: "Tahapan 04: Topology Tree Custom"
 date: "2025-10-31"
-category: "Kuliah"
+category: "Course"
 tags: ["mininet-series"]
 ---
 

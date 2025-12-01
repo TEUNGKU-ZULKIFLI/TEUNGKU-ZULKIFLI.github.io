@@ -1,7 +1,7 @@
 ---
 title: "(Part 11): Install dan Konfigurasi Samba Server"
 date: "2025-10-04"
-category: "Kuliah"
+category: "Course"
 tags: ["debian-server-series"]
 ---
 

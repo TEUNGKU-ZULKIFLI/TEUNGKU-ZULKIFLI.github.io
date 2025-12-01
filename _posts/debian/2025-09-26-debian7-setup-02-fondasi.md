@@ -1,7 +1,7 @@
 ---
 title: "(Part 3): Konfigurasi NTP, SSH, DNS, DHCP Server"
 date: "2025-09-26"
-category: "Kuliah"
+category: "Course"
 tags: ["debian-server-series"]
 ---
 

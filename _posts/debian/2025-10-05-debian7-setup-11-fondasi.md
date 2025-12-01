@@ -1,7 +1,7 @@
 ---
 title: "(Part 12): Konfigurasi Hosting"
 date: "2025-10-05"
-category: "Kuliah"
+category: "Course"
 tags: ["debian-server-series"]
 ---
 

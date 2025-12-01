@@ -1,7 +1,7 @@
 ---
 title: "Integrasi Mininet VM - Tahapan 02: Integrasi ONOS dengan Mininet VM"
 date: "2025-10-20"
-category: "Kuliah"
+category: "Course"
 tags: ["mininet-series"]
 ---
 

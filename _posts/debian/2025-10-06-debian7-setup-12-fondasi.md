@@ -1,7 +1,7 @@
 ---
 title: "(Part 13): Konfigurasi SSL"
 date: "2025-10-06"
-category: "Kuliah"
+category: "Course"
 tags: ["debian-server-series"]
 ---
 

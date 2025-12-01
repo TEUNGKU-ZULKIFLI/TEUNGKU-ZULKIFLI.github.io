@@ -1,7 +1,7 @@
 ---
 title: "Tahapan 05: Topology Linear Custom"
 date: "2025-11-01"
-category: "Kuliah"
+category: "Course"
 tags: ["mininet-series"]
 ---
 

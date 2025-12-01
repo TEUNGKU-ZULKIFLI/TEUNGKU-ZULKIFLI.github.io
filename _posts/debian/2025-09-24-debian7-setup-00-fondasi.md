@@ -1,7 +1,7 @@
 ---
 title: "(Part 1): Instalasi Server dari Awal"
 date: "2025-09-24"
-category: "Kuliah"
+category: "Course"
 tags: ["debian-server-series"]
 ---
 

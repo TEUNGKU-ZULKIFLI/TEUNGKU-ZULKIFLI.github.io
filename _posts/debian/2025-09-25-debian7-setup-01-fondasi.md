@@ -1,7 +1,7 @@
 ---
 title: "(Part 2): Konfigurasi Dasar Server"
 date: "2025-09-25"
-category: "Kuliah"
+category: "Course"
 tags: ["debian-server-series"]
 ---
 

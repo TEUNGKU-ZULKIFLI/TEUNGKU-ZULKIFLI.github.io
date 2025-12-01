@@ -1,7 +1,7 @@
 ---
 title: "Installasi Mininet VM - Tahapan 01: Setup Mininet VM"
 date: "2025-10-10"
-category: "Kuliah"
+category: "Course"
 tags: ["mininet-series"]
 ---
 

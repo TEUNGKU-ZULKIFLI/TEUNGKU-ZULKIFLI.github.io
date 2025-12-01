@@ -1,7 +1,7 @@
 ---
 title: "(Part 10): Install dan Konfigurasi Mail Server"
 date: "2025-10-03"
-category: "Kuliah"
+category: "Course"
 tags: ["debian-server-series"]
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: "Tahapan 03: Topology Single Custom"
 date: "2025-10-30"
-category: "Kuliah"
+category: "Course"
 tags: ["mininet-series"]
 ---
 

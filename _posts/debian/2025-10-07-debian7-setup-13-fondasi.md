@@ -1,7 +1,7 @@
 ---
 title: "(Part 14): Konfigurasi User Dir"
 date: "2025-10-07"
-category: "Kuliah"
+category: "Course"
 tags: ["debian-server-series"]
 ---
 

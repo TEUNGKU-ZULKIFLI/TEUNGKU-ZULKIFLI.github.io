@@ -1,7 +1,7 @@
 ---
 title: "(Part 9): Install dan Konfigurasi Database Mysql & PhpMyAdmin"
 date: "2025-10-02"
-category: "Kuliah"
+category: "Course"
 tags: ["debian-server-series"]
 ---
 
