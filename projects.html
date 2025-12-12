@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Judul Halaman Dinamis -->
     <title data-lang="pages.projects.pageTitle">Proyek - TEUNGKU ZULKIFLI</title>
     <link rel="stylesheet" href="assets/css/main.style.css">
 </head>
@@ -10,18 +11,16 @@
     <header>
         <nav>
             <a href="index.html" class="logo">Teungku Zulkifli</a>
-<ul id="nav-links">
-    <li><a data-lang="common.navHome" href="index.html#home">Beranda</a></li>
-    <li><a data-lang="common.navAbout" href="index.html#about">Tentang</a></li>
-    <li><a data-lang="common.navContact" href="index.html#contact">Kontak</a></li>
-    <li><a data-lang="common.navProjects" href="projects.html">Proyek</a></li>
-    <li><a data-lang="common.navBlog" href="blog.html">Blog</a></li>
-</ul>
-<button id="hamburger-btn" aria-label="Toggle Menu">
-    <span></span>
-    <span></span>
-    <span></span>
-</button>
+            <ul id="nav-links">
+                <li><a data-lang="common.navHome" href="index.html#home">Beranda</a></li>
+                <li><a data-lang="common.navAbout" href="index.html#about">Tentang</a></li>
+                <li><a data-lang="common.navContact" href="index.html#contact">Kontak</a></li>
+                <li><a data-lang="common.navProjects" href="projects.html">Proyek</a></li>
+                <li><a data-lang="common.navBlog" href="blog.html">Blog</a></li>
+            </ul>
+            <button id="hamburger-btn" aria-label="Toggle Menu">
+                <span></span><span></span><span></span>
+            </button>
         </nav>
     </header>
 
@@ -30,19 +29,40 @@
             <h1 data-lang="pages.projects.mainTitle">Galeri Proyek</h1>
             <p data-lang="pages.projects.introText">Berikut adalah beberapa proyek pilihan yang menunjukkan perjalanan dan keahlian saya dalam pengembangan perangkat lunak.</p>
             
+            <!-- ==============================
+                 TIER 1: FEATURED (PROYEK UNGGULAN)
+                 Grid 2 Kolom dengan Gambar Besar
+                 ============================== -->
             <div class="project-grid">
 
-                <!-- Proyek 1: Apok FinTrack -->
+                <!-- 1. Smart Bin (Highlight Utama) -->
                 <div class="project-card">
-                    <!-- GAMBAR PROYEK -->
-                    <img src="https://placehold.co/100x100/2c2c2c/f0f0f0?text=Apok+FinTrack" alt="Apok FinTrack Screenshot" class="project-image">
-                    
-                    <!-- KONTEN TEKS -->
+                    <img src="assets/images/smartbin.jpg" onerror="this.src='https://placehold.co/600x400/2c2c2c/f0f0f0?text=SmartBin+IoT'" alt="SmartBin Project" class="project-image">
                     <div class="project-content">
-                        <h3 data-lang="pages.projects.finTrackTitle">Apok FinTrack - Pelacak Keuangan</h3>
-                        <p data-lang="pages.projects.finTrackDesc">Aplikasi mobile untuk mencatat pendapatan & pengeluaran harian, mengelola kartu, melihat riwayat, dan menganalisis data dengan grafik.</p>
-                        
-                        <!-- DAFTAR TEKNOLOGI -->
+                        <h3 data-lang="pages.projects.smartBinTitle">SmartBin - IoT Waste Management</h3>
+                        <p data-lang="pages.projects.smartBinDesc">Sistem tempat sampah pintar...</p>
+                        <div class="tech-stack-wrapper">
+                            <p class="tech-stack-label" data-lang="pages.projects.techStack">Teknologi:</p>
+                            <ul class="tech-stack">
+                                <li>Laravel</li>
+                                <li>IoT (ESP8266)</li>
+                                <li>Arduino C++</li>
+                                <li>Docker</li>
+                            </ul>
+                        </div>
+                        <div class="project-links">
+                            <a href="article.html?post=_posts/projects/2025-01-02-smartbin-iot-system.md" class="cta-button outline" data-lang="pages.projects.projectDetailButton">Lihat Detail</a>
+                            <a href="https://github.com/TEUNGKU-ZULKIFLI/smartbin" target="_blank" class="cta-button" data-lang="pages.projects.codeButton">Lihat Kode</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Apok FinTrack -->
+                <div class="project-card">
+                    <img src="assets/images/fintrack.jpg" onerror="this.src='https://placehold.co/600x400/2c2c2c/f0f0f0?text=FinTrack'" alt="FinTrack Project" class="project-image">
+                    <div class="project-content">
+                        <h3 data-lang="pages.projects.finTrackTitle">Apok FinTrack</h3>
+                        <p data-lang="pages.projects.finTrackDesc">Aplikasi mobile pencatat keuangan...</p>
                         <div class="tech-stack-wrapper">
                             <p class="tech-stack-label" data-lang="pages.projects.techStack">Teknologi:</p>
                             <ul class="tech-stack">
@@ -51,55 +71,155 @@
                                 <li>Sqflite</li>
                             </ul>
                         </div>
-
-                        <!-- TOMBOL AKSI (CTA) -->
                         <div class="project-links">
-                            <a href="https://github.com/TEUNGKU-ZULKIFLI/finance_tracker" target="_blank" class="cta-button" data-lang="projectCodeButton">Lihat Kode</a>
+                            <a href="article.html?post=_posts/projects/2025-09-10-apok-fintrack.md" class="cta-button outline" data-lang="pages.projects.projectDetailButton">Lihat Detail</a>
+                            <a href="https://github.com/TEUNGKU-ZULKIFLI/finance_tracker" target="_blank" class="cta-button" data-lang="pages.projects.codeButton">Lihat Kode</a>
                         </div>
                     </div>
                 </div>
 
-                <!-- Proyek 2: ATTC -->
+                <!-- 3. ATTC (Travel Car) -->
                 <div class="project-card">
-                    <img src="https://placehold.co/100x100/2c2c2c/f0f0f0?text=ATTC" alt="ATTC Screenshot" class="project-image">
+                    <img src="assets/images/attc.jpg" onerror="this.src='https://placehold.co/600x400/2c2c2c/f0f0f0?text=ATTC+Travel'" alt="ATTC Project" class="project-image">
                     <div class="project-content">
-                        <h3 data-lang="pages.projects.attcTitle">Aceh Ticket Travel Car (ATTC)</h3>
-                        <p data-lang="pages.projects.attcDesc">Platform mobile untuk reservasi tiket perjalanan mobil. Pengguna dapat mencari rute yang tersedia dan melihat informasi pemesanan.</p>
+                        <h3 data-lang="pages.projects.attcTitle">Aceh Ticket Travel Car</h3>
+                        <p data-lang="pages.projects.attcDesc">Platform reservasi tiket travel...</p>
                         <div class="tech-stack-wrapper">
                             <p class="tech-stack-label" data-lang="pages.projects.techStack">Teknologi:</p>
                             <ul class="tech-stack">
                                 <li>Flutter</li>
-                                <li>Dart</li>
                                 <li>MySQL</li>
+                                <li>PHP API</li>
                             </ul>
                         </div>
                         <div class="project-links">
-                            <a href="https://github.com/TEUNGKU-ZULKIFLI/ACEH_TICKET_TRAVEL_CAR" target="_blank" class="cta-button" data-lang="projectCodeButton">Lihat Kode</a>
+                            <a href="article.html?post=_posts/projects/2024-12-30-attc-travel-booking.md" class="cta-button outline" data-lang="pages.projects.projectDetailButton">Lihat Detail</a>
+                            <a href="https://github.com/TEUNGKU-ZULKIFLI/ACEH_TICKET_TRAVEL_CAR" target="_blank" class="cta-button" data-lang="pages.projects.codeButton">Lihat Kode</a>
                         </div>
                     </div>
                 </div>
 
-                <!-- Proyek 3: Smart Bin -->
+                <!-- 4. App Apotek -->
                 <div class="project-card">
-                    <img src="https://placehold.co/100x100/2c2c2c/f0f0f0?text=Smart+Bin" alt="Smart Bin Screenshot" class="project-image">
+                    <img src="assets/images/apotek.jpg" onerror="this.src='https://placehold.co/600x400/2c2c2c/f0f0f0?text=App+Apotek'" alt="Apotek Project" class="project-image">
                     <div class="project-content">
-                        <h3 data-lang="pages.projects.smartBinTitle">Smart Bin - Tempat Sampah Pintar</h3>
-                        <p data-lang="pages.projects.smartBinDesc">Sistem tempat sampah pintar berbasis IoT yang terintegrasi dengan sensor untuk memonitor kapasitas dan mengirim notifikasi.</p>
+                        <h3 data-lang="pages.projects.apotekTitle">Sistem Manajemen Apotek</h3>
+                        <p data-lang="pages.projects.apotekDesc">Aplikasi manajemen data obat...</p>
                         <div class="tech-stack-wrapper">
                             <p class="tech-stack-label" data-lang="pages.projects.techStack">Teknologi:</p>
                             <ul class="tech-stack">
-                                <li>Laravel</li>
-                                <li>Arduino</li>
-                                <li>PHP</li>
+                                <li>Flutter</li>
+                                <li>Firebase Auth</li>
+                                <li>Firestore</li>
                             </ul>
                         </div>
                         <div class="project-links">
-                            <a href="https://github.com/TEUNGKU-ZULKIFLI/smartbin" target="_blank" class="cta-button" data-lang="projectCodeButton">Lihat Kode</a>
+                            <a href="article.html?post=_posts/projects/2024-12-11-sistem-manajemen-apotek.md" class="cta-button outline" data-lang="pages.projects.projectDetailButton">Lihat Detail</a>
+                            <a href="https://github.com/TEUNGKU-ZULKIFLI/PROJECT-FLUTTER/blob/master/002.1.APP_APOTEK_FLUTTERFIRE.md" target="_blank" class="cta-button" data-lang="pages.projects.codeButton">Lihat Kode</a>
                         </div>
                     </div>
                 </div>
 
+            </div> <!-- Akhir Grid Tier 1 -->
+
+
+            <!-- ==============================
+                 TIER 2: WEB & SYSTEM (KOMPETENSI)
+                 Pemisah + Grid Standar
+                 ============================== -->
+            <div class="tier-separator">
+                <h2 data-lang="pages.projects.tier2Title">Sistem & Web Eksperimental</h2>
+                <p data-lang="pages.projects.tier2Desc">Eksplorasi mendalam dalam pengembangan web...</p>
             </div>
+
+            <div class="project-grid">
+                <!-- 5. OS-APOK -->
+                <div class="project-card">
+                    <img src="assets/images/os-apok.jpg" onerror="this.src='https://placehold.co/600x400/2c2c2c/f0f0f0?text=OS-APOK'" alt="OS APOK" class="project-image">
+                    <div class="project-content">
+                        <h3 data-lang="pages.projects.osApokTitle">OS-APOK</h3>
+                        <p data-lang="pages.projects.osApokDesc">Simulasi sistem operasi berbasis web.</p>
+                        <div class="tech-stack-wrapper">
+                            <ul class="tech-stack">
+                                <li>HTML5</li>
+                                <li>CSS3</li>
+                                <li>Vanilla JS</li>
+                            </ul>
+                        </div>
+                        <div class="project-links">
+                            <a href="article.html?post=_posts/projects/2025-01-02-os-apok-web.md" class="cta-button outline" data-lang="pages.projects.projectDetailButton">Lihat Detail</a>
+                            <a href="https://github.com/TEUNGKU-ZULKIFLI/OS-APOK" class="cta-button" data-lang="pages.projects.codeButton">Lihat Kode</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 6. Laravel Auth -->
+                <div class="project-card">
+                    <img src="https://placehold.co/600x400/2c2c2c/f0f0f0?text=Laravel+Auth" class="project-image">
+                    <div class="project-content">
+                        <h3 data-lang="pages.projects.authSystemTitle">Laravel JWT Auth</h3>
+                        <p data-lang="pages.projects.authSystemDesc">Sistem login & register aman.</p>
+                        <div class="tech-stack-wrapper">
+                            <ul class="tech-stack">
+                                <li>Laravel</li>
+                                <li>JWT</li>
+                                <li>Laradock</li>
+                            </ul>
+                        </div>
+                        <div class="project-links">
+                            <a href="article.html?post=_posts/projects/2024-12-13-laravel-jwt-auth.md" class="cta-button outline" data-lang="pages.projects.projectDetailButton">Lihat Detail</a>
+                            <a href="https://github.com/TEUNGKU-ZULKIFLI/installasi-recomended-byTEUNGKU" class="cta-button" data-lang="pages.projects.codeButton">Lihat Kode</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 7. Teungku Craft -->
+                <div class="project-card">
+                    <img src="https://placehold.co/600x400/2c2c2c/f0f0f0?text=Craft" class="project-image">
+                    <div class="project-content">
+                        <h3 data-lang="pages.projects.craftTitle">Teungku Craft</h3>
+                        <p data-lang="pages.projects.craftDesc">Website toko online statis.</p>
+                        <div class="tech-stack-wrapper">
+                            <ul class="tech-stack">
+                                <li>HTML</li>
+                                <li>CSS</li>
+                            </ul>
+                        </div>
+                        <div class="project-links">
+                            <a href="article.html?post=_posts/projects/2024-08-01-teungku-craft.md" class="cta-button outline" data-lang="pages.projects.projectDetailButton">Lihat Detail</a>
+                            <a href="https://github.com/TEUNGKU-ZULKIFLI/TEUNGKU-CRAFT" class="cta-button" data-lang="pages.projects.codeButton">Lihat Kode</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- ==============================
+                 TIER 3: THE LAB (ARSIP EKSPERIMEN)
+                 Pemisah + Grid Kompak
+                 ============================== -->
+            <div class="tier-separator">
+                <h2 data-lang="pages.projects.tier3Title">Laboratorium Kode</h2>
+                <p data-lang="pages.projects.tier3Desc">Kumpulan eksperimen kecil...</p>
+            </div>
+
+            <div class="lab-grid">
+                <!-- Lab 1: Flutter Widgets (Mewakili Project 1-15) -->
+                <div class="lab-card">
+                    <h4 data-lang="pages.projects.flutterLabTitle">Flutter UI & Logic Lab</h4>
+                    <p data-lang="pages.projects.flutterLabDesc">Kumpulan 18+ eksperimen modul Flutter.</p>
+                    <!-- Link ke tab repository GitHub Anda -->
+                    <a href="https://github.com/TEUNGKU-ZULKIFLI/PROJECT-FLUTTER/blob/master/README.md" target="_blank">Lihat Repositori →</a>
+                </div>
+
+                <!-- Lab 2: IoT Journey -->
+                <div class="lab-card">
+                    <h4 data-lang="pages.projects.iotJourneyTitle">IoT Journey</h4>
+                    <p data-lang="pages.projects.iotJourneyDesc">Dokumentasi perjalanan belajar IoT.</p>
+                    <a href="https://github.com/TEUNGKU-ZULKIFLI/InternetofThings" target="_blank">Lihat Repositori →</a>
+                </div>
+            </div>
+
         </section>
     </main>
 

@@ -63,11 +63,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
         fetch('manifest.json')
             .then(response => response.ok ? response.json() : Promise.reject('Gagal memuat manifest'))
-            .then(posts => {
+            .then(allPosts => {
+                // --- FILTER BARU DIMULAI DI SINI ---
+                // Kita hanya mengambil artikel yang KATEGORI-nya BUKAN 'Project'.
+                // Artikel dengan kategori 'Project' akan disembunyikan dari halaman Blog.
+                const posts = allPosts.filter(p => p.category !== 'Project');
+                // --- FILTER BARU SELESAI ---
+
                 if (!posts || posts.length === 0) {
-                    container.innerHTML = '<p>Belum ada artikel yang dipublikasikan.</p>';
+                    container.innerHTML = '<p>Belum ada artikel blog yang dipublikasikan.</p>';
                     return;
                 }
+
+                // Fungsi kecil untuk menampilkan artikel (agar bisa dipakai ulang)
                 const renderPosts = (postList) => {
                     container.innerHTML = '';
                     if (postList.length === 0) {
@@ -78,13 +86,27 @@ document.addEventListener('DOMContentLoaded', function() {
                         const postElement = document.createElement('div');
                         postElement.className = 'project-card';
                         const tagsHTML = post.tags ? `<p class="tags">Tags: ${post.tags.join(', ')}</p>` : '';
-                        postElement.innerHTML = `<div class="project-content"><h3>${post.title}</h3><p>Kategori: ${post.category} | Tanggal: ${post.date}</p>${tagsHTML}<div class="project-links"><a href="article.html?post=${post.file}" class="cta-button">Baca Selengkapnya</a></div></div>`;
+                        postElement.innerHTML = `
+                            <div class="project-content">
+                                <h3>${post.title}</h3>
+                                <p>Kategori: ${post.category} | Tanggal: ${post.date}</p>
+                                ${tagsHTML}
+                                <div class="project-links">
+                                    <a href="article.html?post=${post.file}" class="cta-button">Baca Selengkapnya</a>
+                                </div>
+                            </div>
+                        `;
                         container.appendChild(postElement);
                     });
                 };
+
+                // Ambil semua kategori & tag unik DARI HASIL FILTER (posts), bukan semua data (allPosts)
                 const allCategories = ['Semua', ...new Set(posts.map(p => p.category))];
                 const allTags = [...new Set(posts.flatMap(p => p.tags || []))];
-                filterContainer.innerHTML = '';
+
+                filterContainer.innerHTML = ''; // Kosongkan kontainer filter
+
+                // Buat grup filter Kategori (Primary)
                 const categoryGroup = document.createElement('div');
                 categoryGroup.className = 'filter-group';
                 categoryGroup.innerHTML = '<strong>Kategori:</strong>';
@@ -97,6 +119,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     categoryGroup.appendChild(btn);
                 });
                 filterContainer.appendChild(categoryGroup);
+                
+                // Buat grup filter Tag (Secondary) jika ada
                 if (allTags.length > 0) {
                     const tagGroup = document.createElement('div');
                     tagGroup.className = 'filter-group';
@@ -110,13 +134,17 @@ document.addEventListener('DOMContentLoaded', function() {
                     });
                     filterContainer.appendChild(tagGroup);
                 }
+                
+                // Tambahkan event listener ke semua tombol filter
                 const filterButtons = filterContainer.querySelectorAll('.filter-btn');
                 filterButtons.forEach(btn => {
                     btn.addEventListener('click', () => {
                         filterButtons.forEach(b => b.classList.remove('active'));
                         btn.classList.add('active');
+                        
                         const filterValue = btn.textContent;
                         const filterType = btn.dataset.filterType;
+
                         if (filterValue === 'Semua') {
                             renderPosts(posts);
                         } else if (filterType === 'category') {
@@ -126,7 +154,10 @@ document.addEventListener('DOMContentLoaded', function() {
                         }
                     });
                 });
+
+                // Tampilkan artikel yang sudah difilter saat pertama kali dimuat
                 renderPosts(posts);
+
             })
             .catch(error => {
                 console.error("Gagal memuat manifest artikel:", error);

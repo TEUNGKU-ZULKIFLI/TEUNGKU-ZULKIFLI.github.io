@@ -1,5 +1,14 @@
 [
     {
+        "file": "_posts/mininet/2025-11-03-mininet-setup-07.md",
+        "title": "Tahapan 07: Praktikum QoS (Quality of Service)",
+        "date": "2025-11-03",
+        "category": "Course",
+        "tags": [
+            "\"mininet-series\""
+        ]
+    },
+    {
         "file": "_posts/mininet/2025-11-02-mininet-setup-06.md",
         "title": "Tahapan 06: Topology VPLS EZ",
         "date": "2025-11-02",
@@ -243,6 +252,91 @@
         "tags": [
             "\"tutorials-series\""
         ]
+    },
+    {
+        "file": "_posts/projects/2025-01-02-os-apok-web.md",
+        "title": "Studi Kasus: OS-APOK (Web Portfolio)",
+        "date": "2025-01-02",
+        "category": "Project",
+        "tags": [
+            "\"HTML\"",
+            "\"CSS\"",
+            "\"JS\""
+        ],
+        "status": "Completed"
+    },
+    {
+        "file": "_posts/projects/2025-01-02-smartbin-iot-system.md",
+        "title": "SmartBin: Sistem Manajemen Sampah Cerdas Berbasis IoT",
+        "date": "2025-01-02",
+        "category": "Project",
+        "tags": [
+            "\"IoT\"",
+            "\"Laravel\"",
+            "\"Arduino\"",
+            "\"Hardware\""
+        ]
+    },
+    {
+        "file": "_posts/projects/2024-12-30-attc-travel-booking.md",
+        "title": "Studi Kasus: Aceh Ticket Travel Car (ATTC)",
+        "date": "2024-12-30",
+        "category": "Project",
+        "tags": [
+            "\"System\"",
+            "\"Flutter\"",
+            "\"Mysql\""
+        ],
+        "status": "Completed"
+    },
+    {
+        "file": "_posts/projects/2024-12-13-laravel-jwt-auth.md",
+        "title": "Studi Kasus: Sistem Autentikasi Laravel JWT",
+        "date": "2024-12-13",
+        "category": "Project",
+        "tags": [
+            "\"Auth\"",
+            "\"Laravel\"",
+            "\"JWT\""
+        ],
+        "status": "Completed"
+    },
+    {
+        "file": "_posts/projects/2024-12-11-sistem-manajemen-apotek.md",
+        "title": "Studi Kasus: Sistem Manajemen Poliklinik/Apotek",
+        "date": "2024-12-11",
+        "category": "Project",
+        "tags": [
+            "\"System\"",
+            "\"Flutter\"",
+            "\"Firebase\""
+        ],
+        "status": "Completed"
+    },
+    {
+        "file": "_posts/projects/2025-09-10-apok-fintrack.md",
+        "title": "Studi Kasus: Apok FinTrack - Manajemen Keuangan",
+        "date": "2024-09-10",
+        "category": "Project",
+        "tags": [
+            "\"System\"",
+            "\"Flutter\"",
+            "\"SQLite\""
+        ],
+        "status": "Completed"
+    },
+    {
+        "file": "_posts/projects/2024-08-01-teungku-craft.md",
+        "title": "Studi Kasus: Teungku Craft - E-Commerce",
+        "date": "2024-08-01",
+        "category": "Project",
+        "tags": [
+            "\"WebStatic\"",
+            "\"HTML\"",
+            "\"CSS\"",
+            "\"JavaScript\""
+        ],
+        "status": "Completed"
     },
     {
         "file": "_posts/gns3/2025-11-28-gns3-stage1.md"

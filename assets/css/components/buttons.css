@@ -23,3 +23,14 @@
     background-color: #0056b3; /* Warna biru yang sedikit lebih gelap saat di-hover */
     color: #fff !important;
 }
+
+.cta-button.outline {
+    background-color: transparent;
+    border: 1px solid var(--accent-color);
+    color: var(--accent-color) !important;
+}
+
+.cta-button.outline:hover {
+    background-color: var(--accent-color);
+    color: #fff !important;
+}

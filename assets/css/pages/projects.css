@@ -1,21 +1,18 @@
 /* GAYA SPESIFIK: HALAMAN PROYEK & BLOG */
-/* File ini menata layout grid yang digunakan oleh projects.html dan blog.html, 
-   serta detail di dalam kartu proyek. */
 
-/* Tata letak grid utama untuk galeri */
-.project-grid, 
-#articles-container {
+/* === GRID UTAMA (TIER 1 & 2) === */
+.project-grid, #articles-container {
     display: grid;
-    /* Trik responsif: buat kolom sebanyak mungkin dengan lebar minimal 320px */
+    /* Responsif: Minimal lebar kolom 320px, sisanya menyesuaikan */
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 2rem;
     margin-top: 2rem;
 }
 
-/* Penataan konten di dalam kartu proyek */
+/* === DETAIL KARTU PROYEK === */
 .tech-stack-wrapper {
-    margin-top: auto; /* Trik AJAIB: Mendorong blok ini ke bagian paling bawah kartu */
-    padding-top: 1rem; /* Beri sedikit jarak dari deskripsi di atasnya */
+    margin-top: auto;
+    padding-top: 1rem;
 }
 
 .tech-stack-label {
@@ -34,11 +31,10 @@
     gap: 0.5rem;
 }
 
-/* Gaya untuk setiap tag teknologi */
 .tech-stack li {
     background-color: #3e3e3e;
     padding: 0.25rem 0.75rem;
-    border-radius: 15px; /* Membuatnya terlihat seperti 'pil' */
+    border-radius: 15px;
     font-size: 0.8rem;
 }
 
@@ -48,21 +44,96 @@
     gap: 1rem;
 }
 
-/* GAYA BARU UNTUK FILTER BLOG */
+/* === GAYA BARU: PEMISAH TIER === */
+.tier-separator {
+    margin-top: 5rem; /* Jarak yang cukup jauh dari seksi sebelumnya */
+    margin-bottom: 2rem;
+    border-top: 1px solid #333; /* Garis pemisah halus */
+    padding-top: 2rem;
+}
+
+.tier-separator h2 {
+    color: var(--text-color);
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+}
+
+.tier-separator p {
+    color: var(--secondary-text-color);
+    font-size: 1rem;
+}
+
+/* === GAYA BARU: GRID LABORATORIUM (TIER 3) === */
+.lab-grid {
+    display: grid;
+    /* Grid lebih padat untuk item kecil: Minimal 250px */
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.lab-card {
+    background-color: var(--primary-color);
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid #444;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+    height: 100%; /* Agar tinggi kartu seragam */
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+.lab-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--accent-color); /* Highlight warna aksen saat hover */
+}
+
+.lab-card h4 {
+    color: var(--accent-color);
+    margin-top: 0;
+    margin-bottom: 0.75rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.lab-card p {
+    font-size: 0.9rem;
+    color: var(--secondary-text-color);
+    margin-bottom: 1.5rem;
+    flex-grow: 1; /* Mendorong link ke bawah agar sejajar */
+    line-height: 1.5;
+}
+
+.lab-card a {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-color);
+    text-decoration: none;
+    align-self: flex-start; /* Link rata kiri */
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    transition: color 0.2s ease;
+}
+
+.lab-card a:hover {
+    color: var(--accent-color);
+}
+
+/* GAYA FILTER BLOG (Sudah ada sebelumnya, tetap dipertahankan) */
 #filter-container {
     margin-bottom: 2rem;
     padding-bottom: 2rem;
-    border-bottom: 1px solid #444; /* Garis batas bawah seperti ide Anda */
+    border-bottom: 1px solid #444;
 }
 
 .filter-group {
     display: flex;
     align-items: center;
-    flex-wrap: wrap; /* Agar tombol pindah ke baris baru jika tidak muat */
+    flex-wrap: wrap;
     gap: 0.75rem;
 }
 
-/* Jarak antara grup Kategori dan Tag */
 .filter-group:not(:last-child) {
     margin-bottom: 1rem;
 }
@@ -74,11 +145,11 @@
 }
 
 .filter-btn {
-    background-color: transparent; /* Latar belakang transparan untuk efek outline */
+    background-color: transparent;
     color: var(--secondary-text-color);
     border: 1px solid #555;
     padding: 0.5rem 1rem;
-    border-radius: 20px; /* Membuatnya seperti 'pil' atau tag GitHub */
+    border-radius: 20px;
     cursor: pointer;
     font-family: 'Poppins', sans-serif;
     font-size: 0.9rem;
@@ -91,7 +162,6 @@
     border-color: #777;
 }
 
-/* Gaya untuk tombol yang sedang aktif */
 .filter-btn.active {
     background-color: var(--accent-color);
     color: white;
