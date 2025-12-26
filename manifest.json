@@ -1,5 +1,14 @@
 [
     {
+        "file": "_posts/mininet/2025-11-04-mininet-setup-08.md",
+        "title": "Tahapan 08: VPLS (Private Connectivity) and QoS (Quality of Service Analysis)",
+        "date": "2025-11-04",
+        "category": "Course",
+        "tags": [
+            "\"mininet-series\""
+        ]
+    },
+    {
         "file": "_posts/mininet/2025-11-03-mininet-setup-07.md",
         "title": "Tahapan 07: Praktikum QoS (Quality of Service)",
         "date": "2025-11-03",
@@ -349,5 +358,14 @@
     },
     {
         "file": "_posts/gns3/2025-12-01-gns3-stage4.md"
+    },
+    {
+        "file": "_posts/journey/2025-12-18-journey-assembly.md"
+    },
+    {
+        "file": "_posts/journey/2025-12-19-journey-c.md"
+    },
+    {
+        "file": "_posts/mikrotik/2025-12-24-TheOfficeAdmin.md"
     }
 ]
