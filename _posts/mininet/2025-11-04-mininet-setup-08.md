@@ -312,7 +312,7 @@ h11 pkill iperf3
 * **Analisa:**
 Kenapa 3.7% padahal settingnya 1%? Karena h1 ke h11 melewati **4 Link Backbone** (S1→S2→S3→S4→S5).
 Kalau setiap lompatan ada kemungkinan gagal 1%, maka total kegagalan di ujung menumpuk.
-*Hitungan kasar:* $1\% \times 4 \text{ link} \approx 4\%$.
+*Hitungan kasar:* `1% x 4 link = 4%`.
 Hasil `Kasus Saya` **3.7%** itu **sangat akurat secara statistik!** Ini bukan error, ini bukti simulasi `Kasus Saya` jalan.
 
 ### 2. Throughput TCP (Bitrate): 2.12 Mbits/sec

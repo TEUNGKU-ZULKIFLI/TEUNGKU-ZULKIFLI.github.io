@@ -1,5 +1,50 @@
 [
     {
+        "file": "_posts/mikrotik/2025-12-28-TheDoctor.md",
+        "title": "Monitoring & Diagnosa (The Network Doctor)",
+        "date": "2025-12-28",
+        "category": "Course",
+        "tags": [
+            "\"mikrotik-series\""
+        ]
+    },
+    {
+        "file": "_posts/mikrotik/2025-12-27-VPNPPTPServer.md",
+        "title": "Terowongan Rahasia (VPN PPTP Server)",
+        "date": "2025-12-27",
+        "category": "Course",
+        "tags": [
+            "\"mikrotik-series\""
+        ]
+    },
+    {
+        "file": "_posts/mikrotik/2025-12-26-FirewallFilter.md",
+        "title": "Tembok Pertahanan (Firewall Filter - Input Chain)",
+        "date": "2025-12-26",
+        "category": "Course",
+        "tags": [
+            "\"mikrotik-series\""
+        ]
+    },
+    {
+        "file": "_posts/mikrotik/2025-12-25-BandwidthManagement.md",
+        "title": "Bandwidth Management (Polisi Lalu Lintas)",
+        "date": "2025-12-25",
+        "category": "Course",
+        "tags": [
+            "\"mikrotik-series\""
+        ]
+    },
+    {
+        "file": "_posts/mikrotik/2025-12-24-TheOfficeAdmin.md",
+        "title": "Otomatisasi & Manajemen Dasar (The Office Admin)",
+        "date": "2025-12-24",
+        "category": "Course",
+        "tags": [
+            "\"mikrotik-series\""
+        ]
+    },
+    {
         "file": "_posts/mininet/2025-11-04-mininet-setup-08.md",
         "title": "Tahapan 08: VPLS (Private Connectivity) and QoS (Quality of Service Analysis)",
         "date": "2025-11-04",
@@ -364,8 +409,5 @@
     },
     {
         "file": "_posts/journey/2025-12-19-journey-c.md"
-    },
-    {
-        "file": "_posts/mikrotik/2025-12-24-TheOfficeAdmin.md"
     }
 ]
