@@ -82,10 +82,19 @@ Fase eksperimental untuk menghadirkan pengalaman **Immersive Room** pada portofo
 <img src="./learning-threejs/documentations/Documentation-issue5.png" width="600"/>
 <img src="./learning-threejs/documentations/Documentation-issue6.png" width="600"/>
 
-- [ ] **Modul 2: The Object (Benda & Hierarki)**  
+- [x] **Modul 2: The Object (Benda & Hierarki)**  
   - Eksplorasi Primitives (Sphere, Plane, Cylinder).  
   - Memahami Transformasi (Position, Rotation, Scale).  
   - Memahami Scenegraph (Parenting & Grouping).  
+  👉 [Lihat hasil modul 2/1](https://teungku-zulkifli.github.io/learning-threejs/02-primitives.html)
+  👉 [Lihat hasil modul 2/2](https://teungku-zulkifli.github.io/learning-threejs/03-transforms.html)
+  👉 [Lihat hasil modul 2/3](https://teungku-zulkifli.github.io/learning-threejs/04-scenegraph.html)
+  👉 [Lihat hasil modul 2/4](https://teungku-zulkifli.github.io/learning-threejs/05-case-study.html)
+#### Documentation
+<img src="./learning-threejs/documentations/Documentation-issue8.png" width="600"/>
+<img src="./learning-threejs/documentations/Documentation-issue9.png" width="600"/>
+<img src="./learning-threejs/documentations/Documentation-issue10.png" width="600"/>
+<img src="./learning-threejs/documentations/Documentation-issue11.png" width="600"/>
 
 - [ ] **Modul 3: The Look (Tampilan)**  
   - Texture Loading & Mapping.  
