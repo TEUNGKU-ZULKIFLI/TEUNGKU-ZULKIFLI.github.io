@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Belajar 02: Primitives</title>
+    <style>
+        html, body { margin: 0; height: 100%; }
+        #c { width: 100%; height: 100%; display: block; }
+    </style>
+</head>
+<body>
+    <canvas id="c"></canvas>
+
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"
+            }
+        }
+    </script>
+
+    <script type="module">
+        import * as THREE from 'three';
+
+        function main() {
+            // Setup Dasar
+            const canvas = document.querySelector('#c');
+            const renderer = new THREE.WebGLRenderer({ antialias: true, canvas });
+            renderer.setSize(window.innerWidth, window.innerHeight); // Set ukuran awal
+
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 100);
+            camera.position.z = 3; // Mundur sedikit agar muat 3 benda
+
+            const scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x111111); // Warna background abu gelap
+
+            // --- BAGIAN BARU: PRIMITIVES ---
+            
+            const objects = []; // Daftar benda untuk dianimasikan
+
+            // Fungsi Pembantu untuk membuat benda dengan cepat
+            function addObject(x, geometry, color) {
+                // Kita pakai MeshBasicMaterial agar warna terlihat tanpa lampu
+                // wireframe: true agar kita bisa melihat kerangka 'segmen'-nya
+                const material = new THREE.MeshBasicMaterial({ color: color, wireframe: true });
+                const mesh = new THREE.Mesh(geometry, material);
+                mesh.position.x = x;
+                
+                scene.add(mesh);
+                objects.push(mesh);
+            }
+
+            // 1. KOTAK (Box)
+            // Parameter: (lebar, tinggi, kedalaman)
+            addObject(-2, new THREE.BoxGeometry(0.8, 0.8, 0.8), 0x00ff00);
+
+            // 2. BOLA (Sphere)
+            // Parameter: (radius, segmen_lebar, segmen_tinggi)
+            // Coba ubah 32 dan 16 menjadi angka kecil (misal 4), bola akan jadi kotak-kotak!
+            addObject(0, new THREE.SphereGeometry(0.6, 32, 16), 0xff0000);
+
+            // 3. TABUNG (Cylinder)
+            // Parameter: (radius_atas, radius_bawah, tinggi, segmen_radial)
+            addObject(2, new THREE.CylinderGeometry(0.5, 0.5, 1, 32), 0x0000ff);
+
+            // 4. LANTAI (PlaneGeometry)
+            // Ini adalah kertas tipis 2D. Kita harus memutarnya agar "tiduran" jadi lantai.
+            const planeGeometry = new THREE.PlaneGeometry(10, 10); // Ukuran 10x10
+            const planeMaterial = new THREE.MeshBasicMaterial({ 
+                color: 0x222222, 
+                side: THREE.DoubleSide // Agar bisa dilihat dari atas dan bawah
+            });
+            const floor = new THREE.Mesh(planeGeometry, planeMaterial);
+            
+            // PENTING: Rotasi di 3D menggunakan Radians, bukan Derajat.
+            // Math.PI * -0.5 sama dengan -90 derajat.
+            floor.rotation.x = Math.PI * -0.5; 
+            
+            // Turunkan sedikit (y = -1) agar ada di bawah objek-objek lain
+            floor.position.y = -1;
+            
+            scene.add(floor);
+            
+            // --- ANIMASI ---
+            function render(time) {
+                time *= 0.001;  
+
+                // Putar semua benda
+                objects.forEach((obj, ndx) => {
+                    const speed = 1 + ndx * .1; 
+                    const rot = time * speed;
+                    obj.rotation.x = rot;
+                    obj.rotation.y = rot;
+                });
+
+                renderer.render(scene, camera);
+                requestAnimationFrame(render);
+            }
+
+            // Responsif
+            window.addEventListener('resize', () => {
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+            });
+
+            requestAnimationFrame(render);
+        }
+
+        main();
+    </script>
+</body>
+</html>
