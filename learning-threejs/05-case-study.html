@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Belajar 05: Studi Kasus (Laptop Hierarchy)</title>
+    <style>
+        html, body { margin: 0; height: 100%; }
+        #c { width: 100%; height: 100%; display: block; }
+    </style>
+</head>
+<body>
+    <canvas id="c"></canvas>
+
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"
+            }
+        }
+    </script>
+
+    <script type="module">
+        import * as THREE from 'three';
+
+        function main() {
+            const canvas = document.querySelector('#c');
+            const renderer = new THREE.WebGLRenderer({ antialias: true, canvas });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+
+            // Kamera posisi agak atas serong
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 100);
+            camera.position.set(3, 3, 4); 
+            camera.lookAt(0, 0, 0);
+
+            const scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x222222);
+
+            // --- STUDI KASUS: MEMBUAT LAPTOP ---
+            
+            // 1. GRUP UTAMA (Wadah Laptop Utuh)
+            // Kalau ini digeser, seluruh laptop ikut pindah.
+            const laptopGroup = new THREE.Object3D();
+            scene.add(laptopGroup);
+
+            // 2. BASE (Mesin Bawah/Keyboard)
+            // Kotak pipih: Lebar 3, Tinggi 0.2, Panjang 2
+            const baseGeometry = new THREE.BoxGeometry(3, 0.2, 2);
+            const baseMaterial = new THREE.MeshBasicMaterial({ color: 0x555555 }); // Abu tua
+            const baseMesh = new THREE.Mesh(baseGeometry, baseMaterial);
+            laptopGroup.add(baseMesh); // Masukkan ke Grup Laptop
+
+            // 3. ENGSEL (Pivot Point) - TEKNIK PENTING!
+            // Kita butuh titik putar di BAGIAN BELAKANG base, bukan di tengah.
+            const screenPivot = new THREE.Object3D();
+            screenPivot.position.y = 0.1; // Naik sedikit ke atas base
+            screenPivot.position.z = -1;  // Mundur ke ujung belakang (karena panjang base 2, setengahnya -1)
+            laptopGroup.add(screenPivot); // Tempel Engsel ke Grup Laptop
+
+            // 4. LAYAR (Screen)
+            // Kita tempel layar ke ENGSEL, bukan ke base langsung.
+            const screenGroup = new THREE.Group();
+            screenPivot.add(screenGroup);
+
+            // A. Casing Layar
+            const screenGeom = new THREE.BoxGeometry(3, 2, 0.1); 
+            const screenMat = new THREE.MeshBasicMaterial({ color: 0x888888 }); // Abu muda
+            const screenMesh = new THREE.Mesh(screenGeom, screenMat);
+            // Geser layar ke ATAS dari titik engsel
+            // Supaya saat engsel berputar, layar naik ke atas, bukan berputar di tengahnya
+            screenMesh.position.y = 1; // Setengah tinggi layar (2/2 = 1)
+            screenMesh.position.z = 0.05; // Sedikit tebal
+            screenGroup.add(screenMesh);
+
+            // B. LCD Hitam (Layar menyala)
+            const lcdGeom = new THREE.PlaneGeometry(2.8, 1.8);
+            const lcdMat = new THREE.MeshBasicMaterial({ color: 0x000000 }); // Hitam
+            const lcdMesh = new THREE.Mesh(lcdGeom, lcdMat);
+            lcdMesh.position.y = 1; // Samakan posisinya dengan casing
+            lcdMesh.position.z = 0.11; // Maju dikit biar di depan casing
+            screenGroup.add(lcdMesh);
+
+
+            // --- ANIMASI ---
+            function render(time) {
+                time *= 0.001;
+
+                // A. Rotasi seluruh laptop (Showcase)
+                laptopGroup.rotation.y = time * 0.5;
+
+                // B. Animasi Buka-Tutup Layar (Engsel)
+                // Kita memutar screenPivot pada sumbu X
+                // Math.sin membuat gerakan ayunan naik-turun (nilai -1 s/d 1)
+                // Kita ubah range-nya agar menutup (-90 derajat) dan membuka (0 derajat)
+                const movement = Math.sin(time * 2); // Naik turun
+                const angle = THREE.MathUtils.mapLinear(movement, -1, 1, -1.5, 0); 
+                
+                screenPivot.rotation.x = angle; 
+
+                renderer.render(scene, camera);
+                requestAnimationFrame(render);
+            }
+
+            window.addEventListener('resize', () => {
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+            });
+
+            requestAnimationFrame(render);
+        }
+
+        main();
+    </script>
+</body>
+</html>
