@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Belajar Three.js - Fundamentals</title>
     <style>
         /* CSS Reset Sederhana: Agar canvas memenuhi layar */
-        html, body {
+        html,
+        body {
             margin: 0;
             height: 100%;
         }
+
         #c {
             width: 100%;
             height: 100%;
@@ -17,6 +20,7 @@
         }
     </style>
 </head>
+
 <body>
 
     <!-- 1. KANVAS: Tempat pelukis menggambar -->
@@ -37,51 +41,43 @@
         import * as THREE from 'three';
 
         function main() {
-            // A. RENDERER (Si Pelukis)
-            // Mencari elemen canvas di HTML, lalu serahkan ke Three.js
+            // 1. SETUP DASAR
             const canvas = document.querySelector('#c');
             const renderer = new THREE.WebGLRenderer({ antialias: true, canvas });
 
-            // B. CAMERA (Si Mata)
-            // fov (Field of View): Seberapa lebar pandangan (75 derajat)
-            // aspect: Rasio lebar/tinggi layar (sementara set 2, nanti diperbaiki di Issue Responsive)
-            // near/far: Benda di luar jarak ini tidak akan digambar
             const fov = 75;
-            const aspect = 2; 
+            const aspect = 2;
             const near = 0.1;
             const far = 5;
             const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
-            
-            // Mundurkan kamera sedikit (z = 2) supaya tidak menabrak benda di titik nol
             camera.position.z = 2;
 
-            // C. SCENE (Panggung)
             const scene = new THREE.Scene();
 
-            // D. RENDER (Action!)
-            // Perintahkan pelukis untuk menggambar Panggung dilihat dari Kamera
-            renderer.render(scene, camera);
-            
-            // 5. Buat BENDA (Mesh) -> Hello Cube!
-            
-            // A. Geometry (Bentuk): Kotak dengan ukuran lebar 1, tinggi 1, dalam 1
+            // 2. BUAT BENDA
             const geometry = new THREE.BoxGeometry(1, 1, 1);
-            
-            // B. Material (Kulit): Warna Biru Kehijauan (Teal)
-            // Kita pakai MeshBasicMaterial karena dia TIDAK butuh lampu untuk terlihat (menyala sendiri)
             const material = new THREE.MeshBasicMaterial({ color: 0x44aa88 });
-            
-            // C. Mesh (Gabungan Bentuk + Kulit)
             const cube = new THREE.Mesh(geometry, material);
-            
-            // D. Masukkan ke Panggung
             scene.add(cube);
 
-            // 6. RENDER (Lukis!)
-            renderer.render(scene, camera);
+            // 3. ANIMATION LOOP (BARU!)
+            function render(time) {
+                time *= 0.001;  // Konversi ke detik
+
+                // Putar kubus
+                cube.rotation.x = time;
+                cube.rotation.y = time;
+
+                renderer.render(scene, camera);
+
+                requestAnimationFrame(render);
+            }
+
+            requestAnimationFrame(render);
         }
 
         main();
     </script>
 </body>
+
 </html>
