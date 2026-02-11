@@ -61,6 +61,24 @@
             // D. RENDER (Action!)
             // Perintahkan pelukis untuk menggambar Panggung dilihat dari Kamera
             renderer.render(scene, camera);
+            
+            // 5. Buat BENDA (Mesh) -> Hello Cube!
+            
+            // A. Geometry (Bentuk): Kotak dengan ukuran lebar 1, tinggi 1, dalam 1
+            const geometry = new THREE.BoxGeometry(1, 1, 1);
+            
+            // B. Material (Kulit): Warna Biru Kehijauan (Teal)
+            // Kita pakai MeshBasicMaterial karena dia TIDAK butuh lampu untuk terlihat (menyala sendiri)
+            const material = new THREE.MeshBasicMaterial({ color: 0x44aa88 });
+            
+            // C. Mesh (Gabungan Bentuk + Kulit)
+            const cube = new THREE.Mesh(geometry, material);
+            
+            // D. Masukkan ke Panggung
+            scene.add(cube);
+
+            // 6. RENDER (Lukis!)
+            renderer.render(scene, camera);
         }
 
         main();
