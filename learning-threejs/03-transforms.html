@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Belajar 03: Transformasi (PRS)</title>
+    <style>
+        html, body { margin: 0; height: 100%; }
+        #c { width: 100%; height: 100%; display: block; }
+    </style>
+</head>
+<body>
+    <canvas id="c"></canvas>
+
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"
+            }
+        }
+    </script>
+
+    <script type="module">
+        import * as THREE from 'three';
+
+        function main() {
+            const canvas = document.querySelector('#c');
+            const renderer = new THREE.WebGLRenderer({ antialias: true, canvas });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+
+            // Kamera kita taruh agak jauh dan serong agar terlihat 3D
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 100);
+            camera.position.set(0, 1, 3); // x=0, y=1 (naik dikit), z=3 (mundur)
+            camera.lookAt(0, 0, 0); // Mata selalu menatap titik tengah
+
+            const scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x222222);
+
+            // --- ALAT BANTU (HELPER) ---
+            // Ini akan memunculkan 3 garis di titik 0,0,0
+            // Merah = X (Kanan) | Hijau = Y (Atas) | Biru = Z (Depan)
+            const axesHelper = new THREE.AxesHelper(2); 
+            scene.add(axesHelper);
+
+
+            // --- PRAKTEK TRANSFORMASI ---
+            const objects = [];
+
+            // Fungsi buat kubus cepat
+            function createCube(color, xPos) {
+                const geometry = new THREE.BoxGeometry(0.5, 0.5, 0.5);
+                const material = new THREE.MeshBasicMaterial({ color: color, wireframe: true });
+                const cube = new THREE.Mesh(geometry, material);
+                cube.position.x = xPos; // Set Posisi Awal
+                scene.add(cube);
+                objects.push(cube);
+                return cube;
+            }
+
+            // Kita buat 3 Kubus untuk demo 3 jenis transformasi
+            const cubePosition = createCube(0xff0000, -1.5); // Merah (Kiri)
+            const cubeRotation = createCube(0x00ff00, 0);    // Hijau (Tengah)
+            const cubeScale    = createCube(0x0000ff, 1.5);  // Biru (Kanan)
+
+            
+            // --- ANIMASI ---
+            function render(time) {
+                time *= 0.001; // Detik
+
+                // 1. POSITION (Geser)
+                // Math.sin(time) menghasilkan angka gelombang antara -1 sampai 1
+                // Kubus Merah akan naik turun (sumbu Y)
+                cubePosition.position.y = Math.sin(time * 2) * 0.5;
+
+                // 2. ROTATION (Putar)
+                // Kubus Hijau berputar pada sumbu X dan Y
+                cubeRotation.rotation.x = time;
+                cubeRotation.rotation.y = time;
+
+                // 3. SCALE (Besar Kecil)
+                // Kubus Biru membesar mengecil (Pulsing)
+                // Kita tambah 1.5 agar tidak pernah minus (hilang)
+                const scale = (Math.sin(time * 2) + 1.5) * 0.5; 
+                cubeScale.scale.set(scale, scale, scale); // Set X, Y, Z sekaligus
+
+                renderer.render(scene, camera);
+                requestAnimationFrame(render);
+            }
+
+            window.addEventListener('resize', () => {
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+            });
+
+            requestAnimationFrame(render);
+        }
+
+        main();
+    </script>
+</body>
+</html>
