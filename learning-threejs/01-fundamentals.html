@@ -44,9 +44,13 @@
             // 1. SETUP DASAR
             const canvas = document.querySelector('#c');
             const renderer = new THREE.WebGLRenderer({ antialias: true, canvas });
+            
+            // BARU: Set ukuran awal renderer agar pas layar saat pertama load
+            renderer.setSize(window.innerWidth, window.innerHeight);
 
+            // Setting Kamera Awal
             const fov = 75;
-            const aspect = 2;
+            const aspect = window.innerWidth / window.innerHeight; // BARU: Pakai ukuran layar asli, bukan angka '2'
             const near = 0.1;
             const far = 5;
             const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
@@ -60,11 +64,10 @@
             const cube = new THREE.Mesh(geometry, material);
             scene.add(cube);
 
-            // 3. ANIMATION LOOP (BARU!)
+            // 3. ANIMATION LOOP
             function render(time) {
-                time *= 0.001;  // Konversi ke detik
+                time *= 0.001;  
 
-                // Putar kubus
                 cube.rotation.x = time;
                 cube.rotation.y = time;
 
@@ -72,6 +75,21 @@
 
                 requestAnimationFrame(render);
             }
+
+            // 4. RESPONSIVE DESIGN (SATPAM) - ISSUE #6
+            // Fungsi ini akan dipanggil setiap kali user mengubah ukuran browser
+            window.addEventListener('resize', () => {
+                // A. Update ukuran Renderer (Kanvas)
+                renderer.setSize(window.innerWidth, window.innerHeight);
+
+                // B. Update Lensa Kamera (Aspect Ratio)
+                // Hitung ulang rasio lebar dibagi tinggi
+                camera.aspect = window.innerWidth / window.innerHeight;
+                
+                // C. PENTING: Update Matriks Proyeksi
+                // Beri tahu kamera untuk memproses ulang matematikanya berdasarkan data baru
+                camera.updateProjectionMatrix();
+            });
 
             requestAnimationFrame(render);
         }
