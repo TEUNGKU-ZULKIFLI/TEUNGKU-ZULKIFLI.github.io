@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Belajar Three.js - Fundamentals</title>
+    <style>
+        /* CSS Reset Sederhana: Agar canvas memenuhi layar */
+        html, body {
+            margin: 0;
+            height: 100%;
+        }
+        #c {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. KANVAS: Tempat pelukis menggambar -->
+    <canvas id="c"></canvas>
+
+    <!-- 2. IMPORT MAP: Peta agar browser tahu di mana mencari 'three' -->
+    <!-- Memakai versi Online (CDN) agar praktis -->
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"
+            }
+        }
+    </script>
+
+    <!-- 3. KODE UTAMA -->
+    <script type="module">
+        import * as THREE from 'three';
+
+        function main() {
+            // A. RENDERER (Si Pelukis)
+            // Mencari elemen canvas di HTML, lalu serahkan ke Three.js
+            const canvas = document.querySelector('#c');
+            const renderer = new THREE.WebGLRenderer({ antialias: true, canvas });
+
+            // B. CAMERA (Si Mata)
+            // fov (Field of View): Seberapa lebar pandangan (75 derajat)
+            // aspect: Rasio lebar/tinggi layar (sementara set 2, nanti diperbaiki di Issue Responsive)
+            // near/far: Benda di luar jarak ini tidak akan digambar
+            const fov = 75;
+            const aspect = 2; 
+            const near = 0.1;
+            const far = 5;
+            const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
+            
+            // Mundurkan kamera sedikit (z = 2) supaya tidak menabrak benda di titik nol
+            camera.position.z = 2;
+
+            // C. SCENE (Panggung)
+            const scene = new THREE.Scene();
+
+            // D. RENDER (Action!)
+            // Perintahkan pelukis untuk menggambar Panggung dilihat dari Kamera
+            renderer.render(scene, camera);
+        }
+
+        main();
+    </script>
+</body>
+</html>
