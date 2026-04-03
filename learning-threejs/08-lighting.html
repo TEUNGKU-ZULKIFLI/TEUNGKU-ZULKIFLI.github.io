@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Belajar 08: Material & Pencahayaan (Lighting)</title>
+    <style>
+        html, body { margin: 0; height: 100%; }
+        #c { width: 100%; height: 100%; display: block; }
+        #loading { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; font-family: sans-serif; pointer-events: none; }
+    </style>
+</head>
+<body>
+    <div id="loading">Memuat Gambar...</div>
+    <canvas id="c"></canvas>
+
+    <script type="importmap">
+        { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" } }
+    </script>
+
+    <script type="module">
+        import * as THREE from 'three';
+        import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/controls/OrbitControls.js';
+
+        function main() {
+            const canvas = document.querySelector('#c');
+            const renderer = new THREE.WebGLRenderer({ antialias: true, canvas });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 100);
+            camera.position.set(0, 0, 5); // Mundur 5 langkah
+
+            const scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x111111); // Gelap gulita
+
+            const controls = new OrbitControls(camera, canvas);
+            controls.enableDamping = true;
+
+            const loader = new THREE.TextureLoader();
+            const textureUrl = '../assets/images/Teungku2D.jpg'; // Menggunakan fotomu
+
+            loader.load(textureUrl, function(texture) {
+                document.getElementById('loading').style.display = 'none';
+
+                // ==========================================
+                // 1. KUBUS KIRI (MeshBasicMaterial - Tanpa Cahaya)
+                // Ini seperti layar TV, akan selalu terang benderang
+                // ==========================================
+                const basicMat = new THREE.MeshBasicMaterial({ map: texture });
+                const boxKiri = new THREE.Mesh(new THREE.BoxGeometry(1.5, 1.5, 1.5), basicMat);
+                boxKiri.position.x = -2;
+                scene.add(boxKiri);
+
+                // ==========================================
+                // 2. KUBUS KANAN (MeshStandardMaterial - Butuh Cahaya)
+                // Ini seperti benda nyata, akan gelap jika tidak ada lampu
+                // ==========================================
+                const standardMat = new THREE.MeshStandardMaterial({ 
+                    map: texture,
+                    roughness: 0.5, // Seberapa kasar (0 = licin kayak kaca, 1 = kasar kayak kayu)
+                    metalness: 0.1  // Seberapa mirip besi
+                });
+                const boxKanan = new THREE.Mesh(new THREE.BoxGeometry(1.5, 1.5, 1.5), standardMat);
+                boxKanan.position.x = 2;
+                scene.add(boxKanan);
+
+
+                // ==========================================
+                // 3. MENAMBAHKAN LAMPU (LIGHTING)
+                // ==========================================
+                
+                // A. Ambient Light (Lampu Ruangan Merata)
+                // Cahaya redup ke segala arah supaya bagian yang tidak kena sinar matahari tidak 100% hitam.
+                const ambientLight = new THREE.AmbientLight(0xffffff, 0.3); // Warna putih, intensitas 0.3
+                scene.add(ambientLight);
+
+                // B. Directional Light (Lampu Senter / Matahari)
+                // Cahaya kuat dari satu titik ke titik lain. Ini yang membuat gelap-terang (shading)
+                const dirLight = new THREE.DirectionalLight(0xffffff, 2); // Warna putih, intensitas 2
+                dirLight.position.set(5, 5, 2); // Posisinya di Kanan (5), Atas (5), Depan (2)
+                scene.add(dirLight);
+
+                // --- ANIMASI ---
+                function render(time) {
+                    time *= 0.001;
+
+                    // Putar kedua kubus biar kita bisa lihat efek cahayanya
+                    boxKiri.rotation.x = time * 0.5;
+                    boxKiri.rotation.y = time * 0.5;
+
+                    boxKanan.rotation.x = time * 0.5;
+                    boxKanan.rotation.y = time * 0.5;
+
+                    controls.update();
+                    renderer.render(scene, camera);
+                    requestAnimationFrame(render);
+                }
+                requestAnimationFrame(render);
+            });
+
+            window.addEventListener('resize', () => {
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+            });
+        }
+        main();
+    </script>
+</body>
+</html>
