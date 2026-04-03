@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Belajar 10: Raycasting (Interaksi Mouse)</title>
+    <style>
+        html, body { margin: 0; height: 100%; overflow: hidden; }
+        #c { width: 100%; height: 100%; display: block; }
+        /* UI Peringatan (Tooltip) */
+        #ui-info {
+            position: absolute; top: 20px; left: 20px;
+            background: rgba(0,0,0,0.7); color: #00ffcc; 
+            padding: 10px 20px; border-radius: 8px; font-family: sans-serif;
+            pointer-events: none; /* Penting: agar klik tembus ke 3D */
+            display: none; /* Sembunyikan awal */
+        }
+    </style>
+</head>
+<body>
+    <div id="ui-info">Nama Objek</div>
+    <canvas id="c"></canvas>
+
+    <script type="importmap">
+        { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js", "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/" } }
+    </script>
+
+    <script type="module">
+        import * as THREE from 'three';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+        function main() {
+            const canvas = document.querySelector('#c');
+            const renderer = new THREE.WebGLRenderer({ antialias: true, canvas });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 100);
+            camera.position.set(0, 2, 5);
+
+            const scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x222222);
+
+            const controls = new OrbitControls(camera, canvas);
+            controls.enableDamping = true;
+
+            // --- 1. PERSIAPAN OBJEK (Target Tembakan) ---
+            const objectsToTest = []; // Array khusus untuk menyimpan benda yang boleh diklik
+
+            const geometry = new THREE.BoxGeometry(1, 1, 1);
+            const materialNormal = new THREE.MeshBasicMaterial({ color: 0x44aa88 });
+
+            // Bikin 3 Kotak Berjejer
+            for(let i=0; i<3; i++) {
+                const box = new THREE.Mesh(geometry, materialNormal.clone()); // Clone material biar bisa diubah warnanya secara individu
+                box.position.x = (i - 1) * 2; // Posisi: -2, 0, 2
+                
+                // Kasi nama buat identifikasi nanti
+                box.userData.name = `Kotak Nomor ${i+1}`; 
+                
+                scene.add(box);
+                objectsToTest.push(box); // Masukkan daftar target!
+            }
+
+            // --- 2. PERSIAPAN SENJATA (Raycaster) ---
+            const raycaster = new THREE.Raycaster();
+            const mouse = new THREE.Vector2(); // Kursor X,Y (Format spesifik Three.js)
+
+            // UI Element
+            const uiInfo = document.getElementById('ui-info');
+            let hoveredObject = null; // Menyimpan objek mana yang sedang disorot mouse
+
+            // --- 3. MENDETEKSI GERAKAN MOUSE (HOVER) ---
+            window.addEventListener('mousemove', (event) => {
+                // Kalkulasi ajaib mengubah koordinat layar (pixel) menjadi koordinat Three.js (-1 sampai +1)
+                mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+                mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+                // Tembakkan Sinar Laser dari Kamera melewati titik Mouse
+                raycaster.setFromCamera(mouse, camera);
+
+                // Cek apakah laser nabrak benda yang ada di daftar 'objectsToTest'
+                const intersects = raycaster.intersectObjects(objectsToTest);
+
+                // Kembalikan warna objek lama ke hijau kalau ditinggal mouse
+                if (hoveredObject) {
+                    hoveredObject.material.color.setHex(0x44aa88); 
+                    uiInfo.style.display = 'none';
+                    document.body.style.cursor = 'default';
+                }
+
+                if (intersects.length > 0) {
+                    // KENA! Ambil benda pertama yang tertabrak
+                    hoveredObject = intersects[0].object;
+
+                    // Ubah warnanya jadi merah (Hover Effect)
+                    hoveredObject.material.color.setHex(0xff0000);
+                    
+                    // Ganti kursor jadi tangan (Klik-able)
+                    document.body.style.cursor = 'pointer';
+
+                    // Munculkan teks UI
+                    uiInfo.innerText = "Klik untuk aksi pada: " + hoveredObject.userData.name;
+                    uiInfo.style.display = 'block';
+                } else {
+                    hoveredObject = null; // Meleset
+                }
+            });
+
+            // --- 4. MENDETEKSI KLIK ---
+            window.addEventListener('click', () => {
+                // Kalau ada objek yang sedang disorot (hover), berarti dia diklik
+                if (hoveredObject) {
+                    console.log(`Benda ${hoveredObject.userData.name} DIKLIK!`);
+                    
+                    // Efek klik: Membesar sedikit
+                    hoveredObject.scale.set(1.2, 1.2, 1.2);
+                    
+                    // Balik ke ukuran semula setelah 0.2 detik (Efek 'Membul')
+                    setTimeout(() => {
+                        hoveredObject.scale.set(1, 1, 1);
+                    }, 200);
+                }
+            });
+
+
+            // --- ANIMASI ---
+            function render(time) {
+                time *= 0.001;
+                
+                // Bikin kotaknya muter biar hidup
+                objectsToTest.forEach(obj => {
+                    obj.rotation.x = time;
+                    obj.rotation.y = time;
+                });
+
+                controls.update();
+                renderer.render(scene, camera);
+                requestAnimationFrame(render);
+            }
+            requestAnimationFrame(render);
+            
+            window.addEventListener('resize', () => {
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+            });
+        }
+        main();
+    </script>
+</body>
+</html>
