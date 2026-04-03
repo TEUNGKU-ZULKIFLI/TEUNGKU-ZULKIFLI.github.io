@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Belajar 09: Loading Models (GLTF)</title>
+    <style>
+        html, body { margin: 0; height: 100%; overflow: hidden; }
+        #c { width: 100%; height: 100%; display: block; }
+        #loading {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            color: white; font-family: sans-serif; font-size: 24px; pointer-events: none;
+            background: rgba(0,0,0,0.5); padding: 20px; border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="loading">Memesan Paket dari Pabrik... 0%</div>
+    <canvas id="c"></canvas>
+
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+            }
+        }
+    </script>
+
+    <script type="module">
+        import * as THREE from 'three';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+        
+        // --- 1. IMPORT KURIR PAKET (GLTFLoader) ---
+        // PENTING: Loader ini bukan bagian dari Three.js inti, jadi harus diimport terpisah dari folder addons/examples
+        import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+
+        function main() {
+            const canvas = document.querySelector('#c');
+            const renderer = new THREE.WebGLRenderer({ antialias: true, canvas });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+
+            const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
+            camera.position.set(0, 2, 5);
+
+            const scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x333333);
+
+            const controls = new OrbitControls(camera, canvas);
+            controls.enableDamping = true;
+
+            // --- 2. SETUP CAHAYA ---
+            // Model 3D dari luar biasanya menggunakan StandardMaterial, jadi butuh cahaya yang bagus
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.6); // Cahaya merata
+            scene.add(ambientLight);
+
+            const dirLight = new THREE.DirectionalLight(0xffffff, 2); // Cahaya matahari
+            dirLight.position.set(5, 10, 5);
+            scene.add(dirLight);
+
+            // Lantai tipis agar model tidak mengambang di ruang hampa
+            const floor = new THREE.Mesh(
+                new THREE.PlaneGeometry(10, 10),
+                new THREE.MeshStandardMaterial({color: 0x555555})
+            );
+            floor.rotation.x = -Math.PI / 2;
+            scene.add(floor);
+
+
+            // --- 3. MEMANGGIL KURIR (Load Model) ---
+            const gltfLoader = new GLTFLoader();
+            const loadingText = document.getElementById('loading');
+
+            // URL Model: Kita pakai model burung beo (Parrot) gratis dari repository contoh Three.js
+            // Nanti GANTI ini dengan path lokalmu, misal: '../assets/models/laptop.glb'
+            const modelUrl = 'https://raw.githubusercontent.com/mrdoob/three.js/master/examples/models/gltf/Parrot.glb';
+            // URL Local:
+            // const modelUrl = '../learning-threejs/models/Parrot.glb';
+            // const modelUrl = '../learning-threejs/models/Bank.glb';
+
+
+            // Fungsi loader.load() butuh 3 parameter: (URL, FungsiSukses, FungsiProgres, FungsiGagal)
+            gltfLoader.load(
+                modelUrl,
+                
+                // A. Fungsi Sukses: Dipanggil kalau kurir berhasil mengantar paket
+                function ( gltf ) {
+                    loadingText.style.display = 'none';
+
+                    // gltf.scene adalah keseluruhan objek dari file tersebut (bisa berisi puluhan mesh, lampu, dll)
+                    const model = gltf.scene;
+                    
+                    // Kita bisa menyesuaikan posisi/ukuran paket yang datang
+                    model.position.set(0, 1, 0); // Naikkan dikit dari lantai
+                    model.scale.set(0.05, 0.05, 0.05); // Perkecil kalau model aslinya kebesaran
+
+                    scene.add(model); // Taruh di Panggung!
+                },
+                
+                // B. Fungsi Progres: Dipanggil berkali-kali selama proses download paket
+                function ( xhr ) {
+                    const percent = Math.round(( xhr.loaded / xhr.total * 100 ));
+                    loadingText.innerText = `Mengunduh Model... ${percent}%`;
+                    console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+                },
+                
+                // C. Fungsi Gagal: Kalau paket nyasar/error
+                function ( error ) {
+                    loadingText.innerText = `Gagal Memuat Model!`;
+                    console.error('Terjadi kesalahan:', error);
+                }
+            );
+
+            // --- ANIMASI ---
+            function render(time) {
+                controls.update();
+                renderer.render(scene, camera);
+                requestAnimationFrame(render);
+            }
+            requestAnimationFrame(render);
+            
+            window.addEventListener('resize', () => {
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+            });
+        }
+        main();
+    </script>
+</body>
+</html>
