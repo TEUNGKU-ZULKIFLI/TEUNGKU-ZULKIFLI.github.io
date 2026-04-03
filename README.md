@@ -107,9 +107,14 @@ Fase eksperimental untuk menghadirkan pengalaman **Immersive Room** pada portofo
 <img src="./learning-threejs/documentations/Documentation-issue14&15.png" width="600"/>
 <img src="./learning-threejs/documentations/Documentation-issue16.png" width="600"/>
 
-- [ ] **Modul 4: The Interaction (Interaksi)**  
+- [x] **Modul 4: The Interaction (Interaksi)**  
   - Loading Model 3D Eksternal (GLTF/GLB).  
-  - Raycasting (Deteksi klik mouse pada objek 3D).  
+  - Raycasting (Deteksi klik mouse pada objek 3D).
+  👉 [Lihat hasil modul 4/1](https://teungku-zulkifli.github.io/learning-threejs/09-loading-models.html)
+  👉 [Lihat hasil modul 4/2](https://teungku-zulkifli.github.io/learning-threejs/10-raycasting.html)
+#### Documentation
+<img src="./learning-threejs/documentations/Documentation-issue18.png" width="600"/>
+<img src="./learning-threejs/documentations/Documentation-issue19.png" width="600"/>
 
 ### Target Integrasi
 - [ ] **Menggabungkan scene 3D final ke `index.html` dengan transisi masuk yang mulus.**
