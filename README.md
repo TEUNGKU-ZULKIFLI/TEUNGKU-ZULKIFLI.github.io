@@ -96,9 +96,16 @@ Fase eksperimental untuk menghadirkan pengalaman **Immersive Room** pada portofo
 <img src="./learning-threejs/documentations/Documentation-issue10.png" width="600"/>
 <img src="./learning-threejs/documentations/Documentation-issue11.png" width="600"/>
 
-- [ ] **Modul 3: The Look (Tampilan)**  
+- [x] **Modul 3: The Look (Tampilan)**  
   - Texture Loading & Mapping.  
   - Pencahayaan (Ambient, Directional, Point Light).  
+  👉 [Lihat hasil modul 3/1](https://teungku-zulkifli.github.io/learning-threejs/06-textures.html)
+  👉 [Lihat hasil modul 3/2](https://teungku-zulkifli.github.io/learning-threejs/07-texture-mapping.html)
+  👉 [Lihat hasil modul 3/3](https://teungku-zulkifli.github.io/learning-threejs/08-lighting.html)
+#### Documentation
+<img src="./learning-threejs/documentations/Documentation-issue13.png" width="600"/>
+<img src="./learning-threejs/documentations/Documentation-issue14&15.png" width="600"/>
+<img src="./learning-threejs/documentations/Documentation-issue16.png" width="600"/>
 
 - [ ] **Modul 4: The Interaction (Interaksi)**  
   - Loading Model 3D Eksternal (GLTF/GLB).  
