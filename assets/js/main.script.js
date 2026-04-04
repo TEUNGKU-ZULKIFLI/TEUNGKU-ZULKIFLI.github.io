@@ -1,14 +1,9 @@
-/* === FASE 5 (FINAL & LENGKAP) === */
-
 document.addEventListener('DOMContentLoaded', function() {
+    let globalDataCenter = null;
 
-    // --- BAGIAN 1: LOGIKA MULTI-BAHASA (VERSI BARU) ---
     const langToggleButtonEN = document.getElementById('lang-en');
     const langToggleButtonID = document.getElementById('lang-id');
 
-    // FUNGSI BARU: Ini adalah "otak" baru kita untuk membaca struktur bersarang.
-    // Ia mengambil objek (misal: languages.id) dan path (misal: "pages.home.heroTitle")
-    // lalu mengembalikan nilainya.
     const getNestedString = (obj, path) => {
         const keys = path.split('.');
         return keys.reduce((currentObj, key) => currentObj && currentObj[key], obj);
@@ -18,17 +13,14 @@ document.addEventListener('DOMContentLoaded', function() {
         const elements = document.querySelectorAll('[data-lang]');
         elements.forEach(el => {
             const key = el.getAttribute('data-lang');
-            // Kita sekarang menggunakan fungsi baru kita di sini
             const text = getNestedString(languages[lang], key);
             
             if (text) {
-                if (el.tagName === 'TITLE') {
-                    el.textContent = text;
-                } else {
-                    el.innerHTML = text;
-                }
+                if (el.tagName === 'TITLE') el.textContent = text;
+                else el.innerHTML = text;
             }
         });
+        
         document.documentElement.lang = lang;
         localStorage.setItem('preferredLanguage', lang);
         
@@ -39,6 +31,8 @@ document.addEventListener('DOMContentLoaded', function() {
             langToggleButtonEN.classList.add('active');
             langToggleButtonID.classList.remove('active');
         }
+
+        updateDynamicUI(lang);
     };
 
     const initializeLanguage = () => {
@@ -53,9 +47,6 @@ document.addEventListener('DOMContentLoaded', function() {
         langToggleButtonID.addEventListener('click', () => setLanguage('id'));
     }
 
-    // --- Sisa file ini tetap sama persis seperti sebelumnya ---
-
-    // --- BAGIAN 2: DEFINISI FUNGSI ---
     function loadBlogPosts() {
         const container = document.getElementById('articles-container');
         const filterContainer = document.getElementById('filter-container');
@@ -64,22 +55,16 @@ document.addEventListener('DOMContentLoaded', function() {
         fetch('manifest.json')
             .then(response => response.ok ? response.json() : Promise.reject('Gagal memuat manifest'))
             .then(allPosts => {
-                // --- FILTER BARU DIMULAI DI SINI ---
-                // Kita hanya mengambil artikel yang KATEGORI-nya BUKAN 'Project'.
-                // Artikel dengan kategori 'Project' akan disembunyikan dari halaman Blog.
                 const posts = allPosts.filter(p => p.category !== 'Project');
-                // --- FILTER BARU SELESAI ---
-
                 if (!posts || posts.length === 0) {
-                    container.innerHTML = '<p>Belum ada artikel blog yang dipublikasikan.</p>';
+                    container.innerHTML = '<p>Belum ada artikel blog.</p>';
                     return;
                 }
 
-                // Fungsi kecil untuk menampilkan artikel (agar bisa dipakai ulang)
                 const renderPosts = (postList) => {
                     container.innerHTML = '';
                     if (postList.length === 0) {
-                        container.innerHTML = '<p>Tidak ada artikel yang cocok dengan filter ini.</p>';
+                        container.innerHTML = '<p>Tidak ada artikel.</p>';
                         return;
                     }
                     postList.forEach(post => {
@@ -100,13 +85,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     });
                 };
 
-                // Ambil semua kategori & tag unik DARI HASIL FILTER (posts), bukan semua data (allPosts)
                 const allCategories = ['Semua', ...new Set(posts.map(p => p.category))];
                 const allTags = [...new Set(posts.flatMap(p => p.tags || []))];
 
-                filterContainer.innerHTML = ''; // Kosongkan kontainer filter
+                filterContainer.innerHTML = ''; 
 
-                // Buat grup filter Kategori (Primary)
                 const categoryGroup = document.createElement('div');
                 categoryGroup.className = 'filter-group';
                 categoryGroup.innerHTML = '<strong>Kategori:</strong>';
@@ -120,7 +103,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
                 filterContainer.appendChild(categoryGroup);
                 
-                // Buat grup filter Tag (Secondary) jika ada
                 if (allTags.length > 0) {
                     const tagGroup = document.createElement('div');
                     tagGroup.className = 'filter-group';
@@ -135,7 +117,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     filterContainer.appendChild(tagGroup);
                 }
                 
-                // Tambahkan event listener ke semua tombol filter
                 const filterButtons = filterContainer.querySelectorAll('.filter-btn');
                 filterButtons.forEach(btn => {
                     btn.addEventListener('click', () => {
@@ -145,25 +126,20 @@ document.addEventListener('DOMContentLoaded', function() {
                         const filterValue = btn.textContent;
                         const filterType = btn.dataset.filterType;
 
-                        if (filterValue === 'Semua') {
-                            renderPosts(posts);
-                        } else if (filterType === 'category') {
-                            renderPosts(posts.filter(p => p.category === filterValue));
-                        } else if (filterType === 'tag') {
-                            renderPosts(posts.filter(p => p.tags && p.tags.includes(filterValue)));
-                        }
+                        if (filterValue === 'Semua') renderPosts(posts);
+                        else if (filterType === 'category') renderPosts(posts.filter(p => p.category === filterValue));
+                        else if (filterType === 'tag') renderPosts(posts.filter(p => p.tags && p.tags.includes(filterValue)));
                     });
                 });
 
-                // Tampilkan artikel yang sudah difilter saat pertama kali dimuat
                 renderPosts(posts);
-
             })
             .catch(error => {
-                console.error("Gagal memuat manifest artikel:", error);
+                console.error("Gagal memuat manifest:", error);
                 container.innerHTML = '<p>Gagal memuat daftar artikel.</p>';
             });
     }
+
     function loadSingleArticle() {
         const params = new URLSearchParams(window.location.search);
         const postFile = params.get('post');
@@ -175,7 +151,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     const content = markdown.split('---').slice(2).join('---').trim();
                     contentContainer.innerHTML = marked.parse(content);
                     const firstHeading = contentContainer.querySelector('h1');
-                    if (firstHeading) { document.title = firstHeading.textContent; }
+                    if (firstHeading) document.title = firstHeading.textContent;
                 })
                 .catch(err => {
                     console.error("Gagal memuat artikel:", err);
@@ -183,15 +159,50 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
         }
     }
-    // --- BAGIAN 3: LOGIKA UMUM (NAVIGASI MOBILE) ---
+
     const hamburgerBtn = document.getElementById('hamburger-btn');
     const navLinks = document.getElementById('nav-links');
     if (hamburgerBtn && navLinks) {
         hamburgerBtn.addEventListener('click', () => navLinks.classList.toggle('nav-active'));
     }
-    // --- BAGIAN 4: EKSEKUSI / "ROUTER" ---
+
+    function updateDynamicUI(lang) {
+        if (!globalDataCenter) return; 
+
+        const heroName = document.getElementById('hero-name');
+        const heroRole = document.getElementById('hero-role');
+        const aboutText = document.getElementById('about-text');
+
+        if (heroName && heroRole) {
+            heroName.textContent = globalDataCenter.profile.name;
+            heroRole.textContent = globalDataCenter.profile.role[lang];
+        }
+        
+        if (aboutText && globalDataCenter.profile.about[lang]) {
+            aboutText.textContent = globalDataCenter.profile.about[lang];
+        }
+    }
+
+    async function initDataCenter() {
+        try {
+            const response = await fetch('assets/data/data-center.json');
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+            
+            globalDataCenter = await response.json();
+            
+            const currentLang = localStorage.getItem('preferredLanguage') || navigator.language.split('-')[0] || 'id';
+            updateDynamicUI(currentLang);
+        } catch (error) {
+            console.error("Gagal memuat Pusat Data:", error);
+        }
+    }
+
     const path = window.location.pathname;
-    initializeLanguage(); 
+    
+    initDataCenter().then(() => {
+        initializeLanguage();
+    });
+
     if (path.endsWith('/') || path.endsWith('index.html') || path.includes('/TEUNGKU-ZULKIFLI.github.io/')) {
         const scrollLinks = document.querySelectorAll('nav a[href^="#"]');
         scrollLinks.forEach(link => {
@@ -199,7 +210,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 e.preventDefault();
                 const id = this.getAttribute('href');
                 const targetElement = document.querySelector(id);
-                if (targetElement) { targetElement.scrollIntoView({ behavior: 'smooth' }); }
+                if (targetElement) targetElement.scrollIntoView({ behavior: 'smooth' });
             });
         });
     } else if (path.endsWith('blog.html')) {
