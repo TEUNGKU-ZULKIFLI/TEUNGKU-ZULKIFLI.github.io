@@ -61,6 +61,7 @@
   "projects": [
     {
       "id": "p1",
+      "tier": "tier1", 
       "title": {
         "id": "GACOROVER V1, Robot Mobil untuk Edukasi IoRT",
         "en": "GACOROVER V1, Mobile Robot for IoRT Education"
@@ -84,8 +85,9 @@
     },
     {
       "id": "p2",
+      "tier": "tier1",
       "title": {
-        "id": "APOK FINTRACK, Pelacak Keuangan Pribadi Offline-First",
+        "id": "APOK FINTRACK, Pelacak Keuangan Pribadi",
         "en": "APOK FINTRACK, Offline-First Personal Finance Tracker"
       },
       "description": {
@@ -104,6 +106,59 @@
       "demo_url": "https://youtube.com/playlist?list=PLuXdnSVJrUhlPdxPsLkPj8o5QRjvfqQek&si=1DYkrLlrPohOKPiw",
       "github_url": "https://github.com/TEUNGKU-ZULKIFLI/finance_tracker/releases/tag/v1.0.0%2B1",
       "tech_stack": ["Flutter", "SQLite"]
+    },
+    {
+      "id": "p3",
+      "tier": "tier1",
+      "title": {
+        "id": "SmartBin - IoT Waste Management",
+        "en": "SmartBin - IoT Waste Management"
+      },
+      "description": {
+        "id": ["Sistem tempat sampah pintar berbasis IoT..."],
+        "en": ["IoT-based smart waste management system..."]
+      },
+      "image_url": "https://raw.githubusercontent.com/TEUNGKU-ZULKIFLI/smartbin/refs/heads/main/public/TongBroh01.jpeg",
+      "demo_url": "",
+      "github_url": "https://github.com/TEUNGKU-ZULKIFLI/smartbin/releases/tag/1.0.0",
+      "detail_url": "article.html?post=_posts/projects/2025-01-02-smartbin-iot-system.md",
+      "tech_stack": ["Laravel", "IoT (ESP8266)", "Arduino C++", "Docker"]
+    },
+
+    {
+      "id": "p5",
+      "tier": "tier2",
+      "title": {
+        "id": "OS-APOK",
+        "en": "OS-APOK"
+      },
+      "description": {
+        "id": ["Simulasi sistem operasi berbasis web."],
+        "en": ["Web-based operating system simulation."]
+      },
+      "image_url": "https://raw.githubusercontent.com/TEUNGKU-ZULKIFLI/OS-APOK/refs/heads/main/assets/images/logo.ico",
+      "demo_url": "",
+      "github_url": "https://github.com/TEUNGKU-ZULKIFLI/OS-APOK",
+      "detail_url": "article.html?post=_posts/projects/2025-01-02-os-apok-web.md",
+      "tech_stack": ["HTML5", "CSS3", "Vanilla JS"]
+    },
+
+    {
+      "id": "lab1",
+      "tier": "tier3",
+      "title": {
+        "id": "Flutter UI & Logic Lab",
+        "en": "Flutter UI & Logic Lab"
+      },
+      "description": {
+        "id": ["Kumpulan 18+ eksperimen modul Flutter."],
+        "en": ["Collection of 18+ Flutter module experiments."]
+      },
+      "image_url": "", 
+      "demo_url": "",
+      "github_url": "https://github.com/TEUNGKU-ZULKIFLI/PROJECT-FLUTTER/blob/master/README.md",
+      "detail_url": "",
+      "tech_stack": []
     }
   ],
 

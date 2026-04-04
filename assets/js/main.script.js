@@ -4,11 +4,13 @@ document.addEventListener('DOMContentLoaded', function() {
     const langToggleButtonEN = document.getElementById('lang-en');
     const langToggleButtonID = document.getElementById('lang-id');
 
+    // Fungsi untuk mengambil string dari object languages
     const getNestedString = (obj, path) => {
         const keys = path.split('.');
         return keys.reduce((currentObj, key) => currentObj && currentObj[key], obj);
     };
 
+    // Fungsi Utama Pengubah Bahasa
     const setLanguage = (lang) => {
         const elements = document.querySelectorAll('[data-lang]');
         elements.forEach(el => {
@@ -32,9 +34,11 @@ document.addEventListener('DOMContentLoaded', function() {
             langToggleButtonID.classList.remove('active');
         }
 
+        // Panggil fungsi untuk update data dinamis (JSON) setiap kali bahasa diganti
         updateDynamicUI(lang);
     };
 
+    // Inisialisasi Bahasa Saat Web Dibuka
     const initializeLanguage = () => {
         const savedLang = localStorage.getItem('preferredLanguage');
         const browserLang = navigator.language.split('-')[0];
@@ -47,6 +51,9 @@ document.addEventListener('DOMContentLoaded', function() {
         langToggleButtonID.addEventListener('click', () => setLanguage('id'));
     }
 
+    // ==========================================
+    // FUNGSI BLOG & ARTIKEL
+    // ==========================================
     function loadBlogPosts() {
         const container = document.getElementById('articles-container');
         const filterContainer = document.getElementById('filter-container');
@@ -160,15 +167,22 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    // ==========================================
+    // NAVIGASI MOBILE (HAMBURGER)
+    // ==========================================
     const hamburgerBtn = document.getElementById('hamburger-btn');
     const navLinks = document.getElementById('nav-links');
     if (hamburgerBtn && navLinks) {
         hamburgerBtn.addEventListener('click', () => navLinks.classList.toggle('nav-active'));
     }
 
+    // ==========================================
+    // MESIN PENCETAK JSON -> HTML (DYNAMIC UI)
+    // ==========================================
     function updateDynamicUI(lang) {
         if (!globalDataCenter) return; 
 
+        // 1. UPDATE HERO & ABOUT (index.html)
         const heroName = document.getElementById('hero-name');
         const heroRole = document.getElementById('hero-role');
         const aboutText = document.getElementById('about-text');
@@ -181,8 +195,79 @@ document.addEventListener('DOMContentLoaded', function() {
         if (aboutText && globalDataCenter.profile.about[lang]) {
             aboutText.textContent = globalDataCenter.profile.about[lang];
         }
+
+        // 2. MESIN PENCETAK PROYEK (projects.html)
+        const t1Container = document.getElementById('tier1-container');
+        const t2Container = document.getElementById('tier2-container');
+        const t3Container = document.getElementById('tier3-container');
+
+        if (t1Container && t2Container && t3Container) {
+            
+            // Kosongkan wadah
+            t1Container.innerHTML = '';
+            t2Container.innerHTML = '';
+            t3Container.innerHTML = '';
+
+            // Tentukan label berdasarkan bahasa (Agar tidak perlu repot dengan data-lang di dalam HTML yang digenerate)
+            const lblStack = lang === 'id' ? 'Teknologi:' : 'Tech Stack:';
+            const lblDetail = lang === 'id' ? 'Lihat Detail' : 'View Details';
+            const lblCode = lang === 'id' ? 'Lihat Kode' : 'Source Code';
+            const lblRepo = lang === 'id' ? 'Lihat Repositori &rarr;' : 'View Repository &rarr;';
+
+            globalDataCenter.projects.forEach(project => {
+                
+                // Siapkan List Teknologi
+                let techListHTML = '';
+                if (project.tech_stack && project.tech_stack.length > 0) {
+                    techListHTML = project.tech_stack.map(tech => `<li>${tech}</li>`).join('');
+                }
+
+                // Ambil paragraf pertama dari deskripsi
+                const shortDesc = project.description[lang][0];
+
+                if (project.tier === 'tier1' || project.tier === 'tier2') {
+                    
+                    const detailBtn = project.detail_url ? `<a href="${project.detail_url}" class="cta-button outline">${lblDetail}</a>` : '';
+                    const githubBtn = project.github_url ? `<a href="${project.github_url}" target="_blank" class="cta-button">${lblCode}</a>` : '';
+
+                    const cardHTML = `
+                        <div class="project-card">
+                            <img src="${project.image_url}" onerror="this.src='https://placehold.co/600x400/2c2c2c/f0f0f0?text=${encodeURIComponent(project.title.en)}'" alt="${project.title[lang]}" class="project-image">
+                            <div class="project-content">
+                                <h3>${project.title[lang]}</h3>
+                                <p>${shortDesc}</p>
+                                <div class="tech-stack-wrapper">
+                                    <p class="tech-stack-label">${lblStack}</p>
+                                    <ul class="tech-stack">${techListHTML}</ul>
+                                </div>
+                                <div class="project-links">
+                                    ${detailBtn}
+                                    ${githubBtn}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    
+                    if (project.tier === 'tier1') t1Container.innerHTML += cardHTML;
+                    if (project.tier === 'tier2') t2Container.innerHTML += cardHTML;
+
+                } else if (project.tier === 'tier3') {
+                    const labHTML = `
+                        <div class="lab-card">
+                            <h4>${project.title[lang]}</h4>
+                            <p>${shortDesc}</p>
+                            <a href="${project.github_url}" target="_blank" class="lab-link">${lblRepo}</a>
+                        </div>
+                    `;
+                    t3Container.innerHTML += labHTML;
+                }
+            });
+        }
     }
 
+    // ==========================================
+    // INITIALIZATION ROOT
+    // ==========================================
     async function initDataCenter() {
         try {
             const response = await fetch('assets/data/data-center.json');
@@ -193,16 +278,18 @@ document.addEventListener('DOMContentLoaded', function() {
             const currentLang = localStorage.getItem('preferredLanguage') || navigator.language.split('-')[0] || 'id';
             updateDynamicUI(currentLang);
         } catch (error) {
-            console.error("Gagal memuat Pusat Data:", error);
+            console.error("Gagal memuat Pusat Data JSON:", error);
         }
     }
 
+    // Eksekusi Logika Berdasarkan Halaman
     const path = window.location.pathname;
     
     initDataCenter().then(() => {
         initializeLanguage();
     });
 
+    // Fitur Scroll Halus (Smooth Scroll) hanya untuk beranda
     if (path.endsWith('/') || path.endsWith('index.html') || path.includes('/TEUNGKU-ZULKIFLI.github.io/')) {
         const scrollLinks = document.querySelectorAll('nav a[href^="#"]');
         scrollLinks.forEach(link => {
