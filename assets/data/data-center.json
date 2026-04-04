@@ -1,0 +1,141 @@
+{
+  "profile": {
+    "name": "Teungku Zulkifli",
+    "role": {
+      "id": "Mahasiswa Vokasi di Politeknik Negeri Lhokseumawe | Penggiat IoT & Pemrograman",
+      "en": "Vocational Student at Politeknik Negeri Lhokseumawe | Enthusiast in IoT & Programming"
+    },
+    "about": {
+      "id": "Mahasiswa tingkat akhir D4 Teknologi Rekayasa Komputer Jaringan di PNL dengan fondasi di bidang infrastruktur IT, jaringan, dan software.",
+      "en": "Final-year Computer Network Engineering Technology student at PNL with a comprehensive foundation in IT infrastructure and software development."
+    },
+    "socials": {
+      "github": "https://github.com/TEUNGKU-ZULKIFLI",
+      "facebook": "https://www.facebook.com/profile.php?id=61566637783288",
+      "instagram": "https://www.instagram.com/teungku_zulkifli/",
+      "x": "https://x.com/TeungkuZ15976",
+      "linkedin": "https://www.linkedin.com/in/teungku-zulkifli08/",
+      "email": {
+        "gmail": "teungkuzulkifli08@gmail.com",
+        "outlook": "i3lenovoslim22@outlook.com"
+      }
+    }
+  },
+
+  "education": [
+    {
+      "institution": "Politeknik Negeri Lhokseumawe",
+      "degree": {
+        "id": "Sarjana Terapan (S.Tr.) Teknologi Rekayasa Komputer Jaringan.",
+        "en": "Bachelor of Applied Science in Computer Network Engineering Technology."
+      },
+      "year": "2022 - 2026"
+    }
+  ],
+
+  "experience": [
+    {
+      "id": "e1",
+      "role": "Technical Support Specialist (Intern)",
+      "company": "PT Telkom Akses",
+      "period": "Feb 2025 - Aug 2025",
+      "description": {
+        "id": [
+          "Melakukan penyambungan serat optik menggunakan fusion splicer serta pengujian OTDR untuk menjamin kualitas instalasi layanan FTTH.",
+          "Menyelesaikan gangguan jaringan dengan mendiagnosis kendala perangkat keras dan konektivitas saat kunjungan langsung ke pelanggan.",
+          "Menjaga kualitas layanan jaringan melalui kegiatan pemeliharaan FTTH proaktif dan penggantian perangkat.",
+          "Berkolaborasi dengan supervisor dan teknisi lapangan guna menyelaraskan operasional harian ISP di lingkungan kerja profesional.",
+          "Mendokumentasikan aktivitas teknis dan menyiapkan laporan menyeluruh untuk keperluan evaluasi kinerja internal."
+        ],
+        "en": [
+          "Executed fiber optic splicing using fusion splicers and conducted OTDR testing to ensure high-quality FTTH service installation.",
+          "Resolved network disruptions by diagnosing hardware and connectivity issues during onsite customer visits.",
+          "Maintained network service quality through proactive FTTH maintenance activities and device replacements.",
+          "Collaborated with supervisors and field technicians to streamline daily ISP operations in a professional environment.",
+          "Documented technical activities and prepared comprehensive reports for internal performance evaluations."
+        ]
+      }
+    }
+  ],
+
+  "projects": [
+    {
+      "id": "p1",
+      "title": {
+        "id": "GACOROVER V1, Robot Mobil untuk Edukasi IoRT",
+        "en": "GACOROVER V1, Mobile Robot for IoRT Education"
+      },
+      "description": {
+        "id": [
+          "Merancang platform robot mobil menggunakan ESP32 dan C++ (PlatformIO) untuk mendemonstrasikan konsep dasar Internet of Robotic Things (IoRT).",
+          "Mengembangkan antarmuka kontrol multi-mode, termasuk terminal serial Bluetooth dan web server HTML lokal untuk manipulasi motor secara real-time.",
+          "Mengimplementasikan logika kontrol motor presisi menggunakan modul L298N untuk mengeksekusi urutan gerakan otomatis dan perintah navigasi manual."
+        ],
+        "en": [
+          "Engineered a mobile robot platform using ESP32 and C++ (PlatformIO) to demonstrate fundamental Internet of Robotic Things (IoRT) concepts.",
+          "Developed multi-mode control interfaces, including a Bluetooth serial terminal and a localized HTML web server for real-time motor manipulation.",
+          "Implemented precise motor control logic using L298N modules to execute automated movement sequences and manual navigation commands."
+        ]
+      },
+      "image_url": "https://raw.githubusercontent.com/TEUNGKU-ZULKIFLI/InternetofRoboticThings/release-v1/pertemuan-03/assets/GacoRover.png",
+      "demo_url": "https://youtu.be/RF_6JotvamE",
+      "github_url": "https://github.com/TEUNGKU-ZULKIFLI/InternetofRoboticThings/tree/release-v1",
+      "tech_stack": ["ESP32", "C++", "PlatformIO"]
+    },
+    {
+      "id": "p2",
+      "title": {
+        "id": "APOK FINTRACK, Pelacak Keuangan Pribadi Offline-First",
+        "en": "APOK FINTRACK, Offline-First Personal Finance Tracker"
+      },
+      "description": {
+        "id": [
+          "Mengembangkan aplikasi mobile menggunakan Flutter dan SQLite untuk membantu pengguna mengelola anggaran pribadi melalui aturan 50/30/20.",
+          "Merancang sistem 'Smart Input' otomatis yang dilengkapi format mata uang IDR kustom dan kategorisasi pengeluaran berdasarkan waktu.",
+          "Memvisualisasikan data keuangan mingguan melalui grafik interaktif untuk memberikan wawasan jelas mengenai rasio pendapatan terhadap pengeluaran."
+        ],
+        "en": [
+          "Developed a mobile application using Flutter and SQLite to help users manage personal budgeting via the 50/30/20 rule.",
+          "Designed an automated 'Smart Input' system featuring custom IDR currency formatting and time-organized expense categorization.",
+          "Visualized weekly financial data through interactive charts to provide users with clear insights into income-to-expense ratios."
+        ]
+      },
+      "image_url": "https://raw.githubusercontent.com/TEUNGKU-ZULKIFLI/finance_tracker/master/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png",
+      "demo_url": "https://youtube.com/playlist?list=PLuXdnSVJrUhlPdxPsLkPj8o5QRjvfqQek&si=1DYkrLlrPohOKPiw",
+      "github_url": "https://github.com/TEUNGKU-ZULKIFLI/finance_tracker/releases/tag/v1.0.0%2B1",
+      "tech_stack": ["Flutter", "SQLite"]
+    }
+  ],
+
+  "skills": [
+    {
+      "category": "Networking & Infrastructure",
+      "items": ["MikroTik", "FTTH", "GNS3", "Linux Admin"]
+    },
+    {
+      "category": "Programming & Development",
+      "items": ["Flutter", "Laravel", "Node.js", "JavaScript", "C++ (PlatformIO)"]
+    },
+    {
+      "category": "Tools & Environment",
+      "items": ["Git", "VS Code", "Postman", "AI-tools"]
+    }
+  ],
+
+  "certifications": [
+    {
+      "id": "c1",
+      "title": "Belajar Dasar Pemrograman Web",
+      "issuer": "Dicoding Academy",
+      "expiry": "May 2027",
+      "verify": "dicoding.com/certificates/0LZ0668ORZ65"
+    },
+    {
+      "id": "c2",
+      "title": "Belajar Dasar Pemrograman JavaScript",
+      "issuer": "Dicoding Academy",
+      "expiry": "Oct 2027",
+      "verify": "dicoding.com/certificates/0LZ04202RP65"
+    }
+  ]
+}
