@@ -10,32 +10,23 @@
     <header>
         <nav>
             <a href="index.html" class="logo">Teungku Zulkifli</a>
-<ul id="nav-links">
-    <li><a data-lang="common.navHome" href="index.html#home">Beranda</a></li>
-    <li><a data-lang="common.navAbout" href="index.html#about">Tentang</a></li>
-    <li><a data-lang="common.navContact" href="index.html#contact">Kontak</a></li>
-    <li><a data-lang="common.navProjects" href="projects.html">Proyek</a></li>
-    <li><a data-lang="common.navBlog" href="blog.html">Blog</a></li>
-</ul>
-<button id="hamburger-btn" aria-label="Toggle Menu">
-    <span></span>
-    <span></span>
-    <span></span>
-</button>
+            <ul id="nav-links">
+                <li><a data-lang="common.navHome" href="index.html#home">Beranda</a></li>
+                <li><a data-lang="common.navAbout" href="index.html#about">Tentang</a></li>
+                <li><a data-lang="common.navContact" href="index.html#contact">Kontak</a></li>
+                <li><a data-lang="common.navProjects" href="projects.html">Proyek</a></li>
+                <li><a data-lang="common.navBlog" href="blog.html">Blog</a></li>
+            </ul>
+            <button id="hamburger-btn" aria-label="Toggle Menu">
+                <span></span><span></span><span></span>
+            </button>
         </nav>
     </header>
 
     <main>
         <!-- Seksi #home -->
-        <!-- <section id="home">
-            <h1 data-lang="pages.home.heroTitle">Hi 👋, Saya TEUNGKU ZULKIFLI</h1>
-            <p data-lang="pages.home.heroSubtitle" class="subtitle">Mahasiswa Teknologi Komputer & Jaringan | Web & Mobile Developer</p>
-            <p data-lang="pages.home.heroPersonal" style="margin-top: 1rem; color: var(--secondary-text-color);">Kaleuh pajoeh 🍚bue?</p>
-            <a data-lang="pages.home.heroButton" href="projects.html" class="cta-button" style="margin-top: 2rem;">Lihat Proyek Saya</a>
-        </section> -->
         <section id="home" class="hero">
             <div class="hero-content">
-                <!-- Tambahkan ID 'hero-name' dan 'hero-role' -->
                 <h1 id="hero-name" data-lang="home.heroTitle">...</h1>
                 <p id="hero-role" data-lang="home.heroSubtitle">...</p>
                 <div class="hero-buttons">
@@ -43,7 +34,6 @@
                     <a href="#contact" class="cta-button secondary" data-lang="home.buttonContact">Hubungi Saya</a>
                 </div>
             </div>
-            <!-- ... (sisa kodenya tetap) ... -->
         </section>
 
         <!-- Seksi #about -->
@@ -59,41 +49,30 @@
                     </div>
                 </div>
             </div>
+            
             <div class="about-subsection">
                 <h3 data-lang="pages.home.philosophyTitle">Filosofi & Misi Saya</h3>
                 <p data-lang="pages.home.philosophyText">Misi saya adalah membangun solusi digital yang tidak hanya berfungsi, tetapi juga intuitif dan efisien. Saya percaya dalam memanfaatkan kekuatan otomasi dan AI untuk mempercepat proses pengembangan, memungkinkan saya untuk fokus pada pemecahan masalah inti dan menciptakan produk yang berdampak positif.</p>
             </div>
+            
+            <!-- Wadah Pengalaman -->
+            <div class="about-subsection">
+                <h3 data-lang="pages.home.experienceTitle">Pengalaman Profesional</h3>
+                <div id="experience-container" class="timeline-container" style="margin-top: 1.5rem;"></div>
+            </div>
+            
+            <!-- Wadah Skills -->
             <div class="about-subsection">
                 <h3 data-lang="pages.home.skillsTitle">Keahlian Teknis & Kompetensi</h3>
                 <p data-lang="pages.home.skillsText">Perjalanan saya di dunia teknologi didorong oleh rasa ingin tahu yang tak pernah padam. Berikut adalah beberapa keahlian yang saya kembangkan:</p>
-                <ul class="skills-list">
-                    <li>Flutter/Dart</li>
-                    <li>Laravel</li>
-                    <li>Docker</li>
-                    <li>Git & GitHub</li>
-                    <li>Administrasi Linux & Windows</li>
-                    <li>Instalasi Jaringan</li>
-                    <li>Problem Solving</li>
-                    <li>Kreativitas & Inovasi</li>
-                </ul>
+                <div id="skills-container" class="skills-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;"></div>
             </div>
+            
+            <!-- Wadah Sertifikasi -->
             <div class="about-subsection">
                 <h3 data-lang="pages.home.certsTitle">Validasi & Sertifikasi Unggulan</h3>
-                <p data-lang="pages.home.certsText">Saya percaya pada pembelajaran berkelanjutan dan validasi pengetahuan melalui sertifikasi yang diakui.</p>
-                <div class="cert-grid">
-                    <a href="https://www.dicoding.com/certificates/0LZ0668ORZ65" target="_blank" class="cert-card-link">
-                        <div class="cert-card">
-                            <h4>Belajar Dasar Pemrograman Web</h4>
-                            <p>Dikeluarkan oleh Dicoding</p>
-                        </div>
-                    </a>
-                    <a href="https://www.dicoding.com/certificates/0LZ04202RP65" target="_blank" class="cert-card-link">
-                        <div class="cert-card">
-                            <h4>Belajar Dasar Pemrograman JavaScript</h4>
-                            <p>Dikeluarkan oleh Dicoding</p>
-                        </div>
-                    </a>
-                </div>
+                <p data-lang="pages.home.certsText">Saya percaya pada pembelajaran berkelanjutan...</p>
+                <div id="certifications-container" class="cert-grid"></div>
                 <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--secondary-text-color);">*Sertifikat seminar dan workshop lainnya tersedia atas permintaan.</p>
             </div>
         </section>
@@ -123,7 +102,7 @@
     </main>
 
     <footer>
-        <p>&copy; 2025 - Teungku Zulkifli. Dibuat dengan ❤️</p>
+        <p>&copy; 2026 - Teungku Zulkifli. Dibuat dengan ❤️</p>
     </footer>
     
     <div class="floating-lang-switcher">
@@ -132,7 +111,7 @@
             <button id="lang-en">EN</button>
         </div>
         <button class="lang-globe-btn" aria-label="Pilih Bahasa">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
         </button>
     </div>
 

@@ -1,16 +1,17 @@
 document.addEventListener('DOMContentLoaded', function() {
     let globalDataCenter = null;
 
+    // ==========================================
+    // 1. MULTILINGUAL SYSTEM (LANGUAGE ENGINE)
+    // ==========================================
     const langToggleButtonEN = document.getElementById('lang-en');
     const langToggleButtonID = document.getElementById('lang-id');
 
-    // Fungsi untuk mengambil string dari object languages
     const getNestedString = (obj, path) => {
         const keys = path.split('.');
         return keys.reduce((currentObj, key) => currentObj && currentObj[key], obj);
     };
 
-    // Fungsi Utama Pengubah Bahasa
     const setLanguage = (lang) => {
         const elements = document.querySelectorAll('[data-lang]');
         elements.forEach(el => {
@@ -34,11 +35,9 @@ document.addEventListener('DOMContentLoaded', function() {
             langToggleButtonID.classList.remove('active');
         }
 
-        // Panggil fungsi untuk update data dinamis (JSON) setiap kali bahasa diganti
         updateDynamicUI(lang);
     };
 
-    // Inisialisasi Bahasa Saat Web Dibuka
     const initializeLanguage = () => {
         const savedLang = localStorage.getItem('preferredLanguage');
         const browserLang = navigator.language.split('-')[0];
@@ -52,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ==========================================
-    // FUNGSI BLOG & ARTIKEL
+    // 2. BLOG & ARTICLE RENDERER
     // ==========================================
     function loadBlogPosts() {
         const container = document.getElementById('articles-container');
@@ -168,7 +167,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ==========================================
-    // NAVIGASI MOBILE (HAMBURGER)
+    // 3. MOBILE NAVIGATION (HAMBURGER)
     // ==========================================
     const hamburgerBtn = document.getElementById('hamburger-btn');
     const navLinks = document.getElementById('nav-links');
@@ -177,12 +176,12 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ==========================================
-    // MESIN PENCETAK JSON -> HTML (DYNAMIC UI)
+    // 4. DYNAMIC UI ENGINE (JSON TO HTML GENERATOR)
     // ==========================================
     function updateDynamicUI(lang) {
         if (!globalDataCenter) return; 
 
-        // 1. UPDATE HERO & ABOUT (index.html)
+        // --- A. HERO & ABOUT SECTION ---
         const heroName = document.getElementById('hero-name');
         const heroRole = document.getElementById('hero-role');
         const aboutText = document.getElementById('about-text');
@@ -191,42 +190,33 @@ document.addEventListener('DOMContentLoaded', function() {
             heroName.textContent = globalDataCenter.profile.name;
             heroRole.textContent = globalDataCenter.profile.role[lang];
         }
-        
         if (aboutText && globalDataCenter.profile.about[lang]) {
             aboutText.textContent = globalDataCenter.profile.about[lang];
         }
 
-        // 2. MESIN PENCETAK PROYEK (projects.html)
+        // --- B. PROJECTS GALLERY ---
         const t1Container = document.getElementById('tier1-container');
         const t2Container = document.getElementById('tier2-container');
         const t3Container = document.getElementById('tier3-container');
 
         if (t1Container && t2Container && t3Container) {
-            
-            // Kosongkan wadah
             t1Container.innerHTML = '';
             t2Container.innerHTML = '';
             t3Container.innerHTML = '';
 
-            // Tentukan label berdasarkan bahasa (Agar tidak perlu repot dengan data-lang di dalam HTML yang digenerate)
             const lblStack = lang === 'id' ? 'Teknologi:' : 'Tech Stack:';
             const lblDetail = lang === 'id' ? 'Lihat Detail' : 'View Details';
             const lblCode = lang === 'id' ? 'Lihat Kode' : 'Source Code';
             const lblRepo = lang === 'id' ? 'Lihat Repositori &rarr;' : 'View Repository &rarr;';
 
             globalDataCenter.projects.forEach(project => {
-                
-                // Siapkan List Teknologi
                 let techListHTML = '';
                 if (project.tech_stack && project.tech_stack.length > 0) {
                     techListHTML = project.tech_stack.map(tech => `<li>${tech}</li>`).join('');
                 }
-
-                // Ambil paragraf pertama dari deskripsi
                 const shortDesc = project.description[lang][0];
 
                 if (project.tier === 'tier1' || project.tier === 'tier2') {
-                    
                     const detailBtn = project.detail_url ? `<a href="${project.detail_url}" class="cta-button outline">${lblDetail}</a>` : '';
                     const githubBtn = project.github_url ? `<a href="${project.github_url}" target="_blank" class="cta-button">${lblCode}</a>` : '';
 
@@ -263,10 +253,70 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
         }
+
+        // --- C. SKILLS SECTION ---
+        const skillsContainer = document.getElementById('skills-container');
+        if (skillsContainer && globalDataCenter.skills) {
+            skillsContainer.innerHTML = ''; 
+            globalDataCenter.skills.forEach(skillGroup => {
+                const listItemsHTML = skillGroup.items.map(item => `<li>${item}</li>`).join('');
+                const skillHTML = `
+                    <div class="skill-category">
+                        <h4 style="margin-bottom: 0.5rem; color: var(--primary-color);">${skillGroup.category}</h4>
+                        <ul class="skills-list" style="margin-left: 1.2rem;">
+                            ${listItemsHTML}
+                        </ul>
+                    </div>
+                `;
+                skillsContainer.innerHTML += skillHTML;
+            });
+        }
+
+        // --- D. EXPERIENCE SECTION ---
+        const experienceContainer = document.getElementById('experience-container');
+        if (experienceContainer && globalDataCenter.experience) {
+            experienceContainer.innerHTML = ''; 
+            globalDataCenter.experience.forEach(exp => {
+                const descListHTML = exp.description[lang].map(point => `<li style="margin-bottom: 0.5rem;">${point}</li>`).join('');
+                const expHTML = `
+                    <div class="timeline-item" style="border-left: 2px solid var(--primary-color); padding-left: 1.5rem; margin-bottom: 2rem; position: relative;">
+                        <div style="position: absolute; width: 12px; height: 12px; background: var(--primary-color); border-radius: 50%; left: -7px; top: 5px;"></div>
+                        <h4 style="color: var(--text-color); margin-bottom: 0.2rem;">${exp.role}</h4>
+                        <div style="display: flex; justify-content: space-between; flex-wrap: wrap; margin-bottom: 1rem; font-size: 0.9rem; color: var(--secondary-text-color);">
+                            <strong>${exp.company}</strong>
+                            <span>${exp.period}</span>
+                        </div>
+                        <ul style="margin-left: 1rem; color: var(--secondary-text-color);">
+                            ${descListHTML}
+                        </ul>
+                    </div>
+                `;
+                experienceContainer.innerHTML += expHTML;
+            });
+        }
+
+        // --- E. CERTIFICATIONS SECTION ---
+        const certContainer = document.getElementById('certifications-container');
+        if (certContainer && globalDataCenter.certifications) {
+            certContainer.innerHTML = ''; 
+            const issuedByLabel = lang === 'id' ? 'Dikeluarkan oleh' : 'Issued by';
+            globalDataCenter.certifications.forEach(cert => {
+                const certHTML = `
+                    <a href="https://${cert.verify}" target="_blank" class="cert-card-link">
+                        <div class="cert-card">
+                            <h4>${cert.title}</h4>
+                            <p>${issuedByLabel} <strong>${cert.issuer}</strong></p>
+                            <p style="font-size: 0.8rem; margin-top: 0.5rem; opacity: 0.8;">Exp: ${cert.expiry}</p>
+                        </div>
+                    </a>
+                `;
+                certContainer.innerHTML += certHTML;
+            });
+        }
     }
 
     // ==========================================
-    // INITIALIZATION ROOT
+    // 5. INITIALIZATION & ROUTER
     // ==========================================
     async function initDataCenter() {
         try {
@@ -282,14 +332,12 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Eksekusi Logika Berdasarkan Halaman
     const path = window.location.pathname;
     
     initDataCenter().then(() => {
         initializeLanguage();
     });
 
-    // Fitur Scroll Halus (Smooth Scroll) hanya untuk beranda
     if (path.endsWith('/') || path.endsWith('index.html') || path.includes('/TEUNGKU-ZULKIFLI.github.io/')) {
         const scrollLinks = document.querySelectorAll('nav a[href^="#"]');
         scrollLinks.forEach(link => {
