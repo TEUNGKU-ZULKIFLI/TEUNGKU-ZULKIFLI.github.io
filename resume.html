@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curriculum Vitae - TEUNGKU ZULKIFLI</title>
+    <style>
+        /* === RESET & STANDAR ATS === */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Times New Roman', Times, serif; /* Font resmi standar ATS */
+            line-height: 1.5;
+            color: #000;
+            background: #e0e0e0; /* Warna abu-abu saat dilihat di layar */
+            font-size: 11pt;
+        }
+        
+        /* === SIMULASI KERTAS A4 DI LAYAR === */
+        .resume-page {
+            max-width: 210mm; /* Lebar A4 */
+            min-height: 297mm; /* Tinggi A4 */
+            margin: 2rem auto;
+            padding: 20mm; /* Margin kertas */
+            background: #fff;
+            box-shadow: 0 0 15px rgba(0,0,0,0.3);
+        }
+
+        /* --- STYLING TIPOGRAFI CV --- */
+        h1 { font-size: 24pt; text-align: center; text-transform: uppercase; margin-bottom: 0.2rem; }
+        .contact-info { text-align: center; font-size: 10pt; margin-bottom: 1.5rem; }
+        .contact-info a { color: #000; text-decoration: none; }
+        
+        h2 { 
+            font-size: 12pt; 
+            text-transform: uppercase; 
+            border-bottom: 1.5px solid #000; 
+            margin-top: 1.2rem; 
+            margin-bottom: 0.5rem; 
+            padding-bottom: 0.2rem;
+        }
+        
+        h3 { font-size: 11pt; font-weight: bold; }
+        .item-header { display: flex; justify-content: space-between; align-items: baseline; }
+        .item-sub { font-style: italic; margin-bottom: 0.3rem; }
+        
+        ul { margin-left: 1.5rem; margin-bottom: 0.8rem; }
+        li { margin-bottom: 0.2rem; text-align: justify; }
+        p { margin-bottom: 0.8rem; text-align: justify; }
+
+        /* --- TOMBOL CETAK DI LAYAR --- */
+        .action-bar { text-align: center; padding: 1rem; background: #2c2c2c; color: white; }
+        .btn-print {
+            padding: 10px 20px; font-size: 16px; font-weight: bold;
+            background: #007bff; color: #000; border: none; cursor: pointer; border-radius: 5px;
+            transition: 0.3s;
+        }
+        .btn-print:hover { background: #007bff9a; }
+
+        /* === MAGIC: SAAT TOMBOL PRINT DITEKAN === */
+        @media print {
+            body { background: #fff; }
+            .resume-page { margin: 0; padding: 0; box-shadow: none; max-width: none; min-height: auto; }
+            .action-bar { display: none; /* Sembunyikan tombol saat dicetak! */ }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Tombol Aksi di Layar -->
+    <div class="action-bar">
+        <p style="margin-bottom: 10px;">Ini adalah format Curriculum Vitae (ATS-Friendly).</p>
+        <!-- window.print() adalah fungsi JS bawaan untuk memanggil perintah cetak browser -->
+        <button class="btn-print" onclick="window.print()">Simpan sebagai PDF / Cetak</button>
+    </div>
+
+    <!-- Kertas CV Kosong -->
+    <div class="resume-page" id="cv-content">
+        <h3 style="text-align:center; padding-top: 50px;">Sedang Memuat Data Resume...</h3>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            // 1. CEK URL (Apakah ID atau EN?)
+            const urlParams = new URLSearchParams(window.location.search);
+            const lang = urlParams.get('lang') || 'id'; // Jika tidak ada, default ID
+            
+            const cvContainer = document.getElementById('cv-content');
+
+            try {
+                // 2. SEDOT PUSAT DATA
+                const response = await fetch('assets/data/data-center.json');
+                if(!response.ok) throw new Error("Gagal mengambil data");
+                const data = await response.json();
+
+                // 3. KAMUS KECIL (Khusus untuk Judul Section CV)
+                const l = {
+                    id: { edu: "PENDIDIKAN", exp: "PENGALAMAN KERJA", proj: "PROYEK PILIHAN", skill: "KETERAMPILAN", award: "PENCAPAIAN", org: "ORGANISASI" },
+                    en: { edu: "EDUCATION", exp: "WORK EXPERIENCE", proj: "SELECTED PROJECTS", skill: "SKILLS", award: "ACHIEVEMENTS", org: "ORGANIZATIONS" }
+                }[lang];
+
+                // 4. MULAI MENCETAK (Menyusun HTML dari atas ke bawah)
+                let html = `
+                    <h1>${data.profile.name}</h1>
+                    <div class="contact-info">
+                        ${data.profile.contact.address} | ${data.profile.contact.phone} | <a href="mailto:${data.profile.socials.email.gmail}">${data.profile.socials.email.gmail}</a><br>
+                        <a href="${data.profile.socials.linkedin}" target="_blank">LinkedIn</a> | 
+                        <a href="${data.profile.socials.github}" target="_blank">GitHub</a>
+                    </div>
+                    
+                    <p>${data.profile.about_long[lang]}</p>
+
+                    <h2>${l.exp}</h2>
+                `;
+
+                // --- PENGALAMAN ---
+                data.experience.forEach(exp => {
+                    const bullets = exp.description[lang].map(d => `<li>${d}</li>`).join('');
+                    html += `
+                        <div class="item-header">
+                            <h3>${exp.company}</h3>
+                            <span>${exp.period}</span>
+                        </div>
+                        <div class="item-sub">${exp.role}</div>
+                        <ul>${bullets}</ul>
+                    `;
+                });
+
+                // --- PENDIDIKAN ---
+                html += `<h2>${l.edu}</h2>`;
+                data.education.forEach(edu => {
+                    html += `
+                        <div class="item-header">
+                            <h3>${edu.institution}</h3>
+                            <span>${edu.year}</span>
+                        </div>
+                        <div class="item-sub">${edu.degree[lang]}</div>
+                        <ul><li>${edu.details[lang]}</li></ul>
+                    `;
+                });
+
+                // --- PROYEK (Hanya ambil Tier 1 agar ATS padat & berbobot) ---
+                const tier1Projects = data.projects.filter(p => p.tier === 'tier1');
+                if (tier1Projects.length > 0) {
+                    html += `<h2>${l.proj}</h2>`;
+                    tier1Projects.forEach(proj => {
+                        const bullets = proj.description[lang].map(d => `<li>${d}</li>`).join('');
+                        html += `
+                            <div class="item-header">
+                                <h3>${proj.title[lang]}</h3>
+                                <span><a href="${proj.github_url}">GitHub Repo</a></span>
+                            </div>
+                            <div class="item-sub">Tech Stack: ${proj.tech_stack.join(', ')}</div>
+                            <ul>${bullets}</ul>
+                        `;
+                    });
+                }
+
+                // --- PENCAPAIAN ---
+                if (data.awards) {
+                    html += `<h2>${l.award}</h2>`;
+                    data.awards.forEach(award => {
+                        html += `
+                            <div class="item-header">
+                                <h3>${award.title[lang]}</h3>
+                                <span>${award.year}</span>
+                            </div>
+                            <div class="item-sub">${award.issuer}</div>
+                            <ul><li>${award.description[lang]}</li></ul>
+                        `;
+                    });
+                }
+
+                // --- SKILLS ---
+                html += `<h2>${l.skill}</h2><ul>`;
+                data.skills.forEach(skill => {
+                    html += `<li><strong>${skill.category}:</strong> ${skill.items.join(', ')}</li>`;
+                });
+                html += `</ul>`;
+
+                // 5. TEMPELKAN HASIL CETAKAN KE LAYAR
+                cvContainer.innerHTML = html;
+
+                // 6. Ubah Nama File saat disave PDF (misal: CV_ATS_EN_TEUNGKUZULKIFLI)
+                document.title = `CV_ATS_${lang.toUpperCase()}_TEUNGKUZULKIFLI`;
+
+            } catch (err) {
+                cvContainer.innerHTML = `<h3 style="color:red; text-align:center;">Gagal memuat JSON: ${err.message}</h3>`;
+            }
+        });
+    </script>
+</body>
+</html>

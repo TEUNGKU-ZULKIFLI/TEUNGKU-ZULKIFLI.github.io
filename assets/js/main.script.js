@@ -191,7 +191,7 @@ document.addEventListener('DOMContentLoaded', function() {
             heroRole.textContent = globalDataCenter.profile.role[lang];
         }
         if (aboutText && globalDataCenter.profile.about[lang]) {
-            aboutText.textContent = globalDataCenter.profile.about[lang];
+            aboutText.textContent = globalDataCenter.profile.about_short[lang];
         }
 
         // --- B. PROJECTS GALLERY ---

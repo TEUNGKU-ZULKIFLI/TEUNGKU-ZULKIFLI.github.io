@@ -5,9 +5,17 @@
       "id": "Mahasiswa Vokasi di Politeknik Negeri Lhokseumawe | Penggiat IoT & Pemrograman",
       "en": "Vocational Student at Politeknik Negeri Lhokseumawe | Enthusiast in IoT & Programming"
     },
-    "about": {
+    "about_short": {
       "id": "Mahasiswa tingkat akhir D4 Teknologi Rekayasa Komputer Jaringan di PNL dengan fondasi di bidang infrastruktur IT, jaringan, dan software.",
       "en": "Final-year Computer Network Engineering Technology student at PNL with a comprehensive foundation in IT infrastructure and software development."
+    },
+    "about_long": {
+      "id": "Mahasiswa tingkat akhir D4 Teknologi Rekayasa Komputer Jaringan di Politeknik Negeri Lhokseumawe dengan fondasi komprehensif di bidang infrastruktur IT, administrasi jaringan, dan pengembangan perangkat lunak. Selain sedang merancang sistem mitigasi otomatis (IPS) terhadap serangan brute force pada router MikroTik sebagai tugas akhir, saya juga aktif mengembangkan berbagai proyek nyata berbasis Web, Mobile (Flutter), dan Internet of Things (IoT). Saya sangat adaptif dalam mengadopsi teknologi baru, termasuk pemanfaatan AI-tools. Mencari peluang karir yang dinamis sebagai Network Engineer, IT Support, maupun Software/Web Developer.",
+      "en": "Final-year D4 Computer Network Engineering Technology student at Lhokseumawe State Polytechnic with a comprehensive foundation in IT infrastructure, network administration, and software development. Currently designing an automated mitigation system (IPS) against brute force attacks on MikroTik routers as a final project. I actively develop real-world projects based on Web, Mobile (Flutter), and IoT. Highly adaptable to new technologies, including the use of AI tools. Seeking dynamic career opportunities as a Network Engineer, IT Support, or Software/Web Developer."
+    },
+    "contact": {
+      "phone": "+62 831 0585 1202",
+      "address": "Kab. Pidie Jaya, Nanggroe Aceh Darussalam, Indonesia"
     },
     "socials": {
       "github": "https://github.com/TEUNGKU-ZULKIFLI",
@@ -26,10 +34,26 @@
     {
       "institution": "Politeknik Negeri Lhokseumawe",
       "degree": {
-        "id": "Sarjana Terapan (S.Tr.) Teknologi Rekayasa Komputer Jaringan.",
-        "en": "Bachelor of Applied Science in Computer Network Engineering Technology."
+        "id": "Sarjana Terapan (S.Tr.) Teknologi Rekayasa Komputer Jaringan",
+        "en": "Bachelor of Applied Science in Computer Network Engineering Technology"
       },
-      "year": "2022 - 2026"
+      "year": "Agt 2022 - Agt 2026",
+      "details": {
+        "id": "Fokus studi pada infrastruktur Jaringan, Keamanan Siber, dan Internet of Things (IoT). GPA: 3.62",
+        "en": "Focus on Network infrastructure, Cybersecurity, and Internet of Things (IoT). GPA: 3.62"
+      }
+    },
+    {
+      "institution": "SMA Terpadu Raudhatul Ulum",
+      "degree": {
+        "id": "Matematika dan Ilmu Pengetahuan Alam (IPA) - Nilai: 90",
+        "en": "Mathematics and Natural Sciences (Science Major) - Grade: 90"
+      },
+      "year": "2019 - 2022",
+      "details": {
+        "id": "Kab. Pidie Jaya, Aceh, Indonesia",
+        "en": "Pidie Jaya Regency, Aceh, Indonesia"
+      }
     }
   ],
 
@@ -38,7 +62,7 @@
       "id": "e1",
       "role": "Technical Support Specialist (Intern)",
       "company": "PT Telkom Akses",
-      "period": "Feb 2025 - Aug 2025",
+      "period": "Feb 2025 - Agt 2025",
       "description": {
         "id": [
           "Melakukan penyambungan serat optik menggunakan fusion splicer serta pengujian OTDR untuk menjamin kualitas instalasi layanan FTTH.",
@@ -81,6 +105,7 @@
       "image_url": "https://raw.githubusercontent.com/TEUNGKU-ZULKIFLI/InternetofRoboticThings/release-v1/pertemuan-03/assets/GacoRover.png",
       "demo_url": "https://youtu.be/RF_6JotvamE",
       "github_url": "https://github.com/TEUNGKU-ZULKIFLI/InternetofRoboticThings/tree/release-v1",
+      "detail_url": "",
       "tech_stack": ["ESP32", "C++", "PlatformIO"]
     },
     {
@@ -105,7 +130,8 @@
       "image_url": "https://raw.githubusercontent.com/TEUNGKU-ZULKIFLI/finance_tracker/master/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png",
       "demo_url": "https://youtube.com/playlist?list=PLuXdnSVJrUhlPdxPsLkPj8o5QRjvfqQek&si=1DYkrLlrPohOKPiw",
       "github_url": "https://github.com/TEUNGKU-ZULKIFLI/finance_tracker/releases/tag/v1.0.0%2B1",
-      "tech_stack": ["Flutter", "SQLite"]
+      "detail_url": "article.html?post=_posts/projects/2025-09-10-apok-fintrack.md",
+      "tech_stack": ["Flutter", "SQLite", "Dart"]
     },
     {
       "id": "p3",
@@ -115,8 +141,8 @@
         "en": "SmartBin - IoT Waste Management"
       },
       "description": {
-        "id": ["Sistem tempat sampah pintar berbasis IoT..."],
-        "en": ["IoT-based smart waste management system..."]
+        "id": ["Sistem tempat sampah pintar berbasis IoT yang terintegrasi dengan sensor ultrasonik & ESP8266 untuk memonitor kapasitas sampah secara realtime ke dashboard Laravel."],
+        "en": ["IoT-based smart trash can system integrated with ultrasonic sensors & ESP8266 to monitor trash capacity in real time to the Laravel dashboard."]
       },
       "image_url": "https://raw.githubusercontent.com/TEUNGKU-ZULKIFLI/smartbin/refs/heads/main/public/TongBroh01.jpeg",
       "demo_url": "",
@@ -124,7 +150,6 @@
       "detail_url": "article.html?post=_posts/projects/2025-01-02-smartbin-iot-system.md",
       "tech_stack": ["Laravel", "IoT (ESP8266)", "Arduino C++", "Docker"]
     },
-
     {
       "id": "p5",
       "tier": "tier2",
@@ -142,7 +167,6 @@
       "detail_url": "article.html?post=_posts/projects/2025-01-02-os-apok-web.md",
       "tech_stack": ["HTML5", "CSS3", "Vanilla JS"]
     },
-
     {
       "id": "lab1",
       "tier": "tier3",
@@ -165,7 +189,7 @@
   "skills": [
     {
       "category": "Networking & Infrastructure",
-      "items": ["MikroTik", "FTTH", "GNS3", "Linux Admin"]
+      "items": ["MikroTik", "FTTH", "GNS3", "Linux Admin", "Proxmox", "Web Server Management"]
     },
     {
       "category": "Programming & Development",
@@ -174,7 +198,55 @@
     {
       "category": "Tools & Environment",
       "items": ["Git", "VS Code", "Postman", "AI-tools"]
+    },
+    {
+      "category": "Soft Skills",
+      "items": ["Teamwork", "Adaptability", "Problem Solving", "Creativity & Innovation"]
     }
+  ],
+
+  "awards": [
+    {
+      "title": {
+        "id": "Perancang Purwarupa IoT 'Arca Persevero' (Delegasi Kampus KMIPN VI)",
+        "en": "IoT Prototype Designer 'Arca Persevero' (Campus Delegate KMIPN VI)"
+      },
+      "issuer": "Panitia Nasional KMIPN VI",
+      "year": "2024",
+      "description": {
+        "id": "Memimpin tim merancang sistem keamanan kendaraan berbasis IoT. Delegasi resmi mewakili Politeknik Negeri Lhokseumawe di tingkat nasional.",
+        "en": "Led a team designing an IoT-based vehicle security system. Official delegate representing Lhokseumawe State Polytechnic at the national level."
+      }
+    },
+    {
+      "title": {
+        "id": "Juara Harapan - Olimpiade Biologi Tingkat Kabupaten/Kota",
+        "en": "Honorable Mention - Regency/City Level Biology Olympiad"
+      },
+      "issuer": "Dinas Pendidikan / Puspresnas",
+      "year": "2021",
+      "description": {
+        "id": "Mewakili SMA Terpadu Raudhatul Ulum dalam kompetisi sains tingkat kabupaten/kota.",
+        "en": "Represented SMA Terpadu Raudhatul Ulum in a regency/city-level science competition."
+      }
+    }
+  ],
+
+  "organizations": [
+    {
+      "name": "Polyrobocom",
+      "role": {
+        "id": "Anggota Divisi Penelitian dan Pengembangan (Litbang)",
+        "en": "Research and Development (R&D) Division Member"
+      },
+      "period": "2023 - Present"
+    }
+  ],
+
+  "languages": [
+    { "name": "Indonesia", "level": "Native" },
+    { "name": "Aceh", "level": "Native" },
+    { "name": "English", "level": "Beginner" }
   ],
 
   "certifications": [
