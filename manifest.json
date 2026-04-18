@@ -45,6 +45,33 @@
         ]
     },
     {
+        "file": "_posts/gns3/2025-11-30-gns3-stage3.md",
+        "title": "GNS3 Stage 3: ~~~",
+        "date": "2025-11-30",
+        "category": "Course",
+        "tags": [
+            "\"gns3-series\""
+        ]
+    },
+    {
+        "file": "_posts/gns3/2025-11-29-gns3-stage2.md",
+        "title": "GNS3 Stage 2: ~~~",
+        "date": "2025-11-29",
+        "category": "Course",
+        "tags": [
+            "\"gns3-series\""
+        ]
+    },
+    {
+        "file": "_posts/gns3/2025-11-28-gns3-stage1.md",
+        "title": "GNS3 Stage 1: The Silent Courier (Switching Deep Dive)",
+        "date": "2025-11-28",
+        "category": "Course",
+        "tags": [
+            "\"gns3-series\""
+        ]
+    },
+    {
         "file": "_posts/mininet/2025-11-04-mininet-setup-08.md",
         "title": "Tahapan 08: VPLS (Private Connectivity) and QoS (Quality of Service Analysis)",
         "date": "2025-11-04",
@@ -69,6 +96,15 @@
         "category": "Course",
         "tags": [
             "\"mininet-series\""
+        ]
+    },
+    {
+        "file": "_posts/gns3/2025-12-01-gns3-stage4.md",
+        "title": "GNS3 Stage 4: ~~~",
+        "date": "2025-11-01",
+        "category": "Course",
+        "tags": [
+            "\"gns3-series\""
         ]
     },
     {
@@ -391,18 +427,6 @@
             "\"JavaScript\""
         ],
         "status": "Completed"
-    },
-    {
-        "file": "_posts/gns3/2025-11-28-gns3-stage1.md"
-    },
-    {
-        "file": "_posts/gns3/2025-11-29-gns3-stage2.md"
-    },
-    {
-        "file": "_posts/gns3/2025-11-30-gns3-stage3.md"
-    },
-    {
-        "file": "_posts/gns3/2025-12-01-gns3-stage4.md"
     },
     {
         "file": "_posts/journey/2025-12-18-journey-assembly.md"
