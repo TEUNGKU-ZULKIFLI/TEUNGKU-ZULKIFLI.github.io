@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>SmartBin: Sistem Manajemen Sampah Cerdas Berbasis IoT - Teungku Zulkifli</title>
+    <meta name="description" content="">
+    <meta name="author" content="Teungku Zulkifli">
+    
+    <meta property="og:title" content="SmartBin: Sistem Manajemen Sampah Cerdas Berbasis IoT - Teungku Zulkifli">
+    <meta property="og:description" content="">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://teungku.me">
+    
+    <link rel="stylesheet" href="../../assets/css/main.style.css">
+    
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="../../index.html" class="logo">Teungku Zulkifli</a>
+            <ul id="nav-links">
+                <li><a data-lang="common.navHome" href="../../index.html#home">Beranda</a></li>
+                <li><a data-lang="common.navAbout" href="../../index.html#about">Tentang</a></li>
+                <li><a data-lang="common.navContact" href="../../index.html#contact">Kontak</a></li>
+                <li><a data-lang="common.navProjects" href="../../projects.html">Proyek</a></li>
+                <li><a data-lang="common.navBlog" href="../../blog.html">Blog</a></li>
+            </ul>
+            <button id="hamburger-btn" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+    
+    <main>
+<article id="article-content">
+    
+    <header class="article-header">
+        <h1>SmartBin: Sistem Manajemen Sampah Cerdas Berbasis IoT</h1>
+        
+        <div class="article-meta">
+            <span class="meta-item">
+                📅 <time datetime="2025-01-02">2025-01-02</time>
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                🏷️ Project
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                ✍️ Teungku Zulkifli
+            </span>
+        </div>
+        
+        <div class="article-tags">
+            <span class="article-tag">#IoT</span>
+            <span class="article-tag">#Laravel</span>
+            <span class="article-tag">#Arduino</span>
+            <span class="article-tag">#Hardware</span>
+        </div>
+    </header>
+    
+    <hr class="article-divider">
+    
+    <div class="article-body">
+        <p><strong>SmartBin</strong> adalah solusi <em>Internet of Things (IoT)</em> yang mengintegrasikan perangkat keras sensor dengan platform web untuk memantau kapasitas sampah secara <em>real-time</em> dan memberikan <em>reward point</em> otomatis kepada pengguna.</p>
+<p><img alt="SmartBin Architecture" src="https://placehold.co/800x400/2c2c2c/f0f0f0?text=SmartBin+Architecture" /></p>
+<hr />
+<h2 id="latar-belakang">🚩 Latar Belakang</h2>
+<p>Di lingkungan perkotaan, pengelolaan sampah seringkali tidak efisien. Petugas kebersihan sering memeriksa tong sampah yang masih kosong (membuang waktu/bensin) atau terlambat mengangkut tong yang sudah penuh (menyebabkan polusi). Selain itu, kurangnya insentif membuat masyarakat malas membuang sampah pada tempatnya.</p>
+<h2 id="solusi-yang-ditawarkan">💡 Solusi yang Ditawarkan</h2>
+<p>SmartBin hadir dengan dua fungsi utama:
+1.  <strong>Monitoring Kapasitas:</strong> Mendeteksi kepenuhan sampah menggunakan sensor ultrasonik.
+2.  <strong>Sistem Reward:</strong> Memberikan poin kepada user yang membuang sampah, yang tercatat otomatis di dashboard.</p>
+<h2 id="arsitektur-teknis">🛠️ Arsitektur Teknis</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Layer</th>
+<th style="text-align: left;">Teknologi</th>
+<th style="text-align: left;">Deskripsi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Hardware</strong></td>
+<td style="text-align: left;">NodeMCU ESP8266</td>
+<td style="text-align: left;">Mikrokontroler utama dengan modul WiFi.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Sensor</strong></td>
+<td style="text-align: left;">Ultrasonik HC-SR04</td>
+<td style="text-align: left;">Mengukur jarak sampah untuk menentukan kepenuhan.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Backend</strong></td>
+<td style="text-align: left;">Laravel 9</td>
+<td style="text-align: left;">REST API untuk menerima data sensor dan manajemen user.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Database</strong></td>
+<td style="text-align: left;">MySQL</td>
+<td style="text-align: left;">Menyimpan log transaksi sampah dan data user.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Container</strong></td>
+<td style="text-align: left;">Docker</td>
+<td style="text-align: left;">Digunakan untuk lingkungan pengembangan yang konsisten.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="tantangan-teknis">🚀 Tantangan Teknis</h2>
+<p>Salah satu tantangan terbesar adalah <strong>latensi jaringan</strong>. Terkadang koneksi WiFi pada ESP8266 terputus saat pengiriman data ke server Laravel.
+* <strong>Solusi:</strong> Saya mengimplementasikan logika <em>reconnect</em> otomatis pada kode C++ Arduino dan membuat <em>queue</em> sederhana untuk menyimpan data sementara jika offline.</p>
+<h2 id="tautan">🔗 Tautan</h2>
+<p><a href="https://github.com/TEUNGKU-ZULKIFLI/smartbin">Lihat Kode di GitHub</a></p>
+    </div>
+    
+    <nav class="article-footer-nav">
+        <a href="../../blog.html" class="cta-button">← Kembali ke Blog</a>
+    </nav>
+    
+</article>
+    </main>
+    
+    <footer>
+        <p>&copy; 2026 - Teungku Zulkifli. Dibuat dengan ❤️</p>
+    </footer>
+    
+    <div class="floating-lang-switcher">
+        <div class="lang-options">
+            <button id="lang-id">ID</button>
+            <button id="lang-en">EN</button>
+        </div>
+        <button class="lang-globe-btn" aria-label="Pilih Bahasa">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+        </button>
+    </div>
+    
+    <script src="../../assets/js/languages.js"></script>
+    <script src="../../assets/js/main.script.js" defer></script>
+    
+</body>
+</html>

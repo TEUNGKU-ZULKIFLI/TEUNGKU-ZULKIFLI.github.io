@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Bandwidth Management (Polisi Lalu Lintas) - Teungku Zulkifli</title>
+    <meta name="description" content="">
+    <meta name="author" content="Teungku Zulkifli">
+    
+    <meta property="og:title" content="Bandwidth Management (Polisi Lalu Lintas) - Teungku Zulkifli">
+    <meta property="og:description" content="">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://teungku.me">
+    
+    <link rel="stylesheet" href="../../assets/css/main.style.css">
+    
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="../../index.html" class="logo">Teungku Zulkifli</a>
+            <ul id="nav-links">
+                <li><a data-lang="common.navHome" href="../../index.html#home">Beranda</a></li>
+                <li><a data-lang="common.navAbout" href="../../index.html#about">Tentang</a></li>
+                <li><a data-lang="common.navContact" href="../../index.html#contact">Kontak</a></li>
+                <li><a data-lang="common.navProjects" href="../../projects.html">Proyek</a></li>
+                <li><a data-lang="common.navBlog" href="../../blog.html">Blog</a></li>
+            </ul>
+            <button id="hamburger-btn" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+    
+    <main>
+<article id="article-content">
+    
+    <header class="article-header">
+        <h1>Bandwidth Management (Polisi Lalu Lintas)</h1>
+        
+        <div class="article-meta">
+            <span class="meta-item">
+                📅 <time datetime="2025-12-25">2025-12-25</time>
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                🏷️ Course
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                ✍️ Teungku Zulkifli
+            </span>
+        </div>
+        
+        <div class="article-tags">
+            <span class="article-tag">#mikrotik-series</span>
+        </div>
+    </header>
+    
+    <hr class="article-divider">
+    
+    <div class="article-body">
+        <h1 id="dokumentasi-lab-mikrotik-misi-2">📂 DOKUMENTASI LAB MIKROTIK: MISI 2</h1>
+<h2 id="a-tujuan-misi">A. TUJUAN MISI</h2>
+<p>Mencegah satu pengguna menghabiskan kapasitas internet kantor (monopoli bandwidth). Mengimplementasikan fitur <em>Simple Queue</em> untuk membatasi kecepatan Download dan Upload pada client spesifik.</p>
+<hr />
+<h2 id="b-konsep-dasar-teori-daging">B. KONSEP DASAR (TEORI DAGING) 🥩</h2>
+<h3 id="1-bandwidth-vs-throughput">1. Bandwidth vs Throughput</h3>
+<ul>
+<li><strong>Bandwidth:</strong> Lebar pipa maksimum (Kapasitas Jalan Tol).</li>
+<li><strong>Throughput:</strong> Kecepatan data yang sebenarnya lewat (Jumlah mobil yang lewat).</li>
+<li><em>Tugas kita:</em> Mengecilkan lebar jalan untuk user tertentu supaya tidak macet.</li>
+</ul>
+<h3 id="2-simple-queue">2. Simple Queue</h3>
+<p>Fitur paling sederhana di Mikrotik untuk melimitasi bandwidth berdasarkan IP Address.</p>
+<ul>
+<li><strong>Target:</strong> Siapa yang mau dibatasi (IP <code>192.168.50.50</code>).</li>
+<li><strong>Max Limit:</strong> Batas mentok kecepatan. (Jika diset 128k, user tidak akan pernah bisa lewat dari angka itu, meskipun internet sedang kosong).</li>
+</ul>
+<h3 id="3-logika-urutan-top-down">3. Logika Urutan (Top-Down)</h3>
+<p>Mikrotik membaca aturan antrian dari <strong>Atas ke Bawah</strong>.</p>
+<ul>
+<li>Aturan untuk IP Spesifik harus ditaruh di urutan <strong>0 (Paling Atas)</strong>.</li>
+<li>Aturan untuk Network Global (Sekantor) ditaruh di <strong>Bawahnya</strong>.</li>
+<li><em>Analogi:</em> VIP diperiksa duluan, baru antrian umum.</li>
+</ul>
+<h3 id="4-satuan-kecepatan">4. Satuan Kecepatan</h3>
+<ul>
+<li><strong>b (bit):</strong> Satuan kecepatan internet (Mbps/Kbps).</li>
+<li><strong>B (Byte):</strong> Satuan ukuran file.</li>
+<li><strong>Rumus:</strong> 1 Byte = 8 bit. (Download 1 Mbps = Kecepatan transfer file sekitar 125 KB/s).</li>
+</ul>
+<hr />
+<h2 id="c-langkah-pengerjaan">C. LANGKAH PENGERJAAN</h2>
+<h3 id="1-skenario-pengujian-before">1. Skenario Pengujian (Before)</h3>
+<ul>
+<li>Melakukan Speedtest tanpa limitasi.</li>
+<li><strong>Hasil:</strong> ~940 Kbps (Note: Terlimit oleh Lisensi CHR Free Tier 1Mbps).</li>
+<li><strong>Experience:</strong> Youtube lancar, browsing cepat.</li>
+</ul>
+<h3 id="2-implementasi-queue-action">2. Implementasi Queue (Action)</h3>
+<p><strong>Metode GUI (Winbox):</strong>
+* Menu: <strong>Queues</strong> &gt; <strong>Simple Queues</strong>.
+* Add (+):
+* Name: <code>Limit-PC-TEUNGKU</code>
+* Target: <code>192.168.50.50</code>
+* Max Limit: <code>128k</code> (Upload) / <code>128k</code> (Download).</p>
+<p><strong>Metode CLI (Script):</strong></p>
+<pre><code class="language-bash">/queue simple add name=&quot;Limit-PC-TEUNGKU&quot; target=192.168.50.50 max-limit=128k/128k
+</code></pre>
+<h3 id="3-hasil-pengujian-after">3. Hasil Pengujian (After)</h3>
+<ul>
+<li><strong>Speedtest:</strong> Turun drastis menjadi ~110 Kbps.</li>
+<li><strong>Experience:</strong></li>
+<li>Membuka YouTube hanya muncul kerangka (<em>wireframe</em>). Video tidak bisa diputar atau sangat patah-patah.</li>
+<li>Indikator Queue di Winbox berubah warna menjadi <strong>Merah 🔴</strong> (Tanda trafik penuh/mentok).</li>
+</ul>
+<h3 id="4-normalisasi">4. Normalisasi</h3>
+<ul>
+<li>Mengubah limit menjadi <strong>1M/1M</strong>.</li>
+<li><strong>Hasil:</strong> YouTube bisa diputar kembali (Resolusi 1080p buffer sedikit).</li>
+</ul>
+<hr />
+<h2 id="d-kesimpulan">D. KESIMPULAN</h2>
+<p>Fitur Simple Queue berhasil diterapkan. Admin memiliki kendali penuh untuk menentukan seberapa cepat client boleh mengakses internet. Ini vital untuk menjaga stabilitas jaringan di kantor agar tidak ada user yang egois.</p>
+<hr />
+    </div>
+    
+    <nav class="article-footer-nav">
+        <a href="../../blog.html" class="cta-button">← Kembali ke Blog</a>
+    </nav>
+    
+</article>
+    </main>
+    
+    <footer>
+        <p>&copy; 2026 - Teungku Zulkifli. Dibuat dengan ❤️</p>
+    </footer>
+    
+    <div class="floating-lang-switcher">
+        <div class="lang-options">
+            <button id="lang-id">ID</button>
+            <button id="lang-en">EN</button>
+        </div>
+        <button class="lang-globe-btn" aria-label="Pilih Bahasa">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+        </button>
+    </div>
+    
+    <script src="../../assets/js/languages.js"></script>
+    <script src="../../assets/js/main.script.js" defer></script>
+    
+</body>
+</html>

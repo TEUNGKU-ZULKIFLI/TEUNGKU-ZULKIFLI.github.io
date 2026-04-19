@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>(Part 4): Konfigurasi Bridge Adapter - Teungku Zulkifli</title>
+    <meta name="description" content="">
+    <meta name="author" content="Teungku Zulkifli">
+    
+    <meta property="og:title" content="(Part 4): Konfigurasi Bridge Adapter - Teungku Zulkifli">
+    <meta property="og:description" content="">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://teungku.me">
+    
+    <link rel="stylesheet" href="../../assets/css/main.style.css">
+    
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="../../index.html" class="logo">Teungku Zulkifli</a>
+            <ul id="nav-links">
+                <li><a data-lang="common.navHome" href="../../index.html#home">Beranda</a></li>
+                <li><a data-lang="common.navAbout" href="../../index.html#about">Tentang</a></li>
+                <li><a data-lang="common.navContact" href="../../index.html#contact">Kontak</a></li>
+                <li><a data-lang="common.navProjects" href="../../projects.html">Proyek</a></li>
+                <li><a data-lang="common.navBlog" href="../../blog.html">Blog</a></li>
+            </ul>
+            <button id="hamburger-btn" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+    
+    <main>
+<article id="article-content">
+    
+    <header class="article-header">
+        <h1>(Part 4): Konfigurasi Bridge Adapter</h1>
+        
+        <div class="article-meta">
+            <span class="meta-item">
+                📅 <time datetime="2025-09-27">2025-09-27</time>
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                🏷️ Course
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                ✍️ Teungku Zulkifli
+            </span>
+        </div>
+        
+        <div class="article-tags">
+            <span class="article-tag">#debian-server-series</span>
+        </div>
+    </header>
+    
+    <hr class="article-divider">
+    
+    <div class="article-body">
+        <iframe src="https://www.youtube.com/embed/FEd7o51UY0Y?controls=0&modestbranding=1&rel=0&disablekb=1&autoplay=0" style="display:block;margin:auto;border:none;width:100%;max-width:960px;height:540px;" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+<h1 id="dokumentasi-debian-di-hyper-v-part-4-konfigurasi-bridge-adapter">Dokumentasi Debian di Hyper V (Part 4): Konfigurasi Bridge Adapter</h1>
+<p><strong>Catatan Perjalanan &amp; Solusi Praktis untuk VM Debian 7.8.0 &ldquo;Wheezy&rdquo;</strong></p>
+<hr />
+<h2 id="pendahuluan">Pendahuluan 🚀</h2>
+<p>Selamat datang di catatan perjalanan saya dalam membangun sebuah server dari nol! Dokumen ini lebih dari sekadar terjemahan; ini adalah sebuah logbook praktis dari proses konfigurasi awal server <strong>Debian 7.8.0 &ldquo;Wheezy&rdquo;</strong>. Setiap langkah di dalamnya tidak hanya diriset, tetapi juga telah dipraktikkan, diuji, dan yang terpenting, dilengkapi dengan solusi untuk setiap masalah tak terduga yang muncul di tengah jalan.</p>
+<p>Tujuannya adalah untuk menciptakan sebuah panduan yang jujur dan mudah diikuti, terutama bagi mereka yang mungkin menempuh jalur yang sama dengan perangkat lunak versi lama ini. Semoga catatan ini bisa menjadi peta yang berguna, menunjukkan bukan hanya jalan yang lurus, tetapi juga cara melewati setiap rintangan.</p>
+<h3 id="credits-referensi">Credits &amp; Referensi</h3>
+<p>Proses ini tidak akan berjalan lancar tanpa sumber daya dan bantuan yang luar biasa. Kredit sepenuhnya diberikan kepada:</p>
+<ul>
+<li><strong><a href="https://www.server-world.info/en/note?os=Debian_7.0">Server-World</a></strong>: Sebagai referensi utama dan panduan dasar untuk semua tahapan konfigurasi. Panduan mereka yang komprehensif menjadi titik awal dari petualangan ini.</li>
+<li><strong>Gemini (Model AI Google)</strong>: Sebagai mitra diskusi interaktif, asisten riset, dan &ldquo;pengumpul data&rdquo;. Gemini membantu dalam menerjemahkan konsep, mendiagnosis masalah unik (seperti error GPG dan repositori arsip), serta menyusun penjelasan langkah demi langkah yang detail.</li>
+</ul>
+<hr />
+<h1 id="bab-1-the-genesis-lanjutan">📖 BAB 1: THE GENESIS (Lanjutan)</h1>
+<h2 id="part-4-jembatan-penghubung-menyiapkan-infrastruktur-virtual">(Part 4) Jembatan Penghubung: Menyiapkan Infrastruktur Virtual</h2>
+<p><strong>(Bridge Adapter Configuration)</strong></p>
+<h3 id="tagline">🏷️ TAGLINE</h3>
+<p><em>&ldquo;Membangun Terminal Listrik untuk Masa Depan&rdquo;</em></p>
+<hr />
+<h3 id="konsep-warung-kopi-analogi">☕ KONSEP &ldquo;WARUNG KOPI&rdquo; (Analogi)</h3>
+<p>Bayangkan <code>eth0</code> (Pintu Belakang) server Anda saat ini seperti <strong>Colokan Listrik Dinding (Wall Socket)</strong>.
+Saat ini, Server Debian mencolok langsung ke situ. IP <code>192.168.10.1</code> menempel di kabel server.</p>
+<p>Masalahnya: Nanti kita mau punya klien (Windows 7). Colokan di dinding cuma satu. Windows 7 mau colok di mana?</p>
+<p>Solusinya: Kita pasang <strong>Terminal Kuningan (Extension Cord/Power Strip)</strong>. Di Linux, ini disebut <strong>Bridge (<code>br0</code>)</strong>.</p>
+<ol>
+<li>Kabel dari dinding (<code>eth0</code>) kita colok ke Terminal (<code>br0</code>).</li>
+<li>Server Debian kita cabut dari dinding, lalu colok ke Terminal (<code>br0</code>).</li>
+<li>Nanti, Windows 7 juga akan colok ke Terminal (<code>br0</code>) yang sama.</li>
+</ol>
+<p>Jadi, IP Address <code>192.168.10.1</code> bukan lagi milik kabel dinding, tapi milik si Terminal.</p>
+<hr />
+<h3 id="misi-operasi">🎯 MISI OPERASI</h3>
+<ol>
+<li>Menginstal tukang jembatan (<code>bridge-utils</code>).</li>
+<li>Mengaktifkan &ldquo;Turbo Mode&rdquo; jaringan (<code>vhost_net</code>).</li>
+<li>Memindahkan IP dari <code>eth0</code> ke jembatan baru <code>br0</code>.</li>
+</ol>
+<hr />
+<h3 id="persiapan">🛠️ PERSIAPAN</h3>
+<ul>
+<li>Login sebagai <strong>root</strong>.</li>
+<li><strong>Mental Baja:</strong> Mengotak-atik <em>network interfaces</em> berisiko putus koneksi SSH. Jika putus, masuk lewat Console VirtualBox/VMware.</li>
+</ul>
+<hr />
+<h3 id="langkah-eksekusi">💻 LANGKAH EKSEKUSI</h3>
+<h4 id="tahap-a-memanggil-tukang-jembatan">TAHAP A: Memanggil Tukang Jembatan</h4>
+<p>Kita butuh alat untuk membangun jembatan virtual ini.</p>
+<p><strong>1. Instal Paket Bridge:</strong></p>
+<pre><code class="language-bash">apt-get install bridge-utils -y
+</code></pre>
+<p><strong>2. Aktifkan Akselerasi (Turbo Mode):</strong>
+Agar performa jaringan antar-VM ngebut, kita aktifkan modul kernel <code>vhost_net</code>.</p>
+<pre><code class="language-bash"># Aktifkan sekarang
+modprobe vhost_net
+
+# Pastikan aktif selamanya (setiap booting)
+echo vhost_net &gt;&gt; /etc/modules
+</code></pre>
+<hr />
+<h4 id="tahap-b-operasi-transplantasi-ip">TAHAP B: Operasi Transplantasi IP</h4>
+<p>Kita akan memindahkan &ldquo;Nyawa&rdquo; (IP Address) dari <code>eth0</code> ke <code>br0</code>.</p>
+<p><strong>1. Backup File Konfigurasi (Wajib!):</strong></p>
+<pre><code class="language-bash">cp /etc/network/interfaces /etc/network/interfaces.nobridge
+</code></pre>
+<p><strong>2. Edit Peta Jaringan:</strong></p>
+<pre><code class="language-bash">nano /etc/network/interfaces
+</code></pre>
+<p><strong>3. Terapkan Konfigurasi Jembatan:</strong>
+Hapus (atau komentar) konfigurasi lama, ganti dengan yang baru di bawah ini. Perhatikan bedanya!</p>
+<pre><code class="language-bash"># Loopback
+auto lo
+iface lo inet loopback
+
+# --- WAJAH 1: Jembatan (Bridge) ---
+# eth0 turun pangkat, cuma jadi 'kabel sambungan'
+allow-hotplug eth0
+iface eth0 inet manual
+
+# br0 naik pangkat, dia yang pegang IP Address
+auto br0
+iface br0 inet static
+    address 192.168.10.1
+    netmask 255.255.255.0
+    bridge_ports eth0       # &lt;--- INI KUNCINYA (Kabel dindingnya eth0)
+    bridge_stp off
+    bridge_fd 0
+
+# --- WAJAH 2: Internet (Tetap Sama) ---
+allow-hotplug eth1
+iface eth1 inet dhcp
+</code></pre>
+<p>Simpan (<code>Ctrl+O</code>) dan keluar (<code>Ctrl+X</code>).</p>
+<p><strong>4. Restart Jaringan:</strong></p>
+<pre><code class="language-bash">/etc/init.d/networking restart
+</code></pre>
+<p><em>(Tunggu sebentar. Jika Anda pakai SSH dan tidak putus, berarti Anda hebat!)</em></p>
+<hr />
+<h3 id="pojok-benang-merah-real-case-study">🚧 POJOK &ldquo;BENANG MERAH&rdquo; (Real Case Study)</h3>
+<p><strong>Kasus:</strong> &ldquo;Mas, setelah restart network, kok <code>eth0</code> saya nggak punya IP? Rusak ya?&rdquo;</p>
+<p><strong>Penjelasan:</strong> TIDAK RUSAK. Itu justru benar!
+Ingat analogi kita? <code>eth0</code> itu cuma kabel dari dinding ke terminal. Dia tidak butuh &ldquo;Nomor Rumah&rdquo; (IP). Yang butuh nomor rumah adalah Terminal-nya (<code>br0</code>).
+Jadi kalau <code>eth0</code> tidak ada IP-nya, tapi <code>br0</code> ada IP-nya, itu <strong>100% SUKSES</strong>.</p>
+<p><strong>Error Fatal:</strong> Lupa baris <code>bridge_ports eth0</code>. Kalau ini lupa ditulis, Jembatan (<code>br0</code>) jadi jembatan putus yang tidak tersambung ke kabel manapun. Server jadi terisolasi.</p>
+<hr />
+<h3 id="momen-ka-boom-verification">📸 MOMEN &ldquo;KA-BOOM!&rdquo; (Verification)</h3>
+<p>Mari kita cek apakah jembatan kita kokoh.</p>
+<p><strong>1. Cek Konstruksi Jembatan:</strong>
+Ketik: <code>brctl show</code></p>
+<ul>
+<li><strong>Hasil:</strong>
+    <code>bridge name     bridge id               STP enabled     interfaces
+    br0             8000.xxxxxxxxxxxx       no              eth0</code>
+    <em>(Pastikan di kolom interfaces ada <code>eth0</code>).</em></li>
+</ul>
+<p><strong>2. Cek Pemilik IP:</strong>
+Ketik: <code>ifconfig</code></p>
+<ul>
+<li><strong>Hasil:</strong><ul>
+<li><code>br0</code>: Punya IP <code>192.168.10.1</code>.</li>
+<li><code>eth0</code>: Tidak ada IP (<code>inet addr</code> hilang), tapi status <code>UP</code>.</li>
+</ul>
+</li>
+</ul>
+<p><strong>3. Tes Koneksi (Ping):</strong></p>
+<ul>
+<li>Ke Laptop Host: <code>ping 192.168.10.10</code> -&gt; (Harus Reply)</li>
+<li>Ke Internet: <code>ping google.com</code> -&gt; (Harus Reply)</li>
+</ul>
+<hr />
+<p>Jika semua tes <code>ping</code> berhasil, selamat! Anda sudah meletakkan dasar infrastruktur virtualisasi. Nanti di <strong>Part 6</strong>, Windows 7 akan sangat berterima kasih karena sudah disiapkan jembatan ini.</p>
+<hr />
+<p>Siap!? Ini dia penutup manis untuk BAB 1.</p>
+<hr />
+<h1 id="bab-1-the-genesis-lanjutan_1">📖 BAB 1: THE GENESIS (Lanjutan)</h1>
+<h2 id="part-17-a-makeover-tampilan-bashrc-utilities">(Part 17-A) Makeover Tampilan: Bashrc &amp; Utilities</h2>
+<p><strong>(Visual Enhancement &amp; Productivity Tools)</strong></p>
+<h3 id="tagline_1">🏷️ TAGLINE</h3>
+<p><em>&ldquo;Mengubah Layar Hitam Membosankan Menjadi Kokpit Hacker&rdquo;</em></p>
+<hr />
+<h3 id="konsep-warung-kopi-analogi_1">☕ KONSEP &ldquo;WARUNG KOPI&rdquo; (Analogi)</h3>
+<p>Bayangkan Anda adalah pilot.
+Terminal bawaan Debian (<code>root@debian:~#</code>) itu ibarat <strong>Dashboard Mobil Pick-up Tua</strong>. Fungsinya ada, tapi cuma jarum speedometer, hitam putih, dan membosankan. Kalau nyetir 10 jam, mata pasti lelah.</p>
+<p>Kita akan memodifikasinya menjadi <strong>Kokpit Pesawat Tempur</strong>.</p>
+<ol>
+<li><strong>Bashrc (Prompt):</strong> Kita pasang indikator warna-warni dan Emoji. Jadi kita tahu siapa kita, jam berapa sekarang, dan ada di folder mana, hanya dengan sekali lirik.</li>
+<li><strong>Nano Color:</strong> Kita ganti kertas polos dengan kertas stabilo. Kode program akan berwarna-warni sesuai fungsinya, meminimalisir salah baca.</li>
+<li><strong>Utilities (Htop/MC):</strong> Kita pasang radar canggih. Daripada menebak-nebak performa server, kita lihat grafiknya secara <em>real-time</em>.</li>
+</ol>
+<hr />
+<h3 id="misi-operasi_1">🎯 MISI OPERASI</h3>
+<ol>
+<li>Mengubah tampilan Prompt (<code>PS1</code>) menjadi gaya Hacker Emoji.</li>
+<li>Mengaktifkan warna pada teks editor <code>nano</code>.</li>
+<li>Menginstal alat bantu visual: <code>htop</code> (Task Manager) dan <code>mc</code> (File Manager).</li>
+</ol>
+<hr />
+<h3 id="persiapan_1">🛠️ PERSIAPAN</h3>
+<ul>
+<li>Login sebagai user yang ingin dipercantik (bisa <code>root</code> atau user biasa).</li>
+<li>Pastikan koneksi internet lancar (untuk install <code>htop</code>).</li>
+</ul>
+<hr />
+<h3 id="langkah-eksekusi_1">💻 LANGKAH EKSEKUSI</h3>
+<h4 id="tahap-a-operasi-plastik-terminal-bashrc">TAHAP A: Operasi Plastik Terminal (.bashrc)</h4>
+<p>Kita akan mengedit file skrip yang dijalankan setiap kali Anda login.</p>
+<p><strong>1. Buka File Konfigurasi:</strong></p>
+<pre><code class="language-bash">nano ~/.bashrc
+</code></pre>
+<p><strong>2. Aktifkan Warna Wajib:</strong>
+Cari baris <code>#force_color_prompt=yes</code>.
+<strong>Hapus tanda <code>#</code></strong> di depannya agar menjadi:</p>
+<pre><code class="language-bash">force_color_prompt=yes
+</code></pre>
+<p><strong>3. Suntikkan DNA Emoji (Ganti Prompt):</strong>
+Cari baris yang dimulai dengan <code>if [ "$color_prompt" = yes ]; then</code>.
+Di bawahnya ada baris <code>PS1=...</code>. Beri tanda <code>#</code> (matikan) baris lama itu, dan tambahkan baris &ldquo;Spesial Racikan Kita&rdquo; di bawahnya:</p>
+<pre><code class="language-bash"># Prompt Emoji Hacker Style (2 Baris)
+# Baris 1: Jam (Merah) - User@Host (Hijau) - Folder (Biru)
+# Baris 2: Alien (Kuning) sebagai penunjuk ketik
+PS1='${debian_chroot:+($debian_chroot)}\[\033[01;31m\]⏰ \t \[\033[01;32m\]👨🏻‍💻 \u@\h\[\033[00m\]:\[\033[01;34m\]📂 \w\[\033[00m\]\n\[\033[1;33m\]👽 \$ \[\033[00m\]'
+</code></pre>
+<p>Bisa juga jika mau simple saja tanpa emoji:</p>
+<pre><code class="language-bash">PS1='${debian_chroot:+($debian_chroot)}\[\033[01;31m\]\t \[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+</code></pre>
+<ul>
+<li>Penjelasan: Ini akan menampilkan <strong><code>Jam</code></strong> (<code>\t</code>) <strong>warna merah</strong>, <strong><code>User@Host</code></strong> <strong>warna hijau</strong>, dan <strong><code>Folder</code></strong> <strong>warna biru</strong>.</li>
+</ul>
+<p><strong>4. Simpan dan Keluar:</strong>
+<code>Ctrl+O</code>, <code>Enter</code>, <code>Ctrl+X</code>.</p>
+<p><strong>5. Terapkan Perubahan (Tanpa Logout):</strong></p>
+<pre><code class="language-bash">source ~/.bashrc
+</code></pre>
+<p><em>(Lihat perbedaannya! Terminal Anda sekarang harusnya punya jam, warna, dan alien).</em></p>
+<hr />
+<h4 id="tahap-b-mewarnai-editor-nano-syntax-highlighting">TAHAP B: Mewarnai Editor (Nano Syntax Highlighting)</h4>
+<p>Supaya mata tidak sakit saat ngoding konfigurasi.</p>
+<p><strong>1. Edit Config Nano Global:</strong></p>
+<pre><code class="language-bash">nano /etc/nanorc
+</code></pre>
+<p><em>(Anda mungkin harus pakai <code>sudo</code> atau login root)</em>.</p>
+<p><strong>2. Aktifkan Pewarnaan:</strong>
+Gulir ke bagian paling bawah file (tekan <code>Ctrl+W</code> lalu <code>Ctrl+V</code> berkali-kali).
+Cari baris-baris yang diawali <code>include</code>. Hapus tanda <code>#</code> pada bahasa yang sering dipakai:</p>
+<pre><code class="language-bash">include &quot;/usr/share/nano/nanorc.nanorc&quot;
+include &quot;/usr/share/nano/sh.nanorc&quot;
+include &quot;/usr/share/nano/html.nanorc&quot;
+include &quot;/usr/share/nano/php.nanorc&quot;
+# Dan lain-lain sesuai selera
+</code></pre>
+<p>Simpan dan keluar.</p>
+<hr />
+<h4 id="tahap-c-instalasi-radar-canggih-utilities">TAHAP C: Instalasi Radar Canggih (Utilities)</h4>
+<p>Kita instal alat bantu visual.</p>
+<p><strong>1. Instal Paket:</strong></p>
+<pre><code class="language-bash">apt-get install htop mc -y
+</code></pre>
+<p><strong>2. Kenalan dengan Alat Baru:</strong></p>
+<ul>
+<li><strong>Htop:</strong> Ketik <code>htop</code>.
+    Ini adalah pengganti <code>top</code>. Anda bisa melihat grafik CPU (Bar warna-warni), penggunaan RAM, dan daftar proses. Tekan <code>F10</code> atau <code>q</code> untuk keluar.</li>
+<li><strong>Midnight Commander:</strong> Ketik <code>mc</code>.
+    Ini adalah File Manager layar ganda (seperti Windows Explorer zaman dulu). Anda bisa copy file dari kiri ke kanan tanpa ngetik perintah panjang. Tekan <code>F10</code> untuk keluar.</li>
+</ul>
+<hr />
+<h3 id="pojok-benang-merah-real-case-study_1">🚧 POJOK &ldquo;BENANG MERAH&rdquo; (Real Case Study)</h3>
+<p><strong>Kasus:</strong> &ldquo;Mas, kok Alien dan Jam-nya jadi kotak-kotak (□ □)?&rdquo;
+<strong>Penyebab:</strong> Masalah ini bukan di Debian, tapi di <strong>Windows/Laptop Anda</strong>. Font di CMD/Putty Windows 7 belum mendukung Emoji modern.
+<strong>Solusi:</strong></p>
+<ol>
+<li>Abaikan saja (Fungsi tetap jalan).</li>
+<li>Gunakan terminal modern di Windows (seperti Git Bash atau VS Code Remote).</li>
+<li>Ganti font di setting Putty menjadi font yang support emoji (misal <em>Consolas</em> atau <em>Nerd Fonts</em>).</li>
+</ol>
+<p><strong>Kasus:</strong> &ldquo;Saya sudah edit <code>.bashrc</code> tapi kok tampilannya nggak berubah?&rdquo;
+<strong>Penyebab:</strong> Lupa menjalankan perintah sakti <code>source</code>.
+<strong>Solusi:</strong> Ketik <code>source ~/.bashrc</code> atau logout dan login lagi.</p>
+<hr />
+<h3 id="momen-ka-boom-verification_1">📸 MOMEN &ldquo;KA-BOOM!&rdquo; (Verification)</h3>
+<ol>
+<li><strong>Cek Prompt:</strong>
+    Lihat terminal Anda. Apakah ada <strong>Jam</strong> yang berjalan? Apakah ada <strong>Alien</strong> <code>👽</code> di baris bawah? Jika ya, Anda sudah resmi jadi <em>Stylish Admin</em>.</li>
+<li><strong>Cek Nano:</strong>
+    Buka file html sembarang: <code>nano /var/www/index.html</code>. (Jika belum ada buat saja).
+    Apakah tag <code>&lt;html&gt;</code> berwarna (bukan putih polos)?</li>
+<li><strong>Cek Htop:</strong>
+    Jalankan <code>htop</code>. Apakah bar CPU bergerak-gerak warna-warni?</li>
+</ol>
+<hr />
+<p><strong>🏁 PENUTUP RESMI BAB 1:</strong></p>
+<p><strong>CONGRATULATIONS!</strong> 🎊
+Anda telah menyelesaikan <strong>BAB 1: THE GENESIS</strong> dengan sempurna.
+Server Anda sudah:</p>
+<ol>
+<li>Terinstal &amp; Terupdate.</li>
+<li>Punya Jaringan Ganda (Bridge).</li>
+<li>Punya Identitas (DNS/NTP).</li>
+<li>Aman (SSH Secured).</li>
+<li><strong>GANTENG MAKSIMAL (Custom Bashrc).</strong></li>
+</ol>
+<p>Server ini sekarang bukan lagi &ldquo;Server Latihan&rdquo;, tapi &ldquo;Server Production-Ready&rdquo;.</p>
+<p>Sekarang, tarik napas. Kita akan melangkah ke <strong>BAB 2: JARINGAN &amp; KONEKTIVITAS</strong>, di mana server ini akan mulai melayani orang lain (Windows 7).</p>
+    </div>
+    
+    <nav class="article-footer-nav">
+        <a href="../../blog.html" class="cta-button">← Kembali ke Blog</a>
+    </nav>
+    
+</article>
+    </main>
+    
+    <footer>
+        <p>&copy; 2026 - Teungku Zulkifli. Dibuat dengan ❤️</p>
+    </footer>
+    
+    <div class="floating-lang-switcher">
+        <div class="lang-options">
+            <button id="lang-id">ID</button>
+            <button id="lang-en">EN</button>
+        </div>
+        <button class="lang-globe-btn" aria-label="Pilih Bahasa">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+        </button>
+    </div>
+    
+    <script src="../../assets/js/languages.js"></script>
+    <script src="../../assets/js/main.script.js" defer></script>
+    
+</body>
+</html>

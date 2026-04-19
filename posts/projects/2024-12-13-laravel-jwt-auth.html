@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Studi Kasus: Sistem Autentikasi Laravel JWT - Teungku Zulkifli</title>
+    <meta name="description" content="">
+    <meta name="author" content="Teungku Zulkifli">
+    
+    <meta property="og:title" content="Studi Kasus: Sistem Autentikasi Laravel JWT - Teungku Zulkifli">
+    <meta property="og:description" content="">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://teungku.me">
+    
+    <link rel="stylesheet" href="../../assets/css/main.style.css">
+    
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="../../index.html" class="logo">Teungku Zulkifli</a>
+            <ul id="nav-links">
+                <li><a data-lang="common.navHome" href="../../index.html#home">Beranda</a></li>
+                <li><a data-lang="common.navAbout" href="../../index.html#about">Tentang</a></li>
+                <li><a data-lang="common.navContact" href="../../index.html#contact">Kontak</a></li>
+                <li><a data-lang="common.navProjects" href="../../projects.html">Proyek</a></li>
+                <li><a data-lang="common.navBlog" href="../../blog.html">Blog</a></li>
+            </ul>
+            <button id="hamburger-btn" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+    
+    <main>
+<article id="article-content">
+    
+    <header class="article-header">
+        <h1>Studi Kasus: Sistem Autentikasi Laravel JWT</h1>
+        
+        <div class="article-meta">
+            <span class="meta-item">
+                📅 <time datetime="2024-12-13">2024-12-13</time>
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                🏷️ Project
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                ✍️ Teungku Zulkifli
+            </span>
+        </div>
+        
+        <div class="article-tags">
+            <span class="article-tag">#Auth</span>
+            <span class="article-tag">#Laravel</span>
+            <span class="article-tag">#JWT</span>
+        </div>
+    </header>
+    
+    <hr class="article-divider">
+    
+    <div class="article-body">
+        <p>Backend service yang aman mengimplementasikan Login, Register, dan manajemen token JWT (JSON Web Token)</p>
+<!-- BAGIAN 1: GAMBARAN UMUM (ELEVATOR PITCH) -->
+<p><strong>Ringkasan:</strong> Sebuah [Jenis Aplikasi] yang dirancang untuk [Tujuan Utama] menggunakan [Teknologi Utama].</p>
+<p><img alt="Screenshot Utama Project" src="https://placehold.co/800x400/2c2c2c/f0f0f0?text=Dashboard+Preview" />
+<em>(Ganti link di atas dengan path gambar aset Anda, misal: ../../assets/images/smartbin-dashboard.jpg)</em></p>
+<hr />
+<h2 id="latar-belakang-masalah">🚩 Latar Belakang Masalah</h2>
+<p>Jelaskan masalah apa yang melatarbelakangi pembuatan proyek ini.
+* <strong>Masalah:</strong> (Contoh: Sampah sering menumpuk tanpa diketahui petugas).
+* <strong>Dampak:</strong> (Contoh: Menimbulkan bau tidak sedap dan ketidakefisienan rute truk sampah).</p>
+<h2 id="solusi-fitur-utama">💡 Solusi &amp; Fitur Utama</h2>
+<p>Bagaimana aplikasi ini menyelesaikan masalah tersebut?
+* <strong>Fitur 1:</strong> Deskripsi fitur (Misal: Monitoring Realtime via Sensor).
+* <strong>Fitur 2:</strong> Deskripsi fitur.
+* <strong>Fitur 3:</strong> Deskripsi fitur.</p>
+<h2 id="tech-stack-di-balik-layar">🛠️ Tech Stack (Di Balik Layar)</h2>
+<p>Jelaskan teknologi apa saja yang digunakan dan <strong>mengapa</strong>.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Komponen</th>
+<th style="text-align: left;">Teknologi</th>
+<th style="text-align: left;">Alasan Pemilihan</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Frontend/Mobile</strong></td>
+<td style="text-align: left;">Flutter (Dart)</td>
+<td style="text-align: left;">Untuk performa native dan UI yang fleksibel.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Backend</strong></td>
+<td style="text-align: left;">Laravel (PHP)</td>
+<td style="text-align: left;">Keamanan kuat dan kemudahan manajemen API.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Database</strong></td>
+<td style="text-align: left;">MySQL</td>
+<td style="text-align: left;">Penyimpanan data relasional yang stabil.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>IoT / Hardware</strong></td>
+<td style="text-align: left;">ESP8266 &amp; Ultrasonic</td>
+<td style="text-align: left;">Biaya rendah dan mudah diintegrasikan via WiFi.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="tantangan-pembelajaran">🚀 Tantangan &amp; Pembelajaran</h2>
+<p><em>(Bagian ini sangat disukai Senior Engineer/HRD)</em>
+Ceritakan satu tantangan teknis tersulit yang Anda hadapi dan bagaimana Anda menyelesaikannya.</p>
+<blockquote>
+<p><strong>Tantangan:</strong> (Contoh: Mengirim data sensor secara realtime tanpa membebani server).
+<strong>Solusi:</strong> (Contoh: Menggunakan MQTT atau mengoptimalkan interval pengiriman data API).</p>
+</blockquote>
+<h2 id="galeri-demo">📸 Galeri &amp; Demo</h2>
+<p>Jika ada, tambahkan screenshot tambahan atau GIF cara kerja aplikasi di sini.</p>
+<ul>
+<li><a href="https://github.com/TEUNGKU-ZULKIFLI/...">Link ke Repositori GitHub</a></li>
+<li><a href="...">Link Demo Live (Jika ada)</a></li>
+</ul>
+    </div>
+    
+    <nav class="article-footer-nav">
+        <a href="../../blog.html" class="cta-button">← Kembali ke Blog</a>
+    </nav>
+    
+</article>
+    </main>
+    
+    <footer>
+        <p>&copy; 2026 - Teungku Zulkifli. Dibuat dengan ❤️</p>
+    </footer>
+    
+    <div class="floating-lang-switcher">
+        <div class="lang-options">
+            <button id="lang-id">ID</button>
+            <button id="lang-en">EN</button>
+        </div>
+        <button class="lang-globe-btn" aria-label="Pilih Bahasa">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+        </button>
+    </div>
+    
+    <script src="../../assets/js/languages.js"></script>
+    <script src="../../assets/js/main.script.js" defer></script>
+    
+</body>
+</html>

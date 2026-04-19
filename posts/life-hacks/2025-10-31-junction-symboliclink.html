@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Lifehack Windows: Part-01 - Teungku Zulkifli</title>
+    <meta name="description" content="">
+    <meta name="author" content="Teungku Zulkifli">
+    
+    <meta property="og:title" content="Lifehack Windows: Part-01 - Teungku Zulkifli">
+    <meta property="og:description" content="">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://teungku.me">
+    
+    <link rel="stylesheet" href="../../assets/css/main.style.css">
+    
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="../../index.html" class="logo">Teungku Zulkifli</a>
+            <ul id="nav-links">
+                <li><a data-lang="common.navHome" href="../../index.html#home">Beranda</a></li>
+                <li><a data-lang="common.navAbout" href="../../index.html#about">Tentang</a></li>
+                <li><a data-lang="common.navContact" href="../../index.html#contact">Kontak</a></li>
+                <li><a data-lang="common.navProjects" href="../../projects.html">Proyek</a></li>
+                <li><a data-lang="common.navBlog" href="../../blog.html">Blog</a></li>
+            </ul>
+            <button id="hamburger-btn" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+    
+    <main>
+<article id="article-content">
+    
+    <header class="article-header">
+        <h1>Lifehack Windows: Part-01</h1>
+        
+        <div class="article-meta">
+            <span class="meta-item">
+                📅 <time datetime="2025-10-31">2025-10-31</time>
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                🏷️ LifeHack
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                ✍️ Teungku Zulkifli
+            </span>
+        </div>
+        
+        <div class="article-tags">
+            <span class="article-tag">#lifehack-win-series</span>
+        </div>
+    </header>
+    
+    <hr class="article-divider">
+    
+    <div class="article-body">
+        <h1 id="lifehack-windows-bebaskan-drive-c-dengan-junction-symlink">💡 Lifehack Windows: Bebaskan Drive C dengan Junction &amp; Symlink</h1>
+<p>Apakah drive C:\ kamu mulai penuh dan bikin sistem lemot? Padahal kamu cuma simpan video, dokumen, atau file rekaman? Tenang, ada trik cerdas yang bisa bantu kamu <strong>pindahkan isi folder ke drive lain</strong> tanpa bikin aplikasi bingung: pakai <strong>Junction</strong> atau <strong>Symbolic Link (Symlink)</strong>.</p>
+<p>Artikel ini akan bantu kamu memahami dua teknik ini dengan gaya yang santai dan langsung bisa dipraktikkan.</p>
+<hr />
+<h2 id="apa-itu-junction-dan-symlink">🧠 Apa itu Junction dan Symlink?</h2>
+<p>Bayangkan kamu punya <strong>pintu palsu</strong> di rumah. Saat orang buka pintu itu, mereka langsung masuk ke ruangan lain — padahal pintunya tetap di tempat lama. Itulah konsep <strong>link folder</strong> di Windows.</p>
+<table>
+<thead>
+<tr>
+<th>Fitur</th>
+<th>Junction</th>
+<th>Symbolic Link (Symlink)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Jenis</td>
+<td>Khusus folder</td>
+<td>Bisa folder &amp; file</td>
+</tr>
+<tr>
+<td>Lintas drive</td>
+<td>✅ Bisa</td>
+<td>✅ Bisa</td>
+</tr>
+<tr>
+<td>Kompatibilitas</td>
+<td>✅ Stabil di Windows</td>
+<td>⚠️ Kadang gagal di aplikasi lama</td>
+</tr>
+<tr>
+<td>Tujuan</td>
+<td>Pindah folder tanpa ganggu sistem</td>
+<td>Pindah file/folder dengan fleksibel</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="kapan-pakai-junction">🎯 Kapan pakai Junction?</h2>
+<p>Gunakan <strong>Junction</strong> kalau:
+- Kamu ingin pindahkan folder besar (misalnya video, rekaman, dokumen) dari C:\ ke D:\ atau E:\
+- Tapi tetap ingin aplikasi mengaksesnya seolah-olah masih di C:\
+- Kamu tidak butuh link ke file individual</p>
+<p><strong>Contoh kasus:</strong> Folder <code>C:\Users\i3len\Videos\Screen Recordings</code> mau dipindah ke <code>E:\Videos</code>, tapi tetap bisa diakses dari lokasi lama.</p>
+<hr />
+<h2 id="tutorial-pindahkan-folder-dengan-junction">🛠️ Tutorial: Pindahkan Folder dengan Junction</h2>
+<p>Langkah-langkahnya:</p>
+<ol>
+<li>
+<p><strong>Buka PowerShell sebagai Administrator</strong></p>
+</li>
+<li>
+<p><strong>Pindahkan folder ke drive tujuan:</strong>
+   <code>powershell
+   Move-Item "C:\Users\i3len\Videos\Screen Recordings" "E:\Videos\Screen Recordings"</code></p>
+</li>
+<li>
+<p><strong>Buat Junction di lokasi lama:</strong>
+   <code>powershell
+   New-Item -ItemType Junction -Path "C:\Users\i3len\Videos\Screen Recordings" -Target "E:\Videos\Screen Recordings"</code></p>
+</li>
+</ol>
+<p>✅ Sekarang, semua aplikasi yang buka folder di C:\ akan diarahkan ke E:\ secara otomatis!</p>
+<hr />
+<h2 id="kapan-pakai-symlink">🧩 Kapan pakai Symlink?</h2>
+<p>Gunakan <strong>Symlink</strong> kalau:
+- Kamu ingin link ke <strong>file individual</strong> (misalnya <code>config.json</code>)
+- Kamu butuh fleksibilitas lebih, misalnya untuk pengembangan software atau testing
+- Kamu tahu aplikasi yang kamu pakai <strong>mendukung symlink</strong></p>
+<p><strong>Contoh perintah:</strong></p>
+<pre><code class="language-powershell">New-Item -ItemType SymbolicLink -Path &quot;C:\Project\config.json&quot; -Target &quot;D:\Configs\config.json&quot;
+</code></pre>
+<hr />
+<h2 id="tips-catatan">⚠️ Tips &amp; Catatan</h2>
+<ul>
+<li>Jalankan PowerShell sebagai <strong>Administrator</strong></li>
+<li>Pastikan folder tujuan sudah ada</li>
+<li>Jangan buat link ke folder yang aktif dipakai sistem saat proses berlangsung</li>
+<li>Untuk folder, <strong>Junction lebih aman dan stabil</strong> di Windows</li>
+</ul>
+<hr />
+<h2 id="bonus-lifehack">🎁 Bonus Lifehack</h2>
+<p>Kamu bisa pakai trik ini untuk:
+- Pindahkan folder cache atau temp ke drive lain
+- Simpan file backup di HDD tapi tetap bisa diakses dari SSD
+- Buat struktur proyek modular tanpa duplikasi file</p>
+<hr />
+<h2 id="penutup">🏁 Penutup</h2>
+<p>Dengan memahami dan menggunakan <strong>Junction</strong> dan <strong>Symlink</strong>, kamu bisa menghemat ruang di drive C:\, mempercepat sistem, dan tetap menjaga kompatibilitas aplikasi. Trik ini cocok untuk pengguna awam, pelajar, developer, atau siapa pun yang ingin sistemnya tetap ringan dan rapi.</p>
+<p>Kalau kamu suka lifehack seperti ini, jangan lupa simpan artikel ini dan coba langsung di sistem kamu!</p>
+<hr />
+    </div>
+    
+    <nav class="article-footer-nav">
+        <a href="../../blog.html" class="cta-button">← Kembali ke Blog</a>
+    </nav>
+    
+</article>
+    </main>
+    
+    <footer>
+        <p>&copy; 2026 - Teungku Zulkifli. Dibuat dengan ❤️</p>
+    </footer>
+    
+    <div class="floating-lang-switcher">
+        <div class="lang-options">
+            <button id="lang-id">ID</button>
+            <button id="lang-en">EN</button>
+        </div>
+        <button class="lang-globe-btn" aria-label="Pilih Bahasa">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+        </button>
+    </div>
+    
+    <script src="../../assets/js/languages.js"></script>
+    <script src="../../assets/js/main.script.js" defer></script>
+    
+</body>
+</html>

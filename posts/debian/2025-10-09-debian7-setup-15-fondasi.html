@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>(Part 16): Install & Konfigurasi Polisi Konten SquidGuard - Teungku Zulkifli</title>
+    <meta name="description" content="">
+    <meta name="author" content="Teungku Zulkifli">
+    
+    <meta property="og:title" content="(Part 16): Install & Konfigurasi Polisi Konten SquidGuard - Teungku Zulkifli">
+    <meta property="og:description" content="">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://teungku.me">
+    
+    <link rel="stylesheet" href="../../assets/css/main.style.css">
+    
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="../../index.html" class="logo">Teungku Zulkifli</a>
+            <ul id="nav-links">
+                <li><a data-lang="common.navHome" href="../../index.html#home">Beranda</a></li>
+                <li><a data-lang="common.navAbout" href="../../index.html#about">Tentang</a></li>
+                <li><a data-lang="common.navContact" href="../../index.html#contact">Kontak</a></li>
+                <li><a data-lang="common.navProjects" href="../../projects.html">Proyek</a></li>
+                <li><a data-lang="common.navBlog" href="../../blog.html">Blog</a></li>
+            </ul>
+            <button id="hamburger-btn" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+    
+    <main>
+<article id="article-content">
+    
+    <header class="article-header">
+        <h1>(Part 16): Install & Konfigurasi Polisi Konten SquidGuard</h1>
+        
+        <div class="article-meta">
+            <span class="meta-item">
+                📅 <time datetime="2025-10-09">2025-10-09</time>
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                🏷️ Course
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                ✍️ Teungku Zulkifli
+            </span>
+        </div>
+        
+        <div class="article-tags">
+            <span class="article-tag">#debian-server-series</span>
+        </div>
+    </header>
+    
+    <hr class="article-divider">
+    
+    <div class="article-body">
+        <iframe src="https://www.youtube.com/embed/l5C7JbDvJos?controls=0&modestbranding=1&rel=0&disablekb=1&autoplay=0" style="display:block;margin:auto;border:none;width:100%;max-width:960px;height:540px;" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+<h1 id="dokumentasi-debian-di-hyper-v-part-16-install-konfigurasi-polisi-konten-squidguard">Dokumentasi Debian di Hyper V (Part 16): Install &amp; Konfigurasi Polisi Konten SquidGuard</h1>
+<p><strong>Catatan Perjalanan &amp; Solusi Praktis untuk VM Debian 7.8.0 &ldquo;Wheezy&rdquo;</strong></p>
+<hr />
+<h2 id="pendahuluan">Pendahuluan 🚀</h2>
+<p>Selamat datang di catatan perjalanan saya dalam membangun sebuah server dari nol! Dokumen ini lebih dari sekadar terjemahan; ini adalah sebuah logbook praktis dari proses konfigurasi awal server <strong>Debian 7.8.0 &ldquo;Wheezy&rdquo;</strong>. Setiap langkah di dalamnya tidak hanya diriset, tetapi juga telah dipraktikkan, diuji, dan yang terpenting, dilengkapi dengan solusi untuk setiap masalah tak terduga yang muncul di tengah jalan.</p>
+<p>Tujuannya adalah untuk menciptakan sebuah panduan yang jujur dan mudah diikuti, terutama bagi mereka yang mungkin menempuh jalur yang sama dengan perangkat lunak versi lama ini. Semoga catatan ini bisa menjadi peta yang berguna, menunjukkan bukan hanya jalan yang lurus, tetapi juga cara melewati setiap rintangan.</p>
+<h3 id="credits-referensi">Credits &amp; Referensi</h3>
+<p>Proses ini tidak akan berjalan lancar tanpa sumber daya dan bantuan yang luar biasa. Kredit sepenuhnya diberikan kepada:</p>
+<ul>
+<li><strong><a href="https://www.server-world.info/en/note?os=Debian_7.0">Server-World</a></strong>: Sebagai referensi utama dan panduan dasar untuk semua tahapan konfigurasi. Panduan mereka yang komprehensif menjadi titik awal dari petualangan ini.</li>
+<li><strong>Gemini (Model AI Google)</strong>: Sebagai mitra diskusi interaktif, asisten riset, dan &ldquo;pengumpul data&rdquo;. Gemini membantu dalam menerjemahkan konsep, mendiagnosis masalah unik (seperti error GPG dan repositori arsip), serta menyusun penjelasan langkah demi langkah yang detail.</li>
+</ul>
+<hr />
+<p>Ini adalah <strong>Bagian Terakhir</strong> dari BAB 5 dan salah satu bagian paling seru.</p>
+<p>Kita sudah punya Satpam (Squid) yang mencatat siapa saja yang masuk. Tapi Satpam itu masih pasif. Dia membiarkan pencuri (Situs Judol/Porno) masuk begitu saja.</p>
+<p>Sekarang, kita akan mempersenjatai Satpam tersebut dengan <strong>Daftar Hitam (Blacklist)</strong> dan pentungan. Namanya <strong>SquidGuard</strong>.</p>
+<p>Mari kita &ldquo;lantakkan&rdquo; situs-situs negatif!</p>
+<hr />
+<h1 id="bab-5-keamanan-kontrol">📖 BAB 5: KEAMANAN &amp; KONTROL</h1>
+<h2 id="part-16-polisi-konten-squidguard-anti-judol">(Part 16) Polisi Konten: SquidGuard Anti-Judol</h2>
+<p><strong>(Web Filtering &amp; Blocking)</strong></p>
+<h3 id="tagline">🏷️ TAGLINE</h3>
+<p><em>&ldquo;Polisi Galak yang Tidak Pandang Bulu&rdquo;</em></p>
+<hr />
+<h3 id="konsep-warung-kopi-analogi">☕ KONSEP &ldquo;WARUNG KOPI&rdquo; (Analogi)</h3>
+<ol>
+<li><strong>Squid (Part 15):</strong> Adalah <strong>Gerbang Tol</strong>. Semua mobil (trafik) wajib lewat sini. Dia mencatat plat nomor, tapi dia membuka palang untuk siapa saja.</li>
+<li><strong>SquidGuard (Part 16):</strong> Adalah <strong>Polisi</strong> yang berdiri di sebelah gerbang tol. Dia memegang buku tebal berisi <strong>Daftar Buronan</strong> (Blacklist).<ul>
+<li>Mobil lewat -&gt; Squid tanya Polisi: <em>&ldquo;Pak, ini plat nomor <code>judol.com</code>, boleh lewat?&rdquo;</em></li>
+<li>Polisi cek buku: <em>&ldquo;Itu buronan! STOP! Putar balik ke kantor polisi (Halaman Blokir)!&ldquo;</em></li>
+</ul>
+</li>
+</ol>
+<p>Tanpa SquidGuard, Squid tidak bisa memblokir secara spesifik dan massal.</p>
+<hr />
+<h3 id="misi-operasi">🎯 MISI OPERASI</h3>
+<ol>
+<li>Menginstal <strong>SquidGuard</strong>.</li>
+<li>Mengunduh Database Blacklist (Daftar situs judi/porno dunia).</li>
+<li>Membuat Halaman Blokir (&ldquo;Internet Positif&rdquo; versi kita).</li>
+<li>Mengintegrasikan SquidGuard agar bekerja sama dengan Squid.</li>
+</ol>
+<hr />
+<h3 id="persiapan">🛠️ PERSIAPAN</h3>
+<ul>
+<li>Login sebagai <strong>root</strong>.</li>
+<li>Pastikan Squid3 (Part 15) sudah berjalan normal.</li>
+<li>Koneksi internet stabil (untuk download blacklist sekitar 5-10 MB).</li>
+</ul>
+<hr />
+<h3 id="langkah-eksekusi">💻 LANGKAH EKSEKUSI</h3>
+<h4 id="tahap-a-merekrut-polisi-instalasi">TAHAP A: Merekrut Polisi (Instalasi)</h4>
+<p><strong>1. Instal Paket:</strong></p>
+<pre><code class="language-bash">apt-get install squidguard -y
+</code></pre>
+<p><strong>2. Siapkan Folder Database:</strong>
+Tempat kita menyimpan &ldquo;Buku Hitam&rdquo;.</p>
+<pre><code class="language-bash">mkdir -p /var/lib/squidguard/db
+cd /var/lib/squidguard/db
+</code></pre>
+<hr />
+<h4 id="tahap-b-mengambil-buku-hitam-download-blacklist">TAHAP B: Mengambil Buku Hitam (Download Blacklist)</h4>
+<p>Kita tidak mungkin mengetik satu per satu juta situs judi. Kita download daftar yang sudah jadi (UT1 Blacklist).</p>
+<p><strong>1. Download Database:</strong>
+<em>(Gunakan <code>--no-check-certificate</code> karena sertifikat SSL Debian 7 sudah tua)</em></p>
+<pre><code class="language-bash">wget --no-check-certificate http://dsi.ut-capitole.fr/blacklists/download/blacklists.tar.gz
+</code></pre>
+<p><em>Jika masih tidak bisa diunduh coba command satu ini</em></p>
+<pre><code class="language-bash">wget http://dsi.ut-capitole.fr/blacklists/download/blacklists.tar.gz
+</code></pre>
+<p><strong>2. Ekstrak File:</strong></p>
+<pre><code class="language-bash">tar -zxvf blacklists.tar.gz
+</code></pre>
+<p><em>(Tunggu prosesnya. Nanti akan muncul folder baru bernama <code>blacklists</code>)</em>.</p>
+<p><strong>3. Atur Kepemilikan (PENTING!):</strong>
+Database ini milik <code>root</code> saat diekstrak. Kita harus kasih ke <code>proxy</code> (user Squid) agar bisa dibaca.</p>
+<pre><code class="language-bash">chown -R proxy:proxy /var/lib/squidguard/db
+</code></pre>
+<hr />
+<h4 id="tahap-c-membuat-sel-penjara-halaman-blokir">TAHAP C: Membuat Sel Penjara (Halaman Blokir)</h4>
+<p>Kalau ada yang akses Judol, kita lempar ke halaman ini.</p>
+<p><strong>1. Buat File HTML:</strong></p>
+<pre><code class="language-bash">nano /var/www/block.html
+</code></pre>
+<p><strong>2. Isi Pesan Menohok:</strong></p>
+<pre><code class="language-html">&lt;html&gt;
+&lt;head&gt;&lt;title&gt;AKSES DITOLAK&lt;/title&gt;&lt;/head&gt;
+&lt;body style=&quot;background-color:red; color:white; text-align:center; margin-top:50px;&quot;&gt;
+  &lt;h1&gt;⛔ STOP! ⛔&lt;/h1&gt;
+  &lt;h2&gt;Situs yang Anda tuju mengandung konten (JUDI/PORNO).&lt;/h2&gt;
+  &lt;img src=https://upload.wikimedia.org/wikipedia/en/7/73/Trollface.png&gt;
+  &lt;p&gt;Akses telah diblokir oleh Admin Jaringan Teungku.&lt;/p&gt;
+  &lt;p&gt;&lt;i&gt;Tobatlah sebelum terlambat.&lt;/i&gt;&lt;/p&gt;
+      &lt;img src=https://s3.getstickerpack.com/storage/uploads/sticker-pack/orang/sticker_11.png?0c6781eb2eda8861f479cab3c5ad6b80&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>Simpan (<code>Ctrl+O</code>) dan keluar (<code>Ctrl+X</code>).</p>
+<hr />
+<h4 id="tahap-d-menulis-undang-undang-squidguardconf">TAHAP D: Menulis Undang-Undang (<code>squidGuard.conf</code>)</h4>
+<p>Kita atur kategori apa yang mau diblokir.</p>
+<p><strong>1. Edit Config:</strong>
+<em>(Lokasi config bisa beda, di Debian 7 biasanya di sini)</em>:</p>
+<pre><code class="language-bash">nano /etc/squidguard/squidGuard.conf
+</code></pre>
+<p><strong>2. Hapus Semua Isinya, Ganti dengan Ini:</strong>
+<em>(Ini konfigurasi bersih dan to-the-point)</em>.</p>
+<pre><code class="language-bash"># === KONFIGURASI ANTI-JUDOL ===
+
+# Lokasi Database
+dbhome /var/lib/squidguard/db/blacklists
+logdir /var/log/squidguard
+
+# Definisi Kategori JUDI (Gambling)
+dest gambling {
+    domainlist gambling/domains
+    urllist gambling/urls
+}
+
+# Definisi Kategori PORNO (Opsional)
+dest porn {
+    domainlist porn/domains
+    urllist porn/urls
+}
+
+# Aturan Main (ACL)
+acl {
+    # Blokir Gambling dan Porn, Sisanya Boleh (Pass)
+    default {
+        pass !gambling !porn all
+        redirect http://www.teungku.edu/block.html
+    }
+}
+</code></pre>
+<p>Simpan dan keluar.</p>
+<p><strong>3. Kompilasi Database (Momen Menegangkan):</strong>
+Kita harus ubah teks blacklist menjadi database biner <code>.db</code> biar cepat.</p>
+<pre><code class="language-bash">squidGuard -C all
+</code></pre>
+<ul>
+<li><strong>Tunggu!</strong> Proses ini bisa memakan waktu 1-2 menit tergantung kecepatan server.</li>
+<li><strong>Sukses:</strong> Jika kembali ke prompt tanpa error fatal.</li>
+<li><strong>Setelah selesai:</strong> Jalankan lagi <code>chown -R proxy:proxy /var/lib/squidguard/db</code> untuk memastikan file <code>.db</code> baru juga milik proxy.</li>
+</ul>
+<hr />
+<h4 id="tahap-e-penyatuan-integrasi-ke-squid">TAHAP E: Penyatuan (Integrasi ke Squid)</h4>
+<p>Satpam (Squid) belum tahu kalau ada Polisi (SquidGuard). Kita kenalkan.</p>
+<p><strong>1. Edit Config Squid:</strong></p>
+<pre><code class="language-bash">nano /etc/squid3/squid.conf
+</code></pre>
+<p><strong>2. Tambahkan di BARIS PALING BAWAH:</strong></p>
+<pre><code class="language-bash"># Integrasi SquidGuard
+url_rewrite_program /usr/bin/squidGuard -c /etc/squidguard/squidGuard.conf
+url_rewrite_children 5
+</code></pre>
+<p><strong>3. Restart Squid:</strong></p>
+<pre><code class="language-bash">service squid3 restart
+</code></pre>
+<hr />
+<h3 id="pojok-benang-merah-real-case-study">🚧 POJOK &ldquo;BENANG MERAH&rdquo; (Real Case Study)</h3>
+<p><strong>Kasus:</strong> &ldquo;Mas, saya buka situs biasa bisa. Tapi pas buka situs judi, browsernya <em>loading</em> terus atau <em>error connection</em>, bukannya muncul halaman merah <code>block.html</code>.&rdquo;</p>
+<p><strong>Penyebab:</strong>
+SquidGuard berhasil memblokir, TAPI dia gagal mengalihkan ke <code>block.html</code>.
+Ini biasanya karena <strong>Permissions</strong>. User <code>proxy</code> tidak boleh menulis log di <code>/var/log/squidguard</code>.</p>
+<p><strong>Solusi:</strong>
+Pastikan folder log juga milik proxy:</p>
+<pre><code class="language-bash">mkdir -p /var/log/squidguard
+chown -R proxy:proxy /var/log/squidguard
+</code></pre>
+<p>Lalu restart Squid lagi.</p>
+<hr />
+<h3 id="momen-ka-boom-verification-part-16">📸 MOMEN &ldquo;KA-BOOM!&rdquo; (Verification Part 16)</h3>
+<p>Pindah ke <strong>Windows 7</strong>.</p>
+<p><strong>1. Tes Situs Halal:</strong>
+Buka <code>google.com</code> atau <code>detik.com</code>.</p>
+<ul>
+<li><strong>Hasil:</strong> Terbuka normal. (Artinya internet lancar).</li>
+</ul>
+<p><strong>2. Tes Situs Haram (Judol):</strong>
+Coba buka situs judi terkenal (misal <code>sbobet.com</code> atau cari di Google &ldquo;situs judi&rdquo;).
+<em>Atau kalau mau aman, masukkan <code>detik.com</code> ke daftar blacklist manual buat tes.</em></p>
+<ul>
+<li><strong>Hasil Sukses:</strong>
+    Browser langsung berubah merah.
+    Muncul tulisan besar: <strong>&ldquo;⛔ STOP! ⛔ &hellip; Tobatlah sebelum terlambat.&rdquo;</strong></li>
+</ul>
+<p>Jika halaman merah itu muncul, <strong>SELAMAT!</strong> 🎉
+Anda telah berhasil membangun tembok api pelindung moral.</p>
+<hr />
+<p><strong>🏁 PENUTUP RESMI BAB 5 &amp; SERI UTAMA:</strong></p>
+<p>Kita telah menyelesaikan <strong>5 BAB UTAMA</strong> dari perjalanan &ldquo;The Server Journey&rdquo;! 👏👏👏</p>
+<ol>
+<li><strong>Server Hidup</strong> (Bab 1).</li>
+<li><strong>Koneksi Lancar</strong> (Bab 2).</li>
+<li><strong>Hosting Jalan</strong> (Bab 3).</li>
+<li><strong>Email Terkirim</strong> (Bab 4).</li>
+<li><strong>Aman Terkendali</strong> (Bab 5).</li>
+</ol>
+<p>Masih ada satu <strong>Bonus Track (Bab 6)</strong> bagi mereka yang lelah melihat layar hitam melulu. Kita akan menyulap server ini menjadi punya tampilan Grafis (Desktop) seperti Windows.</p>
+    </div>
+    
+    <nav class="article-footer-nav">
+        <a href="../../blog.html" class="cta-button">← Kembali ke Blog</a>
+    </nav>
+    
+</article>
+    </main>
+    
+    <footer>
+        <p>&copy; 2026 - Teungku Zulkifli. Dibuat dengan ❤️</p>
+    </footer>
+    
+    <div class="floating-lang-switcher">
+        <div class="lang-options">
+            <button id="lang-id">ID</button>
+            <button id="lang-en">EN</button>
+        </div>
+        <button class="lang-globe-btn" aria-label="Pilih Bahasa">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+        </button>
+    </div>
+    
+    <script src="../../assets/js/languages.js"></script>
+    <script src="../../assets/js/main.script.js" defer></script>
+    
+</body>
+</html>

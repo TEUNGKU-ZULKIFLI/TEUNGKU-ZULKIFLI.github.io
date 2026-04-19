@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Installasi Mininet VM - Tahapan 01: Setup Mininet VM - Teungku Zulkifli</title>
+    <meta name="description" content="">
+    <meta name="author" content="Teungku Zulkifli">
+    
+    <meta property="og:title" content="Installasi Mininet VM - Tahapan 01: Setup Mininet VM - Teungku Zulkifli">
+    <meta property="og:description" content="">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://teungku.me">
+    
+    <link rel="stylesheet" href="../../assets/css/main.style.css">
+    
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="../../index.html" class="logo">Teungku Zulkifli</a>
+            <ul id="nav-links">
+                <li><a data-lang="common.navHome" href="../../index.html#home">Beranda</a></li>
+                <li><a data-lang="common.navAbout" href="../../index.html#about">Tentang</a></li>
+                <li><a data-lang="common.navContact" href="../../index.html#contact">Kontak</a></li>
+                <li><a data-lang="common.navProjects" href="../../projects.html">Proyek</a></li>
+                <li><a data-lang="common.navBlog" href="../../blog.html">Blog</a></li>
+            </ul>
+            <button id="hamburger-btn" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+    
+    <main>
+<article id="article-content">
+    
+    <header class="article-header">
+        <h1>Installasi Mininet VM - Tahapan 01: Setup Mininet VM</h1>
+        
+        <div class="article-meta">
+            <span class="meta-item">
+                📅 <time datetime="2025-10-10">2025-10-10</time>
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                🏷️ Course
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                ✍️ Teungku Zulkifli
+            </span>
+        </div>
+        
+        <div class="article-tags">
+            <span class="article-tag">#mininet-series</span>
+        </div>
+    </header>
+    
+    <hr class="article-divider">
+    
+    <div class="article-body">
+        <iframe src="https://www.youtube.com/embed/KYJy2arn2u4?controls=0&modestbranding=1&rel=0&disablekb=1&autoplay=0" style="display:block;margin:auto;border:none;width:100%;max-width:960px;height:540px;" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+<h1 id="panduan-lengkap-mininet-di-hyper-v-part-1-instalasi-konfigurasi-dual-adapter">🧠 Panduan Lengkap Mininet di Hyper-V (Part 1): Instalasi &amp; Konfigurasi Dual Adapter</h1>
+<h2 id="pendahuluan">🚀 Pendahuluan</h2>
+<p>Mininet adalah simulator jaringan ringan berbasis Linux yang memungkinkan kita membuat topologi jaringan virtual untuk belajar dan menguji protokol seperti OpenFlow. Cocok untuk pelajar, peneliti, dan pengembang jaringan.</p>
+<h3 id="referensi-resmi">📚 Referensi Resmi</h3>
+<ul>
+<li><a href="http://mininet.org/">Mininet.org</a></li>
+<li><a href="http://mininet.org/download/">Download Mininet VM</a></li>
+<li><a href="http://mininet.org/download/#option-1-mininet-vm-installation-easy-recommended">VM Installation Guide</a></li>
+<li><a href="http://mininet.org/vm-setup-notes/">VM Setup Notes</a></li>
+</ul>
+<hr />
+<h2 id="tujuan-konsep">🎯 Tujuan &amp; Konsep</h2>
+<ul>
+<li>Menjalankan Mininet VM di Windows 11 menggunakan Hyper-V.</li>
+<li>Menghubungkan VM ke internet dan host melalui adapter virtual.</li>
+<li>Mengaktifkan akses SSH agar bisa remote dari terminal Windows.</li>
+</ul>
+<hr />
+<h2 id="prasyarat">🧰 Prasyarat</h2>
+<ul>
+<li>Windows 11 Pro atau Enterprise (Hyper-V hanya tersedia di edisi ini).</li>
+<li>Hyper-V sudah aktif (bisa diaktifkan lewat &ldquo;Turn Windows features on or off&rdquo;).</li>
+<li>File VM Mininet dalam format <code>.vhd</code> atau <code>.vhdx</code>.</li>
+<li>Koneksi internet untuk update dan instalasi paket.</li>
+</ul>
+<hr />
+<h2 id="langkah-langkah-eksekusi">🛠️ Langkah-langkah Eksekusi</h2>
+<h3 id="1-unduh-file-mininet-vm">1. 🔽 Unduh File Mininet VM</h3>
+<ul>
+<li>Bisa dari situs resmi atau link alternatif berikut:<br />
+<a href="https://drive.google.com/drive/folders/1_hwvg3CvoA8R4qGL6qFd5a371D6cQ_99"><code>Download Mininet VM</code></a></li>
+</ul>
+<blockquote>
+<p>⚠️
+Jika file yang kamu unduh berformat <code>.zip</code>, pastikan di dalamnya ada file <code>.vhd</code> atau <code>.vhdx</code>. Jika tidak, kamu perlu konversi terlebih dahulu.</p>
+</blockquote>
+<hr />
+<h3 id="2-buat-virtual-machine-di-hyper-v">2. 🖥️ Buat Virtual Machine di Hyper-V</h3>
+<ol>
+<li>Buka <strong>Hyper-V Manager</strong>.</li>
+<li>Klik <strong>New → Virtual Machine</strong>.</li>
+<li>Ikuti wizard, dan pada bagian:
+   - <strong>Memory</strong>: isi minimal <code>1024 MB</code>.
+   - <strong>Processor</strong>: isi <code>2 virtual processors</code>.
+   - <strong>Hard Disk</strong>: pilih file <code>.vhdx</code> Mininet yang sudah diunduh.</li>
+</ol>
+<hr />
+<h3 id="3-setup-network-adapter">3. 🌐 Setup Network Adapter</h3>
+<p>Tambahkan dua adapter:
+- <strong>Adapter 1</strong>: pilih <code>Default Switch</code> → untuk akses internet.
+- <strong>Adapter 2</strong>: buat virtual switch baru bernama <code>HostOnlyMininet</code> → untuk komunikasi dengan host.</p>
+<blockquote>
+<p>🛑
+<strong>Adapter 2</strong> untuk membuatnya lihat video!</p>
+</blockquote>
+<hr />
+<h3 id="4-jalankan-vm">4. ▶️ Jalankan VM</h3>
+<ul>
+<li>Klik kanan VM → pilih <strong>Connect</strong>.</li>
+<li>Di jendela baru, klik tombol <strong>Start</strong>.</li>
+</ul>
+<hr />
+<h3 id="5-login-ke-mininet-vm">5. 🔐 Login ke Mininet VM</h3>
+<p>Masukkan kredensial default:</p>
+<pre><code class="language-bash">Username : mininet
+Password : mininet
+</code></pre>
+<hr />
+<h2 id="konfigurasi-jaringan-mininet-vm">⚙️ Konfigurasi Jaringan Mininet VM</h2>
+<h3 id="61-backup-file-konfigurasi">6.1 🧾 Backup File Konfigurasi</h3>
+<pre><code class="language-bash">cd /etc/netplan
+ls
+sudo cp 01-netcfg.yaml 01-netcfg.yaml.backup
+ls
+</code></pre>
+<hr />
+<h3 id="62-edit-konfigurasi-network">6.2 📝 Edit Konfigurasi Network</h3>
+<pre><code class="language-bash">sudo nano 01-netcfg.yaml
+</code></pre>
+<p>Ubah isi file menjadi:</p>
+<pre><code class="language-yaml">network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    eth0:
+      dhcp4: yes
+    eth1:
+      dhcp4: no
+      addresses: [192.168.20.1/24]
+</code></pre>
+<blockquote>
+<p>⚠️
+Gunakan <strong>spasi</strong>, bukan <strong>tab</strong>, saat menulis file YAML.</p>
+</blockquote>
+<p>Simpan dan keluar:
+<code>Ctrl + o</code> <code>Enter</code> <code>Ctrl + x</code></p>
+<hr />
+<h3 id="63-terapkan-konfigurasi">6.3 🚀 Terapkan Konfigurasi</h3>
+<pre><code class="language-bash">sudo netplan apply
+ip a
+</code></pre>
+<p>Pastikan:
+- <code>eth0</code> mendapat IP dari DHCP.
+- <code>eth1</code> beralamat <code>192.168.20.1/24</code>.</p>
+<hr />
+<h3 id="64-uji-koneksi">6.4 🧪 Uji Koneksi</h3>
+<ul>
+<li>Ping dari VM ke host:<br />
+<code>ping &lt;IP host&gt;</code></li>
+<li>Ping dari host ke VM:<br />
+<code>ping 192.168.20.1</code></li>
+<li>Uji internet:<br />
+<code>ping google.com</code> atau <code>ping 8.8.8.8</code></li>
+</ul>
+<blockquote>
+<p>🛑
+Jika gagal, ulangi langkah konfigurasi di <strong>6.2</strong>.</p>
+</blockquote>
+<hr />
+<h2 id="update-ssh-access">🔄 Update &amp; SSH Access</h2>
+<h3 id="71-update-sistem">7.1 ⬆️ Update Sistem</h3>
+<pre><code class="language-bash">sudo apt-get update
+</code></pre>
+<hr />
+<h3 id="72-cek-install-ssh">7.2 🔍 Cek &amp; Install SSH</h3>
+<pre><code class="language-bash">dpkg -l | grep openssh-server
+sudo apt-get install openssh-server
+</code></pre>
+<hr />
+<h3 id="73-konfigurasi-ssh">7.3 🛡️ Konfigurasi SSH</h3>
+<pre><code class="language-bash">cd /etc/ssh
+ls
+sudo cp sshd_config sshd_config.backup
+sudo nano sshd_config
+</code></pre>
+<p>Ubah dua baris berikut:</p>
+<pre><code class="language-bash">#Port 22       → Port 2220
+#ListenAddress 0.0.0.0 → ListenAddress 192.168.20.1
+</code></pre>
+<p>Simpan dan keluar:
+<code>Ctrl + o</code> <code>Enter</code> <code>Ctrl + x</code></p>
+<hr />
+<h3 id="74-restart-uji-ssh">7.4 🔁 Restart &amp; Uji SSH</h3>
+<pre><code class="language-bash">sudo systemctl restart ssh
+systemctl status ssh
+</code></pre>
+<p>Di Windows Terminal:</p>
+<pre><code class="language-bash">ssh mininet@192.168.20.1 -p 2220
+</code></pre>
+<p>Pastinya muncul <code>Connection refused</code> nah ini saya juga muncul sekarang buka <code>Control Panel</code> dan ke bagian setup adapter mah pokoknya cari adapter <code>HostOnlyMininet</code> dan mencet 2x dan cari text yang ada ipv4 nya dan mencet 2x dan juga coba ubah ip ujung itu ke <code>192.168.20.10</code> dan <code>apply</code> <code>ok</code> <code>ok</code> dan kembali ke <code>Terminal windows</code> dan sekarang menyobanya lagi dan <code>💥Boom</code> . jangan <code>boom-boom</code> juga aja kamu, udah bisa apa belom itu kalau udah ya <code>💫Super</code> <code>💥Boom</code> buat kamuNya.</p>
+<hr />
+<h2 id="penutup">✅ Penutup</h2>
+<p>Selamat! 🎉 Kamu sudah berhasil menjalankan Mininet VM di Hyper-V dengan koneksi internet dan akses SSH.  Jika ada kendala, ulangi langkah dengan teliti dan jangan ragu untuk bertanya, bukan pada <code>saya</code> ya tapi, pada <code>Dosen</code>.</p>
+<hr />
+    </div>
+    
+    <nav class="article-footer-nav">
+        <a href="../../blog.html" class="cta-button">← Kembali ke Blog</a>
+    </nav>
+    
+</article>
+    </main>
+    
+    <footer>
+        <p>&copy; 2026 - Teungku Zulkifli. Dibuat dengan ❤️</p>
+    </footer>
+    
+    <div class="floating-lang-switcher">
+        <div class="lang-options">
+            <button id="lang-id">ID</button>
+            <button id="lang-en">EN</button>
+        </div>
+        <button class="lang-globe-btn" aria-label="Pilih Bahasa">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+        </button>
+    </div>
+    
+    <script src="../../assets/js/languages.js"></script>
+    <script src="../../assets/js/main.script.js" defer></script>
+    
+</body>
+</html>

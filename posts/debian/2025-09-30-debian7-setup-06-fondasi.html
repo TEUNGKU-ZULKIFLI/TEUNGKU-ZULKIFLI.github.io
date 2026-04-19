@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>(Part 7): Konfigurasi NAT Router Sharing Internet - Teungku Zulkifli</title>
+    <meta name="description" content="">
+    <meta name="author" content="Teungku Zulkifli">
+    
+    <meta property="og:title" content="(Part 7): Konfigurasi NAT Router Sharing Internet - Teungku Zulkifli">
+    <meta property="og:description" content="">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://teungku.me">
+    
+    <link rel="stylesheet" href="../../assets/css/main.style.css">
+    
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="../../index.html" class="logo">Teungku Zulkifli</a>
+            <ul id="nav-links">
+                <li><a data-lang="common.navHome" href="../../index.html#home">Beranda</a></li>
+                <li><a data-lang="common.navAbout" href="../../index.html#about">Tentang</a></li>
+                <li><a data-lang="common.navContact" href="../../index.html#contact">Kontak</a></li>
+                <li><a data-lang="common.navProjects" href="../../projects.html">Proyek</a></li>
+                <li><a data-lang="common.navBlog" href="../../blog.html">Blog</a></li>
+            </ul>
+            <button id="hamburger-btn" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+    
+    <main>
+<article id="article-content">
+    
+    <header class="article-header">
+        <h1>(Part 7): Konfigurasi NAT Router Sharing Internet</h1>
+        
+        <div class="article-meta">
+            <span class="meta-item">
+                📅 <time datetime="2025-09-30">2025-09-30</time>
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                🏷️ Course
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                ✍️ Teungku Zulkifli
+            </span>
+        </div>
+        
+        <div class="article-tags">
+            <span class="article-tag">#debian-server-series</span>
+        </div>
+    </header>
+    
+    <hr class="article-divider">
+    
+    <div class="article-body">
+        <iframe src="https://www.youtube.com/embed/nznAZGlkP48?controls=0&modestbranding=1&rel=0&disablekb=1&autoplay=0" style="display:block;margin:auto;border:none;width:100%;max-width:960px;height:540px;" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+<h1 id="dokumentasi-debian-di-hyper-v-part-7-konfigurasi-nat-router-sharing-internet">Dokumentasi Debian di Hyper V (Part 7): Konfigurasi NAT Router Sharing Internet</h1>
+<p><strong>Catatan Perjalanan &amp; Solusi Praktis untuk VM Debian 7.8.0 &ldquo;Wheezy&rdquo;</strong></p>
+<hr />
+<h2 id="pendahuluan">Pendahuluan 🚀</h2>
+<p>Selamat datang di catatan perjalanan saya dalam membangun sebuah server dari nol! Dokumen ini lebih dari sekadar terjemahan; ini adalah sebuah logbook praktis dari proses konfigurasi awal server <strong>Debian 7.8.0 &ldquo;Wheezy&rdquo;</strong>. Setiap langkah di dalamnya tidak hanya diriset, tetapi juga telah dipraktikkan, diuji, dan yang terpenting, dilengkapi dengan solusi untuk setiap masalah tak terduga yang muncul di tengah jalan.</p>
+<p>Tujuannya adalah untuk menciptakan sebuah panduan yang jujur dan mudah diikuti, terutama bagi mereka yang mungkin menempuh jalur yang sama dengan perangkat lunak versi lama ini. Semoga catatan ini bisa menjadi peta yang berguna, menunjukkan bukan hanya jalan yang lurus, tetapi juga cara melewati setiap rintangan.</p>
+<h3 id="credits-referensi">Credits &amp; Referensi</h3>
+<p>Proses ini tidak akan berjalan lancar tanpa sumber daya dan bantuan yang luar biasa. Kredit sepenuhnya diberikan kepada:</p>
+<ul>
+<li><strong><a href="https://www.server-world.info/en/note?os=Debian_7.0">Server-World</a></strong>: Sebagai referensi utama dan panduan dasar untuk semua tahapan konfigurasi. Panduan mereka yang komprehensif menjadi titik awal dari petualangan ini.</li>
+<li><strong>Gemini (Model AI Google)</strong>: Sebagai mitra diskusi interaktif, asisten riset, dan &ldquo;pengumpul data&rdquo;. Gemini membantu dalam menerjemahkan konsep, mendiagnosis masalah unik (seperti error GPG dan repositori arsip), serta menyusun penjelasan langkah demi langkah yang detail.</li>
+</ul>
+<hr />
+<h1 id="bab-2-jaringan-konektivitas">📖 BAB 2: JARINGAN &amp; KONEKTIVITAS</h1>
+<h2 id="part-7-menjadi-router-segmen-1">(Part 7) Menjadi Router: Segmen 1</h2>
+<p><strong>(NAT &amp; Internet Sharing)</strong></p>
+<h3 id="tagline">🏷️ TAGLINE</h3>
+<p><em>&ldquo;Satu Pintu untuk Semua: Membagi Koneksi ke Seluruh Jaringan&rdquo;</em></p>
+<hr />
+<h3 id="konsep-warung-kopi-analogi">☕ KONSEP &ldquo;WARUNG KOPI&rdquo; (Analogi)</h3>
+<p>Bayangkan server Anda adalah satu-satunya orang yang punya <strong>KTP</strong> (IP Publik/Koneksi Internet) di sebuah asrama. Teman-teman asrama (Windows 7/Klien) ingin masuk ke klub malam (Internet), tapi mereka tidak punya KTP (IP Privat).</p>
+<p>Apa solusinya? <strong>NAT (Network Address Translation) Masquerade.</strong>
+Server Anda akan meminjamkan &ldquo;Topeng Wajah&rdquo;-nya.</p>
+<ol>
+<li>Windows 7 titip pesan ke Server.</li>
+<li>Server pergi ke Internet pakai KTP-nya sendiri.</li>
+<li>Server balik lagi ke asrama dan kasih hasilnya ke Windows 7.</li>
+</ol>
+<p>Internet taunya yang akses cuma Server Debian, padahal di belakangnya ada banyak klien &ldquo;nebeng&rdquo;.</p>
+<hr />
+<h3 id="misi-operasi-segmen-1">🎯 MISI OPERASI (Segmen 1)</h3>
+<ol>
+<li>Mengaktifkan <strong>IP Forwarding</strong> (Supaya Server mau jadi kurir data).</li>
+<li>Memasang aturan <strong>NAT Masquerade</strong> (Supaya Server meminjamkan identitasnya).</li>
+<li>Menyimpan aturan firewall agar permanen.</li>
+</ol>
+<hr />
+<h3 id="persiapan">🛠️ PERSIAPAN</h3>
+<ul>
+<li>Login sebagai <strong>root</strong>.</li>
+<li>Ingat kembali: <code>eth1</code> adalah internet, <code>br0</code> (atau <code>eth0</code>) adalah jaringan lokal.</li>
+</ul>
+<hr />
+<h3 id="langkah-eksekusi-segmen-1">💻 LANGKAH EKSEKUSI (Segmen 1)</h3>
+<h4 id="tahap-a-membuka-keran-enable-packet-forwarding">TAHAP A: Membuka Keran (Enable Packet Forwarding)</h4>
+<p>Secara default, Linux itu &ldquo;pelit&rdquo;. Dia menolak meneruskan paket data orang lain. Kita harus ubah sifatnya.</p>
+<p><strong>1. Edit Kernel System:</strong></p>
+<pre><code class="language-bash">nano /etc/sysctl.conf
+</code></pre>
+<p><strong>2. Aktifkan Fitur Forward:</strong>
+Cari baris <code>#net.ipv4.ip_forward=1</code>.
+<strong>Hapus tanda pagar (#)</strong> di depannya agar aktif.</p>
+<pre><code class="language-bash">net.ipv4.ip_forward=1
+</code></pre>
+<p>Simpan (<code>Ctrl+O</code>) dan keluar (<code>Ctrl+X</code>).</p>
+<p><strong>3. Terapkan Sekarang:</strong></p>
+<pre><code class="language-bash">sysctl -p
+</code></pre>
+<ul>
+<li><strong>Hasil:</strong> Muncul output <code>net.ipv4.ip_forward = 1</code>. Keran sudah terbuka!</li>
+</ul>
+<hr />
+<h4 id="tahap-b-mantra-sihir-iptables-nat">TAHAP B: Mantra Sihir IPTables (NAT)</h4>
+<p>Sekarang kita atur lalu lintasnya.</p>
+<p><strong>1. Pasang Aturan Utama (Masquerade):</strong>
+Perintah ini artinya: <em>&ldquo;Hai Firewall, semua paket dari jaringan lokal (<code>192.168.10.0/24</code>) yang mau keluar lewat <code>eth1</code>, tolong SAMARKAN (Masquerade) seolah-olah paket itu dari saya.&rdquo;</em></p>
+<pre><code class="language-bash">iptables -t nat -A POSTROUTING -s 192.168.10.0/24 -o eth1 -j MASQUERADE
+</code></pre>
+<p><strong>2. Izinkan Jalur Masuk-Keluar (Forwarding):</strong>
+<em>(Catatan: Karena di Part 4 kita pakai Bridge <code>br0</code>, kita gunakan <code>br0</code> sebagai jalur lokal).</em></p>
+<pre><code class="language-bash"># Izinkan paket BARU dari Lokal (br0) ke Internet (eth1)
+iptables -A FORWARD -i br0 -o eth1 -m state --state NEW,RELATED,ESTABLISHED -j ACCEPT
+
+# Izinkan paket BALASAN dari Internet (eth1) ke Lokal (br0)
+iptables -A FORWARD -i eth1 -o br0 -m state --state RELATED,ESTABLISHED -j ACCEPT
+</code></pre>
+<hr />
+<h4 id="tahap-c-membekukan-aturan-persistence">TAHAP C: Membekukan Aturan (Persistence)</h4>
+<p>IPTables itu &ldquo;pelupa&rdquo;. Kalau server restart, aturan di atas hilang semua. Kita butuh &ldquo;Pendingin&rdquo;.</p>
+<p><strong>1. Instal Paket Penyimpan:</strong></p>
+<pre><code class="language-bash">aptitude -y install iptables-persistent
+</code></pre>
+<p><em>(Saat muncul layar konfirmasi biru/merah, pilih </em><em>YES</em><em> untuk Save IPv4 Rules).</em></p>
+<blockquote>
+<p><strong>💡 Tips:</strong> Jika nanti Anda nambah aturan firewall lagi, simpan manual dengan:
+<code>iptables-save &gt; /etc/iptables/rules.v4</code></p>
+</blockquote>
+<hr />
+<h3 id="pojok-benang-merah-real-case-study">🚧 POJOK &ldquo;BENANG MERAH&rdquo; (Real Case Study)</h3>
+<p><strong>Kasus:</strong> &ldquo;Mas, IPTables sudah diketik, <code>sysctl</code> sudah diaktifkan, tapi klien tetap nggak bisa browsing?&rdquo;
+<strong>Penyebab:</strong> Biasanya masalah <strong>DNS</strong>. Router (Debian) sudah meneruskan paketnya, tapi Klien (Windows) tidak tahu alamat IP dari <code>google.com</code>. Jalur pipanya sudah benar, tapi buku teleponnya belum dibagi.
+<strong>Solusi:</strong> Ini akan kita bereskan di <strong>Segmen 2 (DNS Forwarding)</strong> dan <strong>Part 6 (DHCP)</strong>.</p>
+<hr />
+<h3 id="momen-ka-boom-verification-segmen-1">📸 MOMEN &ldquo;KA-BOOM!&rdquo; (Verification Segmen 1)</h3>
+<p>Cek tabel NAT Anda untuk memastikan aturan sudah tertulis.</p>
+<p><strong>Perintah:</strong></p>
+<pre><code class="language-bash">iptables -t nat -L -v -n
+</code></pre>
+<p><strong>Hasil Sukses:</strong>
+Anda akan melihat baris di bagian <code>Chain POSTROUTING</code> yang berisi:
+<code>MASQUERADE ... source 192.168.10.0/24 ...</code></p>
+<p>Jika baris itu ada, <strong>Segmen 1 SELESAI!</strong> Pipa internet sudah terpasang.</p>
+<hr />
+<p><em>(Lanjut ke Segmen 2: Kita perbaiki otak DNS-nya&hellip;)</em></p>
+<hr />
+<h1 id="bab-2-jaringan-konektivitas_1">📖 BAB 2: JARINGAN &amp; KONEKTIVITAS</h1>
+<h2 id="part-7-menjadi-router-segmen-2">(Part 7) Menjadi Router: Segmen 2</h2>
+<p><strong>(DNS Forwarding &amp; Verification)</strong></p>
+<h3 id="tagline_1">🏷️ TAGLINE</h3>
+<p><em>&ldquo;Jangan Sok Tahu: Bertanya pada Ahlinya (Google)&rdquo;</em></p>
+<hr />
+<h3 id="konsep-warung-kopi-analogi_1">☕ KONSEP &ldquo;WARUNG KOPI&rdquo; (Analogi)</h3>
+<p>Di Part 3, Server kita punya &ldquo;Buku Telepon Lokal&rdquo; (<code>teungku.edu</code>). Tapi kalau Windows 7 tanya: <em>&ldquo;Berapa nomor HP-nya Facebook?&rdquo;</em>, server kita bakal bingung karena tidak ada di bukunya.</p>
+<p>Solusinya: <strong>DNS Forwarding</strong>.
+Kita ajarkan Server: <em>&ldquo;Eh, kalau kamu nggak tau jawabannya, jangan diam aja. Teruskan (Forward) pertanyaan itu ke Guru Besar (Google DNS 8.8.8.8). Nanti kalau Google jawab, baru kamu kasih tau ke Windows 7.&rdquo;</em></p>
+<p><img src="https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcSEe1Fp1OwU5_jrYX356ZH3Q8t-VmuV4OAulHMdfrfepSarj8qzXpA9sPZ28VmxquwDm9n1IzMPmUL2jY_wY66TN7ZozCsMd_vv-4MpBEkkTKbV4Ds" width="400"></p>
+<hr />
+<h3 id="misi-operasi-segmen-2">🎯 MISI OPERASI (Segmen 2)</h3>
+<ol>
+<li>Mengedit BIND9 agar punya &ldquo;Guru Besar&rdquo; (Forwarders).</li>
+<li>Mematikan validasi keamanan ribet (DNSSEC) agar koneksi lancar.</li>
+</ol>
+<hr />
+<h3 id="langkah-eksekusi-segmen-2">💻 LANGKAH EKSEKUSI (Segmen 2)</h3>
+<h4 id="tahap-a-konfigurasi-forwarder">TAHAP A: Konfigurasi Forwarder</h4>
+<p><strong>1. Edit Opsi BIND:</strong></p>
+<pre><code class="language-bash">nano /etc/bind/named.conf.options
+</code></pre>
+<p><strong>2. Masukkan Alamat Google:</strong>
+Cari bagian <code>forwarders { ... };</code>. Biasanya ada tanda <code>//</code> (komentar).
+Hapus tanda <code>//</code> dan isi IP Google. Tambahkan juga baris <code>forward only</code>.</p>
+<p>Isinya harus jadi seperti ini:</p>
+<pre><code class="language-bash">options {
+        directory &quot;/var/cache/bind&quot;;
+
+        // === START DNS GOOGLE === //
+        forwarders {
+                8.8.8.8;
+                8.8.4.4;
+        };
+        forward only;
+        // ==== END DNS GOOGLE ==== //
+
+        // Matikan Validasi DNSSEC (PENTING!)
+        // dnssec-validation auto;  &lt;-- Ubah jadi no
+        dnssec-validation no;
+
+        auth-nxdomain no;    # conform to RFC1035
+        listen-on-v6 { any; };
+};
+</code></pre>
+<p><strong>3. Restart BIND:</strong></p>
+<pre><code class="language-bash">service bind9 restart
+</code></pre>
+<hr />
+<h3 id="momen-ka-boom-verification-part-7">📸 MOMEN &ldquo;KA-BOOM!&rdquo; (Verification Part 7)</h3>
+<p>Sekarang kita buktikan apakah Server Debian sudah pintar.</p>
+<p><strong>1. Tes Tanya Alamat Luar:</strong>
+Gunakan perintah <code>nslookup</code> di terminal <strong>Debian</strong>.</p>
+<pre><code class="language-bash">nslookup google.com 192.168.10.1
+</code></pre>
+<p><em>(Artinya: Hai Server 192.168.10.1, tau nggak alamat google.com?)</em></p>
+<ul>
+<li><strong>Hasil Sukses:</strong>
+    <code>Server:     192.168.10.1
+    Name:       google.com
+    Address:    142.250.xxx.xxx</code>
+    (Server menjawab dengan IP Google. Berarti dia sukses bertanya ke 8.8.8.8).</li>
+</ul>
+<p><strong>2. Tes Ping:</strong>
+Pastikan server sendiri masih konek internet.</p>
+<pre><code class="language-bash">ping google.com
+</code></pre>
+<hr />
+<p><strong>🏁 PENUTUP PART 7:</strong>
+Misi Router Selesai!</p>
+<ol>
+<li>Jalur pipa (NAT) sudah dibangun.</li>
+<li>Otak server (DNS) sudah diperbarui.</li>
+</ol>
+<p>Sekarang infrastruktur sudah siap. Tapi&hellip; siapa yang mau pakai? Klien (Windows 7) masih belum punya IP Address.</p>
+    </div>
+    
+    <nav class="article-footer-nav">
+        <a href="../../blog.html" class="cta-button">← Kembali ke Blog</a>
+    </nav>
+    
+</article>
+    </main>
+    
+    <footer>
+        <p>&copy; 2026 - Teungku Zulkifli. Dibuat dengan ❤️</p>
+    </footer>
+    
+    <div class="floating-lang-switcher">
+        <div class="lang-options">
+            <button id="lang-id">ID</button>
+            <button id="lang-en">EN</button>
+        </div>
+        <button class="lang-globe-btn" aria-label="Pilih Bahasa">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+        </button>
+    </div>
+    
+    <script src="../../assets/js/languages.js"></script>
+    <script src="../../assets/js/main.script.js" defer></script>
+    
+</body>
+</html>

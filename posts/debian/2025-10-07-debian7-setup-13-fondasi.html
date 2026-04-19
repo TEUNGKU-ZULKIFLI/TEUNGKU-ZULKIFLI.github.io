@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>(Part 14): Konfigurasi User Dir - Teungku Zulkifli</title>
+    <meta name="description" content="">
+    <meta name="author" content="Teungku Zulkifli">
+    
+    <meta property="og:title" content="(Part 14): Konfigurasi User Dir - Teungku Zulkifli">
+    <meta property="og:description" content="">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://teungku.me">
+    
+    <link rel="stylesheet" href="../../assets/css/main.style.css">
+    
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="../../index.html" class="logo">Teungku Zulkifli</a>
+            <ul id="nav-links">
+                <li><a data-lang="common.navHome" href="../../index.html#home">Beranda</a></li>
+                <li><a data-lang="common.navAbout" href="../../index.html#about">Tentang</a></li>
+                <li><a data-lang="common.navContact" href="../../index.html#contact">Kontak</a></li>
+                <li><a data-lang="common.navProjects" href="../../projects.html">Proyek</a></li>
+                <li><a data-lang="common.navBlog" href="../../blog.html">Blog</a></li>
+            </ul>
+            <button id="hamburger-btn" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+    
+    <main>
+<article id="article-content">
+    
+    <header class="article-header">
+        <h1>(Part 14): Konfigurasi User Dir</h1>
+        
+        <div class="article-meta">
+            <span class="meta-item">
+                📅 <time datetime="2025-10-07">2025-10-07</time>
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                🏷️ Course
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                ✍️ Teungku Zulkifli
+            </span>
+        </div>
+        
+        <div class="article-tags">
+            <span class="article-tag">#debian-server-series</span>
+        </div>
+    </header>
+    
+    <hr class="article-divider">
+    
+    <div class="article-body">
+        <iframe src="https://www.youtube.com/embed/W96IMb0NYEQ?controls=0&modestbranding=1&rel=0&disablekb=1&autoplay=0" style="display:block;margin:auto;border:none;width:100%;max-width:960px;height:540px;" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+<h1 id="dokumentasi-debian-di-hyper-v-part-14-konfigurasi-user-dir">Dokumentasi Debian di Hyper V (Part 14): Konfigurasi User Dir</h1>
+<p><strong>Catatan Perjalanan &amp; Solusi Praktis untuk VM Debian 7.8.0 &ldquo;Wheezy&rdquo;</strong></p>
+<hr />
+<h2 id="pendahuluan">Pendahuluan 🚀</h2>
+<p>Selamat datang di catatan perjalanan saya dalam membangun sebuah server dari nol! Dokumen ini lebih dari sekadar terjemahan; ini adalah sebuah logbook praktis dari proses konfigurasi awal server <strong>Debian 7.8.0 &ldquo;Wheezy&rdquo;</strong>. Setiap langkah di dalamnya tidak hanya diriset, tetapi juga telah dipraktikkan, diuji, dan yang terpenting, dilengkapi dengan solusi untuk setiap masalah tak terduga yang muncul di tengah jalan.</p>
+<p>Tujuannya adalah untuk menciptakan sebuah panduan yang jujur dan mudah diikuti, terutama bagi mereka yang mungkin menempuh jalur yang sama dengan perangkat lunak versi lama ini. Semoga catatan ini bisa menjadi peta yang berguna, menunjukkan bukan hanya jalan yang lurus, tetapi juga cara melewati setiap rintangan.</p>
+<h3 id="credits-referensi">Credits &amp; Referensi</h3>
+<p>Proses ini tidak akan berjalan lancar tanpa sumber daya dan bantuan yang luar biasa. Kredit sepenuhnya diberikan kepada:</p>
+<ul>
+<li><strong><a href="https://www.server-world.info/en/note?os=Debian_7.0">Server-World</a></strong>: Sebagai referensi utama dan panduan dasar untuk semua tahapan konfigurasi. Panduan mereka yang komprehensif menjadi titik awal dari petualangan ini.</li>
+<li><strong>Gemini (Model AI Google)</strong>: Sebagai mitra diskusi interaktif, asisten riset, dan &ldquo;pengumpul data&rdquo;. Gemini membantu dalam menerjemahkan konsep, mendiagnosis masalah unik (seperti error GPG dan repositori arsip), serta menyusun penjelasan langkah demi langkah yang detail.</li>
+</ul>
+<hr />
+<p>Ini adalah penutup manis untuk <strong>BAB 3</strong>.</p>
+<p>Kita sudah punya Ruko Besar (Virtual Host). Tapi, bagaimana kalau ada teman yang cuma mau &ldquo;numpang&rdquo; bikin halaman web sederhana tanpa perlu menyewa satu ruko penuh?</p>
+<p>Kita akan menggunakan fitur klasik Apache bernama <strong>UserDir</strong>. Ini adalah cikal bakal dari layanan &ldquo;Free Hosting&rdquo; zaman dulu (seperti GeoCities).</p>
+<p>Mari kita &ldquo;lantakkan&rdquo; part terakhir di Bab 3 ini!</p>
+<hr />
+<h1 id="bab-3-web-hosting-master">📖 BAB 3: WEB HOSTING MASTER</h1>
+<h2 id="part-14-paket-hemat-hosting-userdir">(Part 14) Paket Hemat Hosting: UserDir</h2>
+<p><strong>(Personal Web Space Configuration)</strong></p>
+<h3 id="tagline">🏷️ TAGLINE</h3>
+<p><em>&ldquo;Memberi Lapak Jualan untuk Setiap Penduduk&rdquo;</em></p>
+<hr />
+<h3 id="konsep-warung-kopi-analogi">☕ KONSEP &ldquo;WARUNG KOPI&rdquo; (Analogi)</h3>
+<ol>
+<li><strong>Virtual Host (Part 12):</strong> Itu ibarat membuka <strong>Cabang Toko Baru</strong>. Butuh surat izin khusus, butuh konfigurasi admin, dan punya alamat sendiri (<code>blog.teungku.edu</code>). Ribet kalau cuma untuk iseng.</li>
+<li><strong>UserDir (Part 14):</strong> Itu ibarat <strong>Kamar Kost</strong>.
+    Server adalah Ibu Kost. User (seperti <code>teungku</code>, <code>budi</code>) adalah penghuni kost.
+    Setiap penghuni boleh menempel poster atau jualan di jendela kamarnya masing-masing.
+    Alamatnya numpang alamat induk, ditambah nomor kamar.<ul>
+<li>Contoh: <code>www.teungku.edu/~teungku</code> (Tanda <code>~</code> artinya &ldquo;Rumah/Kamar&rdquo;).</li>
+</ul>
+</li>
+</ol>
+<hr />
+<h3 id="misi-operasi">🎯 MISI OPERASI</h3>
+<ol>
+<li>Mengaktifkan modul <strong>UserDir</strong> di Apache.</li>
+<li>Membuat folder khusus bernama <code>public_html</code> di dalam rumah user.</li>
+<li>Mengakses web pribadi menggunakan tanda gelombang (<code>~</code>).</li>
+</ol>
+<hr />
+<h3 id="persiapan">🛠️ PERSIAPAN</h3>
+<ul>
+<li>Login sebagai <strong>root</strong> (untuk setting server).</li>
+<li>Kita akan pakai user <code>teungku</code> sebagai kelinci percobaan (atau user non-root lainnya).</li>
+</ul>
+<hr />
+<h3 id="langkah-eksekusi">💻 LANGKAH EKSEKUSI</h3>
+<h4 id="tahap-a-membuka-izin-kost-enable-module">TAHAP A: Membuka Izin Kost (Enable Module)</h4>
+<p>Secara default, Apache melarang user biasa punya web sendiri. Kita izinkan dulu.</p>
+<p><strong>1. Aktifkan Modul:</strong></p>
+<pre><code class="language-bash">a2enmod userdir
+</code></pre>
+<ul>
+<li><strong>Hasil:</strong> <code>Enabling module userdir</code>.</li>
+</ul>
+<p><strong>2. Restart Apache:</strong></p>
+<pre><code class="language-bash">service apache2 restart
+</code></pre>
+<hr />
+<h4 id="tahap-b-menghias-kamar-create-content">TAHAP B: Menghias Kamar (Create Content)</h4>
+<p>Sekarang kita bertindak sebagai user biasa (<code>teungku</code>). Apache hanya akan mencari folder bernama <strong><code>public_html</code></strong>. Kalau namanya beda, dia tidak akan ketemu.</p>
+<p><strong>1. Buat Folder Web:</strong>
+Kita taruh di dalam folder home user.</p>
+<pre><code class="language-bash">mkdir /home/teungku/public_html
+</code></pre>
+<p><strong>2. Buat Halaman Profil:</strong></p>
+<pre><code class="language-bash">nano /home/teungku/public_html/index.html
+</code></pre>
+<p><strong>3. Isi Konten Sederhana:</strong>
+<em>(Copy-paste kode ini)</em></p>
+<pre><code class="language-html">&lt;html&gt;
+  &lt;head&gt;&lt;title&gt;Lapak Teungku&lt;/title&gt;&lt;/head&gt;
+  &lt;body style=&quot;background-color: #f0f0f0;&quot;&gt;
+    &lt;h1&gt;Halo! Ini Web Pribadi Teungku&lt;/h1&gt;
+    &lt;p&gt;Halaman ini di-hosting menggunakan fitur &lt;b&gt;UserDir&lt;/b&gt;.&lt;/p&gt;
+    &lt;p&gt;Saya cuma user biasa, tapi saya punya web sendiri!&lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>Simpan (<code>Ctrl+O</code>) dan keluar (<code>Ctrl+X</code>).</p>
+<p><strong>4. Atur Kepemilikan (PENTING!):</strong>
+Karena kita buat ini pakai <code>root</code>, kita harus kembalikan kepemilikannya ke <code>teungku</code> agar sah.</p>
+<pre><code class="language-bash">chown -R teungku:teungku /home/teungku/public_html
+</code></pre>
+<hr />
+<h3 id="pojok-benang-merah-real-case-study">🚧 POJOK &ldquo;BENANG MERAH&rdquo; (Real Case Study)</h3>
+<p><strong>Kasus:</strong> &ldquo;Mas, pas dibuka muncul <strong>403 Forbidden</strong> (You don&rsquo;t have permission).&rdquo;</p>
+<p><strong>Penyebab:</strong>
+Ini masalah privasi Linux.
+Apache (user <code>www-data</code>) mencoba masuk ke kamar <code>/home/teungku</code>, tapi pintunya dikunci rapat (Permission <code>700</code> atau <code>drwx------</code>). Apache tidak boleh masuk, makanya Forbidden.</p>
+<p><strong>Solusi:</strong>
+Kita harus melonggarkan sedikit pintu rumah user agar Apache bisa &ldquo;mengintip&rdquo;.</p>
+<pre><code class="language-bash">chmod 755 /home/teungku
+</code></pre>
+<p><em>(Ini membolehkan orang lain untuk &ldquo;Read/Execute&rdquo; folder home, tapi tidak bisa &ldquo;Write&rdquo;/mengacak-acak).</em></p>
+<hr />
+<h3 id="momen-ka-boom-verification-part-14">📸 MOMEN &ldquo;KA-BOOM!&rdquo; (Verification Part 14)</h3>
+<p>Buka Browser di Windows 7.</p>
+<p><strong>Ketik Alamat Unik Ini:</strong>
+<code>http://www.teungku.edu/~teungku</code></p>
+<p><em>(Perhatikan tanda tilde <code>~</code> sebelum nama user. Di keyboard, biasanya ada di sebelah kiri angka 1, pakai Shift).</em></p>
+<p><strong>Hasil Sukses:</strong></p>
+<ol>
+<li>Muncul halaman dengan latar belakang abu-abu.</li>
+<li>Tulisan besar: <strong>&ldquo;Halo! Ini Web Pribadi Teungku&rdquo;</strong>.</li>
+</ol>
+<p>Jika muncul, selamat! Anda sudah berhasil membuat layanan &ldquo;Shared Hosting&rdquo; paling sederhana di dunia.
+Jika Anda membuat user baru bernama <code>budi</code>, lalu buat folder <code>public_html</code> di <code>/home/budi</code>, maka otomatis dia bisa diakses di <code>~budi</code> tanpa perlu restart server lagi!</p>
+<hr />
+<p><strong>🏁 PENUTUP RESMI BAB 3:</strong></p>
+<p><strong>MISI SELESAI!</strong> 🎊
+Kita telah menamatkan <strong>BAB 3: WEB HOSTING MASTER</strong>.</p>
+<p>Mari kita rekap kekayaan fitur Server Anda:</p>
+<ol>
+<li><strong>Web Server Utama:</strong> <code>www.teungku.edu</code> (Apache/PHP).</li>
+<li><strong>Database:</strong> MySQL &amp; PhpMyAdmin.</li>
+<li><strong>Virtual Host:</strong> <code>blog.teungku.edu</code>.</li>
+<li><strong>Keamanan:</strong> HTTPS/SSL.</li>
+<li><strong>Personal Web:</strong> <code>www.teungku.edu/~teungku</code>.</li>
+</ol>
+<p>Server Anda sudah sangat powerful untuk urusan Website.
+Tapi&hellip; bagaimana cara server ini berkomunikasi dengan dunia luar lewat surat?</p>
+<p>Di <strong>BAB 4</strong>, kita akan membangun <strong>Kantor Pos Digital (Mail Server)</strong>. Kita akan bisa kirim email dari <code>teungku@teungku.edu</code> ke user lain.</p>
+    </div>
+    
+    <nav class="article-footer-nav">
+        <a href="../../blog.html" class="cta-button">← Kembali ke Blog</a>
+    </nav>
+    
+</article>
+    </main>
+    
+    <footer>
+        <p>&copy; 2026 - Teungku Zulkifli. Dibuat dengan ❤️</p>
+    </footer>
+    
+    <div class="floating-lang-switcher">
+        <div class="lang-options">
+            <button id="lang-id">ID</button>
+            <button id="lang-en">EN</button>
+        </div>
+        <button class="lang-globe-btn" aria-label="Pilih Bahasa">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+        </button>
+    </div>
+    
+    <script src="../../assets/js/languages.js"></script>
+    <script src="../../assets/js/main.script.js" defer></script>
+    
+</body>
+</html>

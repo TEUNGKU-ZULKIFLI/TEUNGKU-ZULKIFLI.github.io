@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Integrasi Mininet VM - Tahapan 02: Integrasi ONOS dengan Mininet VM - Teungku Zulkifli</title>
+    <meta name="description" content="">
+    <meta name="author" content="Teungku Zulkifli">
+    
+    <meta property="og:title" content="Integrasi Mininet VM - Tahapan 02: Integrasi ONOS dengan Mininet VM - Teungku Zulkifli">
+    <meta property="og:description" content="">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://teungku.me">
+    
+    <link rel="stylesheet" href="../../assets/css/main.style.css">
+    
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="../../index.html" class="logo">Teungku Zulkifli</a>
+            <ul id="nav-links">
+                <li><a data-lang="common.navHome" href="../../index.html#home">Beranda</a></li>
+                <li><a data-lang="common.navAbout" href="../../index.html#about">Tentang</a></li>
+                <li><a data-lang="common.navContact" href="../../index.html#contact">Kontak</a></li>
+                <li><a data-lang="common.navProjects" href="../../projects.html">Proyek</a></li>
+                <li><a data-lang="common.navBlog" href="../../blog.html">Blog</a></li>
+            </ul>
+            <button id="hamburger-btn" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+    
+    <main>
+<article id="article-content">
+    
+    <header class="article-header">
+        <h1>Integrasi Mininet VM - Tahapan 02: Integrasi ONOS dengan Mininet VM</h1>
+        
+        <div class="article-meta">
+            <span class="meta-item">
+                📅 <time datetime="2025-10-20">2025-10-20</time>
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                🏷️ Course
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                ✍️ Teungku Zulkifli
+            </span>
+        </div>
+        
+        <div class="article-tags">
+            <span class="article-tag">#mininet-series</span>
+        </div>
+    </header>
+    
+    <hr class="article-divider">
+    
+    <div class="article-body">
+        <iframe src="https://www.youtube.com/embed/4c9R0YHQAAY?controls=0&modestbranding=1&rel=0&disablekb=1&autoplay=0" style="display:block;margin:auto;border:none;width:100%;max-width:960px;height:540px;" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+<h1 id="panduan-lengkap-mininet-di-hyper-v-part-2-integrasi-onos-mininet">🧠 Panduan Lengkap Mininet di Hyper-V (Part 2): Integrasi ONOS &amp; MININET</h1>
+<h2 id="pendahuluan">🚀 Pendahuluan</h2>
+<p><strong><code>Mininet</code></strong> adalah simulator jaringan ringan berbasis Linux yang memungkinkan kita membuat topologi jaringan virtual untuk belajar dan menguji protokol seperti OpenFlow. Cocok untuk pelajar, peneliti, dan pengembang jaringan.</br></p>
+<p><strong><code>ONOS</code></strong> (Open Network Operating System) adalah sistem operasi yang dirancang untuk membantu penyedia layanan jaringan membangun jaringan berbasis perangkat lunak (SDN) dengan tingkat skalabilitas, ketersediaan, dan kinerja yang tinggi. ONOS berfungsi sebagai kontroler SDN yang mengelola komponen jaringan seperti switch dan link, serta menjalankan program perangkat lunak untuk menyediakan layanan komunikasi kepada perangkat akhir dan jaringan sekitarnya. Dengan arsitektur modularnya, ONOS memungkinkan penyesuaian yang lebih mudah dan meningkatkan ketersediaan jaringan.</br></p>
+<h3 id="referensi-resmi">📚 Referensi Resmi</h3>
+<ul>
+<li><a href="http://mininet.org/">Mininet.org</a></li>
+<li><a href="https://wiki.onosproject.org/display/ONOS/ONOS">ONOS</a></li>
+<li><a href="https://hub.docker.com/r/onosproject/onos/">Docker ONOS</a></li>
+<li><a href="https://github.com/ArnoTroch/ONOS-Tutorial/blob/main/README.md">Github Ref</a></li>
+</ul>
+<hr />
+<h2 id="tujuan-konsep">🎯 Tujuan &amp; Konsep</h2>
+<ul>
+<li>Menjalankan Mininet VM di Windows 11 menggunakan Hyper-V.</li>
+<li>Menghubungkan VM ke internet dan host melalui adapter virtual.</li>
+<li>Mengintegrasikan ONOS dengan Mininet VM.</li>
+</ul>
+<hr />
+<h2 id="prasyarat">🧰 Prasyarat</h2>
+<ul>
+<li>Windows 11 Pro atau Enterprise (Hyper-V hanya tersedia di edisi ini).</li>
+<li>Hyper-V sudah aktif (bisa diaktifkan lewat &ldquo;Turn Windows features on or off&rdquo;).</li>
+<li>Koneksi internet untuk update dan instalasi paket.</li>
+<li>Sudah ada VM mininet <a href="https://teungku-zulkifli.github.io/article.html?post=_posts/kuliah/2025-10-10-mininet-setup-01.md"><code>Belum Ada ?👆🏻</code></a></li>
+<li>Sudah bisa remote VM Mininet</li>
+</ul>
+<hr />
+<h2 id="langkah-langkah-eksekusi">🛠️ Langkah-langkah Eksekusi</h2>
+<h3 id="tahap-1-persiapan-vm-dan-instalasi-docker">Tahap 1: Persiapan VM dan Instalasi Docker</h3>
+<p>Langkah ini meintegrasikan ONOS ke mininet simak baik&rdquo; dan jika bisa sambilan nonton video diatas tersebut.</p>
+<ol>
+<li>
+<p><strong>Update Sistem &amp; Instal Prasyarat:</strong></p>
+<p><code>bash
+sudo apt-get update &amp;&amp; sudo apt-get upgrade -y
+sudo apt-get install -y git python3 zip unzip</code></p>
+</li>
+<li>
+<p><strong>Bersihkan Sisa Percobaan Gagal (Wajib):</strong>
+    Kita hapus semua percobaan membuat topology terdahulu.</p>
+<p><code>bash
+sudo mn -c</code></p>
+</li>
+<li>
+<p><strong>Instal Docker:</strong></p>
+<p><code>bash
+sudo apt-get install -y docker.io</code></p>
+</li>
+<li>
+<p><strong>Aktifkan Service Docker:</strong></p>
+<p><code>bash
+sudo systemctl enable docker &amp;&amp; sudo systemctl start docker</code></p>
+</li>
+<li>
+<p><strong>Beri Izin User <code>mininet</code> (Sangat Penting):</strong>
+    Ini agar Anda tidak perlu <code>sudo</code> untuk setiap perintah Docker.</p>
+<p><code>bash
+sudo usermod -aG docker mininet</code></p>
+</li>
+<li>
+<p><strong>Terapkan Izin (Krusial):</strong>
+    Anda harus <strong>logout</strong> dari VM lalu <strong>login kembali</strong>.</p>
+<p><code>bash
+exit</code></p>
+<p>(Sekarang, login kembali ke VM Anda).</p>
+</li>
+</ol>
+<hr />
+<h3 id="tahap-2-menyiapkan-kontainer-onos">Tahap 2: Menyiapkan Kontainer ONOS</h3>
+<p>Sekarang kita akan mengunduh dan menjalankan &ldquo;paket jadi&rdquo; ONOS.</p>
+<ol>
+<li>
+<p><strong>Verifikasi Instalasi Docker:</strong>
+    Setelah login kembali, jalankan perintah ini. Seharusnya berhasil tanpa <code>sudo</code>.</p>
+<p><code>bash
+docker --version</code></p>
+<p>Terapkan Perintah berikut digunakan untuk membuat symbolic link (symlink) <code>DOCKER</code>
+<code>bash
+sudo ln -sf /usr/bin/docker /usr/local/bin/docker</code></p>
+</li>
+<li>
+<p><strong>Unduh &ldquo;Paket&rdquo; ONOS (Versi 2.6-latest):</strong></p>
+<p><code>bash
+docker pull onosproject/onos:2.6-latest</code></p>
+</li>
+<li>
+<p><strong>Jalankan Kontainer ONOS:</strong>
+    Ini adalah perintah utama yang menyalakan ONOS di latar belakang dan secara otomatis mengaktifkan semua aplikasi yang kita butuhkan.</p>
+<p><code>bash
+docker run -d -p 6653:6653 -p 8181:8181 -p 8101:8101 -e ONOS_APPS=openflow,reactive.fwd,gui2 --name onos onosproject/onos:2.6-latest</code></p>
+<p><em>Catatan: Parameter <code>-e ONOS_APPS=...</code> adalah kunci sukses kita. Ia mencegah semua masalah <code>feature:install</code> karena aplikasi sudah langsung diaktifkan.</em></p>
+</li>
+</ol>
+<hr />
+<h3 id="tahap-3-verifikasi-dan-integrasi">Tahap 3: Verifikasi dan Integrasi</h3>
+<p>Kita pastikan ONOS berjalan, lalu kita sambungkan Mininet.</p>
+<ol>
+<li>
+<p><strong>Cek Kontainer yang Berjalan:</strong>
+    Tunggu sekitar 1-2 menit agar ONOS siap, lalu jalankan:</p>
+<p><code>bash
+docker ps</code></p>
+<p>Anda akan melihat kontainer bernama <code>onos</code> dengan status <code>Up</code>.</p>
+</li>
+<li>
+<p><strong>(Opsional) Cek Log Startup ONOS:</strong>
+    Untuk melihat apa yang terjadi di dalam, Anda bisa &ldquo;mengintip&rdquo; log-nya.</p>
+<p><code>bash
+docker logs -f onos</code></p>
+<p>(Tekan <code>Ctrl+C</code> untuk keluar dari log).</p>
+</li>
+<li>
+<p><strong>(Opsional) Login ke Konsol ONOS/Karaf:</strong>
+    Untuk verifikasi level dewa, buka terminal baru dan login ke konsol Karaf.</p>
+<p><code>bash
+ssh -p 8101 karaf@127.0.0.1</code></p>
+<p>(Password: <code>karaf</code>). Lalu jalankan <code>apps -a -s</code> untuk melihat <code>reactive.fwd</code> dan <code>gui2</code> sudah aktif.</p>
+</li>
+<li>
+<p><strong>Bersihkan dan Jalankan Mininet (Momen Kemenangan):</strong>
+    Di terminal baru, jalankan perintah Mininet yang sudah terbukti sukses.</p>
+<p><code>bash
+sudo mn -c</code>
+<code>bash
+sudo mn --topo single,3 --mac --switch ovs,protocols=OpenFlow14  --controller remote,ip=127.0.0.1</code></p>
+</li>
+<li>
+<p><strong>Akses Web UI (Dari Komputer Utama Anda):</strong>
+    Buka browser di <strong>komputer host</strong> Anda (bukan di VM) dan kunjungi:
+    <code>http://192.168.20.1:8181/onos/ui</code></p>
+<ul>
+<li><strong>Login:</strong> <code>onos</code></li>
+<li><strong>Password:</strong> <code>rocks</code>
+    <strong>BOOM!</strong> Topologi Anda akan muncul di sana.</li>
+</ul>
+</li>
+<li>
+<p><strong>Tes Akhir di Mininet:</strong>
+    Kembali ke terminal Mininet Anda dan jalankan:</p>
+<p><code>bash
+mininet&gt; pingall</code></p>
+<p>Hasilnya akan <code>0% dropped</code>.</p>
+</li>
+</ol>
+<hr />
+<h1 id="basic-command-docker">BASIC Command Docker</h1>
+<h3 id="mengelola-kontainer-si-akuarium-yang-sedang-berjalan">Mengelola Kontainer (Si &ldquo;Akuarium&rdquo; yang Sedang Berjalan) 📦</h3>
+<p>Kontainer adalah ONOS Anda yang sedang <em>hidup</em> dan <em>berjalan</em>.</p>
+<ul>
+<li>
+<p><strong>Melihat kontainer yang sedang berjalan:</strong>
+    Perintah ini akan menunjukkan kontainer apa saja yang sedang aktif (status <code>Up</code>). Ini adalah cara tercepat untuk mengecek apakah <code>onos</code> Anda berjalan.</p>
+<p><code>bash
+docker ps</code></p>
+</li>
+<li>
+<p><strong>Melihat SEMUA kontainer (termasuk yang mati/stop):</strong>
+    Kadang kontainer berhenti karena error. Perintah ini akan menampilkannya.</p>
+<p><code>bash
+docker ps -a</code></p>
+</li>
+<li>
+<p><strong>Menghentikan kontainer:</strong>
+    Ini cara yang aman untuk mematikan ONOS tanpa menghapusnya.</p>
+<p><code>bash
+docker stop onos</code></p>
+</li>
+<li>
+<p><strong>Menyalakan kembali kontainer yang sudah di-stop:</strong>
+    Jika Anda sudah <code>stop</code>, ini cara menyalakannya lagi (tidak perlu <code>docker run</code> lagi).</p>
+<p><code>bash
+docker start onos</code></p>
+</li>
+<li>
+<p><strong>Melihat log (pesan) dari kontainer:</strong>
+    Sangat berguna untuk <em>troubleshooting</em> jika kontainer tidak mau jalan.</p>
+<p><code>bash
+docker logs onos</code></p>
+<p>(Gunakan <code>docker logs -f onos</code> untuk melihat log secara <em>live</em>).</p>
+</li>
+<li>
+<p><strong>Menghapus kontainer:</strong>
+    Ini akan menghapus kontainer <code>onos</code> secara permanen. Anda <strong>hanya bisa menghapus kontainer yang sudah di-<code>stop</code></strong>.</p>
+<p><code>bash
+docker rm onos</code></p>
+</li>
+</ul>
+<hr />
+<h3 id="mengelola-image-si-cetakan-atau-file-instalasi">Mengelola Image (Si &ldquo;Cetakan&rdquo; atau &ldquo;File Instalasi&rdquo;) 💿</h3>
+<p>Image adalah &ldquo;file .tar.gz&rdquo; atau &ldquo;cetakan&rdquo; yang Anda unduh (<code>docker pull</code>).</p>
+<ul>
+<li>
+<p><strong>Melihat semua image yang ada di mesin Anda:</strong></p>
+<p><code>bash
+docker images</code></p>
+</li>
+<li>
+<p><strong>Menghapus image:</strong>
+    Ini akan menghapus &ldquo;cetakan&rdquo; <code>onos:2.6-latest</code> dari disk Anda. Berguna untuk menghemat ruang.</p>
+<p><code>bash
+docker rmi onosproject/onos:2.6-latest</code></p>
+<p><em>Catatan: Anda hanya bisa menghapus image jika sudah tidak ada kontainer (termasuk yang sudah di-<code>stop</code>) yang menggunakannya.</em></p>
+</li>
+</ul>
+<hr />
+<h3 id="jawaban-untuk-pertanyaan-spesifik-anda">Jawaban untuk Pertanyaan Spesifik Anda 💡</h3>
+<ul>
+<li>
+<p><strong>&ldquo;Cara nanti aman container sebelum shutdownkan mechine?&rdquo;</strong>
+    Kabar baik! Docker modern (yang Anda instal) sudah pintar. Saat Anda menjalankan <code>sudo shutdown</code> atau <code>sudo reboot</code> pada VM Anda, Docker akan secara otomatis mengirim sinyal &ldquo;STOP&rdquo; yang aman ke semua kontainer yang sedang berjalan (seperti <code>docker stop onos</code>). Anda <strong>tidak perlu mematikannya secara manual</strong> satu per satu. Semuanya aman!</p>
+</li>
+<li>
+<p><strong>&ldquo;Hapus chache?&rdquo; (Sapu Bersih) 🧹</strong>
+    Ini adalah perintah &ldquo;ajaib&rdquo; yang paling Anda butuhkan untuk bersih-bersih. Ini menjawab pertanyaan Anda soal &ldquo;cache&rdquo; dan &ldquo;lain-lain&rdquo;.</p>
+<p><code>bash
+docker system prune</code></p>
+<p>Perintah ini akan secara otomatis menghapus:</p>
+<ol>
+<li>Semua kontainer yang sudah di-<code>stop</code>.</li>
+<li>Semua jaringan yang tidak terpakai.</li>
+<li>Semua <em>build cache</em> yang menggantung.</li>
+</ol>
+<p>Jika Anda ingin lebih &ldquo;sadis&rdquo; dan menghapus <strong>image yang tidak terpakai</strong> juga, gunakan:</p>
+<p><code>bash
+docker system prune -a</code></p>
+</li>
+</ul>
+<hr />
+    </div>
+    
+    <nav class="article-footer-nav">
+        <a href="../../blog.html" class="cta-button">← Kembali ke Blog</a>
+    </nav>
+    
+</article>
+    </main>
+    
+    <footer>
+        <p>&copy; 2026 - Teungku Zulkifli. Dibuat dengan ❤️</p>
+    </footer>
+    
+    <div class="floating-lang-switcher">
+        <div class="lang-options">
+            <button id="lang-id">ID</button>
+            <button id="lang-en">EN</button>
+        </div>
+        <button class="lang-globe-btn" aria-label="Pilih Bahasa">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+        </button>
+    </div>
+    
+    <script src="../../assets/js/languages.js"></script>
+    <script src="../../assets/js/main.script.js" defer></script>
+    
+</body>
+</html>

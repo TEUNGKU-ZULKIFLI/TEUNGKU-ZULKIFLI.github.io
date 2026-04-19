@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Untitled - Teungku Zulkifli</title>
+    <meta name="description" content="">
+    <meta name="author" content="Teungku Zulkifli">
+    
+    <meta property="og:title" content="Untitled - Teungku Zulkifli">
+    <meta property="og:description" content="">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://teungku.me">
+    
+    <link rel="stylesheet" href="../../assets/css/main.style.css">
+    
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="../../index.html" class="logo">Teungku Zulkifli</a>
+            <ul id="nav-links">
+                <li><a data-lang="common.navHome" href="../../index.html#home">Beranda</a></li>
+                <li><a data-lang="common.navAbout" href="../../index.html#about">Tentang</a></li>
+                <li><a data-lang="common.navContact" href="../../index.html#contact">Kontak</a></li>
+                <li><a data-lang="common.navProjects" href="../../projects.html">Proyek</a></li>
+                <li><a data-lang="common.navBlog" href="../../blog.html">Blog</a></li>
+            </ul>
+            <button id="hamburger-btn" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+    
+    <main>
+<article id="article-content">
+    
+    <header class="article-header">
+        <h1>Untitled</h1>
+        
+        <div class="article-meta">
+            <span class="meta-item">
+                📅 <time datetime="1970-01-01">1970-01-01</time>
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                🏷️ Uncategorized
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                ✍️ Teungku Zulkifli
+            </span>
+        </div>
+        
+    </header>
+    
+    <hr class="article-divider">
+    
+    <div class="article-body">
+        <div align="center">
+<picture>
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/GNU_Compiler_Collection_logo.svg/250px-GNU_Compiler_Collection_logo.svg.png" width="300" alt="GCC Compiler Logo">
+</picture>
+
+<h1 align="center">🚀 Journey 02: Membungkus Logika dengan Bahasa C</h1>
+
+<p align="center">
+<b>The Bridge Between Human and Machine: Understanding Pointers & Memory Mapping</b>
+
+
+
+
+Laboratorium: Debian 7 "Wheezy" | GCC Compiler
+</p>
+</div>
+
+<hr />
+<h3 id="1-pendahuluan-c-adalah-assembly-yang-bisa-membaca">1. Pendahuluan: C adalah Assembly yang &ldquo;Bisa Membaca&rdquo;</h3>
+<p>Setelah berurusan dengan Register di Assembly, saya pindah ke bahasa C. Di sini, saya tidak lagi menulis nomor syscall secara manual, tapi saya masih bisa merasakan &ldquo;detak jantung&rdquo; hardware melalui <strong>Pointer</strong>.</p>
+<h3 id="2-required-alat-tempur">2. Required (Alat Tempur)</h3>
+<ul>
+<li><strong>Compiler:</strong> <code>gcc</code> (GNU C Compiler).</li>
+<li><strong>Library:</strong> <code>stdio.h</code> (Standard Input Output).</li>
+<li><strong>Insight:</strong> C mengubah kode manusia menjadi file <code>.s</code> (Assembly) sebelum menjadi file eksekusi. Saya membuktikannya dengan perintah <code>gcc -S</code>.</li>
+</ul>
+<hr />
+<h3 id="3-langkah-langkah-eksperimen-memori">3. Langkah-Langkah &amp; Eksperimen Memori</h3>
+<h4 id="langkah-01-the-wrapper-abstraksi-pertama">🔵 Langkah 01: The Wrapper (Abstraksi Pertama)</h4>
+<p><strong>Tujuan:</strong> Memahami bahwa <code>printf</code> adalah pembungkus (wrapper) dari <code>sys_write</code> yang saya pelajari sebelumnya.</p>
+<ul>
+<li><strong>Hasil:</strong> Kode lebih ringkas, tapi tujuannya sama: mengirim data ke File Descriptor 1 (Layar).</li>
+</ul>
+<h4 id="langkah-02-memory-inspector-melihat-koordinat-ram">🟡 Langkah 02: Memory Inspector (Melihat Koordinat RAM)</h4>
+<p><strong>Tujuan:</strong> Mencari tahu di mana data disimpan secara fisik.</p>
+<ul>
+<li><strong>Key Concept:</strong> Menggunakan operator <code>&amp;</code> (Address-of) untuk melihat alamat heksadesimal.</li>
+<li><strong>Eksperimen:</strong> Saya melihat bahwa variabel <code>char</code> dan <code>int</code> duduk berdampingan di RAM hanya selisih beberapa byte.</li>
+</ul>
+<h4 id="checkpoint-the-memory-hacker-pointer-manipulation">🟢 Checkpoint: The Memory Hacker (Pointer Manipulation)</h4>
+<p><strong>Tujuan:</strong> Mengubah data tanpa menyentuh variabel aslinya (Pass by Reference).</p>
+<ul>
+<li><strong>Analogi:</strong> Seperti memiliki &ldquo;kunci cadangan&rdquo; (Pointer) untuk masuk ke sebuah laci (Alamat Memori) dan mengganti isinya tanpa izin pemilik rumah.</li>
+<li><strong>Code Logic:</strong></li>
+</ul>
+<pre><code class="language-c">void hackMemori(int *target) {
+    *target = *target + 9999; 
+}
+
+</code></pre>
+<ul>
+<li><strong>Real Result:</strong> Saya berhasil meng-update nilai <code>saldo</code> melalui alamat memorinya. Ini adalah dasar bagaimana sistem operasi mengelola data secara efisien.</li>
+</ul>
+<hr />
+<h3 id="4-kesimpulan-impact">4. Kesimpulan &amp; Impact</h3>
+<ul>
+<li><strong>CRUD Level RAM:</strong> Saya paham bahwa operasi &ldquo;Update&rdquo; di aplikasi apapun pada akhirnya adalah manipulasi alamat memori menggunakan Pointer.</li>
+<li><strong>Safety vs Power:</strong> Bahasa C memberikan kekuatan penuh untuk &ldquo;merusak&rdquo; atau &ldquo;memperbaiki&rdquo; memori, sebuah tanggung jawab besar yang tidak ada di bahasa tingkat tinggi seperti Python.</li>
+</ul>
+<p><strong>Next Stop:</strong> Migrasi ke <strong>C++</strong> Bagaimana konsep &ldquo;Class&rdquo; dan &ldquo;Object&rdquo; membuat manajemen memori yang rumit ini menjadi lebih terorganisir?</p>
+<div align="center">
+<p><b>Created with ❤️ by Teungku | 🤖 Gemini</b></p>
+</div>
+    </div>
+    
+    <nav class="article-footer-nav">
+        <a href="../../blog.html" class="cta-button">← Kembali ke Blog</a>
+    </nav>
+    
+</article>
+    </main>
+    
+    <footer>
+        <p>&copy; 2026 - Teungku Zulkifli. Dibuat dengan ❤️</p>
+    </footer>
+    
+    <div class="floating-lang-switcher">
+        <div class="lang-options">
+            <button id="lang-id">ID</button>
+            <button id="lang-en">EN</button>
+        </div>
+        <button class="lang-globe-btn" aria-label="Pilih Bahasa">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+        </button>
+    </div>
+    
+    <script src="../../assets/js/languages.js"></script>
+    <script src="../../assets/js/main.script.js" defer></script>
+    
+</body>
+</html>

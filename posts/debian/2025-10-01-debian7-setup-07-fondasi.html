@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>(Part 8): Tranfer File Aman Antara VSFTPD dengan SFTP - Teungku Zulkifli</title>
+    <meta name="description" content="">
+    <meta name="author" content="Teungku Zulkifli">
+    
+    <meta property="og:title" content="(Part 8): Tranfer File Aman Antara VSFTPD dengan SFTP - Teungku Zulkifli">
+    <meta property="og:description" content="">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://teungku.me">
+    
+    <link rel="stylesheet" href="../../assets/css/main.style.css">
+    
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="../../index.html" class="logo">Teungku Zulkifli</a>
+            <ul id="nav-links">
+                <li><a data-lang="common.navHome" href="../../index.html#home">Beranda</a></li>
+                <li><a data-lang="common.navAbout" href="../../index.html#about">Tentang</a></li>
+                <li><a data-lang="common.navContact" href="../../index.html#contact">Kontak</a></li>
+                <li><a data-lang="common.navProjects" href="../../projects.html">Proyek</a></li>
+                <li><a data-lang="common.navBlog" href="../../blog.html">Blog</a></li>
+            </ul>
+            <button id="hamburger-btn" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+    
+    <main>
+<article id="article-content">
+    
+    <header class="article-header">
+        <h1>(Part 8): Tranfer File Aman Antara VSFTPD dengan SFTP</h1>
+        
+        <div class="article-meta">
+            <span class="meta-item">
+                📅 <time datetime="2025-10-01">2025-10-01</time>
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                🏷️ Course
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                ✍️ Teungku Zulkifli
+            </span>
+        </div>
+        
+        <div class="article-tags">
+            <span class="article-tag">#debian-server-series</span>
+        </div>
+    </header>
+    
+    <hr class="article-divider">
+    
+    <div class="article-body">
+        <iframe src="https://www.youtube.com/embed/WahLoPUczfA?controls=0&modestbranding=1&rel=0&disablekb=1&autoplay=0" style="display:block;margin:auto;border:none;width:100%;max-width:960px;height:540px;" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+<h1 id="dokumentasi-debian-di-hyper-v-part-8-tranfer-file-aman-antara-vsftpd-dengan-sftp">Dokumentasi Debian di Hyper V (Part 8): Tranfer File Aman Antara VSFTPD dengan SFTP</h1>
+<p><strong>Catatan Perjalanan &amp; Solusi Praktis untuk VM Debian 7.8.0 &ldquo;Wheezy&rdquo;</strong></p>
+<hr />
+<h2 id="pendahuluan">Pendahuluan 🚀</h2>
+<p>Selamat datang di catatan perjalanan saya dalam membangun sebuah server dari nol! Dokumen ini lebih dari sekadar terjemahan; ini adalah sebuah logbook praktis dari proses konfigurasi awal server <strong>Debian 7.8.0 &ldquo;Wheezy&rdquo;</strong>. Setiap langkah di dalamnya tidak hanya diriset, tetapi juga telah dipraktikkan, diuji, dan yang terpenting, dilengkapi dengan solusi untuk setiap masalah tak terduga yang muncul di tengah jalan.</p>
+<p>Tujuannya adalah untuk menciptakan sebuah panduan yang jujur dan mudah diikuti, terutama bagi mereka yang mungkin menempuh jalur yang sama dengan perangkat lunak versi lama ini. Semoga catatan ini bisa menjadi peta yang berguna, menunjukkan bukan hanya jalan yang lurus, tetapi juga cara melewati setiap rintangan.</p>
+<h3 id="credits-referensi">Credits &amp; Referensi</h3>
+<p>Proses ini tidak akan berjalan lancar tanpa sumber daya dan bantuan yang luar biasa. Kredit sepenuhnya diberikan kepada:</p>
+<ul>
+<li><strong><a href="https://www.server-world.info/en/note?os=Debian_7.0">Server-World</a></strong>: Sebagai referensi utama dan panduan dasar untuk semua tahapan konfigurasi. Panduan mereka yang komprehensif menjadi titik awal dari petualangan ini.</li>
+<li><strong>Gemini (Model AI Google)</strong>: Sebagai mitra diskusi interaktif, asisten riset, dan &ldquo;pengumpul data&rdquo;. Gemini membantu dalam menerjemahkan konsep, mendiagnosis masalah unik (seperti error GPG dan repositori arsip), serta menyusun penjelasan langkah demi langkah yang detail.</li>
+</ul>
+<hr />
+<p>Ini adalah <strong>kepingan terakhir</strong> dari puzzle <strong>BAB 2</strong>.</p>
+<p>Kita sudah punya Router, DHCP, dan Samba. Samba itu enak untuk <em>lokal</em> (LAN), tapi kalau kita bicara soal upload file website atau transfer lewat internet yang lebih luas, protokol standarnya adalah <strong>FTP</strong>.</p>
+<p>Dan karena kita peduli keamanan, kita tidak hanya belajar FTP biasa (yang tidak aman), tapi juga SFTP (yang terenkripsi).</p>
+<hr />
+<h1 id="bab-2-jaringan-konektivitas">📖 BAB 2: JARINGAN &amp; KONEKTIVITAS</h1>
+<h2 id="part-8-transfer-file-aman-vsftpd-sftp">(Part 8) Transfer File Aman: VSFTPD &amp; SFTP</h2>
+<p><strong>(File Transfer Protocol &amp; Secure Shell Transfer)</strong></p>
+<h3 id="tagline">🏷️ TAGLINE</h3>
+<p><em>&ldquo;Mengirim Paket Rahasia Menggunakan Truk Baja&rdquo;</em></p>
+<hr />
+<h3 id="konsep-warung-kopi-analogi">☕ KONSEP &ldquo;WARUNG KOPI&rdquo; (Analogi)</h3>
+<p>Di Part 11, kita pakai <strong>Samba</strong>. Itu ibarat Anda memindahkan barang dari ruang tamu ke dapur. Pintunya terbuka, mudah, tinggal <em>drag-and-drop</em>. Cocok untuk santai di rumah (LAN).</p>
+<p>Tapi, bagaimana kalau Anda mau mengirim barang berharga ke luar kota (Internet)? Anda butuh jasa ekspedisi.</p>
+<ol>
+<li><strong>FTP (VSFTPD):</strong> Ini seperti <strong>Jasa Kurir Biasa</strong>. Cepat, efisien, tapi kalau kurirnya dicegat di jalan, isi paketnya bisa diintip orang (tidak terenkripsi).</li>
+<li><strong>SFTP (Secure FTP):</strong> Ini seperti <strong>Truk Baja Anti-Peluru</strong>. Paketnya dikunci rapat. Bahkan jika truknya dibajak, isinya tidak bisa dibuka karena Anda yang pegang kuncinya. SFTP menumpang jalur aman SSH yang sudah kita buat di Part 3.</li>
+</ol>
+<hr />
+<h3 id="misi-operasi">🎯 MISI OPERASI</h3>
+<ol>
+<li>Menginstal <strong>VSFTPD</strong> (Very Secure FTP Daemon) untuk layanan FTP standar.</li>
+<li>Mengunci User agar tidak bisa &ldquo;jalan-jalan&rdquo; ke folder sistem (Chroot Jail).</li>
+<li>Menggunakan <strong>SFTP</strong> melalui port rahasia kita (2280).</li>
+</ol>
+<hr />
+<h3 id="persiapan">🛠️ PERSIAPAN</h3>
+<ul>
+<li>Login sebagai <strong>root</strong>.</li>
+<li>Di Windows 7, siapkan aplikasi klien seperti <strong>WinSCP</strong> atau <strong>FileZilla</strong> (Wajib punya ini untuk admin server!).</li>
+</ul>
+<hr />
+<h3 id="langkah-eksekusi">💻 LANGKAH EKSEKUSI</h3>
+<h4 id="tahap-a-membangun-pos-ekspedisi-instalasi-vsftpd">TAHAP A: Membangun Pos Ekspedisi (Instalasi VSFTPD)</h4>
+<p><strong>1. Instal Paket:</strong></p>
+<pre><code class="language-bash">apt-get install vsftpd -y
+</code></pre>
+<p><strong>2. Backup Konfigurasi:</strong>
+Selalu cadangkan sebelum mengedit.</p>
+<pre><code class="language-bash">cp /etc/vsftpd.conf /etc/vsftpd.conf.backup
+</code></pre>
+<hr />
+<h4 id="tahap-b-menulis-aturan-keamanan-vsftpdconf">TAHAP B: Menulis Aturan Keamanan (<code>vsftpd.conf</code>)</h4>
+<p>Secara default, VSFTPD itu &ldquo;pelit&rdquo; (hanya boleh download, tidak boleh upload). Kita harus ubah.</p>
+<p><strong>1. Edit File Config:</strong></p>
+<pre><code class="language-bash">nano /etc/vsftpd.conf
+</code></pre>
+<p><strong>2. Modifikasi Baris Penting:</strong>
+Cari baris-baris di bawah ini. Hilangkan tanda <code>#</code> (uncomment) dan sesuaikan nilainya:</p>
+<ul>
+<li>
+<p><strong>Izinkan Tulis (Upload):</strong>
+    Cari <code>#write_enable=YES</code>.
+    Ubah jadi:</p>
+<p><code>bash
+write_enable=YES</code></p>
+</li>
+<li>
+<p><strong>Penjara Lokal (Chroot Jail) - PENTING!:</strong>
+    Ini fitur keamanan agar user yang login FTP <strong>terkurung</strong> di folder home-nya sendiri (<code>/home/teungku</code>) dan tidak bisa mengintip folder <code>/etc</code> atau <code>/root</code>.
+    Cari <code>#chroot_local_user=YES</code>.
+    Ubah jadi:</p>
+<p><code>bash
+chroot_local_user=YES</code></p>
+</li>
+</ul>
+<p><strong>3. Simpan dan Keluar:</strong>
+<code>Ctrl+O</code>, <code>Enter</code>, <code>Ctrl+X</code>.</p>
+<p><strong>4. Restart Service:</strong></p>
+<pre><code class="language-bash">/etc/init.d/vsftpd restart
+</code></pre>
+<hr />
+<h4 id="tahap-c-cara-menggunakan-sftp-jalur-truk-baja">TAHAP C: Cara Menggunakan SFTP (Jalur Truk Baja)</h4>
+<p>Untuk SFTP, <strong>Anda TIDAK PERLU menginstal apa-apa lagi!</strong>
+Kenapa? Karena SFTP adalah fitur bawaan dari <strong>SSH</strong>.</p>
+<p>Ingat Part 3? Kita sudah punya SSH di port <strong>2280</strong>.
+Berarti otomatis kita juga sudah punya SFTP di port <strong>2280</strong>.</p>
+<hr />
+<h3 id="pojok-benang-merah-real-case-study">🚧 POJOK &ldquo;BENANG MERAH&rdquo; (Real Case Study)</h3>
+<p><strong>Kasus:</strong> &ldquo;Mas, saya login FTP sukses. Tapi pas login, muncul error: <strong>&lsquo;500 OOPS: vsftpd: refusing to run with writable root inside chroot()&rsquo;</strong>.&rdquo;</p>
+<p><strong>Analisis:</strong>
+Ini adalah fitur keamanan VSFTPD versi modern. Dia marah kalau folder penjara user (<code>/home/teungku</code>) memiliki izin tulis (writable) penuh, karena itu dianggap celah keamanan.</p>
+<p><strong>Solusi Cepat (The Hack):</strong>
+Cabut izin tulis pada folder root user, lalu buat folder baru di dalamnya untuk upload.</p>
+<pre><code class="language-bash"># Cabut izin tulis folder utama
+chmod a-w /home/teungku
+
+# Buat folder khusus upload di dalamnya
+mkdir /home/teungku/upload
+chmod 777 /home/teungku/upload
+</code></pre>
+<p>Sekarang kalau mau upload, masukkan ke folder <code>upload</code> tersebut.</p>
+<hr />
+<h3 id="momen-ka-boom-verification-part-8">📸 MOMEN &ldquo;KA-BOOM!&rdquo; (Verification Part 8)</h3>
+<p>Kita tes menggunakan <strong>WinSCP</strong> di Windows 7 (atau FileZilla).</p>
+<p><strong>SKENARIO 1: Tes FTP Biasa (VSFTPD)</strong></p>
+<ul>
+<li><strong>File Protocol:</strong> FTP</li>
+<li><strong>Host name:</strong> <code>192.168.10.1</code></li>
+<li><strong>Port:</strong> 21 (Default)</li>
+<li><strong>User/Pass:</strong> <code>teungku</code> / (password user)</li>
+<li><strong>Hasil:</strong><ul>
+<li>Login Berhasil.</li>
+<li>Coba naik satu folder (Parent Directory). Jika gagal/mentok, berarti <strong>Chroot Jail BERHASIL</strong>.</li>
+</ul>
+</li>
+</ul>
+<p><strong>SKENARIO 2: Tes SFTP (Jalur Aman)</strong></p>
+<ul>
+<li><strong>File Protocol:</strong> SFTP</li>
+<li><strong>Host name:</strong> <code>192.168.10.1</code></li>
+<li><strong>Port:</strong> <strong>2280</strong> (Ingat port custom kita di Part 3!)</li>
+<li><strong>User/Pass:</strong> <code>teungku</code> / (password user)</li>
+<li><strong>Hasil:</strong><ul>
+<li>Login Berhasil.</li>
+<li>Ikon gembok terkunci (Encrypted).</li>
+<li>Anda bisa melihat seluruh isi server (karena SFTP via SSH biasanya tidak di-Chroot secara default, kecuali disetting khusus).</li>
+</ul>
+</li>
+</ul>
+<hr />
+<p><strong>🏁 PENUTUP RESMI BAB 2:</strong></p>
+<p><strong>MISSION ACCOMPLISHED!</strong> 🎊
+Kita telah menyelesaikan <strong>BAB 2: JARINGAN &amp; KONEKTIVITAS</strong>.</p>
+<p>Mari kita rekap apa yang sudah bisa dilakukan Server Anda:</p>
+<ol>
+<li><strong>Router:</strong> Membagi internet ke Windows 7.</li>
+<li><strong>DHCP:</strong> Memberi alamat otomatis ke Windows 7.</li>
+<li><strong>Samba:</strong> Bertukar file lokal via Network Folder.</li>
+<li><strong>FTP/SFTP:</strong> Transfer file website/sistem dengan aman.</li>
+</ol>
+<p>Server Anda sekarang sudah menjadi <strong>Pusat Komando Jaringan</strong>.</p>
+<p>Selanjutnya, kita akan masuk ke <strong>BAB 3: WEB HOSTING MASTER</strong>.
+Kita akan menginstal Apache, PHP, MySQL, dan membuat server ini bisa menampung website layaknya <strong>Hostinger/Niagahoster</strong>.</p>
+    </div>
+    
+    <nav class="article-footer-nav">
+        <a href="../../blog.html" class="cta-button">← Kembali ke Blog</a>
+    </nav>
+    
+</article>
+    </main>
+    
+    <footer>
+        <p>&copy; 2026 - Teungku Zulkifli. Dibuat dengan ❤️</p>
+    </footer>
+    
+    <div class="floating-lang-switcher">
+        <div class="lang-options">
+            <button id="lang-id">ID</button>
+            <button id="lang-en">EN</button>
+        </div>
+        <button class="lang-globe-btn" aria-label="Pilih Bahasa">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+        </button>
+    </div>
+    
+    <script src="../../assets/js/languages.js"></script>
+    <script src="../../assets/js/main.script.js" defer></script>
+    
+</body>
+</html>

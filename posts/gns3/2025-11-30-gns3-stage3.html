@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>GNS3 Stage 3: ~~~ - Teungku Zulkifli</title>
+    <meta name="description" content="">
+    <meta name="author" content="Teungku Zulkifli">
+    
+    <meta property="og:title" content="GNS3 Stage 3: ~~~ - Teungku Zulkifli">
+    <meta property="og:description" content="">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://teungku.me">
+    
+    <link rel="stylesheet" href="../../assets/css/main.style.css">
+    
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="../../index.html" class="logo">Teungku Zulkifli</a>
+            <ul id="nav-links">
+                <li><a data-lang="common.navHome" href="../../index.html#home">Beranda</a></li>
+                <li><a data-lang="common.navAbout" href="../../index.html#about">Tentang</a></li>
+                <li><a data-lang="common.navContact" href="../../index.html#contact">Kontak</a></li>
+                <li><a data-lang="common.navProjects" href="../../projects.html">Proyek</a></li>
+                <li><a data-lang="common.navBlog" href="../../blog.html">Blog</a></li>
+            </ul>
+            <button id="hamburger-btn" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+    
+    <main>
+<article id="article-content">
+    
+    <header class="article-header">
+        <h1>GNS3 Stage 3: ~~~</h1>
+        
+        <div class="article-meta">
+            <span class="meta-item">
+                📅 <time datetime="2025-11-30">2025-11-30</time>
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                🏷️ Course
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                ✍️ Teungku Zulkifli
+            </span>
+        </div>
+        
+        <div class="article-tags">
+            <span class="article-tag">#gns3-series</span>
+        </div>
+    </header>
+    
+    <hr class="article-divider">
+    
+    <div class="article-body">
+        <p>Masuk ke <strong>Stage 3</strong>. Ini adalah materi yang membedakan &ldquo;Admin Jaringan Biasa&rdquo; dengan &ldquo;Network Engineer&rdquo;.</p>
+<p>Siap pusing sedikit? Tenang, obatnya ada di analogi.</p>
+<hr />
+<h2 id="stage-3-the-gps-system-dynamic-routing-ospf">STAGE 3: The GPS System (Dynamic Routing - OSPF)</h2>
+<h3 id="logika-dasar-kenapa-manual-itu-neraka">🧠 Logika Dasar: Kenapa Manual itu Neraka?</h3>
+<p>Bayangkan kamu admin jaringan untuk <strong>Indomaret</strong> se-Indonesia. Ada 10.000 cabang.
+Kalau pakai cara Stage 2 (Static Routing/Manual), setiap ada cabang baru buka, kamu harus login ke 10.000 router lain untuk ngetik: <em>&ldquo;Eh, ada jalan baru nih ke cabang X&rdquo;</em>. Tanganmu putus, bos marah.</p>
+<p><strong>Solusinya: OSPF (Open Shortest Path First)</strong>
+Ini adalah <strong>Waze / Google Maps</strong> versi Router.</p>
+<ol>
+<li><strong>Router Gosip (Hello Packet):</strong> Router R1 bilang ke R2: <em>&ldquo;Bro, gue punya jalan ke Network A loh.&rdquo;</em></li>
+<li><strong>Tukar Peta (LSA):</strong> R2 bilang: <em>&ldquo;Oke, gue catet. Gue punya jalan ke Network B.&rdquo;</em></li>
+<li><strong>Kalkulasi (SPF Algorithm):</strong> Kalau jalan putus, mereka otomatis cari jalan tikus. Gak perlu nelpon kamu tengah malam.</li>
+</ol>
+<hr />
+<h3 id="lab-time-the-triangle-of-trust-segitiga-emas">🛠️ Lab Time: The Triangle of Trust (Segitiga Emas)</h3>
+<p>Kita akan pakai teknik <strong>&ldquo;Loopback Interface&rdquo;</strong>.</p>
+<ul>
+<li><em>Tips Pro:</em> Di lab routing canggih, kita malas narik VPCS banyak-banyak. Kita buat <strong>Interface Hantu</strong> (Loopback) di dalam router sebagai simulasi LAN/PC.</li>
+<li>Anggap Loopback 1.1.1.1 itu adalah &ldquo;Network Kantor Pusat&rdquo; di belakang Router 1.</li>
+</ul>
+<h4 id="langkah-1-bangun-topologi-segitiga">Langkah 1: Bangun Topologi Segitiga</h4>
+<ol>
+<li>Tarik <strong>3 Router c3725</strong> (R1, R2, R3).</li>
+<li>Hubungkan kabel membentuk <strong>Segitiga</strong>:<ul>
+<li><strong>R1 f0/0</strong> \&lt;&ndash;&gt; <strong>R2 f0/0</strong></li>
+<li><strong>R2 f0/1</strong> \&lt;&ndash;&gt; <strong>R3 f0/0</strong></li>
+<li><strong>R3 f0/1</strong> \&lt;&ndash;&gt; <strong>R1 f0/1</strong></li>
+</ul>
+</li>
+<li>Nyalakan semua!</li>
+</ol>
+<h4 id="langkah-2-setting-ip-address-jalan-raya-rumah-hantu">Langkah 2: Setting IP Address (Jalan Raya &amp; Rumah Hantu)</h4>
+<p>Kita butuh perencanaan IP yang rapi. Ini standar lab internasional biar gak bingung:</p>
+<ul>
+<li><strong>Antara R1-R2:</strong> <code>12.12.12.0/24</code> (R1=.1, R2=.2)</li>
+<li><strong>Antara R2-R3:</strong> <code>23.23.23.0/24</code> (R2=.2, R3=.3)</li>
+<li><strong>Antara R3-R1:</strong> <code>13.13.13.0/24</code> (R3=.3, R1=.1)</li>
+<li><strong>Loopback (Simulasi PC):</strong><ul>
+<li>R1: <code>1.1.1.1/32</code></li>
+<li>R2: <code>2.2.2.2/32</code></li>
+<li>R3: <code>3.3.3.3/32</code></li>
+</ul>
+</li>
+</ul>
+<p><strong>Konfigurasi R1:</strong></p>
+<pre><code class="language-bash">enable
+</code></pre>
+<pre><code class="language-bash">configure terminal
+</code></pre>
+<p><strong>! Setting Interface Fisik</strong></p>
+<pre><code class="language-bash">interface fastEthernet 0/0
+</code></pre>
+<pre><code class="language-bash"> ip address 12.12.12.1 255.255.255.0
+ ```
+```bash
+ no shutdown
+</code></pre>
+<pre><code class="language-bash">interface fastEthernet 0/1
+</code></pre>
+<pre><code class="language-bash"> ip address 13.13.13.1 255.255.255.0
+</code></pre>
+<pre><code class="language-bash"> no shutdown
+</code></pre>
+<p><strong>! Setting Interface Hantu (Loopback)</strong></p>
+<pre><code class="language-bash">interface loopback 0
+</code></pre>
+<pre><code class="language-bash"> ip address 1.1.1.1 255.255.255.255
+</code></pre>
+<pre><code class="language-bash">end
+</code></pre>
+<p><em>(Lakukan pola yang sama untuk R2 dan R3 sesuai IP plan di atas. Jangan sampai salah angka!)</em></p>
+<h4 id="langkah-3-mengaktifkan-google-maps-ospf">Langkah 3: Mengaktifkan &ldquo;Google Maps&rdquo; (OSPF)</h4>
+<p>Sekarang, router-router ini masih &ldquo;bisu&rdquo;. R1 tidak tahu cara ke 2.2.2.2 (milik R2). Kita aktifkan OSPF.</p>
+<p><strong>Di R1:</strong></p>
+<pre><code class="language-bash">configure terminal
+</code></pre>
+<pre><code class="language-bash">router ospf 1
+</code></pre>
+<pre><code class="language-bash"> network 12.12.12.0 0.0.0.255 area 0
+</code></pre>
+<pre><code class="language-bash"> network 13.13.13.0 0.0.0.255 area 0
+</code></pre>
+<pre><code class="language-bash"> network 1.1.1.1 0.0.0.0 area 0
+</code></pre>
+<pre><code class="language-bash">end
+</code></pre>
+<pre><code class="language-bash">copy running-config startup-config
+</code></pre>
+<pre><code class="language-bash">write
+</code></pre>
+<p><em>Penjelasan Mantra:</em></p>
+<ul>
+<li><code>router ospf 1</code>: Menyalakan aplikasi OSPF proses nomor 1.</li>
+<li><code>network [IP] [WILDCARD] area 0</code>: &ldquo;Tolong iklankan jalan ini ke teman-teman di area pusat (0)&rdquo;.</li>
+<li><em>Wildcard Mask:</em> Kebalikan Subnet Mask. Kalau <code>/24</code> (255.255.255.0) jadinya <code>0.0.0.255</code>. Kalau single IP <code>/32</code>, jadinya <code>0.0.0.0</code>.</li>
+</ul>
+<p><strong>Di R2:</strong></p>
+<pre><code class="language-bash">configure terminal
+</code></pre>
+<pre><code class="language-bash">router ospf 1
+</code></pre>
+<pre><code class="language-bash"> network 12.12.12.0 0.0.0.255 area 0
+</code></pre>
+<pre><code class="language-bash"> network 23.23.23.0 0.0.0.255 area 0
+</code></pre>
+<pre><code class="language-bash"> network 2.2.2.2 0.0.0.0 area 0
+</code></pre>
+<pre><code class="language-bash">end
+</code></pre>
+<pre><code class="language-bash">copy running-config startup-config
+</code></pre>
+<pre><code class="language-bash">write
+</code></pre>
+<p><em>Tunggu sebentar&hellip; akan muncul pesan &ldquo;OSPF-5-ADJCHG: Process 1, Nbr &hellip; on FastEthernet0/0 from LOADING to FULL&rdquo;.</em>
+<strong>Artinya:</strong> &ldquo;Hore! Aku baru jadian (kenalan) sama R1!&ldquo;</p>
+<p><strong>Di R3:</strong></p>
+<pre><code class="language-bash">configure terminal
+</code></pre>
+<pre><code class="language-bash">router ospf 1
+</code></pre>
+<pre><code class="language-bash"> network 23.23.23.0 0.0.0.255 area 0
+</code></pre>
+<pre><code class="language-bash"> network 13.13.13.0 0.0.0.255 area 0
+</code></pre>
+<pre><code class="language-bash"> network 3.3.3.3 0.0.0.0 area 0
+</code></pre>
+<pre><code class="language-bash">end
+</code></pre>
+<pre><code class="language-bash">copy running-config startup-config
+</code></pre>
+<pre><code class="language-bash">write
+</code></pre>
+<hr />
+<h3 id="verification-destruction-test-ini-bagian-serunya">🕵️‍♂️ Verification &amp; Destruction Test (Ini Bagian Serunya!)</h3>
+<h4 id="1-cek-tabel-routing">1. Cek Tabel Routing</h4>
+<p>Di <strong>R1</strong>, ketik:</p>
+<pre><code class="language-bash">show ip route
+</code></pre>
+<p>Cari kode <strong><code>O</code></strong> (OSPF).
+Kamu harusnya melihat:
+<code>O 2.2.2.2 [110/2] via 12.12.12.2 ...</code>
+<code>O 3.3.3.3 [110/2] via 13.13.13.3 ...</code></p>
+<p><em>Artinya:</em> R1 tahu 2.2.2.2 punya R2, dan 3.3.3.3 punya R3, tanpa kita input manual!</p>
+<h4 id="2-uji-redundansi-jalan-tikus">2. Uji Redundansi (Jalan Tikus)</h4>
+<p>Sekarang kita buktikan kecerdasan OSPF.</p>
+<ol>
+<li>
+<p>Di <strong>R1</strong>, ping ke Loopback R2 secara terus menerus:</p>
+<p><code>bash
+ping 2.2.2.2 repeat 1000</code></p>
+<p><em>(Akan muncul <code>!!!!!</code> yang banyak)</em></p>
+</li>
+<li>
+<p><strong>SAAT PING BERJALAN</strong>, arahkan mouse ke kabel antara <strong>R1 dan R2</strong>, klik kanan -&gt; <strong>Delete</strong> (atau Shutdown interface di console).</p>
+<ul>
+<li><em>Skenario:</em> Kabel digigit tikus / putus.</li>
+</ul>
+</li>
+<li>
+<p><strong>Lihat Console R1:</strong></p>
+<ul>
+<li>Ping mungkin akan putus sebentar (<code>. . . .</code>).</li>
+<li>Tapi tiba-tiba nyambung lagi (<code>! ! ! !</code>).</li>
+</ul>
+</li>
+</ol>
+<p><strong>Analisis:</strong>
+Saat jalur utama (R1-R2) putus, OSPF di R1 berpikir cepat:
+<em>&ldquo;Waduh, jalan ke R2 putus! Tapi tunggu&hellip; gue bisa ke R2 lewat R3 (muter)!&ldquo;</em>
+Maka paket akan dikirim R1 -&gt; R3 -&gt; R2.</p>
+<hr />
+<h3 id="misi-stage-3">🚦 Misi Stage 3</h3>
+<p>Lakukan <strong>&ldquo;Destruction Test&rdquo;</strong> tadi.
+Kalau kamu berhasil melihat ping putus lalu nyambung lagi secara otomatis setelah kabel diputus, kamu sudah menguasai konsep <strong>High Availability</strong>.</p>
+<p>Gimana? Berhasil bikin &ldquo;Internet Anti Padam&rdquo; di lab kamu? Kalau sudah, kita lanjut ke <strong>Stage 4</strong> untuk belajar jadi Satpam Galak (Access List/Security).</p>
+    </div>
+    
+    <nav class="article-footer-nav">
+        <a href="../../blog.html" class="cta-button">← Kembali ke Blog</a>
+    </nav>
+    
+</article>
+    </main>
+    
+    <footer>
+        <p>&copy; 2026 - Teungku Zulkifli. Dibuat dengan ❤️</p>
+    </footer>
+    
+    <div class="floating-lang-switcher">
+        <div class="lang-options">
+            <button id="lang-id">ID</button>
+            <button id="lang-en">EN</button>
+        </div>
+        <button class="lang-globe-btn" aria-label="Pilih Bahasa">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+        </button>
+    </div>
+    
+    <script src="../../assets/js/languages.js"></script>
+    <script src="../../assets/js/main.script.js" defer></script>
+    
+</body>
+</html>

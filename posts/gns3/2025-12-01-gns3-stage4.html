@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>GNS3 Stage 4: ~~~ - Teungku Zulkifli</title>
+    <meta name="description" content="">
+    <meta name="author" content="Teungku Zulkifli">
+    
+    <meta property="og:title" content="GNS3 Stage 4: ~~~ - Teungku Zulkifli">
+    <meta property="og:description" content="">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://teungku.me">
+    
+    <link rel="stylesheet" href="../../assets/css/main.style.css">
+    
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="../../index.html" class="logo">Teungku Zulkifli</a>
+            <ul id="nav-links">
+                <li><a data-lang="common.navHome" href="../../index.html#home">Beranda</a></li>
+                <li><a data-lang="common.navAbout" href="../../index.html#about">Tentang</a></li>
+                <li><a data-lang="common.navContact" href="../../index.html#contact">Kontak</a></li>
+                <li><a data-lang="common.navProjects" href="../../projects.html">Proyek</a></li>
+                <li><a data-lang="common.navBlog" href="../../blog.html">Blog</a></li>
+            </ul>
+            <button id="hamburger-btn" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+    
+    <main>
+<article id="article-content">
+    
+    <header class="article-header">
+        <h1>GNS3 Stage 4: ~~~</h1>
+        
+        <div class="article-meta">
+            <span class="meta-item">
+                📅 <time datetime="2025-12-01">2025-12-01</time>
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                🏷️ Course
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                ✍️ Teungku Zulkifli
+            </span>
+        </div>
+        
+        <div class="article-tags">
+            <span class="article-tag">#gns3-series</span>
+        </div>
+    </header>
+    
+    <hr class="article-divider">
+    
+    <div class="article-body">
+        <p>Sekarang saatnya kita menjadi <strong>Security Guard</strong>.</p>
+<p>Jaringan kamu sekarang &ldquo;Terlalu Bebas&rdquo;. Siapa saja bisa ping siapa saja. Di dunia nyata, ini bahaya. Karyawan magang gak boleh ping Server Gaji.</p>
+<p>Kita gass ke Stage 4?</p>
+<hr />
+<h2 id="stage-4-the-firewall-access-control-list-acl">STAGE 4: The Firewall (Access Control List - ACL)</h2>
+<h3 id="logika-dasar-satpam-klub-malam">🧠 Logika Dasar: Satpam Klub Malam</h3>
+<p>Router itu punya fitur bernama <strong>ACL (Access Control List)</strong>. Ini adalah daftar nama yang dipegang Satpam di pintu masuk.</p>
+<ul>
+<li><strong>Permit:</strong> Boleh masuk.</li>
+<li><strong>Deny:</strong> Dilarang masuk (Ditendang).</li>
+</ul>
+<p>Ada aturan main ACL yang paling penting:</p>
+<blockquote>
+<p><strong>&ldquo;ACL dibaca dari baris paling atas ke bawah. Kalau sudah cocok, baris bawahnya tidak dibaca lagi.&rdquo;</strong></p>
+</blockquote>
+<h3 id="lab-time-blokir-si-magang">🛠️ Lab Time: Blokir Si Magang!</h3>
+<p><strong>Skenario:</strong>
+Kita pakai topologi OSPF yang sudah jadi (R1, R2, R3).</p>
+<ul>
+<li><strong>R1 (Loopback 1.1.1.1):</strong> Anggap ini PC <strong>BOS</strong>.</li>
+<li><strong>R3 (Loopback 3.3.3.3):</strong> Anggap ini PC <strong>MAGANG</strong>.</li>
+<li><strong>R2 (Loopback 2.2.2.2):</strong> Anggap ini <strong>SERVER RAHASIA</strong>.</li>
+</ul>
+<p><strong>Misi:</strong></p>
+<ol>
+<li><strong>BOS (R1)</strong> harus BISA ping ke Server (R2).</li>
+<li><strong>MAGANG (R3)</strong> HARUS GAGAL (Request Timed Out) kalau ping ke Server (R2).</li>
+<li>Tapi Magang boleh ping ke Bos (R1). Jadi cuma Server R2 yang anti-magang.</li>
+</ol>
+<h4 id="langkah-1-cek-kondisi-awal-wajib">Langkah 1: Cek Kondisi Awal (Wajib!)</h4>
+<p>Sebelum pasang aturan, pastikan semua <strong>BISA</strong> ping dulu.</p>
+<ul>
+<li>Di R1: <code>ping 2.2.2.2</code> -&gt; Harus sukses (!!!!!).</li>
+<li>Di R3: <code>ping 2.2.2.2</code> -&gt; Harus sukses (!!!!!).</li>
+</ul>
+<h4 id="langkah-2-membuat-aturan-acl-di-r2">Langkah 2: Membuat Aturan (ACL) di R2</h4>
+<p>Kenapa di R2? Karena R2 adalah &ldquo;pemilik rumah&rdquo; (Server). Satpam ditaruh di pintu R2.</p>
+<p>Masuk ke <strong>R2</strong>:</p>
+<pre><code class="language-bash">configure terminal
+</code></pre>
+<p><strong>! Membuat Daftar Larangan (Extended ACL nomor 100)</br></strong>
+<strong>! Aturan 1: Tolak paket dari Magang (3.3.3.3) yang mau ke Saya (2.2.2.2)</br></strong></p>
+<pre><code class="language-bash">access-list 100 deny ip host 3.3.3.3 host 2.2.2.2
+</code></pre>
+<p><strong>! Aturan 2: Izinkan sisanya (Wajib! Kalau gak ada ini, semua orang ditolak)</strong></p>
+<pre><code class="language-bash">access-list 100 permit ip any any
+</code></pre>
+<p><em>Penjelasan:</em></p>
+<ul>
+<li><code>deny ip host 3.3.3.3 host 2.2.2.2</code>: Tolak spesifik dari 3.3.3.3 ke 2.2.2.2.</li>
+<li><code>permit ip any any</code>: Izinkan paket lain selain aturan di atas. (Ingat: Secara default, ACL itu punya aturan tersembunyi di paling bawah yaitu &ldquo;Tolak Semua&rdquo;. Jadi kita harus kasih izin &ldquo;Any&rdquo; di akhir).</li>
+</ul>
+<h4 id="langkah-3-menerapkan-aturan-ke-pintu-interface">Langkah 3: Menerapkan Aturan ke Pintu (Interface)</h4>
+<p>Aturan (ACL) cuma kertas catatan. Gak akan ngefek kalau gak ditempel di pintu satpam.
+Kita tempel di interface <strong>Loopback 0</strong> milik R2 (karena 2.2.2.2 ada di situ), atau bisa juga di pintu masuk fisik. Biar lebih terasa efeknya, kita pasang di pintu masuk fisik arah R3.</p>
+<p>Tapi, cara paling aman dan umum untuk lab ini, kita pasang di <strong>arah masuk (in)</strong> pada interface yang mengarah ke R3.
+Asumsikan <strong>R2 f0/1</strong> terhubung ke R3 (cek topologi kamu, sesuaikan interfacenya!).</p>
+<p>Misal R2 f0/1 nyambung ke R3:</p>
+<pre><code class="language-bash">interface fastEthernet 0/1
+</code></pre>
+<pre><code class="language-bash"> ip access-group 100 in
+</code></pre>
+<pre><code class="language-bash"> exit
+</code></pre>
+<p><em>Artinya:</em> &ldquo;Wahai interface f0/1, kalau ada paket masuk (<strong>in</strong>), tolong cek daftar buku tamu nomor <strong>100</strong> tadi.&rdquo;</p>
+<h4 id="langkah-4-pembuktian-verification">Langkah 4: Pembuktian (Verification)</h4>
+<ol>
+<li>
+<p><strong>Tes BOS (R1):</strong>
+    <code>ping 2.2.2.2</code> -&gt; Harus SUKSES (!!!!!).
+    <em>(Karena Bos tidak ada di daftar Deny).</em></p>
+</li>
+<li>
+<p><strong>Tes MAGANG (R3):</strong>
+    <code>ping 2.2.2.2</code> -&gt; Harus <strong>U.U.U.U.U</strong>
+    <em>(U = Unreachable / Administratively Prohibited. Artinya Satpam nendang paketnya).</em></p>
+</li>
+<li>
+<p><strong>Tes MAGANG ke BOS (R3 ping R1):</strong>
+    <code>ping 1.1.1.1</code> -&gt; Harus SUKSES.
+    <em>(Karena larangan cuma ke R2).</em></p>
+</li>
+</ol>
+<hr />
+<h3 id="analisis-pesan-error">🕵️‍♂️ Analisis Pesan Error</h3>
+<p>Coba perhatikan bedanya error ping:</p>
+<ul>
+<li><strong><code>. . . .</code> (Request Timed Out):</strong> Paket hilang/nyasar/jalur putus.</li>
+<li><strong><code>U.U.U.U</code> (Unreachable):</strong> Paket SAMPAI di router, tapi DITOLAK oleh admin/ACL. Ini tanda kamu berhasil jadi admin galak.</li>
+</ul>
+<p><strong>Challenge:</strong>
+Coba kamu setting ACL tersebut. Kalau berhasil muncul &ldquo;U.U.U&rdquo;, berarti keamanan jaringanmu sudah Level 1.</p>
+    </div>
+    
+    <nav class="article-footer-nav">
+        <a href="../../blog.html" class="cta-button">← Kembali ke Blog</a>
+    </nav>
+    
+</article>
+    </main>
+    
+    <footer>
+        <p>&copy; 2026 - Teungku Zulkifli. Dibuat dengan ❤️</p>
+    </footer>
+    
+    <div class="floating-lang-switcher">
+        <div class="lang-options">
+            <button id="lang-id">ID</button>
+            <button id="lang-en">EN</button>
+        </div>
+        <button class="lang-globe-btn" aria-label="Pilih Bahasa">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+        </button>
+    </div>
+    
+    <script src="../../assets/js/languages.js"></script>
+    <script src="../../assets/js/main.script.js" defer></script>
+    
+</body>
+</html>

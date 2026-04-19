@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>(Part 5): Konfigurasi Web Server, Apache2, Perl2, Php5 - Teungku Zulkifli</title>
+    <meta name="description" content="">
+    <meta name="author" content="Teungku Zulkifli">
+    
+    <meta property="og:title" content="(Part 5): Konfigurasi Web Server, Apache2, Perl2, Php5 - Teungku Zulkifli">
+    <meta property="og:description" content="">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://teungku.me">
+    
+    <link rel="stylesheet" href="../../assets/css/main.style.css">
+    
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="../../index.html" class="logo">Teungku Zulkifli</a>
+            <ul id="nav-links">
+                <li><a data-lang="common.navHome" href="../../index.html#home">Beranda</a></li>
+                <li><a data-lang="common.navAbout" href="../../index.html#about">Tentang</a></li>
+                <li><a data-lang="common.navContact" href="../../index.html#contact">Kontak</a></li>
+                <li><a data-lang="common.navProjects" href="../../projects.html">Proyek</a></li>
+                <li><a data-lang="common.navBlog" href="../../blog.html">Blog</a></li>
+            </ul>
+            <button id="hamburger-btn" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+    
+    <main>
+<article id="article-content">
+    
+    <header class="article-header">
+        <h1>(Part 5): Konfigurasi Web Server, Apache2, Perl2, Php5</h1>
+        
+        <div class="article-meta">
+            <span class="meta-item">
+                📅 <time datetime="2025-09-28">2025-09-28</time>
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                🏷️ Course
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                ✍️ Teungku Zulkifli
+            </span>
+        </div>
+        
+        <div class="article-tags">
+            <span class="article-tag">#debian-server-series</span>
+        </div>
+    </header>
+    
+    <hr class="article-divider">
+    
+    <div class="article-body">
+        <iframe src="https://www.youtube.com/embed/2nWfMydtnzc?controls=0&modestbranding=1&rel=0&disablekb=1&autoplay=0" style="display:block;margin:auto;border:none;width:100%;max-width:960px;height:540px;" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+<h1 id="dokumentasi-debian-di-hyper-v-part-5-konfigurasi-web-server-apache2-perl2-php5">Dokumentasi Debian di Hyper V (Part 5): Konfigurasi Web Server, Apache2, Perl2, Php5</h1>
+<p><strong>Catatan Perjalanan &amp; Solusi Praktis untuk VM Debian 7.8.0 &ldquo;Wheezy&rdquo;</strong></p>
+<hr />
+<h2 id="pendahuluan">Pendahuluan 🚀</h2>
+<p>Selamat datang di catatan perjalanan saya dalam membangun sebuah server dari nol! Dokumen ini lebih dari sekadar terjemahan; ini adalah sebuah logbook praktis dari proses konfigurasi awal server <strong>Debian 7.8.0 &ldquo;Wheezy&rdquo;</strong>. Setiap langkah di dalamnya tidak hanya diriset, tetapi juga telah dipraktikkan, diuji, dan yang terpenting, dilengkapi dengan solusi untuk setiap masalah tak terduga yang muncul di tengah jalan.</p>
+<p>Tujuannya adalah untuk menciptakan sebuah panduan yang jujur dan mudah diikuti, terutama bagi mereka yang mungkin menempuh jalur yang sama dengan perangkat lunak versi lama ini. Semoga catatan ini bisa menjadi peta yang berguna, menunjukkan bukan hanya jalan yang lurus, tetapi juga cara melewati setiap rintangan.</p>
+<h3 id="credits-referensi">Credits &amp; Referensi</h3>
+<p>Proses ini tidak akan berjalan lancar tanpa sumber daya dan bantuan yang luar biasa. Kredit sepenuhnya diberikan kepada:</p>
+<ul>
+<li><strong><a href="https://www.server-world.info/en/note?os=Debian_7.0">Server-World</a></strong>: Sebagai referensi utama dan panduan dasar untuk semua tahapan konfigurasi. Panduan mereka yang komprehensif menjadi titik awal dari petualangan ini.</li>
+<li><strong>Gemini (Model AI Google)</strong>: Sebagai mitra diskusi interaktif, asisten riset, dan &ldquo;pengumpul data&rdquo;. Gemini membantu dalam menerjemahkan konsep, mendiagnosis masalah unik (seperti error GPG dan repositori arsip), serta menyusun penjelasan langkah demi langkah yang detail.</li>
+</ul>
+<hr />
+<h1 id="bab-3-web-hosting-master">📖 BAB 3: WEB HOSTING MASTER</h1>
+<p><em>(Menjadi Hostinger Mini)</em></p>
+<h2 id="part-5-membangun-web-server-segmen-1">(Part 5) Membangun Web Server: Segmen 1</h2>
+<p><strong>(DNS Fix &amp; Apache Installation)</strong></p>
+<h3 id="tagline">🏷️ TAGLINE</h3>
+<p><em>&ldquo;Membangun Ruko Kosong dan Memasang Papan Nama&rdquo;</em></p>
+<hr />
+<h3 id="konsep-warung-kopi-analogi">☕ KONSEP &ldquo;WARUNG KOPI&rdquo; (Analogi)</h3>
+<ol>
+<li><strong>Web Server (Apache):</strong> Ini ibarat kita membangun sebuah <strong>Ruko</strong>. Fisiknya ada, pintunya bisa dibuka, tapi di dalamnya masih kosong melompong.</li>
+<li><strong>DNS Fix (Resolv.conf):</strong> Masalah di server kita saat ini, Ruko kita sering &ldquo;lupa ingatan&rdquo;. Setiap kali listrik mati (reboot), dia lupa alamat dirinya sendiri dan malah nanya ke tetangga (Router NAT). Kita perlu kasih dia &ldquo;Tato Permanen&rdquo; biar gak lupa diri.</li>
+<li><strong>Hosts File:</strong> Di laptop kita (Windows), kita perlu simpan &ldquo;Kartu Nama&rdquo; server Ruko ini. Biar kalau kita ketik <code>teungku.edu</code>, laptop langsung tau rutenya ke mana.</li>
+</ol>
+<hr />
+<h3 id="misi-operasi-segmen-1">🎯 MISI OPERASI (Segmen 1)</h3>
+<ol>
+<li>Mengunci konfigurasi DNS Server agar tidak ditimpa oleh DHCP.</li>
+<li>Menginstal <strong>Apache2</strong> (Web Server).</li>
+<li>Memperkenalkan identitas domain ke Windows (Hosts File).</li>
+</ol>
+<hr />
+<h3 id="persiapan">🛠️ PERSIAPAN</h3>
+<ul>
+<li>Login sebagai <strong>root</strong>.</li>
+<li>Buka Notepad (Run as Administrator) di Windows.</li>
+</ul>
+<hr />
+<h3 id="langkah-eksekusi-segmen-1">💻 LANGKAH EKSEKUSI (Segmen 1)</h3>
+<h4 id="tahap-a-mengunci-ingatan-dns-the-fix">TAHAP A: Mengunci Ingatan DNS (The Fix)</h4>
+<p>Masalah: <code>resolv.conf</code> selalu kereset jadi IP Router NAT (<code>172.x.x.x</code>).
+Solusi: Paksa DHCP Client untuk selalu memprioritaskan diri sendiri (<code>127.0.0.1</code>).</p>
+<p><strong>1. Backup Config DHCP Client:</strong></p>
+<pre><code class="language-bash">cp /etc/dhcp/dhclient.conf /etc/dhcp/dhclient.conf.backup
+</code></pre>
+<p><strong>2. Edit Config:</strong></p>
+<pre><code class="language-bash">nano /etc/dhcp/dhclient.conf
+</code></pre>
+<p><strong>3. Suntikkan Baris Sakti:</strong>
+Cari baris <code>#prepend domain-name-servers 127.0.0.1;</code>.
+Hilangkan tanda <code>#</code>. Jika tidak ada, tulis manual baris ini di mana saja:</p>
+<pre><code class="language-bash">prepend domain-name-servers 127.0.0.1;
+</code></pre>
+<p><em>(Artinya: &ldquo;Hei, sebelum nanya orang lain, tanya diri sendiri dulu!&ldquo;)</em></p>
+<p>Simpan dan keluar.</p>
+<p><strong>4. Refresh Koneksi:</strong></p>
+<pre><code class="language-bash">ifdown eth1 &amp;&amp; ifup eth1
+</code></pre>
+<p><em>(Tunggu sebentar sampai selesai).</em></p>
+<p><strong>5. Cek Hasil:</strong></p>
+<pre><code class="language-bash">cat /etc/resolv.conf
+</code></pre>
+<ul>
+<li><strong>Harapan:</strong> Baris paling atas harus <code>nameserver 127.0.0.1</code>.</li>
+</ul>
+<hr />
+<h4 id="tahap-b-membangun-ruko-install-apache">TAHAP B: Membangun Ruko (Install Apache)</h4>
+<p><strong>1. Update Repo:</strong></p>
+<pre><code class="language-bash">apt-get update
+</code></pre>
+<p><strong>2. Install Apache:</strong></p>
+<pre><code class="language-bash">apt-get install apache2 -y
+</code></pre>
+<p><strong>3. Cek Status:</strong></p>
+<pre><code class="language-bash">/etc/init.d/apache2 status
+</code></pre>
+<ul>
+<li><strong>Hasil:</strong> <code>Apache2 is running</code>.</li>
+</ul>
+<hr />
+<h4 id="tahap-c-memasang-papan-nama-servername">TAHAP C: Memasang Papan Nama (ServerName)</h4>
+<p>Supaya Apache tidak bingung dia siapa.</p>
+<p><strong>1. Amankan Identitas (Security):</strong>
+Sembunyikan versi server agar tidak diintip hacker.</p>
+<pre><code class="language-bash">nano /etc/apache2/conf.d/security
+</code></pre>
+<p>Ubah:</p>
+<ul>
+<li><code>ServerTokens Prod</code></li>
+<li><code>ServerSignature Off</code></li>
+</ul>
+<p><strong>2. Set ServerName:</strong>
+Edit file kosong konfigurasi user.</p>
+<pre><code class="language-bash">nano /etc/apache2/httpd.conf
+</code></pre>
+<p>Isi dengan satu baris:</p>
+<pre><code class="language-bash">ServerName www.teungku.edu
+</code></pre>
+<p><strong>3. Restart Apache:</strong></p>
+<pre><code class="language-bash">/etc/init.d/apache2 restart
+</code></pre>
+<hr />
+<h4 id="tahap-d-menyebar-kartu-nama-di-windows">TAHAP D: Menyebar Kartu Nama (Di Windows)</h4>
+<p>Agar laptop kita kenal <code>teungku.edu</code>.</p>
+<p><strong>1. Buka Hosts File di Windows:</strong></p>
+<ul>
+<li>Buka Notepad (Run as Admin).</li>
+<li>Open File: <code>C:\Windows\System32\drivers\etc\hosts</code>.</li>
+</ul>
+<p><strong>2. Tambahkan Baris Ini:</strong>
+Di paling bawah:</p>
+<pre><code class="language-text">192.168.10.1    teungku.edu
+192.168.10.1    www.teungku.edu
+192.168.10.1    debian.teungku.edu
+</code></pre>
+<p>Save dan Close.</p>
+<hr />
+<h3 id="momen-ka-boom-verification-segmen-1">📸 MOMEN &ldquo;KA-BOOM!&rdquo; (Verification Segmen 1)</h3>
+<p><strong>1. Tes Ping Nama:</strong>
+Buka CMD di Windows, ketik: <code>ping www.teungku.edu</code>.</p>
+<ul>
+<li><strong>Hasil:</strong> Reply from <code>192.168.10.1</code>. (Windows sudah kenal nama server).</li>
+</ul>
+<p><strong>2. Tes Buka Toko:</strong>
+Buka Browser di Windows, ketik: <code>http://www.teungku.edu</code>.</p>
+<ul>
+<li><strong>Hasil:</strong> Muncul tulisan besar <strong>&ldquo;It works!&ldquo;</strong>.</li>
+</ul>
+<p>Selamat! Ruko web Anda sudah berdiri kokoh. Tapi isinya masih kosong (cuma file HTML statis). Di segmen selanjutnya, kita akan mengajari server bahasa pemrograman <strong>Perl</strong>.</p>
+<hr />
+<p><em>(Segmen 1 Selesai. Lanjut ke Segmen 2: Perl Support&hellip;)</em></p>
+<p>Sekarang kita lanjut ke <strong>Segmen 2</strong>.
+Ruko (Apache) kita sudah berdiri, tapi dia masih &ldquo;bisu&rdquo;. Dia cuma bisa menyodorkan brosur (file HTML statis). Kita ingin dia bisa &ldquo;berpikir&rdquo; dan melakukan tugas dinamis (seperti menghitung waktu).</p>
+<p>Kita akan mengajarinya bahasa pemrograman pertamanya: <strong>Perl</strong>.</p>
+<hr />
+<h1 id="bab-3-web-hosting-master_1">📖 BAB 3: WEB HOSTING MASTER</h1>
+<h2 id="part-5-membangun-web-server-segmen-2">(Part 5) Membangun Web Server: Segmen 2</h2>
+<p><strong>(Perl Support &amp; CGI)</strong></p>
+<h3 id="tagline_1">🏷️ TAGLINE</h3>
+<p><em>&ldquo;Mengajari Server Bicara Bahasa Asing Pertama&rdquo;</em></p>
+<hr />
+<h3 id="konsep-warung-kopi-analogi_1">☕ KONSEP &ldquo;WARUNG KOPI&rdquo; (Analogi)</h3>
+<p>Saat ini, Web Server Anda ibarat <strong>Pelayan Restoran</strong> yang kerjanya cuma membagikan <strong>Menu Makanan</strong> (HTML). Menunya tetap, tidak berubah mau siapa saja yang baca.</p>
+<p>Kita ingin Pelayan ini bisa menghitung <strong>Tagihan</strong> (Konten Dinamis). Tagihan itu berubah-ubah sesuai pesanan dan waktu.
+Untuk melakukan itu, Pelayan butuh otak tambahan. Kita akan pasangkan otak <strong>Perl (Mod_Perl)</strong>.
+Kita juga akan siapkan meja khusus (<code>/var/www/perl</code>) di mana semua perhitungan itu dilakukan.</p>
+<hr />
+<h3 id="misi-operasi-segmen-2">🎯 MISI OPERASI (Segmen 2)</h3>
+<ol>
+<li>Menginstal <strong>Modul Perl</strong> untuk Apache.</li>
+<li>Membuat folder khusus untuk skrip Perl (CGI).</li>
+<li>Membuat konfigurasi agar Apache tahu cara menjalankan file <code>.pl</code> (bukan cuma menampilkannya sebagai teks).</li>
+</ol>
+<hr />
+<h3 id="persiapan_1">🛠️ PERSIAPAN</h3>
+<ul>
+<li>Login sebagai <strong>root</strong>.</li>
+<li>Siapkan mental ngoding sedikit (menyalin script).</li>
+</ul>
+<hr />
+<h3 id="langkah-eksekusi-segmen-2">💻 LANGKAH EKSEKUSI (Segmen 2)</h3>
+<h4 id="tahap-a-merekrut-penerjemah-install-modul">TAHAP A: Merekrut Penerjemah (Install Modul)</h4>
+<p>Kita instal &ldquo;otak&rdquo; tambahannya dulu.</p>
+<p><strong>1. Instal Paket:</strong></p>
+<pre><code class="language-bash">apt-get install libapache2-mod-perl2 -y
+</code></pre>
+<p><em>(Tunggu proses selesai. Apache akan otomatis merestart dirinya sendiri).</em></p>
+<hr />
+<h4 id="tahap-b-menyiapkan-meja-kerja-folder-script">TAHAP B: Menyiapkan Meja Kerja (Folder &amp; Script)</h4>
+<p>Kita pisahkan file program dengan file gambar/html biasa agar rapi.</p>
+<p><strong>1. Buat Folder Khusus:</strong></p>
+<pre><code class="language-bash">mkdir /var/www/perl
+</code></pre>
+<p><strong>2. Buat Script Uji Coba (<code>test.pl</code>):</strong>
+Kita buat program sederhana yang menampilkan Jam Server.</p>
+<pre><code class="language-bash">nano /var/www/perl/test.pl
+</code></pre>
+<p><strong>3. Masukkan Kode Perl Ini:</strong>
+<em>(Copy-paste semua)</em></p>
+<pre><code class="language-perl">#!/usr/bin/perl
+print &quot;Content-type: text/html\n\n&quot;;
+print &quot;&lt;html&gt;&lt;head&gt;&lt;title&gt;Perl Test&lt;/title&gt;&lt;/head&gt;&lt;body&gt;&quot;;
+print &quot;&lt;h1&gt;Halo dari Perl!&lt;/h1&gt;&quot;;
+my $tanggal = localtime();
+print &quot;&lt;p&gt;Waktu di Server saat ini: &lt;b&gt;$tanggal&lt;/b&gt;&lt;/p&gt;&quot;;
+print &quot;&lt;/body&gt;&lt;/html&gt;&quot;;
+</code></pre>
+<p>Simpan (<code>Ctrl+O</code>) dan keluar.</p>
+<p><strong>4. Beri Izin Eksekusi (PENTING!):</strong>
+Linux tidak akan menjalankan program yang tidak punya izin &ldquo;Execute&rdquo;.</p>
+<pre><code class="language-bash">chmod +x /var/www/perl/test.pl
+</code></pre>
+<hr />
+<h4 id="tahap-c-menulis-aturan-main-apache-config">TAHAP C: Menulis Aturan Main (Apache Config)</h4>
+<p>Apache belum tahu kalau file di dalam <code>/var/www/perl</code> itu adalah program. Dia pikir itu cuma teks biasa. Kita harus kasih tahu.</p>
+<p><strong>1. Buat File Konfigurasi Baru:</strong>
+Di Debian 7, kita bisa taruh config tambahan di <code>conf.d</code>.</p>
+<pre><code class="language-bash">nano /etc/apache2/conf.d/perl.conf
+</code></pre>
+<p><strong>2. Masukkan Aturan Eksekusi:</strong></p>
+<pre><code class="language-apache">&lt;Directory /var/www/perl&gt;
+    Options +ExecCGI
+    AddHandler cgi-script .cgi .pl
+&lt;/Directory&gt;
+</code></pre>
+<ul>
+<li><strong>Options +ExecCGI:</strong> &ldquo;Hei Apache, file di sini boleh DILAKUKAN (Execute), bukan cuma DIBACA.&rdquo;</li>
+<li><strong>AddHandler:</strong> &ldquo;Kalau file-nya berakhiran <code>.pl</code>, panggil mesin Perl untuk mengerjakannya.&rdquo;</li>
+</ul>
+<p>Simpan dan keluar.</p>
+<p><strong>3. Restart Apache:</strong></p>
+<pre><code class="language-bash">/etc/init.d/apache2 restart
+</code></pre>
+<hr />
+<h3 id="pojok-benang-merah-real-case-study">🚧 POJOK &ldquo;BENANG MERAH&rdquo; (Real Case Study)</h3>
+<p><strong>Kasus:</strong> &ldquo;Mas, pas saya buka di browser, kok yang muncul malah <strong>kodingannya</strong>, bukan hasilnya?&rdquo;</p>
+<p><strong>Penyebab:</strong>
+Apache gagal paham. Dia menganggap file itu teks biasa (<code>text/plain</code>). Ini terjadi karena:</p>
+<ol>
+<li>Lupa langkah <code>AddHandler</code> di config.</li>
+<li>Lupa restart Apache.</li>
+<li>Salah folder (naruh file <code>.pl</code> di luar folder <code>/var/www/perl</code>).</li>
+</ol>
+<p><strong>Solusi:</strong> Cek lagi TAHAP C. Pastikan konfigurasinya benar dan Apache sudah direstart.</p>
+<hr />
+<h3 id="momen-ka-boom-verification-segmen-2">📸 MOMEN &ldquo;KA-BOOM!&rdquo; (Verification Segmen 2)</h3>
+<p>Buka Browser di Windows 7 (atau Laptop Host).</p>
+<p><strong>Kunjungi:</strong> <code>http://www.teungku.edu/perl/test.pl</code></p>
+<p><strong>Hasil Sukses:</strong></p>
+<ol>
+<li>Muncul tulisan besar: <strong>&ldquo;Halo dari Perl!&ldquo;</strong></li>
+<li>Di bawahnya ada jam: <em>&ldquo;Waktu di Server saat ini: Mon Dec 01 14:00:00 2025&rdquo;</em> (Sesuai jam server).</li>
+<li>Coba <strong>Refresh</strong> halaman. Detik pada jam harus berubah.</li>
+</ol>
+<p>Jika jamnya berubah saat di-refresh, berarti server Anda sudah pintar (Dinamis)!</p>
+<hr />
+<p><em>(Segmen 2 Selesai. Kita lanjut ke Segmen Terakhir:!  Menginstal Raja Web Dinamis, yaitu </em><em>PHP 5</em><em>&hellip;)</em></p>
+<p>Siap! Ini adalah <strong>Segmen Terakhir</strong> untuk Part 5.</p>
+<p>Kita sudah punya Ruko (Apache) dan Kalkulator (Perl). Sekarang kita akan mendatangkan <strong>Chef Utama</strong> yang bisa memasak segala jenis hidangan web modern (WordPress, Joomla, Facebook, dll).</p>
+<p>Chef itu bernama <strong>PHP</strong>. Tanpa PHP, web server hanyalah pengantar surat. Dengan PHP, dia menjadi aplikasi pintar.</p>
+<hr />
+<h1 id="bab-3-web-hosting-master_2">📖 BAB 3: WEB HOSTING MASTER</h1>
+<h2 id="part-5-membangun-web-server-segmen-3">(Part 5) Membangun Web Server: Segmen 3</h2>
+<p><strong>(PHP 5 Integration)</strong></p>
+<h3 id="tagline_2">🏷️ TAGLINE</h3>
+<p><em>&ldquo;Menghidupkan Otak Utama Internet&rdquo;</em></p>
+<hr />
+<h3 id="konsep-warung-kopi-analogi_2">☕ KONSEP &ldquo;WARUNG KOPI&rdquo; (Analogi)</h3>
+<p>Jika HTML adalah <strong>Kertas Menu</strong> (Statis), dan Perl adalah <strong>Kalkulator Kasir</strong> (Hitungan Sederhana), maka <strong>PHP</strong> adalah <strong>Dapur Masak Utama</strong>.</p>
+<p>Hampir 80% website di dunia (termasuk Facebook di masa awalnya) dibangun pakai PHP.
+Kita juga akan langsung menginstal <strong>&ldquo;Jembatan Gudang&rdquo; (<code>php5-mysql</code>)</strong>.
+Kenapa? Karena PHP (Dapur) seringkali butuh mengambil bahan makanan (Data) dari Gudang (Database MySQL). Tanpa jembatan ini, Chef PHP tidak bisa mengambil stok barang.</p>
+<hr />
+<h3 id="misi-operasi-segmen-3">🎯 MISI OPERASI (Segmen 3)</h3>
+<ol>
+<li>Menginstal <strong>PHP 5</strong> dan Modul Apache-nya.</li>
+<li>Menginstal Modul Konektor <strong>MySQL</strong> (Persiapan untuk Part 9).</li>
+<li>Membuat halaman <code>test.php</code> untuk melihat &ldquo;jeroan&rdquo; server.</li>
+</ol>
+<hr />
+<h3 id="persiapan_2">🛠️ PERSIAPAN</h3>
+<ul>
+<li>Login sebagai <strong>root</strong>.</li>
+<li>Pastikan Apache sedang berjalan (<code>service apache2 status</code>).</li>
+</ul>
+<hr />
+<h3 id="langkah-eksekusi-segmen-3">💻 LANGKAH EKSEKUSI (Segmen 3)</h3>
+<h4 id="tahap-a-merekrut-chef-instalasi-php">TAHAP A: Merekrut Chef (Instalasi PHP)</h4>
+<p>Kita instal paket komplitnya sekaligus.</p>
+<p><strong>1. Jalankan Perintah Instalasi:</strong></p>
+<pre><code class="language-bash">apt-get install php5 libapache2-mod-php5 php5-mysql -y
+</code></pre>
+<ul>
+<li><strong>php5:</strong> Bahasa pemrogramannya.</li>
+<li><strong>libapache2-mod-php5:</strong> Agar Apache mengerti bahasa PHP.</li>
+<li><strong>php5-mysql:</strong> Agar PHP bisa ngobrol sama Database nanti.</li>
+</ul>
+<p><strong>2. Restart Apache (WAJIB):</strong>
+Setiap kali nambah modul baru, Apache harus disegarkan ingatan-nya.</p>
+<pre><code class="language-bash">/etc/init.d/apache2 restart
+</code></pre>
+<ul>
+<li><strong>Hasil:</strong> Harus <code>[ ok ]</code>.</li>
+</ul>
+<hr />
+<h4 id="tahap-b-ujian-kualifikasi-chef-testing">TAHAP B: Ujian Kualifikasi Chef (Testing)</h4>
+<p>Kita tidak perlu bikin kodingan rumit. PHP punya satu perintah sakti untuk membuktikan dia sudah siap kerja.</p>
+<p><strong>1. Buat File Tes:</strong>
+Taruh di folder utama web (<code>/var/www</code>).</p>
+<pre><code class="language-bash">nano /var/www/test.php
+</code></pre>
+<p><strong>2. Masukkan Mantra Sakti:</strong>
+Cukup satu baris ini saja:</p>
+<pre><code class="language-php">&lt;?php phpinfo(); ?&gt;
+</code></pre>
+<p><em>(Fungsi <code>phpinfo()</code> akan mencetak laporan panjang lebar tentang kondisi server).</em></p>
+<p>Simpan (<code>Ctrl+O</code>) dan keluar (<code>Ctrl+X</code>).</p>
+<hr />
+<h3 id="pojok-benang-merah-real-case-study_1">🚧 POJOK &ldquo;BENANG MERAH&rdquo; (Real Case Study)</h3>
+<p><strong>Kasus:</strong> &ldquo;Mas, pas saya buka <code>test.php</code> di browser, kok malah <strong>download file</strong>? Atau malah muncul tulisan <code>&lt;?php...</code> mentah-mentah?&rdquo;</p>
+<p><strong>Penyebab:</strong>
+Apache belum &ldquo;sadar&rdquo; kalau dia punya teman baru bernama PHP. Dia memperlakukan file <code>.php</code> seperti file teks biasa atau file unduhan.
+Ini biasanya terjadi karena:</p>
+<ol>
+<li>Lupa restart Apache setelah install.</li>
+<li>Ada error saat instalasi <code>libapache2-mod-php5</code>.</li>
+</ol>
+<p><strong>Solusi:</strong>
+Coba restart lagi: <code>/etc/init.d/apache2 restart</code>.
+Jika masih bandel, paksa aktifkan modulnya: <code>a2enmod php5</code> lalu restart lagi.</p>
+<hr />
+<h3 id="momen-ka-boom-verification-segmen-3">📸 MOMEN &ldquo;KA-BOOM!&rdquo; (Verification Segmen 3)</h3>
+<p>Kembali ke Browser Windows 7.</p>
+<p><strong>Kunjungi:</strong> <code>http://www.teungku.edu/test.php</code></p>
+<p><strong>Hasil Sukses:</strong>
+Anda akan melihat <strong>Tabel Ungu/Biru Panjang</strong> yang sangat detail.</p>
+<ul>
+<li>Ada Logo besar <strong>PHP</strong> di atas kiri.</li>
+<li>Tulisan <strong>PHP Version 5.4.x</strong> (atau sejenisnya).</li>
+<li>Gulir ke bawah, cari bagian <strong>mysql</strong>. Jika ada tabel mysql, berarti persiapan kita untuk Part 9 sudah sempurna.</li>
+</ul>
+<hr />
+<p><strong>🏁 PENUTUP RESMI PART 5:</strong></p>
+<p><strong>SELAMAT!</strong> 🎊
+Anda baru saja menyelesaikan <strong>Part 5</strong>. Ini adalah lompatan besar.
+Server Anda sekarang:</p>
+<ol>
+<li>Punya Nama Domain sendiri (<code>teungku.edu</code>).</li>
+<li>Bisa menyajikan Web Statis (HTML).</li>
+<li>Bisa menyajikan Web Dinamis (Perl &amp; PHP).</li>
+</ol>
+<p><strong>Apa Selanjutnya?</strong>
+Ruko dan Dapur (PHP) sudah siap, tapi <strong>Gudangnya (Database)</strong> belum ada. Aplikasi modern butuh tempat nyimpen data user, barang, dll.</p>
+<p>Di <strong>(Part 9) Manajemen Data (MySQL &amp; PhpMyAdmin)</strong>, kita akan membangun gudang data tersebut dan menginstal alat untuk mengelolanya lewat browser.</p>
+    </div>
+    
+    <nav class="article-footer-nav">
+        <a href="../../blog.html" class="cta-button">← Kembali ke Blog</a>
+    </nav>
+    
+</article>
+    </main>
+    
+    <footer>
+        <p>&copy; 2026 - Teungku Zulkifli. Dibuat dengan ❤️</p>
+    </footer>
+    
+    <div class="floating-lang-switcher">
+        <div class="lang-options">
+            <button id="lang-id">ID</button>
+            <button id="lang-en">EN</button>
+        </div>
+        <button class="lang-globe-btn" aria-label="Pilih Bahasa">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+        </button>
+    </div>
+    
+    <script src="../../assets/js/languages.js"></script>
+    <script src="../../assets/js/main.script.js" defer></script>
+    
+</body>
+</html>

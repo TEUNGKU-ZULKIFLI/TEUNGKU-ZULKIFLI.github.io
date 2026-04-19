@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Tahapan 08: VPLS (Private Connectivity) and QoS (Quality of Service Analysis) - Teungku Zulkifli</title>
+    <meta name="description" content="">
+    <meta name="author" content="Teungku Zulkifli">
+    
+    <meta property="og:title" content="Tahapan 08: VPLS (Private Connectivity) and QoS (Quality of Service Analysis) - Teungku Zulkifli">
+    <meta property="og:description" content="">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://teungku.me">
+    
+    <link rel="stylesheet" href="../../assets/css/main.style.css">
+    
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="../../index.html" class="logo">Teungku Zulkifli</a>
+            <ul id="nav-links">
+                <li><a data-lang="common.navHome" href="../../index.html#home">Beranda</a></li>
+                <li><a data-lang="common.navAbout" href="../../index.html#about">Tentang</a></li>
+                <li><a data-lang="common.navContact" href="../../index.html#contact">Kontak</a></li>
+                <li><a data-lang="common.navProjects" href="../../projects.html">Proyek</a></li>
+                <li><a data-lang="common.navBlog" href="../../blog.html">Blog</a></li>
+            </ul>
+            <button id="hamburger-btn" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+    
+    <main>
+<article id="article-content">
+    
+    <header class="article-header">
+        <h1>Tahapan 08: VPLS (Private Connectivity) and QoS (Quality of Service Analysis)</h1>
+        
+        <div class="article-meta">
+            <span class="meta-item">
+                📅 <time datetime="2025-11-04">2025-11-04</time>
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                🏷️ Course
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                ✍️ Teungku Zulkifli
+            </span>
+        </div>
+        
+        <div class="article-tags">
+            <span class="article-tag">#mininet-series</span>
+        </div>
+    </header>
+    
+    <hr class="article-divider">
+    
+    <div class="article-body">
+        <iframe src="https://www.youtube.com/embed/IkT2eJtU_Dc?controls=0&modestbranding=1&rel=0&disablekb=1&autoplay=0" style="display:block;margin:auto;border:none;width:100%;max-width:960px;height:540px;" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+<h1 id="panduan-lengkap-mininet-di-hyper-v-part-8-vpls-private-connectivity-and-qos-quality-of-service-analysis">🧠 Panduan Lengkap  Mininet di Hyper-V (Part 8): VPLS (Private Connectivity) and QoS (Quality of Service Analysis)</h1>
+<h2 id="pendahuluan">🚀 Pendahuluan</h2>
+<p><strong><code>Mininet</code></strong> adalah simulator jaringan ringan berbasis Linux yang memungkinkan kita membuat topologi jaringan virtual untuk belajar dan menguji protokol seperti OpenFlow. Cocok untuk pelajar, peneliti, dan pengembang jaringan.</br></p>
+<p><strong><code>ONOS</code></strong> (Open Network Operating System) adalah sistem operasi yang dirancang untuk membantu penyedia layanan jaringan membangun jaringan berbasis perangkat lunak (SDN) dengan tingkat skalabilitas, ketersediaan, dan kinerja yang tinggi. ONOS berfungsi sebagai kontroler SDN yang mengelola komponen jaringan seperti switch dan link, serta menjalankan program perangkat lunak untuk menyediakan layanan komunikasi kepada perangkat akhir dan jaringan sekitarnya. Dengan arsitektur modularnya, ONOS memungkinkan penyesuaian yang lebih mudah dan meningkatkan ketersediaan jaringan.</br></p>
+<p><strong><code>Topologi Linear (Daisy Chain)</code></strong> <strong>Topologi Linear (Daisy Chain) pada SDN</strong> adalah jenis topologi jaringan di mana setiap <code>node (perangkat)</code> terhubung langsung ke node berikutnya dalam <code>satu garis lurus</code>. Dalam pengaturan ini, data ditransmisikan dari satu perangkat ke perangkat lainnya secara berurutan hingga mencapai tujuan akhir. Topologi ini mirip dengan <code>sirkuit seri dalam listrik</code>, di mana <code>satu kegagalan pada node</code> dapat mempengaruhi seluruh jaringan.</br></p>
+<p><strong>Kelebihan</strong>: </br>
+- <strong>Ekspansi Mudah</strong>: Menambahkan perangkat baru ke dalam jaringan dapat dilakukan dengan mudah tanpa mempengaruhi perangkat lain. </br>
+- <strong>Biaya Rendah</strong>: Menggunakan beberapa sakelar kecil dalam rantai bisa lebih hemat biaya dibandingkan dengan menggunakan sakelar besar dan berkapasitas tinggi. </br>
+- <strong>Fleksibilitas</strong>: Konfigurasi ini memungkinkan penempatan perangkat di lokasi yang berbeda dalam rantai.</br></p>
+<p><strong>Kekurangan</strong>: </br>
+- <strong>Risiko Kegagalan</strong>: Jika satu node mengalami kegagalan, hal ini dapat mengganggu seluruh komunikasi dalam jaringan.</br>
+- <strong>Keterbatasan Bandwidth</strong>: Setiap perangkat dalam rantai berbagi bandwidth yang sama, sehingga semakin banyak perangkat yang terhubung, semakin sedikit bandwidth yang tersedia untuk masing-masing perangkat. </br>
+- <strong>Kemacetan Data</strong>: Jika satu perangkat dalam rantai memproses data lebih lambat, hal ini dapat menyebabkan kemacetan dan mengurangi efisiensi jaringan secara keseluruhan.</br></p>
+<p><strong><code>QoS</code></strong> <strong>QoS pada SDN (Software Defined Networking)</strong> adalah metode yang digunakan untuk mengelola lalu lintas data dengan memberikan prioritas pada jenis lalu lintas tertentu. Dalam konteks SDN, QoS memungkinkan pengelolaan sumber daya jaringan untuk meningkatkan kualitas layanan, seperti mengurangi <em>kehilangan paket</em>, <em>latensi</em>, dan <em>jitter</em>. Dengan QoS, aplikasi yang sensitif terhadap keterlambatan, seperti <em>panggilan suara</em> dan <em>video</em>, dapat mendapatkan akses yang lebih baik ke sumber daya jaringan, sehingga memastikan <strong>kinerja yang optimal dan kualitas</strong> layanan yang lebih baik.</br></p>
+<h3 id="referensi-resmi">📚 Referensi Resmi</h3>
+<ul>
+<li><a href="http://mininet.org/">Mininet.org</a></li>
+<li><a href="https://wiki.onosproject.org/display/ONOS/ONOS">ONOS</a></li>
+<li><a href="https://hub.docker.com/r/onosproject/onos/">Docker ONOS</a></li>
+<li><a href="https://github.com/ArnoTroch/ONOS-Tutorial/blob/main/README.md">Github Ref</a></li>
+</ul>
+<hr />
+<h2 id="tahap-1-script-topologi-python"><strong>🛠️ TAHAP 1: Script Topologi (Python)</strong></h2>
+<h3 id="1-persiapan-pembersihan"><strong>1. Persiapan &amp; Pembersihan</strong></h3>
+<pre><code class="language-bash">sudo mn -c
+docker stop onos
+docker rm onos
+</code></pre>
+<p>Untuk Membersihkan sisa proyek mininet dan onos.</p>
+<h3 id="2-buat-file-topologi-vpls_qospy"><strong>2. Buat File Topologi (<code>vpls_qos.py</code>)</strong></h3>
+<pre><code class="language-bash">touch ~/mininet/custom/vpls_qos.py
+</code></pre>
+<p>Pertama, buat file<code>.py</code> baru di dalam direktori <code>mininet/custom</code>. Mari kita beri nama <code>vpls_qos.py</code>.</p>
+<h3 id="3-buka-file-python-anda"><strong>3. Buka File Python Anda</strong></h3>
+<pre><code class="language-bash">nano ~/mininet/custom/vpls_qos.py
+</code></pre>
+<p>Gunakan editor <code>nano</code> untuk mengedit file yang sudah Anda buat.</p>
+<h3 id="4-code-topologi"><strong>4. Code Topologi</strong></h3>
+<p>Topologi ini didesain pas: <code>5 Switch</code>, <code>11 Host</code>.</p>
+<pre><code class="language-code">#!/usr/bin/python
+
+&quot;&quot;&quot;
+Script Topologi Final Task
+- 11 Host, 5 Switch (Linear Topology)
+- Menggunakan TCLink untuk membatasi Bandwidth, Delay, Jitter, dan Loss
+- Tujuan: Simulasi VPLS dan Pengukuran QoS
+&quot;&quot;&quot;
+
+from mininet.topo import Topo
+from mininet.link import TCLink
+
+class VplsQos( Topo ):
+    &quot;Topologi Linear 5 Switch 11 Host dengan Limitasi QoS&quot;
+
+    def __init__( self ):
+        Topo.__init__( self )
+
+        # --- BAGIAN 1: MEMBUAT SWITCH (5 Buah) ---
+        # Switch disusun berurutan s1 sampai s5
+        s1 = self.addSwitch('s1')
+        s2 = self.addSwitch('s2')
+        s3 = self.addSwitch('s3')
+        s4 = self.addSwitch('s4')
+        s5 = self.addSwitch('s5')
+
+        # --- BAGIAN 2: MEMBUAT HOST (11 Buah) ---
+        h1 = self.addHost('h1'); h2 = self.addHost('h2')
+        h3 = self.addHost('h3'); h4 = self.addHost('h4')
+        h5 = self.addHost('h5'); h6 = self.addHost('h6')
+        h7 = self.addHost('h7'); h8 = self.addHost('h8')
+        h9 = self.addHost('h9'); h10 = self.addHost('h10'); h11 = self.addHost('h11')
+
+        # --- BAGIAN 3: LINK HOST KE SWITCH (ACCESS LINK) ---
+        # Link ini kita buat cepat (100Mbps) dan stabil
+        # Agar bottleneck murni terjadi di antar switch
+        access_link = dict(bw=100, delay='1ms', loss=0, use_htb=True)
+
+        # S1 handle h1, h2
+        self.addLink(h1, s1, **access_link)
+        self.addLink(h2, s1, **access_link)
+
+        # S2 handle h3, h4
+        self.addLink(h3, s2, **access_link)
+        self.addLink(h4, s2, **access_link)
+
+        # S3 handle h5, h6
+        self.addLink(h5, s3, **access_link)
+        self.addLink(h6, s3, **access_link)
+
+        # S4 handle h7, h8
+        self.addLink(h7, s4, **access_link)
+        self.addLink(h8, s4, **access_link)
+
+        # S5 handle h9, h10, h11 (3 Host di ujung)
+        self.addLink(h9, s5, **access_link)
+        self.addLink(h10, s5, **access_link)
+        self.addLink(h11, s5, **access_link)
+
+        # --- BAGIAN 4: LINK ANTAR SWITCH (BACKBONE LINK) ---
+        # INI KUNCI QOS-NYA!
+        # Kita batasi BW 20Mbps, Delay 5ms, Jitter 2ms, Loss 1%
+        # use_htb=True agar limitasi bandwidth lebih akurat
+        backbone_link = dict(bw=20, delay='5ms', jitter='2ms', loss=1, use_htb=True)
+
+        self.addLink(s1, s2, **backbone_link)
+        self.addLink(s2, s3, **backbone_link)
+        self.addLink(s3, s4, **backbone_link)
+        self.addLink(s4, s5, **backbone_link)
+
+# Registrasi topologi agar bisa dipanggil dengan --topo final
+topos = { 'vplsqos': ( lambda: VplsQos() ) }
+</code></pre>
+<ul>
+<li><em>Perhatikan bagian <code>linkopts_backbone</code>. Di situlah kita &ldquo;menyabotase&rdquo; jaringan agar punya <code>delay</code> dan <code>loss</code> (untuk bahan <code>ukur QoS</code>).</em></li>
+</ul>
+<h2 id="tahap-2-eksekusi-mininet-onos"><strong>🚀 TAHAP 2: Eksekusi Mininet &amp; ONOS</strong></h2>
+<h3 id="langkah-1-jalankan-docker-tanpa-fwd"><strong>Langkah 1: Jalankan Docker (Tanpa fwd)</strong></h3>
+<pre><code class="language-bash">docker run -d -p 6653:6653 -p 8181:8181 -p 8101:8101 -e ONOS_APPS=drivers,openflow,gui2 --name onos onosproject/onos:2.6-latest
+</code></pre>
+<h3 id="langkah-2-jalankan-topologi-mininet"><strong>Langkah 2: Jalankan Topologi Mininet</strong></h3>
+<pre><code class="language-bash">sudo mn --custom /home/mininet/mininet/custom/vpls_qos.py --topo vplsqos --controller remote,ip=127.0.0.1 --switch ovs,protocols=OpenFlow14 --link=tc
+</code></pre>
+<ul>
+<li><em>Jalankan <code>pingall</code> -&gt; Harus <code>100% Dropped</code>.</em></li>
+</ul>
+<h2 id="tahap-3-konfigurasi-onos"><strong>⚙️ TAHAP 3: Konfigurasi ONOS</strong></h2>
+<p>Buka terminal baru:</p>
+<pre><code class="language-bash">ssh -p 8101 onos@127.0.0.1
+</code></pre>
+<ul>
+<li>Pastinya ini muncul Warning kan? <code>OKE</code> Lanjut <code>ke bawah ini</code></li>
+</ul>
+<pre><code class="language-bash">sudo rm -rf /home/mininet/.ssh/known_hosts
+</code></pre>
+<ul>
+<li>
+<p>Untuk menghapus hasil <code>key ssh</code> kemaren <strong>(pada saat sebelum menghapus container onos terdahulu)</strong></p>
+</li>
+<li>
+<p>dan melanjutkan dengan masuk ssh onos lagi! Bingung yang mana? <strong><code>Langkah 3: brother</code></strong></p>
+</li>
+<li>Jangan Lupa Password: <code>rocks</code></li>
+</ul>
+<h3 id="langkah-1-cek-app"><strong>Langkah 1: Cek App</strong></h3>
+<pre><code class="language-bash">apps -a -s
+</code></pre>
+<ul>
+<li>(Pastikan <code>fwd</code> TIDAK ADA, <code>vpls</code> BELUM ADA).</li>
+</ul>
+<h3 id="langkah-2-hidupkan-app-vpls"><strong>Langkah 2: Hidupkan App VPLS</strong></h3>
+<pre><code class="language-bash">app activate org.onosproject.vpls
+</code></pre>
+<ul>
+<li>(Tunggu sampai <code>Activated</code>).</li>
+</ul>
+<h3 id="langkah-3-daftarkan-interface-port-mapping"><strong>Langkah 3: Daftarkan Interface (Port Mapping)</strong></h3>
+<pre><code class="language-bash">vpls clean
+</code></pre>
+<pre><code class="language-bash">interface-add of:0000000000000001/1 h1
+</code></pre>
+<pre><code class="language-bash">interface-add of:0000000000000003/1 h5
+</code></pre>
+<pre><code class="language-bash">interface-add of:0000000000000005/3 h11
+</code></pre>
+<ul>
+<li><em>Verifikasi: Ketik interfaces. Sekarang harusnya sudah muncul 3 baris.</em></li>
+</ul>
+<h3 id="langkah-4-membuat-network-vpls"><strong>Langkah 4: Membuat Network VPLS</strong></h3>
+<p>Membuat instance VPLS bernama VPLS_DEMO dan memasukkan ketiga host tadi ke dalamnya.</p>
+<pre><code class="language-bash">vpls create VPLS_DEMO
+</code></pre>
+<h3 id="langkah-5-daftarkan-interface-ke-vpls"><strong>Langkah 5: Daftarkan Interface ke VPLS</strong></h3>
+<pre><code class="language-bash">vpls add-if VPLS_DEMO h1
+</code></pre>
+<pre><code class="language-bash">vpls add-if VPLS_DEMO h5
+</code></pre>
+<pre><code class="language-bash">vpls add-if VPLS_DEMO h11
+</code></pre>
+<h4 id="dan-melihat-hasil-add-interface-tersebut-pada-tiap-vpls"><strong>Dan Melihat Hasil add Interface tersebut pada tiap&rdquo; VPLS</strong></h4>
+<pre><code class="language-bash">vpls list
+</code></pre>
+<ul>
+<li>Untuk melihat List&rdquo; VPLS yang sudah di <code>create</code>.</li>
+</ul>
+<pre><code class="language-bash">vpls show
+</code></pre>
+<ul>
+<li><em>(Pastikan outputnya menunjukkan VPLS_DEMO memiliki member h1, h5, dan h11).</em></li>
+</ul>
+<h3 id="langkah-6-verifikasi-final"><strong>Langkah 6: Verifikasi (Final)</strong></h3>
+<p>Kembali ke <strong><code>mininet&gt;</code></strong>.</p>
+<pre><code class="language-bash">pingall
+</code></pre>
+<h3 id="6-testing"><strong>6. Testing</strong></h3>
+<p><em>Sekarang konfigurasi sudah selesai. Mari kita coba ping antar <code>host VPLS yang berjauhan</code>, dari <code>h1 (Switch 1)</code> ke <code>h11 (Switch 5)</code>.</em></p>
+<h4 id="testing-pertama"><strong>Testing Pertama</strong></h4>
+<pre><code class="language-bash">h1 ping -c 3 h11
+</code></pre>
+<ul>
+<li><em><code>TARGET:</code> Harus <code>REPLY</code> (Mungkin ping pertama loss buat ARP, tapi selanjutnya reply).</em></li>
+</ul>
+<p><em>Untuk membuktikan <code>isolasi</code>, saya coba ping dari <code>h1 ke h2</code>. Padahal <code>satu switch</code>, tapi <code>h2</code> tidak masuk VPLS, jadi harusnya gagal.</em></p>
+<h4 id="testing-kedua"><strong>Testing Kedua</strong></h4>
+<pre><code class="language-bash">h1 ping -c5 h2
+</code></pre>
+<ul>
+<li><em><code>TARGET:</code> Harus <code>100% Packet Loss</code>.</em></li>
+</ul>
+<h2 id="tahap-4-pengujian-qos"><strong>📊 TAHAP 4: Pengujian &amp; QoS</strong></h2>
+<h3 id="1-mengukur-delay-latency"><strong>1. Mengukur DELAY (Latency)</strong></h3>
+<p>Di <code>mininet&gt;</code>:</p>
+<pre><code class="language-bash">h1 ping -c 5 h2
+</code></pre>
+<ul>
+<li><strong>Lihat output <code>time=... ms</code>.</strong></li>
+<li>Itu adalah <strong>Delay</strong>.</li>
+</ul>
+<h3 id="2-mengukur-packet-loss"><strong>2. Mengukur PACKET LOSS</strong></h3>
+<p>Di <code>mininet&gt;</code>:</p>
+<pre><code class="language-bash">h1 ping -c 20 h2
+</code></pre>
+<ul>
+<li>Lihat hasil akhir <code>...% packet loss</code>.</li>
+<li>Itu adalah <strong>Packet Loss</strong>.</li>
+</ul>
+<p>Kita akan menggunakan fitur <strong>Background Process (<code>&amp;</code>)</strong> linux langsung di dalam prompt Mininet.
+Ikuti langkah ini persis:</p>
+<h3 id="3-mengukur-throughput-bandwidth"><strong>3. Mengukur THROUGHPUT (Bandwidth)</strong></h3>
+<h4 id="langkah-1-jalankan-server-di-background-h11"><strong>Langkah 1: Jalankan Server di Background (h11)</strong></h4>
+<p>Kita suruh <code>h11</code> menjadi server, dan taruh di belakang layar (<code>&amp;</code>) supaya terminal tidak macet.</p>
+<p>Ketik di <code>mininet&gt;</code>:</p>
+<pre><code class="language-bash">h11 iperf3 -s &amp;
+</code></pre>
+<p><em>(Tidak akan muncul output apa-apa, itu tandanya berhasil jalan diam-diam).</em></p>
+<h4 id="langkah-2-ukur-throughput-tcp-mode"><strong>Langkah 2: Ukur THROUGHPUT (TCP Mode)</strong></h4>
+<p>Sekarang <code>h1</code> menembak ke <code>h11</code>.</p>
+<p>Ketik di <code>mininet&gt;</code>:</p>
+<pre><code class="language-bash">h1 iperf3 -c 10.0.0.11 -t 5
+</code></pre>
+<ul>
+<li>Tunggu 10 detik.</li>
+<li>Lihat kolom <strong>Bitrate</strong>.</li>
+</ul>
+<h3 id="4-mengukur-jitter"><strong>4. Mengukur JITTER</strong></h3>
+<p>TCP tidak punya Jitter. Kita harus pakai UDP (<code>-u</code>). Kita tembak bandwidth 10Mbps (<code>-b 10M</code>).</p>
+<p>Ketik di <code>mininet&gt;</code>:</p>
+<pre><code class="language-bash">h1 iperf3 -c 10.0.0.11 -u -b 10M -t 5
+</code></pre>
+<ul>
+<li>Tunggu 10 detik.</li>
+<li>Lihat hasil akhir di tabel paling bawah:<ul>
+<li>Kolom <strong>Jitter</strong>: Lihat angkanya (ms).</li>
+<li>Kolom <strong>Lost/Total Datagrams</strong>: Ini Packet Loss versi data stream.</li>
+</ul>
+</li>
+</ul>
+<h3 id="5-matikan-server-penting"><strong>5. Matikan Server (Penting!)</strong></h3>
+<p>Setelah selesai, kita harus mematikan proses iperf3 yang jalan diam-diam di <code>h11</code> tadi.</p>
+<p>Ketik di <code>mininet&gt;</code>:</p>
+<pre><code class="language-bash">h11 pkill iperf3
+</code></pre>
+<hr />
+<h2 id="analisa-hasil-qos"><strong>📊 Analisa Hasil QoS</strong></h2>
+<ul>
+<li><em>Data ini membuktikan bahwa skenario <code>Linear Topology</code> + <code>Lossy Link</code> berhasil total.</em></li>
+</ul>
+<h3 id="1-packet-loss-matematika-nya-pas">1. Packet Loss: Matematika-nya Pas!</h3>
+<ul>
+<li><strong>Config:</strong> Loss 1% per link.</li>
+<li><strong>Hasil UDP:</strong> 3.7% Loss.</li>
+<li><strong>Analisa:</strong>
+Kenapa 3.7% padahal settingnya 1%? Karena h1 ke h11 melewati <strong>4 Link Backbone</strong> (S1→S2→S3→S4→S5).
+Kalau setiap lompatan ada kemungkinan gagal 1%, maka total kegagalan di ujung menumpuk.
+<em>Hitungan kasar:</em> <code>1% x 4 link = 4%</code>.
+Hasil <code>Kasus Saya</code> <strong>3.7%</strong> itu <strong>sangat akurat secara statistik!</strong> Ini bukan error, ini bukti simulasi <code>Kasus Saya</code> jalan.</li>
+</ul>
+<h3 id="2-throughput-tcp-bitrate-212-mbitssec">2. Throughput TCP (Bitrate): 2.12 Mbits/sec</h3>
+<ul>
+<li><strong>Config:</strong> Limit 20 Mbps.</li>
+<li><strong>Hasil:</strong> ~2 Mbps.</li>
+<li><strong>Analisa:</strong>
+<em>&ldquo;Kenapa kecil banget? Katanya 20 Mbps?&rdquo;</em>
+Jawabannya: <strong>TCP sangat benci Packet Loss.</strong>
+Ketika ada packet loss 3.7% (seperti data UDP tadi), protokol TCP menganggap jaringan sedang macet parah. TCP otomatis &ldquo;menginjak rem&rdquo; (memperkecil Window Size). Ditambah lagi laptop yang <em>lagging</em>, proses <em>acknowledgement</em> (ACK) jadi telat.
+<strong>Kesimpulan:</strong> Jaringan VPLS <code>Kasus Saya</code> stabil secara koneksi, tapi kualitasnya &ldquo;buruk&rdquo; karena noise (loss/jitter), sesuai dengan skenario yang kita buat.</li>
+</ul>
+<h3 id="3-jitter-2692-ms">3. Jitter: 2.692 ms</h3>
+<ul>
+<li><strong>Config:</strong> 2ms.</li>
+<li><strong>Hasil:</strong> ~2.7 ms.</li>
+<li><strong>Analisa:</strong>
+Ini hasil yang sangat presisi. Selisih 0.6ms adalah wajar karena <em>processing delay</em> di dalam virtual switch dan antrian CPU laptop.</li>
+</ul>
+<hr />
+<p><strong>The Result:</strong> <em>&ldquo;Hasil iperf menunjukkan Loss 3.7% karena akumulasi dari 4 switch, dan Jitter stabil di 2.7ms. Ini membuktikan QoS limiting di Mininet berfungsi.&rdquo;</em></p>
+    </div>
+    
+    <nav class="article-footer-nav">
+        <a href="../../blog.html" class="cta-button">← Kembali ke Blog</a>
+    </nav>
+    
+</article>
+    </main>
+    
+    <footer>
+        <p>&copy; 2026 - Teungku Zulkifli. Dibuat dengan ❤️</p>
+    </footer>
+    
+    <div class="floating-lang-switcher">
+        <div class="lang-options">
+            <button id="lang-id">ID</button>
+            <button id="lang-en">EN</button>
+        </div>
+        <button class="lang-globe-btn" aria-label="Pilih Bahasa">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+        </button>
+    </div>
+    
+    <script src="../../assets/js/languages.js"></script>
+    <script src="../../assets/js/main.script.js" defer></script>
+    
+</body>
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Tembok Pertahanan (Firewall Filter - Input Chain) - Teungku Zulkifli</title>
+    <meta name="description" content="">
+    <meta name="author" content="Teungku Zulkifli">
+    
+    <meta property="og:title" content="Tembok Pertahanan (Firewall Filter - Input Chain) - Teungku Zulkifli">
+    <meta property="og:description" content="">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://teungku.me">
+    
+    <link rel="stylesheet" href="../../assets/css/main.style.css">
+    
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="../../index.html" class="logo">Teungku Zulkifli</a>
+            <ul id="nav-links">
+                <li><a data-lang="common.navHome" href="../../index.html#home">Beranda</a></li>
+                <li><a data-lang="common.navAbout" href="../../index.html#about">Tentang</a></li>
+                <li><a data-lang="common.navContact" href="../../index.html#contact">Kontak</a></li>
+                <li><a data-lang="common.navProjects" href="../../projects.html">Proyek</a></li>
+                <li><a data-lang="common.navBlog" href="../../blog.html">Blog</a></li>
+            </ul>
+            <button id="hamburger-btn" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+    
+    <main>
+<article id="article-content">
+    
+    <header class="article-header">
+        <h1>Tembok Pertahanan (Firewall Filter - Input Chain)</h1>
+        
+        <div class="article-meta">
+            <span class="meta-item">
+                📅 <time datetime="2025-12-26">2025-12-26</time>
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                🏷️ Course
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                ✍️ Teungku Zulkifli
+            </span>
+        </div>
+        
+        <div class="article-tags">
+            <span class="article-tag">#mikrotik-series</span>
+        </div>
+    </header>
+    
+    <hr class="article-divider">
+    
+    <div class="article-body">
+        <h1 id="dokumentasi-lab-mikrotik-misi-3">📂 DOKUMENTASI LAB MIKROTIK: MISI 3</h1>
+<h2 id="a-tujuan-misi">A. TUJUAN MISI</h2>
+<p>Mengamankan Router dari akses yang tidak diinginkan oleh Client. Menerapkan aturan &ldquo;Siapa yang boleh mengetuk pintu Router&rdquo;.</p>
+<hr />
+<h2 id="b-konsep-dasar-teori-daging">B. KONSEP DASAR (TEORI DAGING) 🥩</h2>
+<h3 id="1-firewall-chains-3-pintu-gerbang">1. Firewall Chains (3 Pintu Gerbang)</h3>
+<p>Ibarat rumah, Mikrotik punya 3 jenis lalu lintas:</p>
+<ul>
+<li><strong>INPUT (Pintu Masuk):</strong> Trafik dari luar menuju <strong>KE DALAM</strong> Router itu sendiri.</li>
+<li><em>Target:</em> IP Router (<code>192.168.50.1</code>).</li>
+<li>
+<p><em>Contoh:</em> Client nge-Ping Router, Client buka Web Router, Client Login Winbox.</p>
+</li>
+<li>
+<p><strong>FORWARD (Jalan Depan Rumah):</strong> Trafik yang hanya <strong>NUMPANG LEWAT</strong>.</p>
+</li>
+<li><em>Target:</em> Internet / Komputer Lain.</li>
+<li>
+<p><em>Contoh:</em> Client browsing Google (Google ada di luar, bukan di dalam Router).</p>
+</li>
+<li>
+<p><strong>OUTPUT (Pintu Keluar):</strong> Trafik dari Router mau keluar.</p>
+</li>
+</ul>
+<h3 id="2-action-drop-vs-reject">2. Action: Drop vs Reject</h3>
+<ul>
+<li><strong>Drop:</strong> Paket dibuang diam-diam. Pengirim akan menunggu sampai <em>Request Timed Out</em> (RTO). (Lebih aman, bikin bingung hacker).</li>
+<li><strong>Reject:</strong> Paket ditolak dan dikasih tahu &ldquo;Dilarang Masuk!&rdquo;. (Lebih sopan, tapi memberi info ke lawan).</li>
+</ul>
+<hr />
+<h2 id="c-langkah-pengerjaan">C. LANGKAH PENGERJAAN</h2>
+<h3 id="1-skenario-target">1. Skenario &amp; Target</h3>
+<ul>
+<li><strong>Suspect:</strong> <code>192.168.50.50</code> (Teungku-PC).</li>
+<li>
+<p><strong>Tujuan:</strong>
+1. Memblokir Ping (ICMP) ke Router.
+2. Memblokir Akses Web Router (HTTP - TCP Port 80).</p>
+</li>
+<li>
+<p><strong>Syarat:</strong> Internet Client harus tetap jalan.</p>
+</li>
+</ul>
+<h3 id="2-implementasi-cli-command">2. Implementasi (CLI Command)</h3>
+<p><strong>A. Blokir PING (ICMP)</strong></p>
+<pre><code class="language-bash">/ip firewall filter add chain=input src-address=192.168.50.50 protocol=icmp action=drop comment=&quot;Dilarang Ping Router&quot;
+</code></pre>
+<p><strong>B. Blokir WEB ROUTER (TCP Port 80)</strong>
+<em>Note: Wajib pakai <code>dst-port=80</code> agar Winbox (Port 8291) tidak ikut terblokir.</em></p>
+<pre><code class="language-bash">/ip firewall filter add chain=input src-address=192.168.50.50 protocol=tcp dst-port=80 action=drop comment=&quot;Dilarang Buka Web Router&quot;
+</code></pre>
+<h3 id="3-hasil-pengujian-verification">3. Hasil Pengujian (Verification)</h3>
+<ul>
+<li><strong>Ping ke 192.168.50.1:</strong> <code>Request Timed Out</code> (Sukses Terblokir).</li>
+<li><strong>Buka Browser ke 192.168.50.1:</strong> Loading terus / <em>Site can&rsquo;t be reached</em> (Sukses Terblokir).</li>
+<li><strong>Ping ke 8.8.8.8 (Internet):</strong> <code>Reply</code> (Sukses, Internet Aman).</li>
+</ul>
+<hr />
+<h2 id="d-kesimpulan">D. KESIMPULAN</h2>
+<p>Rule pada Chain <strong>INPUT</strong> berhasil melindungi Router. Kita membedakan antara trafik yang tujuannya &ldquo;Kepada Router&rdquo; (Input) dan trafik yang &ldquo;Melewati Router&rdquo; (Forward). Keamanan Router kini meningkat.</p>
+<hr />
+    </div>
+    
+    <nav class="article-footer-nav">
+        <a href="../../blog.html" class="cta-button">← Kembali ke Blog</a>
+    </nav>
+    
+</article>
+    </main>
+    
+    <footer>
+        <p>&copy; 2026 - Teungku Zulkifli. Dibuat dengan ❤️</p>
+    </footer>
+    
+    <div class="floating-lang-switcher">
+        <div class="lang-options">
+            <button id="lang-id">ID</button>
+            <button id="lang-en">EN</button>
+        </div>
+        <button class="lang-globe-btn" aria-label="Pilih Bahasa">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+        </button>
+    </div>
+    
+    <script src="../../assets/js/languages.js"></script>
+    <script src="../../assets/js/main.script.js" defer></script>
+    
+</body>
+</html>

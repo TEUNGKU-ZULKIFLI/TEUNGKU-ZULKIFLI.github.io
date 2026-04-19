@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Tahapan 06: Topology VPLS EZ - Teungku Zulkifli</title>
+    <meta name="description" content="">
+    <meta name="author" content="Teungku Zulkifli">
+    
+    <meta property="og:title" content="Tahapan 06: Topology VPLS EZ - Teungku Zulkifli">
+    <meta property="og:description" content="">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://teungku.me">
+    
+    <link rel="stylesheet" href="../../assets/css/main.style.css">
+    
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="../../index.html" class="logo">Teungku Zulkifli</a>
+            <ul id="nav-links">
+                <li><a data-lang="common.navHome" href="../../index.html#home">Beranda</a></li>
+                <li><a data-lang="common.navAbout" href="../../index.html#about">Tentang</a></li>
+                <li><a data-lang="common.navContact" href="../../index.html#contact">Kontak</a></li>
+                <li><a data-lang="common.navProjects" href="../../projects.html">Proyek</a></li>
+                <li><a data-lang="common.navBlog" href="../../blog.html">Blog</a></li>
+            </ul>
+            <button id="hamburger-btn" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+    
+    <main>
+<article id="article-content">
+    
+    <header class="article-header">
+        <h1>Tahapan 06: Topology VPLS EZ</h1>
+        
+        <div class="article-meta">
+            <span class="meta-item">
+                📅 <time datetime="2025-11-02">2025-11-02</time>
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                🏷️ Course
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                ✍️ Teungku Zulkifli
+            </span>
+        </div>
+        
+        <div class="article-tags">
+            <span class="article-tag">#mininet-series</span>
+        </div>
+    </header>
+    
+    <hr class="article-divider">
+    
+    <div class="article-body">
+        <iframe src="https://www.youtube.com/embed/rrYD4ofdjco?controls=0&modestbranding=1&rel=0&disablekb=1&autoplay=0" style="display:block;margin:auto;border:none;width:100%;max-width:960px;height:540px;" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+<h1 id="panduan-lengkap-mininet-di-hyper-v-part-6-topology-vpls-ez">🧠 Panduan Lengkap  Mininet di Hyper-V (Part 6): TOPOLOGY VPLS EZ</h1>
+<h2 id="pendahuluan">🚀 Pendahuluan</h2>
+<p><strong><code>Mininet</code></strong> adalah simulator jaringan ringan berbasis Linux yang memungkinkan kita membuat topologi jaringan virtual untuk belajar dan menguji protokol seperti OpenFlow. Cocok untuk pelajar, peneliti, dan pengembang jaringan.</br></p>
+<p><strong><code>ONOS</code></strong> (Open Network Operating System) adalah sistem operasi yang dirancang untuk membantu penyedia layanan jaringan membangun jaringan berbasis perangkat lunak (SDN) dengan tingkat skalabilitas, ketersediaan, dan kinerja yang tinggi. ONOS berfungsi sebagai kontroler SDN yang mengelola komponen jaringan seperti switch dan link, serta menjalankan program perangkat lunak untuk menyediakan layanan komunikasi kepada perangkat akhir dan jaringan sekitarnya. Dengan arsitektur modularnya, ONOS memungkinkan penyesuaian yang lebih mudah dan meningkatkan ketersediaan jaringan.</br></p>
+<p><strong><code>Topology</code></strong> Topologi mengacu pada bagaimana suatu jaringan diorganisasikan. Setiap jaringan terdiri dari node yang berbeda dan node ini terhubung satu sama lain dengan link. Tautan ini dapat didefinisikan baik secara fisik maupun logis. Dengan kata lain, topologi adalah desain atau tata letak dari elemen-elemen jaringan, termasuk komputer, server, printer, router, dan perangkat lainnya, serta bagaimana mereka terhubung.</br></p>
+<p><strong><code>VPLS</code></strong> VPLS (Virtual Private LAN Service) adalah teknologi jaringan yang memungkinkan koneksi satu atau lebih jaringan area lokal (LAN) melalui internet melalui satu koneksi jembatan tunggal. VPLS menggunakan protokol switching label untuk menyediakan antarmuka Ethernet kepada pelanggan, sehingga memungkinkan mereka untuk memiliki akses ke internet dan mengelola informasi jaringan mereka sendiri. VPLS mendukung berbagai jenis konektivitas jaringan, termasuk titik-ke-titik dan multipoint-to-point, dan memungkinkan pelanggan untuk terhubung ke LAN virtual dari lokasi yang berbeda.</br></p>
+<h3 id="referensi-resmi">📚 Referensi Resmi</h3>
+<ul>
+<li><a href="http://mininet.org/">Mininet.org</a></li>
+<li><a href="https://wiki.onosproject.org/display/ONOS/ONOS">ONOS</a></li>
+<li><a href="https://hub.docker.com/r/onosproject/onos/">Docker ONOS</a></li>
+<li><a href="https://github.com/ArnoTroch/ONOS-Tutorial/blob/main/README.md">Github Ref</a></li>
+</ul>
+<hr />
+<h2 id="tujuan-konsep">🎯 Tujuan &amp; Konsep</h2>
+<ul>
+<li>Tujuan kita di tahap ini adalah mengonfigurasi <code>vpls</code> kedalam sebuah topology.</li>
+</ul>
+<hr />
+<h2 id="prasyarat">🧰 Prasyarat</h2>
+<ul>
+<li>Windows 11 Pro atau Enterprise (Hyper-V hanya tersedia di edisi ini).</li>
+<li>Hyper-V sudah aktif (bisa diaktifkan lewat &ldquo;Turn Windows features on or off&rdquo;).</li>
+<li>Koneksi internet untuk update dan instalasi paket.</li>
+<li>Sudah ada VM mininet <a href="https://teungku-zulkifli.github.io/article.html?post=_posts/kuliah/2035-10-10-mininet-setup-01.md"><code>Belum Ada ?👆🏻</code></a></li>
+<li>Sudah bisa remote VM Mininet</li>
+</ul>
+<hr />
+<h2 id="langkah-langkah-eksekusi"><strong>🛠️ Langkah-langkah Eksekusi</strong></h2>
+<h3 id="1-persiapan-pembersihan"><strong>1. Persiapan &amp; Pembersihan</strong></h3>
+<pre><code class="language-bash">sudo mn -c
+docker stop onos
+docker rm onos
+</code></pre>
+<p>Untuk Membersihkan sisa proyek mininet dan onos.</p>
+<h3 id="2-buat-file-topologi-vplspy"><strong>2. Buat File Topologi (<code>vpls.py</code>)</strong></h3>
+<pre><code class="language-bash">touch ~/mininet/custom/vpls.py
+</code></pre>
+<p>Pertama, buat file<code>.py</code> baru di dalam direktori <code>mininet/custom</code>. Mari kita beri nama <code>vpls.py</code>.</p>
+<h3 id="3-buka-file-python-anda"><strong>3. Buka File Python Anda</strong></h3>
+<pre><code class="language-bash">nano ~/mininet/custom/vpls.py
+</code></pre>
+<p>Gunakan editor <code>nano</code> untuk mengedit file yang sudah Anda buat.</p>
+<h3 id="4-code-topologi"><strong>4. Code Topologi</strong></h3>
+<p>Topologi ini didesain pas: <code>4 Switch</code>, <code>5 Host</code>, dan tepat <code>10 Kabel (Link)</code>.</p>
+<pre><code class="language-code">#!/usr/bin/python
+from mininet.topo import Topo
+
+class  VplsTopo( Topo ):
+    &quot;Topologi Penerapan VPLS: 4 Switch, 5 Host, 10 Link&quot;
+
+    def __init__( self ):
+        Topo.__init__( self )
+
+        # 1. Buat 4 Switch
+        s1 = self.addSwitch('s1')
+        s2 = self.addSwitch('s2')
+        s3 = self.addSwitch('s3')
+        s4 = self.addSwitch('s4')
+
+        # 2. Buat 5 Host
+        h1 = self.addHost('h1')
+        h2 = self.addHost('h2')
+        h3 = self.addHost('h3')
+        h4 = self.addHost('h4')
+        h5 = self.addHost('h5')
+
+        # 3. Total 10 Link (5 Host-Switch + 5 Switch-Switch)
+
+        # Link Host ke Switch (5 Link)
+        self.addLink(h1, s1) # s1 port 2 (karena port 1 utk switch)
+        self.addLink(h2, s2) 
+        self.addLink(h3, s3)
+        self.addLink(h4, s4)
+        self.addLink(h5, s1) # h5 juga di s1
+
+        # Link Antar Switch (5 Link - Mesh/Ring)
+        self.addLink(s1, s2)
+        self.addLink(s2, s3)
+        self.addLink(s3, s4)
+        self.addLink(s4, s1)
+        self.addLink(s1, s3) # Diagonal
+
+topos = { 'myvpls': ( lambda:  VplsTopo() ) }
+</code></pre>
+<h3 id="5-eksekusi-langkah-demi-langkah"><strong>5. Eksekusi Langkah-demi-Langkah</strong></h3>
+<h4 id="langkah-1-jalankan-docker-tanpa-fwd"><strong>Langkah 1: Jalankan Docker (Tanpa fwd)</strong></h4>
+<pre><code class="language-bash">docker run -d -p 6653:6653 -p 8181:8181 -p 8101:8101 -e ONOS_APPS=drivers,openflow,gui2 --name onos onosproject/onos:2.6-latest
+</code></pre>
+<h4 id="langkah-2-jalankan-topologi-mininet"><strong>Langkah 2: Jalankan Topologi Mininet</strong></h4>
+<pre><code class="language-bash">sudo mn --custom ~/mininet/custom/vpls.py --topo urgent --switch ovs,protocols=OpenFlow14 --controller remote,ip=127.0.0.1,port=6653
+</code></pre>
+<ul>
+<li><em>Cek <code>links</code> di mininet, pastikan ada 10 item OK. Jalankan <code>pingall</code> -&gt; Harus <code>100% Dropped</code>.</em></li>
+</ul>
+<h4 id="langkah-3-masuk-onos-cli"><strong>Langkah 3: Masuk ONOS CLI</strong></h4>
+<p>Buka terminal baru:</p>
+<pre><code class="language-bash">ssh -p 8101 onos@127.0.0.1
+</code></pre>
+<ul>
+<li>Pastinya ini muncul Warning kan? <code>OKE</code> Lanjut <code>ke bawah ini</code></li>
+</ul>
+<pre><code class="language-bash">sudo rm -rf /home/mininet/.ssh/known_hosts
+</code></pre>
+<ul>
+<li>
+<p>Untuk menghapus hasil <code>key ssh</code> kemaren <strong>(pada saat sebelum menghapus container onos terdahulu)</strong></p>
+</li>
+<li>
+<p>dan melanjutkan dengan masuk ssh onos lagi! Bingung yang mana? <strong><code>Langkah 3: brother</code></strong></p>
+</li>
+<li>Jangan Lupa Password: <code>rocks</code></li>
+</ul>
+<h4 id="langkah-4-cek-app"><strong>Langkah 4: Cek App</strong></h4>
+<pre><code class="language-bash">apps -a -s
+</code></pre>
+<ul>
+<li>(Pastikan <code>fwd</code> TIDAK ADA, <code>vpls</code> BELUM ADA).</li>
+</ul>
+<h4 id="langkah-5-hidupkan-app-vpls"><strong>Langkah 5: Hidupkan App VPLS</strong></h4>
+<pre><code class="language-bash">app activate org.onosproject.vpls
+</code></pre>
+<ul>
+<li>(Tunggu sampai <code>Activated</code>).</li>
+</ul>
+<h4 id="langkah-6-daftarkan-interface-port-mapping"><strong>Langkah 6: Daftarkan Interface (Port Mapping)</strong></h4>
+<pre><code class="language-bash">vpls clean
+</code></pre>
+<pre><code class="language-bash">interface-add of:0000000000000001/1 h1
+</code></pre>
+<pre><code class="language-bash">interface-add of:0000000000000002/1 h2
+</code></pre>
+<pre><code class="language-bash">interface-add of:0000000000000003/1 h3
+</code></pre>
+<pre><code class="language-bash">interface-add of:0000000000000004/1 h4
+</code></pre>
+<pre><code class="language-bash">interface-add of:0000000000000001/2 h5
+</code></pre>
+<h4 id="langkah-7-membuat-vpls-vpls1-vpls2"><strong>Langkah 7: Membuat VPLS (VPLS1 &amp; VPLS2)</strong></h4>
+<p>Kita pisahkan jaringan mereka.</p>
+<pre><code class="language-bash">vpls create VPLS1
+vpls create VPLS2
+</code></pre>
+<h4 id="langkah-8-daftarkan-interface-ke-vpls"><strong>Langkah 8: Daftarkan Interface ke VPLS</strong></h4>
+<h5 id="vpls1-h1-h3-h4-satu-grup"><strong>VPLS1: h1, h3, h4 (Satu Grup)</strong></h5>
+<pre><code class="language-bash">vpls add-if VPLS1 h1
+vpls add-if VPLS1 h3
+vpls add-if VPLS1 h4
+</code></pre>
+<h5 id="vpls2-h2-h5-satu-grup"><strong>VPLS2: h2, h5 (Satu Grup)</strong></h5>
+<pre><code class="language-bash">vpls add-if VPLS2 h2
+vpls add-if VPLS2 h5
+</code></pre>
+<h5 id="dan-melihat-hasil-add-interface-tersebut-pada-tiap-vpls"><strong>Dan Melihat Hasil add Interface tersebut pada tiap&rdquo; VPLS</strong></h5>
+<pre><code class="language-bash">vpls list
+</code></pre>
+<ul>
+<li>Untuk melihat List&rdquo; VPLS yang sudah di <code>create</code>.</li>
+</ul>
+<pre><code class="language-bash">vpls show
+</code></pre>
+<ul>
+<li>Untuk Melihat Isian <code>Host</code> pada <code>Tiap" VPLS</code> Tersebut.</li>
+</ul>
+<h4 id="langkah-9-verifikasi-final"><strong>Langkah 9: Verifikasi (Final)</strong></h4>
+<p>Kembali ke <strong><code>mininet&gt;</code></strong>.</p>
+<pre><code class="language-bash">pingall
+</code></pre>
+<h3 id="6-testing"><strong>6. Testing</strong></h3>
+<h4 id="testing-pertama"><strong>Testing Pertama</strong></h4>
+<ul>
+<li>Ping Device <code>VPLS1</code></li>
+</ul>
+<pre><code class="language-bash">h1 ping -c5 h3
+</code></pre>
+<pre><code class="language-bash">h3 ping -c5 h4
+</code></pre>
+<pre><code class="language-bash">h4 ping -c5 h1
+</code></pre>
+<ul>
+<li>Ping Device <code>VPLS2</code></li>
+</ul>
+<pre><code class="language-bash">h2 ping -c5 h5
+</code></pre>
+<pre><code class="language-bash">h5 ping -c5 h2
+</code></pre>
+<h4 id="testing-kedua"><strong>Testing Kedua</strong></h4>
+<ul>
+<li>Ping <strong>Host</strong> <code>VPLS1</code> dengan <strong>Host</strong> <code>VPLS2</code></li>
+<li>Pastikan <code>Gagal</code> atau <code>Uncharable</code> atau <strong>apalah itu namanya</strong>.</li>
+</ul>
+<pre><code class="language-bash">h1 ping -c5 h2
+</code></pre>
+<pre><code class="language-bash">h1 ping -c5 h5
+</code></pre>
+<h4 id="pokonya-mah-kek-gini-kira"><strong>Pokonya mah kek gini kira&rdquo;</strong></h4>
+<p><code>h1</code> &lt;-&gt; <code>h2</code> : SUKSES (VPLS1)</p>
+<p><code>h1</code> &lt;-&gt;<code>h4</code> : SUKSES (VPLS1)</p>
+<p><code>h2</code> &lt;-&gt; <code>h5</code> : SUKSES (VPLS2)</p>
+<p><code>h1</code> &lt;-&gt; <code>h2</code> : GAGAL (Beda VPLS)</p>
+<h3 id="selamat-kamu-sudah-berhasil-mengonfigurasikan-vpls-dalam-sebuah-topo"><strong>🥳 Selamat Kamu sudah Berhasil mengonfigurasikan VPLS dalam sebuah Topo</strong></h3>
+    </div>
+    
+    <nav class="article-footer-nav">
+        <a href="../../blog.html" class="cta-button">← Kembali ke Blog</a>
+    </nav>
+    
+</article>
+    </main>
+    
+    <footer>
+        <p>&copy; 2026 - Teungku Zulkifli. Dibuat dengan ❤️</p>
+    </footer>
+    
+    <div class="floating-lang-switcher">
+        <div class="lang-options">
+            <button id="lang-id">ID</button>
+            <button id="lang-en">EN</button>
+        </div>
+        <button class="lang-globe-btn" aria-label="Pilih Bahasa">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+        </button>
+    </div>
+    
+    <script src="../../assets/js/languages.js"></script>
+    <script src="../../assets/js/main.script.js" defer></script>
+    
+</body>
+</html>

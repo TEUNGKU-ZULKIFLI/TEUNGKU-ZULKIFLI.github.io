@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Tahapan 07: Praktikum QoS (Quality of Service) - Teungku Zulkifli</title>
+    <meta name="description" content="">
+    <meta name="author" content="Teungku Zulkifli">
+    
+    <meta property="og:title" content="Tahapan 07: Praktikum QoS (Quality of Service) - Teungku Zulkifli">
+    <meta property="og:description" content="">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://teungku.me">
+    
+    <link rel="stylesheet" href="../../assets/css/main.style.css">
+    
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="../../index.html" class="logo">Teungku Zulkifli</a>
+            <ul id="nav-links">
+                <li><a data-lang="common.navHome" href="../../index.html#home">Beranda</a></li>
+                <li><a data-lang="common.navAbout" href="../../index.html#about">Tentang</a></li>
+                <li><a data-lang="common.navContact" href="../../index.html#contact">Kontak</a></li>
+                <li><a data-lang="common.navProjects" href="../../projects.html">Proyek</a></li>
+                <li><a data-lang="common.navBlog" href="../../blog.html">Blog</a></li>
+            </ul>
+            <button id="hamburger-btn" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+    
+    <main>
+<article id="article-content">
+    
+    <header class="article-header">
+        <h1>Tahapan 07: Praktikum QoS (Quality of Service)</h1>
+        
+        <div class="article-meta">
+            <span class="meta-item">
+                📅 <time datetime="2025-11-03">2025-11-03</time>
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                🏷️ Course
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                ✍️ Teungku Zulkifli
+            </span>
+        </div>
+        
+        <div class="article-tags">
+            <span class="article-tag">#mininet-series</span>
+        </div>
+    </header>
+    
+    <hr class="article-divider">
+    
+    <div class="article-body">
+        <iframe src="https://www.youtube.com/embed/XnEqtm8Ou8c?controls=0&modestbranding=1&rel=0&disablekb=1&autoplay=0" style="display:block;margin:auto;border:none;width:100%;max-width:960px;height:540px;" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+<h1 id="panduan-lengkap-mininet-di-hyper-v-part-7-praktikum-qos-quality-of-service">🧠 Panduan Lengkap  Mininet di Hyper-V (Part 7): Praktikum QoS (Quality of Service)</h1>
+<h2 id="pendahuluan">🚀 Pendahuluan</h2>
+<p><strong><code>Mininet</code></strong> adalah simulator jaringan ringan berbasis Linux yang memungkinkan kita membuat topologi jaringan virtual untuk belajar dan menguji protokol seperti OpenFlow. Cocok untuk pelajar, peneliti, dan pengembang jaringan.</br></p>
+<p><strong><code>ONOS</code></strong> (Open Network Operating System) adalah sistem operasi yang dirancang untuk membantu penyedia layanan jaringan membangun jaringan berbasis perangkat lunak (SDN) dengan tingkat skalabilitas, ketersediaan, dan kinerja yang tinggi. ONOS berfungsi sebagai kontroler SDN yang mengelola komponen jaringan seperti switch dan link, serta menjalankan program perangkat lunak untuk menyediakan layanan komunikasi kepada perangkat akhir dan jaringan sekitarnya. Dengan arsitektur modularnya, ONOS memungkinkan penyesuaian yang lebih mudah dan meningkatkan ketersediaan jaringan.</br></p>
+<p><strong><code>Topologi Dumbbell</code></strong> <strong>Topologi Dumbbell (Barbel) pada SDN</strong> adalah arsitektur jaringan yang memanfaatkan dua node utama yang saling terhubung melalui satu kabel. Dalam topologi ini, data mengalir dari node ke node melalui kabel yang terputus, sehingga setiap node dapat berkomunikasi langsung dengan node pusat.</br></p>
+<p><strong>Kelebihan</strong>: Sederhana dalam instalasi dan memungkinkan pengelolaan yang efisien karena setiap node hanya terhubung langsung ke node pusat. </br></p>
+<p><strong>Kekurangan</strong>: Jika satu kabel terputus, semua node akan terganggu, sehingga penting untuk memastikan ketersediaan kabel.</br></p>
+<p>Topologi ini sering digunakan dalam jaringan komputer untuk memastikan keandalan dan efisiensi dalam pengiriman data..</br></p>
+<p><strong><code>QoS</code></strong> <strong>QoS pada SDN (Software Defined Networking)</strong> adalah metode yang digunakan untuk mengelola lalu lintas data dengan memberikan prioritas pada jenis lalu lintas tertentu. Dalam konteks SDN, QoS memungkinkan pengelolaan sumber daya jaringan untuk meningkatkan kualitas layanan, seperti mengurangi <em>kehilangan paket</em>, <em>latensi</em>, dan <em>jitter</em>. Dengan QoS, aplikasi yang sensitif terhadap keterlambatan, seperti <em>panggilan suara</em> dan <em>video</em>, dapat mendapatkan akses yang lebih baik ke sumber daya jaringan, sehingga memastikan <strong>kinerja yang optimal dan kualitas</strong> layanan yang lebih baik.</br></p>
+<h3 id="referensi-resmi">📚 Referensi Resmi</h3>
+<ul>
+<li><a href="http://mininet.org/">Mininet.org</a></li>
+<li><a href="https://wiki.onosproject.org/display/ONOS/ONOS">ONOS</a></li>
+<li><a href="https://hub.docker.com/r/onosproject/onos/">Docker ONOS</a></li>
+<li><a href="https://github.com/ArnoTroch/ONOS-Tutorial/blob/main/README.md">Github Ref</a></li>
+</ul>
+<hr />
+<h3 id="1-materi-teori-dasar-qos-apa-yang-kita-ukur">1. Materi: Teori Dasar QoS (Apa yang Kita Ukur?)</h3>
+<p>Bayangkan jaringan (kabel switch) Anda adalah sebuah <strong>Pipa Air</strong>.</p>
+<h4 id="a-throughput-debit-air">A. Throughput (Debit Air)</h4>
+<ul>
+<li><strong>Definisi:</strong> Seberapa banyak data yang <em>berhasil</em> sampai dari A ke B dalam satu detik.</li>
+<li><strong>Satuan:</strong> Mbps (Megabits per second) atau Gbps.</li>
+<li><strong>Analogi:</strong> Seberapa deras air yang keluar dari ujung selang.</li>
+<li><strong>Di SDN:</strong> Kita akan ukur seberapa kuat Switch OVS dan Link Mininet mengirim data sebelum &ldquo;tersedak&rdquo;.</li>
+</ul>
+<h4 id="b-packet-loss-air-tumpah">B. Packet Loss (Air Tumpah)</h4>
+<ul>
+<li><strong>Definisi:</strong> Persentase paket yang dikirim tapi <strong>hilang</strong> di tengah jalan (tidak sampai).</li>
+<li><strong>Satuan:</strong> Persen (%).</li>
+<li><strong>Penyebab:</strong> Jaringan penuh (Congestion), kabel rusak, atau Switch <em>overload</em>.</li>
+<li><strong>Di SDN:</strong> Jika kita membanjiri link 10Mbps dengan data 20Mbps, paket akan mulai <em>dropped</em>.</li>
+</ul>
+<h4 id="c-delay-latency-waktu-tempuh">C. Delay / Latency (Waktu Tempuh)</h4>
+<ul>
+<li><strong>Definisi:</strong> Waktu yang dibutuhkan paket untuk pergi dari A ke B (One-way) atau bolak-balik (RTT - Round Trip Time).</li>
+<li><strong>Satuan:</strong> ms (millisecond).</li>
+<li><strong>Analogi:</strong> Berapa detik waktu yang dibutuhkan air sejak keran dibuka sampai airnya keluar di ujung selang.</li>
+</ul>
+<h4 id="d-jitter-kestabilan-arus">D. Jitter (Kestabilan Arus)</h4>
+<ul>
+<li><strong>Definisi:</strong> Variasi dari Delay. Kadang cepat, kadang lambat.</li>
+<li><strong>Satuan:</strong> ms (millisecond).</li>
+<li><strong>Analogi:</strong> Apakah airnya mengalir lancar (Jitter rendah) atau &ldquo;muncrat-muncrat&rdquo; tersendat (Jitter tinggi)? Ini musuh utama VoIP dan Video Call.</li>
+</ul>
+<hr />
+<h3 id="2-skenario-praktikum-apa-yang-kita-qos">2. Skenario Praktikum: Apa yang Kita QoS?</h3>
+<p>Di Mininet, switch (OVS) itu sangat kuat karena software-based. Jika kita hanya pakai topologi biasa, hasilnya akan &ldquo;terlalu bagus&rdquo; (Throughput max, Loss 0%, Jitter 0ms). Itu tidak seru dan tidak bisa diukur.</p>
+<p>Untuk melihat QoS bekerja, kita harus <strong>Membatasi Jaringan</strong> (Limiting). Kita akan menggunakan fitur Mininet bernama <strong><code>TCLink</code></strong> (Traffic Control Link).</p>
+<p><strong>Skenario:</strong>
+Kita akan membuat &ldquo;Jalan Sempit&rdquo; di antara dua switch. Lalu kita paksa data besar lewat sana. Di situlah kita akan melihat Packet Loss dan Jitter muncul.</p>
+<hr />
+<h3 id="3-rancang-bangun-topologi-dumbbell-topology">3. Rancang Bangun Topologi (Dumbbell Topology)</h3>
+<p>Untuk pengujian QoS, topologi terbaik bukanlah yang rumit, tapi yang <strong>terisolasi</strong>. Saya menyarankan topologi <strong>Dumbbell (Barbel)</strong>.</p>
+<p><strong>Struktur:</strong>
+<code>Server(h1) --[Link Cepat]-- (s1) --[JALAN SEMPIT]-- (s2) --[Link Cepat]-- Client(h2)</code></p>
+<ul>
+<li><strong>h1 (Server):</strong> Pengirim Traffic (Video/File).</li>
+<li><strong>h2 (Client):</strong> Penerima yang mengukur kualitas.</li>
+<li><strong>Link s1-s2 (Bottleneck):</strong> Kita akan set Bandwidth misal <strong>10 Mbps</strong>, Delay <strong>5ms</strong>, Loss <strong>1%</strong>.</li>
+</ul>
+<hr />
+<h2 id="tujuan-konsep">🎯 Tujuan &amp; Konsep</h2>
+<ul>
+<li>Tujuan kita di tahap ini adalah melihat <code>QoS</code> berkerja.</li>
+<li>Kita akan menggunakan alat bernama <code>iperf3</code> untuk <code>Throughput</code>, <code>Jitter</code>, dan <code>Packet Loss</code>. Dan kita akan menggunakan <code>ping</code> (dengan opsi timestamp) untuk <code>Delay</code>. Alat-alat ini berbasis CLI, ringan, dan jauh lebih akurat memberikan angka <code>QoS</code> dibandingkan membedah file <code>pcap Wireshark</code> secara manual.</li>
+</ul>
+<hr />
+<h2 id="prasyarat">🧰 Prasyarat</h2>
+<ul>
+<li>Windows 11 Pro atau Enterprise (Hyper-V hanya tersedia di edisi ini).</li>
+<li>Hyper-V sudah aktif (bisa diaktifkan lewat &ldquo;Turn Windows features on or off&rdquo;).</li>
+<li>Koneksi internet untuk update dan instalasi paket.</li>
+<li>Sudah ada VM mininet <a href="https://teungku-zulkifli.github.io/article.html?post=_posts/kuliah/2035-10-10-mininet-setup-01.md"><code>Belum Ada ?👆🏻</code></a></li>
+<li>Sudah bisa remote VM Mininet</li>
+</ul>
+<hr />
+<h2 id="langkah-langkah-eksekusi"><strong>🛠️ Langkah-langkah Eksekusi</strong></h2>
+<h3 id="1-persiapan-pembersihan"><strong>1. Persiapan &amp; Pembersihan</strong></h3>
+<pre><code class="language-bash">sudo mn -c
+docker stop onos
+docker rm onos
+</code></pre>
+<p>Untuk Membersihkan sisa proyek mininet dan onos.</p>
+<h3 id="2-buat-file-topologi-qos_topopy"><strong>2. Buat File Topologi (<code>qos_topo.py</code>)</strong></h3>
+<pre><code class="language-bash">touch mininet/custom/qos_topo.py
+</code></pre>
+<p>Pertama, buat file<code>.py</code> baru di dalam direktori <code>mininet/custom</code>. Mari kita beri nama <code>qos_topo.py</code>.</p>
+<h3 id="3-buka-file-python-anda"><strong>3. Buka File Python Anda</strong></h3>
+<pre><code class="language-bash">nano mininet/custom/qos_topo.py
+</code></pre>
+<p>Gunakan editor <code>nano</code> untuk mengedit file yang sudah Anda buat.</p>
+<h3 id="4-code-topologi"><strong>4. Code Topologi</strong></h3>
+<p>Code ini akan membuat <code>topologi Dumbbell (Barbel)</code>. <code>h1 (Client)</code> <strong>&lt;&ndash;&gt;</strong> <code>s1 &lt;== JALUR TEST ==&gt; s2</code> <strong>&lt;&ndash;&gt;</strong> <code>h2 (Server)</code></p>
+<pre><code class="language-code">#!/usr/bin/python
+
+&quot;&quot;&quot;
+Skrip Topologi QoS (Dumbbell)
+Untuk pengukuran Throughput, Jitter, Loss, Delay.
+&quot;&quot;&quot;
+
+from mininet.topo import Topo
+
+class QoSTopo( Topo ):
+    &quot;Topologi Dumbbell dengan Link Terbatas (Bottleneck).&quot;
+
+    def __init__( self ):
+        Topo.__init__( self )
+
+        # 1. Buat 2 Switch
+        s1 = self.addSwitch('s1')
+        s2 = self.addSwitch('s2')
+
+        # 2. Buat 2 Host (Client &amp; Server)
+        h1 = self.addHost('h1') # Pengirim / Client
+        h2 = self.addHost('h2') # Penerima / Server
+
+        # 3. KONEKSI KABEL (LINKS)
+
+        # --- Link Lokal (Cepat &amp; Stabil) ---
+        # Dari Host ke Switch masing-masing.
+        # Bandwidth 100Mbps, Delay 1ms (Sangat cepat)
+        self.addLink(h1, s1, bw=100, delay='1ms')
+        self.addLink(h2, s2, bw=100, delay='1ms')
+
+        # --- LINK BOTTLENECK (Jalur yang Kita Ukur) ---
+        # Ini adalah simulasi jaringan WAN / Internet yang jelek.
+        # bw     = 10 Mbps (Kecil, supaya cepat penuh)
+        # delay  = 20ms    (Ada jeda waktu)
+        # jitter = 5ms     (Delay tidak stabil, naik turun +- 5ms)
+        # loss   = 2       (2% paket akan sengaja dibuang/hilang)
+
+        self.addLink(s1, s2, bw=10, delay='20ms', jitter='5ms', loss=2)
+
+# Registrasi Topologi
+topos = { 'qos': ( lambda: QoSTopo() ) }
+</code></pre>
+<h3 id="5-eksekusi-langkah-demi-langkah"><strong>5. Eksekusi Langkah-demi-Langkah</strong></h3>
+<h4 id="langkah-1-jalankan-docker"><strong>Langkah 1: Jalankan Docker</strong></h4>
+<pre><code class="language-bash">docker run -d -p 6653:6653 -p 8181:8181 -p 8101:8101 -e ONOS_APPS=drivers,openflow,gui2,fwd --name onos onosproject/onos:2.6-latest
+</code></pre>
+<p><em>(Tunggu 1 menit sampai ONOS siap).</em></p>
+<h4 id="langkah-2-jalankan-topologi-mininet"><strong>Langkah 2: Jalankan Topologi Mininet</strong></h4>
+<pre><code class="language-bash">sudo mn --custom mininet/custom/qos_topo.py --topo qos --switch ovs,protocols=OpenFlow14 --controller remote,ip=127.0.0.1,port=6653 --link=tc
+</code></pre>
+<ul>
+<li><em>Perhatikan ada flag <code>--link=tc</code> di akhir.</em></li>
+</ul>
+<h4 id="langkah-3-pengujian-pengukuran-the-real-deal"><strong>📊 Langkah 3: Pengujian &amp; Pengukuran (The Real Deal)</strong></h4>
+<p>Setelah masuk ke prompt <code>mininet&gt;</code>, kita akan mulai mengukur 4 parameter tadi.</p>
+<h4 id="1-mengukur-delay-latency"><strong>1. Mengukur DELAY (Latency)</strong></h4>
+<p>Kita gunakan <code>ping</code>. Di kode tadi, kita set delay bottleneck 20ms. Ditambah link lokal 1ms + 1ms.
+Secara teori, bolak balik (RTT) harusnya sekitar: (20+1+1) x 2 = <strong>44ms</strong>. Mari kita buktikan.</p>
+<p>Di <code>mininet&gt;</code>:</p>
+<pre><code class="language-bash">h1 ping -c 5 h2
+</code></pre>
+<ul>
+<li><strong>Lihat output <code>time=... ms</code>.</strong></li>
+<li>Apakah mendekati 44-50 ms?</li>
+<li>Itu adalah <strong>Delay</strong>.</li>
+</ul>
+<h4 id="2-mengukur-packet-loss"><strong>2. Mengukur PACKET LOSS</strong></h4>
+<p>Di kode tadi, kita set <code>loss=2</code> (2%).
+Di <code>mininet&gt;</code>:</p>
+<pre><code class="language-bash">h1 ping -c 20 h2
+</code></pre>
+<ul>
+<li>Lihat hasil akhir <code>...% packet loss</code>.</li>
+<li>Apakah ada sekitar 2% - 5% paket hilang?</li>
+<li>Itu adalah <strong>Packet Loss</strong>.</li>
+</ul>
+<p>Kita akan menggunakan fitur <strong>Background Process (<code>&amp;</code>)</strong> linux langsung di dalam prompt Mininet.</p>
+<p>Ikuti langkah ini persis:</p>
+<h4 id="3-mengukur-throughput-bandwidth"><strong>3. Mengukur THROUGHPUT (Bandwidth)</strong></h4>
+<h5 id="langkah-1-jalankan-server-di-background-h2"><strong>Langkah 1: Jalankan Server di Background (h2)</strong></h5>
+<p>Kita suruh <code>h2</code> menjadi server, dan taruh di belakang layar (<code>&amp;</code>) supaya terminal tidak macet.</p>
+<p>Ketik di <code>mininet&gt;</code>:</p>
+<pre><code class="language-bash">h2 iperf3 -s &amp;
+</code></pre>
+<p><em>(Tidak akan muncul output apa-apa, itu tandanya berhasil jalan diam-diam).</em></p>
+<h5 id="langkah-2-ukur-throughput-tcp-mode"><strong>Langkah 2: Ukur THROUGHPUT (TCP Mode)</strong></h5>
+<p>Sekarang <code>h1</code> menembak ke <code>h2</code>.</p>
+<p>Ketik di <code>mininet&gt;</code>:</p>
+<pre><code class="language-bash">h1 iperf3 -c 10.0.0.2 -t 10
+</code></pre>
+<ul>
+<li>Tunggu 10 detik.</li>
+<li>Lihat kolom <strong>Bitrate</strong>.</li>
+<li><strong>Target:</strong> Karena kita limit <code>bw=10</code> Mbps, hasilnya harusnya di sekitar <strong>9.xx Mbits/sec</strong>.</li>
+</ul>
+<h4 id="4-mengukur-jitter"><strong>4. Mengukur JITTER</strong></h4>
+<p>TCP tidak punya Jitter. Kita harus pakai UDP (<code>-u</code>). Kita tembak bandwidth 5Mbps (<code>-b 5M</code>).</p>
+<p>Ketik di <code>mininet&gt;</code>:</p>
+<pre><code class="language-bash">h1 iperf3 -c 10.0.0.2 -u -b 5M -t 10
+</code></pre>
+<ul>
+<li>Tunggu 10 detik.</li>
+<li>Lihat hasil akhir di tabel paling bawah:<ul>
+<li>Kolom <strong>Jitter</strong>: Lihat angkanya (ms). Di kode kita set 5ms.</li>
+<li>Kolom <strong>Lost/Total Datagrams</strong>: Ini Packet Loss versi data stream.</li>
+</ul>
+</li>
+</ul>
+<h4 id="5-matikan-server-penting"><strong>5. Matikan Server (Penting!)</strong></h4>
+<p>Setelah selesai, kita harus mematikan proses iperf3 yang jalan diam-diam di <code>h2</code> tadi.</p>
+<p>Ketik di <code>mininet&gt;</code>:</p>
+<pre><code class="language-bash">h2 pkill iperf3
+</code></pre>
+<hr />
+<h3 id="laporan-analisa-qos-dumbbell-topology">📊 LAPORAN ANALISA QOS: DUMBBELL TOPOLOGY</h3>
+<p><strong>Konfigurasi Skenario (Yang Kita Set di Python):</strong>
+* Bandwidth: <strong>10 Mbps</strong>
+* Delay: <strong>20ms</strong> (RTT ~40ms)
+* Jitter: <strong>5ms</strong>
+* Packet Loss: <strong>2%</strong></p>
+<h4 id="1-analisa-throughput-kecepatan">1. Analisa Throughput (Kecepatan)</h4>
+<ul>
+<li><strong>Teori:</strong> Link capacity adalah 10 Mbps.</li>
+<li><strong>Hasil TCP (Kasus Saya):</strong> Rata-rata <strong>3.17 Mbits/sec</strong>.</li>
+<li><strong>Kenapa Rendah?</strong>
+    Ini adalah fenomena menarik! Padahal jalannya selebar 10 Mbps, kenapa mobil yang lewat cuma 3 Mbps?<ul>
+<li><strong>Jawabannya:</strong> Karena <strong>TCP Protocol</strong>. TCP itu &ldquo;sopan&rdquo;. Ketika dia mendeteksi ada paket yang hilang (Loss 2%), dia panik dan berpikir &ldquo;Waduh, macet nih!&rdquo;. Maka TCP secara otomatis <strong>menurunkan kecepatan</strong> pengiriman data (Throttling) untuk mencegah kemacetan lebih parah.</li>
+<li><strong>Kesimpulan:</strong> Packet Loss kecil (2%) bisa menghancurkan kecepatan TCP secara signifikan.</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-analisa-packet-loss-kehilangan-data">2. Analisa Packet Loss (Kehilangan Data)</h4>
+<ul>
+<li><strong>Hasil UDP (Kasus Saya):</strong> <code>82/4316 (1.9%)</code> -&gt; <strong>1.9% Loss</strong>.</li>
+<li><strong>Hasil Ping (Kasus Saya):</strong> <code>15% packet loss</code>.</li>
+<li><strong>Analisa:</strong><ul>
+<li>Hasil UDP (1.9%) sangat akurat dengan settingan kita (2%). Ini membuktikan <code>TCLink</code> bekerja sempurna.</li>
+<li>Hasil Ping lebih tinggi (15%) karena ICMP (Ping) memiliki prioritas rendah dan sering dibuang duluan saat antrian switch penuh.</li>
+</ul>
+</li>
+</ul>
+<h4 id="3-analisa-delay-latency">3. Analisa Delay (Latency)</h4>
+<ul>
+<li><strong>Teori:</strong> 20ms (pergi) + 20ms (pulang) + overhead = <strong>~42ms</strong>.</li>
+<li><strong>Hasil Kasus Saya:</strong> Rata-rata <strong>44.343 ms</strong>.</li>
+<li><strong>Kesimpulan:</strong> <strong>Sangat Akurat.</strong> Delay injeksi berhasil.</li>
+</ul>
+<h4 id="4-analisa-jitter-kestabilan">4. Analisa Jitter (Kestabilan)</h4>
+<ul>
+<li><strong>Teori:</strong> Kita set jitter 5ms.</li>
+<li><strong>Hasil Kasus Saya:</strong> <code>3.902 ms</code> dan <code>4.841 ms</code>.</li>
+<li><strong>Kesimpulan:</strong> <strong>Sangat Akurat.</strong> Angka ini menunjukkan delay paket naik-turun di kisaran 4-5ms, sesuai perintah kita.</li>
+</ul>
+<hr />
+<h3 id="kesimpulan-akhir-praktikum-qos">🏁 KESIMPULAN AKHIR PRAKTIKUM QOS</h3>
+<p>Anda telah berhasil membuktikan bahwa di dunia SDN (Software Defined Network):
+1.  Kita bisa <strong>memanipulasi kualitas jaringan</strong> secara software (menggunakan <code>TCLink</code> di Python).
+2.  Kita bisa <strong>mengukur dampaknya</strong> secara presisi menggunakan <code>iperf3</code> dan <code>ping</code> via CLI.
+3.  Anda melihat langsung bagaimana <strong>Network Impairment</strong> (Gangguan Jaringan) mempengaruhi aplikasi (Throughput drop drastis).</p>
+<p>Praktikum QoS ini <strong>COMPLETE &amp; CLEARED.</strong> 🏆</p>
+    </div>
+    
+    <nav class="article-footer-nav">
+        <a href="../../blog.html" class="cta-button">← Kembali ke Blog</a>
+    </nav>
+    
+</article>
+    </main>
+    
+    <footer>
+        <p>&copy; 2026 - Teungku Zulkifli. Dibuat dengan ❤️</p>
+    </footer>
+    
+    <div class="floating-lang-switcher">
+        <div class="lang-options">
+            <button id="lang-id">ID</button>
+            <button id="lang-en">EN</button>
+        </div>
+        <button class="lang-globe-btn" aria-label="Pilih Bahasa">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+        </button>
+    </div>
+    
+    <script src="../../assets/js/languages.js"></script>
+    <script src="../../assets/js/main.script.js" defer></script>
+    
+</body>
+</html>

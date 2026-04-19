@@ -1,0 +1,64 @@
+{# Template untuk halaman artikel individual #}
+{% extends "base.html" %}
+
+{# Override block title - judul tab browser #}
+{% block title %}{{ post.title }} - Teungku Zulkifli{% endblock %}
+
+{# Override description - untuk SEO #}
+{% block description %}{{ post.description | default(post.title) }}{% endblock %}
+
+{# Override OG type - artikel itu type 'article' bukan 'website' #}
+{% block og_type %}article{% endblock %}
+
+{# Konten utama #}
+{% block content %}
+<article id="article-content">
+    
+    {# === HEADER ARTIKEL === #}
+    <header class="article-header">
+        <h1>{{ post.title }}</h1>
+        
+        <div class="article-meta">
+            <span class="meta-item">
+                📅 <time datetime="{{ post.date }}">{{ post.date }}</time>
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                🏷️ {{ post.category }}
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                ✍️ {{ post.author }}
+            </span>
+            {% if post.reading_time %}
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                ⏱️ {{ post.reading_time }} menit baca
+            </span>
+            {% endif %}
+        </div>
+        
+        {# Tags - hanya tampil kalau ada #}
+        {% if post.tags %}
+        <div class="article-tags">
+            {% for tag in post.tags %}
+            <span class="article-tag">#{{ tag }}</span>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </header>
+    
+    <hr class="article-divider">
+    
+    {# === KONTEN ARTIKEL === #}
+    <div class="article-body">
+        {{ post.html_content | safe }}
+    </div>
+    
+    {# === NAVIGASI BAWAH === #}
+    <nav class="article-footer-nav">
+        <a href="../../blog.html" class="cta-button">← Kembali ke Blog</a>
+    </nav>
+    
+</article>
+{% endblock %}

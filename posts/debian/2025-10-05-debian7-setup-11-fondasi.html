@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>(Part 12): Konfigurasi Hosting - Teungku Zulkifli</title>
+    <meta name="description" content="">
+    <meta name="author" content="Teungku Zulkifli">
+    
+    <meta property="og:title" content="(Part 12): Konfigurasi Hosting - Teungku Zulkifli">
+    <meta property="og:description" content="">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://teungku.me">
+    
+    <link rel="stylesheet" href="../../assets/css/main.style.css">
+    
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="../../index.html" class="logo">Teungku Zulkifli</a>
+            <ul id="nav-links">
+                <li><a data-lang="common.navHome" href="../../index.html#home">Beranda</a></li>
+                <li><a data-lang="common.navAbout" href="../../index.html#about">Tentang</a></li>
+                <li><a data-lang="common.navContact" href="../../index.html#contact">Kontak</a></li>
+                <li><a data-lang="common.navProjects" href="../../projects.html">Proyek</a></li>
+                <li><a data-lang="common.navBlog" href="../../blog.html">Blog</a></li>
+            </ul>
+            <button id="hamburger-btn" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+    
+    <main>
+<article id="article-content">
+    
+    <header class="article-header">
+        <h1>(Part 12): Konfigurasi Hosting</h1>
+        
+        <div class="article-meta">
+            <span class="meta-item">
+                📅 <time datetime="2025-10-05">2025-10-05</time>
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                🏷️ Course
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                ✍️ Teungku Zulkifli
+            </span>
+        </div>
+        
+        <div class="article-tags">
+            <span class="article-tag">#debian-server-series</span>
+        </div>
+    </header>
+    
+    <hr class="article-divider">
+    
+    <div class="article-body">
+        <iframe src="https://www.youtube.com/embed/aHwVLrsRfr0?controls=0&modestbranding=1&rel=0&disablekb=1&autoplay=0" style="display:block;margin:auto;border:none;width:100%;max-width:960px;height:540px;" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+<h1 id="dokumentasi-debian-di-hyper-v-part-12-konfigurasi-hosting">Dokumentasi Debian di Hyper V (Part 12): Konfigurasi Hosting</h1>
+<p><strong>Catatan Perjalanan &amp; Solusi Praktis untuk VM Debian 7.8.0 &ldquo;Wheezy&rdquo;</strong></p>
+<hr />
+<h2 id="pendahuluan">Pendahuluan 🚀</h2>
+<p>Selamat datang di catatan perjalanan saya dalam membangun sebuah server dari nol! Dokumen ini lebih dari sekadar terjemahan; ini adalah sebuah logbook praktis dari proses konfigurasi awal server <strong>Debian 7.8.0 &ldquo;Wheezy&rdquo;</strong>. Setiap langkah di dalamnya tidak hanya diriset, tetapi juga telah dipraktikkan, diuji, dan yang terpenting, dilengkapi dengan solusi untuk setiap masalah tak terduga yang muncul di tengah jalan.</p>
+<p>Tujuannya adalah untuk menciptakan sebuah panduan yang jujur dan mudah diikuti, terutama bagi mereka yang mungkin menempuh jalur yang sama dengan perangkat lunak versi lama ini. Semoga catatan ini bisa menjadi peta yang berguna, menunjukkan bukan hanya jalan yang lurus, tetapi juga cara melewati setiap rintangan.</p>
+<h3 id="credits-referensi">Credits &amp; Referensi</h3>
+<p>Proses ini tidak akan berjalan lancar tanpa sumber daya dan bantuan yang luar biasa. Kredit sepenuhnya diberikan kepada:</p>
+<ul>
+<li><strong><a href="https://www.server-world.info/en/note?os=Debian_7.0">Server-World</a></strong>: Sebagai referensi utama dan panduan dasar untuk semua tahapan konfigurasi. Panduan mereka yang komprehensif menjadi titik awal dari petualangan ini.</li>
+<li><strong>Gemini (Model AI Google)</strong>: Sebagai mitra diskusi interaktif, asisten riset, dan &ldquo;pengumpul data&rdquo;. Gemini membantu dalam menerjemahkan konsep, mendiagnosis masalah unik (seperti error GPG dan repositori arsip), serta menyusun penjelasan langkah demi langkah yang detail.</li>
+</ul>
+<hr />
+<p>Kita masuk ke materi yang akan membuat Anda merasa seperti <strong>&ldquo;Juragan Kost Digital&rdquo;</strong>! .</p>
+<p>Di Part 5, server kita cuma punya satu website (<code>www.teungku.edu</code>).
+Di Part 12 ini, kita akan menyulap server tersebut agar bisa menampung <strong>banyak website sekaligus</strong> (misal: <code>blog.teungku.edu</code>, <code>toko.teungku.edu</code>, dll) hanya dengan menggunakan <strong>SATU IP ADDRESS</strong>.</p>
+<p>Karena ini melibatkan konfigurasi file yang agak jelimet, kita bagi menjadi <strong>2 Segmen</strong>:</p>
+<ul>
+<li><strong>Segmen 1:</strong> Menyiapkan Lahan &amp; Surat Izin (Folder &amp; Konfigurasi).</li>
+<li><strong>Segmen 2:</strong> Peresmian &amp; Pemasangan Papan Nama (Enable &amp; DNS).</li>
+</ul>
+<p>Mari kita mulai!</p>
+<hr />
+<h1 id="bab-3-web-hosting-master">📖 BAB 3: WEB HOSTING MASTER</h1>
+<h2 id="part-12-hosting-banyak-web-segmen-1">(Part 12) Hosting Banyak Web: Segmen 1</h2>
+<p><strong>(Virtual Host Configuration)</strong></p>
+<h3 id="tagline">🏷️ TAGLINE</h3>
+<p><em>&ldquo;Satu Gedung, Seribu Toko: Seni Membagi Ruangan&rdquo;</em></p>
+<hr />
+<h3 id="konsep-warung-kopi-analogi">☕ KONSEP &ldquo;WARUNG KOPI&rdquo; (Analogi)</h3>
+<p>Bayangkan IP Address server Anda (<code>192.168.10.1</code>) adalah sebuah <strong>Gedung Mall</strong>.
+Saat ini, Mall itu cuma punya satu penyewa besar, yaitu <code>www.teungku.edu</code>. Pengunjung yang datang ke Mall pasti langsung masuk ke situ.</p>
+<p><strong>Virtual Host</strong> adalah cara kita menyekat-nyekat Mall tersebut menjadi banyak toko kecil.</p>
+<ul>
+<li>Lantai 1 untuk <code>www.teungku.edu</code>.</li>
+<li>Lantai 2 untuk <code>blog.teungku.edu</code>.</li>
+<li>Lantai 3 untuk <code>sekolah.teungku.edu</code>.</li>
+</ul>
+<p>Satpam Mall (Apache) akan bekerja lebih pintar. Dia tidak cuma melihat alamat gedung, tapi dia akan bertanya ke pengunjung: <em>&ldquo;Kamu mau ke toko yang mana?&rdquo;</em>. Kalau pengunjung jawab &ldquo;Blog&rdquo;, satpam akan mengantar ke Lantai 2.</p>
+<p><img src="https://encrypted-tbn2.gstatic.com/licensed-image?q=tbn:ANd9GcQdS5sdu4X1IZQoDzBuqM2VcSGeglx3-ha8BZNz495PVD1wWhYWu9xAKhDMeM0JUQiH-x_NeFC0a_KdW5ZiFJBlcGnxV5vg940gXdnXrWI1UB0ozbY" width="400"></p>
+<hr />
+<h3 id="misi-operasi-segmen-1">🎯 MISI OPERASI (Segmen 1)</h3>
+<ol>
+<li>Membuat folder khusus untuk website kedua (<code>blog</code>).</li>
+<li>Membuat halaman <code>index.html</code> sederhana sebagai tanda pengenal.</li>
+<li>Membuat File Konfigurasi Virtual Host (Surat Izin Toko).</li>
+</ol>
+<hr />
+<h3 id="persiapan">🛠️ PERSIAPAN</h3>
+<ul>
+<li>Login sebagai <strong>root</strong>.</li>
+<li>Pastikan Apache berjalan lancar.</li>
+</ul>
+<hr />
+<h3 id="langkah-eksekusi-segmen-1">💻 LANGKAH EKSEKUSI (Segmen 1)</h3>
+<h4 id="tahap-a-menyiapkan-lahan-folder-konten">TAHAP A: Menyiapkan Lahan (Folder &amp; Konten)</h4>
+<p>Kita tidak boleh mencampur file <code>blog</code> dengan file <code>www</code> utama. Kita buatkan folder baru.</p>
+<p><strong>1. Buat Direktori Blog:</strong></p>
+<pre><code class="language-bash">mkdir /var/www/blog
+</code></pre>
+<p><strong>2. Buat Halaman Sambutan (Index):</strong>
+Biar kita tahu kalau kita sudah sampai di blog.</p>
+<pre><code class="language-bash">nano /var/www/blog/index.html
+</code></pre>
+<p><strong>3. Isi Konten Sederhana:</strong>
+<em>(Copy-paste kode HTML ini)</em></p>
+<pre><code class="language-html">&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;Blog Teungku&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1 style=&quot;color: blue;&quot;&gt;Selamat Datang di Blog Teungku!&lt;/h1&gt;
+    &lt;p&gt;Ini adalah website kedua yang berjalan di server yang sama.&lt;/p&gt;
+    &lt;p&gt;Teknologi: Virtual Host Apache.&lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>Simpan (<code>Ctrl+O</code>) dan keluar (<code>Ctrl+X</code>).</p>
+<p><strong>4. Atur Kepemilikan (Penting):</strong>
+Agar Apache bisa membaca file ini.</p>
+<pre><code class="language-bash">chown -R www-data:www-data /var/www/blog
+chmod -R 755 /var/www/blog
+</code></pre>
+<hr />
+<h4 id="tahap-b-menerbitkan-surat-izin-config-file">TAHAP B: Menerbitkan Surat Izin (Config File)</h4>
+<p>Sekarang kita harus memberitahu Apache bahwa ada toko baru bernama &ldquo;Blog&rdquo;.</p>
+<p><strong>1. Masuk ke Kantor Perizinan Apache:</strong>
+Lokasi semua konfigurasi website ada di sini.</p>
+<pre><code class="language-bash">cd /etc/apache2/sites-available/
+</code></pre>
+<p><strong>2. Copy Template (Jangan Ngetik dari Nol):</strong>
+Kita duplikat saja konfigurasi default yang sudah ada biar tidak capek ngetik.</p>
+<pre><code class="language-bash">cp default blog.teungku.edu
+</code></pre>
+<p><strong>3. Edit Surat Izin Baru:</strong></p>
+<pre><code class="language-bash">nano blog.teungku.edu
+</code></pre>
+<p><strong>4. MODIFIKASI (Fokus di Sini!):</strong>
+Anda akan melihat banyak teks. Fokus ubah bagian-bagian ini saja:</p>
+<ul>
+<li><strong>ServerAdmin:</strong> Ganti jadi email Anda (opsional).</li>
+<li><strong>ServerName (WAJIB ADA):</strong> Tambahkan baris ini di bawah ServerAdmin.
+    <code>apache
+    ServerName blog.teungku.edu</code></li>
+<li><strong>DocumentRoot (WAJIB UBAH):</strong> Arahkan ke folder yang kita buat tadi.
+    <code>apache
+    DocumentRoot /var/www/blog</code></li>
+<li><strong>Directory (WAJIB UBAH):</strong> Ubah juga path di dalam tag <code>&lt;Directory ...&gt;</code>.
+    <code>apache
+    &lt;Directory /var/www/blog&gt;</code></li>
+</ul>
+<p><strong>Hasil Akhirnya (Kurang Lebih Begini):</strong></p>
+<pre><code class="language-apache">&lt;VirtualHost *:80&gt;
+    ServerAdmin webmaster@teungku.edu
+    ServerName blog.teungku.edu
+
+    DocumentRoot /var/www/blog
+    &lt;Directory /var/www/blog&gt;
+        Options Indexes FollowSymLinks MultiViews
+        AllowOverride None
+        Order allow,deny
+        allow from all
+    &lt;/Directory&gt;
+
+    # ... (sisanya biarkan default) ...
+&lt;/VirtualHost&gt;
+</code></pre>
+<p>Simpan (<code>Ctrl+O</code>) dan keluar (<code>Ctrl+X</code>).</p>
+<hr />
+<h3 id="pojok-benang-merah-real-case-study">🚧 POJOK &ldquo;BENANG MERAH&rdquo; (Real Case Study)</h3>
+<p><strong>Kasus:</strong> &ldquo;Mas, saya sudah buat file config <code>blog.teungku.edu</code>, tapi kok pas diakses masih masuk ke web utama (<code>It works</code>)?&rdquo;</p>
+<p><strong>Penyebab:</strong>
+Anda baru &ldquo;Menulis Surat Izin&rdquo;, tapi belum &ldquo;Menandatangani/Meresmikan&rdquo;-nya. Apache belum memuat file konfigurasi baru tersebut. File itu masih sekadar teks mati di folder <code>sites-available</code>.</p>
+<p><strong>Solusi:</strong>
+Kita harus melakukan <strong>Aktivasi (Enable Site)</strong>. Ini akan kita lakukan di <strong>Segmen 2</strong>. Jadi jangan panik kalau belum bisa diakses sekarang.</p>
+<hr />
+<h3 id="momen-ka-boom-verification-segmen-1">📸 MOMEN &ldquo;KA-BOOM!&rdquo; (Verification Segmen 1)</h3>
+<p>Cek apakah file konfigurasi kita bebas dari <em>Typo</em> (Salah Ketik).
+Apache punya fitur cek sintaks.</p>
+<p><strong>Ketik:</strong></p>
+<pre><code class="language-bash">apache2ctl configtest
+</code></pre>
+<p><strong>Hasil Sukses:</strong>
+Harus muncul tulisan: <code>Syntax OK</code>.
+<em>(Kalau muncul warning <code>Could not reliably determine the server's fully qualified domain name</code>, abaikan saja. Yang penting <code>Syntax OK</code>)</em>.</p>
+<hr />
+<p><em>(Segmen 1 Selesai. Toko sudah siap, izin sudah diketik. Sekarang saatnya Gunting Pita Peresmian dan Sebar Brosur di Segmen 2&hellip;)</em></p>
+<p>Ini adalah langkah terakhir untuk menjadi <strong>Juragan Kost Digital</strong>.</p>
+<p>Toko (Folder Blog) sudah siap, Surat Izin (Config) sudah diketik. Tapi, toko itu masih &ldquo;Tutup&rdquo;. Lampunya mati, dan belum ada orang yang tahu kalau toko itu ada.</p>
+<p>Di Segmen 2 ini, kita akan melakukan <strong>Gunting Pita (Aktivasi)</strong> dan <strong>Menyebar Brosur (Update DNS)</strong>.</p>
+<hr />
+<h1 id="bab-3-web-hosting-master_1">📖 BAB 3: WEB HOSTING MASTER</h1>
+<h2 id="part-12-hosting-banyak-web-segmen-2">(Part 12) Hosting Banyak Web: Segmen 2</h2>
+<p><strong>(Activation &amp; DNS Mapping)</strong></p>
+<h3 id="tagline_1">🏷️ TAGLINE</h3>
+<p><em>&ldquo;Menyalakan Lampu Toko dan Menyebar Undangan&rdquo;</em></p>
+<hr />
+<h3 id="konsep-warung-kopi-analogi_1">☕ KONSEP &ldquo;WARUNG KOPI&rdquo; (Analogi)</h3>
+<ol>
+<li>
+<p><strong>a2ensite (Apache2 Enable Site):</strong>
+    Di Segmen 1, kita baru menulis surat izin di kertas. Surat itu masih tersimpan di laci (<code>sites-available</code>).
+    Perintah <code>a2ensite</code> adalah tindakan <strong>Menempelkan Surat Izin</strong> itu di dinding (<code>sites-enabled</code>). Begitu ditempel, Satpam Mall (Apache) baru sadar: <em>&ldquo;Oh, ada toko baru ya? Oke, saya siap antar tamu ke sana.&rdquo;</em></p>
+</li>
+<li>
+<p><strong>DNS/Hosts:</strong>
+    Toko sudah buka, tapi pengunjung (Windows 7) belum tahu namanya. Kalau mereka ketik <code>blog.teungku.edu</code>, mereka bingung itu di mana.
+    Kita harus update &ldquo;Buku Kontak&rdquo; mereka: <em>&ldquo;Eh, <code>blog.teungku.edu</code> itu alamatnya sama kok dengan <code>www.teungku.edu</code> (192.168.10.1). Cuma beda pintu aja.&rdquo;</em></p>
+</li>
+</ol>
+<hr />
+<h3 id="misi-operasi-segmen-2">🎯 MISI OPERASI (Segmen 2)</h3>
+<ol>
+<li>Mengaktifkan website baru dengan perintah sakti <code>a2ensite</code>.</li>
+<li>Me-reload Apache (Tanpa mematikan server, cuma refresh).</li>
+<li>Mendaftarkan nama <code>blog.teungku.edu</code> di komputer klien (Windows 7).</li>
+</ol>
+<hr />
+<h3 id="persiapan_1">🛠️ PERSIAPAN</h3>
+<ul>
+<li>Masih login sebagai <strong>root</strong>.</li>
+<li>Buka <strong>Windows 7</strong> (Klien) Anda.</li>
+</ul>
+<hr />
+<h3 id="langkah-eksekusi-segmen-2">💻 LANGKAH EKSEKUSI (Segmen 2)</h3>
+<h4 id="tahap-a-gunting-pita-aktivasi-site">TAHAP A: Gunting Pita (Aktivasi Site)</h4>
+<p>Kita sahkan konfigurasi yang kita buat di Segmen 1.</p>
+<p><strong>1. Aktifkan Site Blog:</strong></p>
+<pre><code class="language-bash">a2ensite blog.teungku.edu
+</code></pre>
+<ul>
+<li><strong>Hasil:</strong> Muncul tulisan <code>Enabling site blog.teungku.edu</code>.</li>
+<li><em>Catatan: Anda tidak perlu mengetik ekstensi <code>.conf</code> jika di Debian 7 nama filenya tidak pakai <code>.conf</code>. Sesuai nama file yang Anda buat.</em></li>
+</ul>
+<p><strong>2. Reload Apache (Penyegaran):</strong>
+Kita tidak perlu <code>restart</code> (mematikan total). Cukup <code>reload</code> (baca ulang konfigurasi) agar pengunjung lain tidak terganggu.</p>
+<pre><code class="language-bash">service apache2 reload
+</code></pre>
+<ul>
+<li><strong>Hasil:</strong> <code>[ ok ] Reloading web server config...</code>.</li>
+</ul>
+<hr />
+<h4 id="tahap-b-menyebar-undangan-update-dns-klien">TAHAP B: Menyebar Undangan (Update DNS Klien)</h4>
+<p>Supaya Windows 7 tahu ke mana harus pergi saat kita ketik alamat blog.</p>
+<p><strong>Lakukan ini di WINDOWS 7 (Klien):</strong></p>
+<p><strong>1. Buka Notepad sebagai Administrator:</strong></p>
+<ul>
+<li>Start -&gt; All Programs -&gt; Accessories.</li>
+<li>Klik Kanan <strong>Notepad</strong> -&gt; <strong>Run as administrator</strong>.</li>
+</ul>
+<p><strong>2. Buka File Hosts:</strong></p>
+<ul>
+<li>File -&gt; Open.</li>
+<li>Arahkan ke: <code>C:\Windows\System32\drivers\etc\</code></li>
+<li>Ubah pilihan file di pojok kanan bawah dari <code>Text Documents</code> menjadi <code>All Files</code>.</li>
+<li>Pilih file bernama <strong><code>hosts</code></strong>.</li>
+</ul>
+<p><strong>3. Tambahkan Alamat Baru:</strong>
+Tambahkan baris untuk blog di bawah alamat utama yang dulu.</p>
+<pre><code class="language-text">192.168.10.1    www.teungku.edu
+192.168.10.1    blog.teungku.edu   &lt;-- TAMBAHKAN INI
+</code></pre>
+<p><em>(Lihat? IP-nya SAMA. Tapi namanya BEDA. Itulah keajaiban Virtual Host).</em></p>
+<p><strong>4. Simpan:</strong>
+File -&gt; Save (<code>Ctrl+S</code>).</p>
+<hr />
+<h3 id="pojok-benang-merah-real-case-study_1">🚧 POJOK &ldquo;BENANG MERAH&rdquo; (Real Case Study)</h3>
+<p><strong>Kasus:</strong> &ldquo;Mas, saya sudah reload Apache, sudah edit hosts. Tapi pas buka <code>blog.teungku.edu</code>, kok yang muncul masih halaman <strong>&lsquo;It works!&lsquo;</strong> (Halaman Utama)?&rdquo;</p>
+<p><strong>Penyebab (Browser Cache):</strong>
+Browser itu sok tahu. Dia ingat kalau IP <code>192.168.10.1</code> itu isinya &ldquo;It works!&ldquo;, jadi dia malas ngecek lagi ke server. Dia kasih Anda tampilan lama dari memori dia (Cache).</p>
+<p><strong>Solusi:</strong></p>
+<ol>
+<li><strong>Hard Refresh:</strong> Tekan <code>Ctrl + F5</code> di browser.</li>
+<li><strong>Mode Penyamaran:</strong> Buka browser dalam mode <strong>Incognito / Private Window</strong>. Ini memaksa browser mengambil data segar dari server.</li>
+</ol>
+<hr />
+<h3 id="momen-ka-boom-verification-part-12">📸 MOMEN &ldquo;KA-BOOM!&rdquo; (Verification Part 12)</h3>
+<p>Saatnya pembuktian apakah Mall kita sudah punya dua toko berbeda.</p>
+<p><strong>1. Buka Toko Utama:</strong>
+Ketik: <code>http://www.teungku.edu</code></p>
+<ul>
+<li><strong>Hasil:</strong> Halaman putih tulisan <strong>&ldquo;It works!&ldquo;</strong> (Default Apache).</li>
+</ul>
+<p><strong>2. Buka Toko Kedua:</strong>
+Ketik: <code>http://blog.teungku.edu</code></p>
+<ul>
+<li><strong>Hasil:</strong><ul>
+<li>Halaman dengan Judul Biru: <strong>&ldquo;Selamat Datang di Blog Teungku!&ldquo;</strong>.</li>
+<li>Tulisan: <em>&ldquo;Ini adalah website kedua&hellip;&rdquo;</em>.</li>
+</ul>
+</li>
+</ul>
+<p>Jika kedua alamat tersebut menampilkan <strong>konten yang berbeda</strong> padahal <strong>IP-nya sama</strong>, maka&hellip;</p>
+<p><strong>SELAMAT!</strong> 🥳
+Anda resmi menjadi <strong>Juragan Hosting</strong>. Anda bisa membuat 10, 100, atau 1000 website di server ini dengan cara yang sama (Buat Folder -&gt; Buat Config -&gt; Enable -&gt; Update Hosts).</p>
+<hr />
+<p><strong>🏁 PENUTUP RESMI PART 12:</strong>
+Kita sudah punya banyak website. Tapi&hellip; website kita masih pakai <code>HTTP</code> (Gembok Terbuka / Tidak Aman). Kalau ada yang login, passwordnya bisa diintip hacker.</p>
+<p>Di zaman sekarang, website wajib pakai <strong>HTTPS (Gembok Hijau)</strong>.
+Di <strong>(Part 13) Menggembok Situs (SSL/HTTPS)</strong>, kita akan belajar membuat Sertifikat Keamanan sendiri dan memasangnya di Apache.</p>
+    </div>
+    
+    <nav class="article-footer-nav">
+        <a href="../../blog.html" class="cta-button">← Kembali ke Blog</a>
+    </nav>
+    
+</article>
+    </main>
+    
+    <footer>
+        <p>&copy; 2026 - Teungku Zulkifli. Dibuat dengan ❤️</p>
+    </footer>
+    
+    <div class="floating-lang-switcher">
+        <div class="lang-options">
+            <button id="lang-id">ID</button>
+            <button id="lang-en">EN</button>
+        </div>
+        <button class="lang-globe-btn" aria-label="Pilih Bahasa">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+        </button>
+    </div>
+    
+    <script src="../../assets/js/languages.js"></script>
+    <script src="../../assets/js/main.script.js" defer></script>
+    
+</body>
+</html>

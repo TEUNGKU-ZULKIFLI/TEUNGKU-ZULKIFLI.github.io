@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>(Part 13): Konfigurasi SSL - Teungku Zulkifli</title>
+    <meta name="description" content="">
+    <meta name="author" content="Teungku Zulkifli">
+    
+    <meta property="og:title" content="(Part 13): Konfigurasi SSL - Teungku Zulkifli">
+    <meta property="og:description" content="">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://teungku.me">
+    
+    <link rel="stylesheet" href="../../assets/css/main.style.css">
+    
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="../../index.html" class="logo">Teungku Zulkifli</a>
+            <ul id="nav-links">
+                <li><a data-lang="common.navHome" href="../../index.html#home">Beranda</a></li>
+                <li><a data-lang="common.navAbout" href="../../index.html#about">Tentang</a></li>
+                <li><a data-lang="common.navContact" href="../../index.html#contact">Kontak</a></li>
+                <li><a data-lang="common.navProjects" href="../../projects.html">Proyek</a></li>
+                <li><a data-lang="common.navBlog" href="../../blog.html">Blog</a></li>
+            </ul>
+            <button id="hamburger-btn" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+    
+    <main>
+<article id="article-content">
+    
+    <header class="article-header">
+        <h1>(Part 13): Konfigurasi SSL</h1>
+        
+        <div class="article-meta">
+            <span class="meta-item">
+                📅 <time datetime="2025-10-06">2025-10-06</time>
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                🏷️ Course
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                ✍️ Teungku Zulkifli
+            </span>
+        </div>
+        
+        <div class="article-tags">
+            <span class="article-tag">#debian-server-series</span>
+        </div>
+    </header>
+    
+    <hr class="article-divider">
+    
+    <div class="article-body">
+        <iframe src="https://www.youtube.com/embed/hnhcRUBBfSU?controls=0&modestbranding=1&rel=0&disablekb=1&autoplay=0" style="display:block;margin:auto;border:none;width:100%;max-width:960px;height:540px;" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+<h1 id="dokumentasi-debian-di-hyper-v-part-13-konfigurasi-ssl">Dokumentasi Debian di Hyper V (Part 13): Konfigurasi SSL</h1>
+<p><strong>Catatan Perjalanan &amp; Solusi Praktis untuk VM Debian 7.8.0 &ldquo;Wheezy&rdquo;</strong></p>
+<hr />
+<h2 id="pendahuluan">Pendahuluan 🚀</h2>
+<p>Selamat datang di catatan perjalanan saya dalam membangun sebuah server dari nol! Dokumen ini lebih dari sekadar terjemahan; ini adalah sebuah logbook praktis dari proses konfigurasi awal server <strong>Debian 7.8.0 &ldquo;Wheezy&rdquo;</strong>. Setiap langkah di dalamnya tidak hanya diriset, tetapi juga telah dipraktikkan, diuji, dan yang terpenting, dilengkapi dengan solusi untuk setiap masalah tak terduga yang muncul di tengah jalan.</p>
+<p>Tujuannya adalah untuk menciptakan sebuah panduan yang jujur dan mudah diikuti, terutama bagi mereka yang mungkin menempuh jalur yang sama dengan perangkat lunak versi lama ini. Semoga catatan ini bisa menjadi peta yang berguna, menunjukkan bukan hanya jalan yang lurus, tetapi juga cara melewati setiap rintangan.</p>
+<h3 id="credits-referensi">Credits &amp; Referensi</h3>
+<p>Proses ini tidak akan berjalan lancar tanpa sumber daya dan bantuan yang luar biasa. Kredit sepenuhnya diberikan kepada:</p>
+<ul>
+<li><strong><a href="https://www.server-world.info/en/note?os=Debian_7.0">Server-World</a></strong>: Sebagai referensi utama dan panduan dasar untuk semua tahapan konfigurasi. Panduan mereka yang komprehensif menjadi titik awal dari petualangan ini.</li>
+<li><strong>Gemini (Model AI Google)</strong>: Sebagai mitra diskusi interaktif, asisten riset, dan &ldquo;pengumpul data&rdquo;. Gemini membantu dalam menerjemahkan konsep, mendiagnosis masalah unik (seperti error GPG dan repositori arsip), serta menyusun penjelasan langkah demi langkah yang detail.</li>
+</ul>
+<hr />
+<p>Di Part 12, kita sudah punya banyak toko. Tapi toko-toko itu pintunya masih terbuka lebar (HTTP). Kalau ada pelanggan yang bertransaksi, tetangga yang kepo bisa mengintip data mereka.</p>
+<p>Di Part 13 ini, kita akan memasang <strong>Pintu Baja (HTTPS)</strong> dan <strong>Gembok Digital (SSL)</strong>.</p>
+<p>Karena proses ini melibatkan pembuatan &ldquo;Kunci Rahasia&rdquo; (Kriptografi) dan pemasangan di Apache, kita bagi menjadi <strong>2 Segmen</strong>:</p>
+<ul>
+<li><strong>Segmen 1:</strong> Menyalakan Mesin Enkripsi &amp; Membuat KTP Digital.</li>
+<li><strong>Segmen 2:</strong> Memasang Gembok di Pintu Utama.</li>
+</ul>
+<p>Mari kita mulai!</p>
+<hr />
+<h1 id="bab-3-web-hosting-master">📖 BAB 3: WEB HOSTING MASTER</h1>
+<h2 id="part-13-menggembok-situs-segmen-1">(Part 13) Menggembok Situs: Segmen 1</h2>
+<p><strong>(Enable SSL &amp; Generate Certificate)</strong></p>
+<h3 id="tagline">🏷️ TAGLINE</h3>
+<p><em>&ldquo;Membuat KTP Digital dan Menyalakan Mesin Enkripsi&rdquo;</em></p>
+<hr />
+<h3 id="konsep-warung-kopi-analogi">☕ KONSEP &ldquo;WARUNG KOPI&rdquo; (Analogi)</h3>
+<ol>
+<li>
+<p><strong>HTTP (Surat Terbuka):</strong>
+    Saat ini website kita berjalan di protokol HTTP. Ini ibarat mengirim surat menggunakan <strong>Kartu Pos</strong>. Tukang pos, tetangga, atau orang jahat di jalan bisa membaca isi surat itu dengan mudah.</p>
+</li>
+<li>
+<p><strong>HTTPS (Surat Tersegel):</strong>
+    Kita ingin mengubahnya menjadi HTTPS. Ini ibarat mengirim surat di dalam <strong>Amplop Baja Tersegel</strong>. Hanya pengirim dan penerima yang punya kuncinya. Orang di jalan cuma lihat amplopnya, tapi tidak bisa baca isinya.</p>
+</li>
+<li>
+<p><strong>Self-Signed Certificate (KTP Bikin Sendiri):</strong>
+    Untuk menyegel amplop itu, server butuh identitas (Sertifikat SSL).
+    Normalnya, kita beli sertifikat di lembaga resmi (Verisign/Google) biar dipercaya.
+    Tapi karena kita lagi belajar (dan irit), kita akan <strong>Mencetak KTP Sendiri</strong> di rumah.
+    <em>Konsekuensinya:</em> Nanti Browser akan komplain &ldquo;Ini KTP palsu ya?&rdquo;. Tapi fungsinya tetap sama: <strong>Enkripsi tetap berjalan aman.</strong></p>
+</li>
+</ol>
+<hr />
+<h3 id="misi-operasi-segmen-1">🎯 MISI OPERASI (Segmen 1)</h3>
+<ol>
+<li>Mengaktifkan Modul SSL di Apache (Menyalakan fitur HTTPS).</li>
+<li>Membuat folder rahasia untuk menyimpan kunci.</li>
+<li>Membuat Sertifikat SSL (KTP) dan Kunci Privat (Private Key) menggunakan OpenSSL.</li>
+</ol>
+<hr />
+<h3 id="persiapan">🛠️ PERSIAPAN</h3>
+<ul>
+<li>Login sebagai <strong>root</strong>.</li>
+<li>Pastikan jam server akurat (Ingat NTP di Part 3? Jam yang salah bikin sertifikat tidak valid!).</li>
+</ul>
+<hr />
+<h3 id="langkah-eksekusi-segmen-1">💻 LANGKAH EKSEKUSI (Segmen 1)</h3>
+<h4 id="tahap-a-menyalakan-mesin-enkripsi">TAHAP A: Menyalakan Mesin Enkripsi</h4>
+<p>Apache punya fitur SSL, tapi default-nya dimatikan biar ringan. Kita nyalakan dulu.</p>
+<p><strong>1. Aktifkan Modul SSL:</strong></p>
+<pre><code class="language-bash">a2enmod ssl
+</code></pre>
+<p><strong>2. Restart Apache:</strong>
+Biar mesinnya panas.</p>
+<pre><code class="language-bash">service apache2 restart
+</code></pre>
+<p><strong>3. Cek Port 443:</strong>
+HTTPS berjalan di Port 443. Kita cek apakah Apache sudah siap dengar di sana.</p>
+<pre><code class="language-bash">netstat -tlnp | grep 443
+</code></pre>
+<ul>
+<li><strong>Hasil:</strong> Muncul baris <code>tcp ... :::443 ... LISTEN ... apache2</code>. (Artinya telinga Apache sudah terbuka).</li>
+</ul>
+<hr />
+<h4 id="tahap-b-mencetak-ktp-dan-kunci-openssl">TAHAP B: Mencetak KTP dan Kunci (OpenSSL)</h4>
+<p>Kita akan jadi pemalsu dokumen sebentar (hehe). Kita buat sertifikat sendiri.</p>
+<p><strong>1. Buat Brankas Kunci:</strong>
+Buat folder agar file tidak berceceran.</p>
+<pre><code class="language-bash">mkdir /etc/apache2/ssl
+</code></pre>
+<p><strong>2. Generate Sertifikat (Satu Perintah Panjang):</strong>
+Ketik (atau copy) perintah ini. Ini akan membuat Kunci (<code>apache.key</code>) dan KTP (<code>apache.crt</code>) yang berlaku selama 365 hari.</p>
+<pre><code class="language-bash">openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+-keyout /etc/apache2/ssl/apache.key \
+-out /etc/apache2/ssl/apache.crt
+</code></pre>
+<p><strong>3. Isi Formulir Identitas (PENTING!):</strong>
+Anda akan ditanya beberapa hal. Isi bebas, <strong>KECUALI &ldquo;Common Name&rdquo;</strong>.</p>
+<ul>
+<li><em>Country Name (2 letter code):</em> <strong>ID</strong></li>
+<li><em>State or Province Name:</em> <strong>Aceh</strong></li>
+<li><em>Locality Name:</em> <strong>Lhokseumawe</strong></li>
+<li><em>Organization Name:</em> <strong>Teungku Edu</strong></li>
+<li><em>Organizational Unit Name:</em> <strong>IT Dept</strong></li>
+<li><strong>Common Name (e.g. server FQDN):</strong> <code>www.teungku.edu</code>  \&lt;&ndash; <strong>(WAJIB SAMA DENGAN DOMAIN ANDA!)</strong></li>
+<li><em>Email Address:</em> <code>admin@teungku.edu</code></li>
+</ul>
+<hr />
+<h3 id="pojok-benang-merah-real-case-study">🚧 POJOK &ldquo;BENANG MERAH&rdquo; (Real Case Study)</h3>
+<p><strong>Kasus:</strong> &ldquo;Mas, sertifikat sudah jadi. Tapi nanti pas dipasang, browser bilang <strong>&lsquo;Certificate Name Mismatch&rsquo;</strong>.&rdquo;</p>
+<p><strong>Penyebab:</strong>
+Di bagian <strong>Common Name</strong>, Anda mengisi nama Anda sendiri (misal: &ldquo;Budi&rdquo;), padahal domainnya <code>www.teungku.edu</code>.
+KTP Digital itu harus atas nama Website, bukan atas nama pemiliknya.</p>
+<p><strong>Solusi:</strong>
+Pastikan <strong>Common Name</strong> diisi persis dengan nama domain utama yang mau digembok.</p>
+<hr />
+<h3 id="momen-ka-boom-verification-segmen-1">📸 MOMEN &ldquo;KA-BOOM!&rdquo; (Verification Segmen 1)</h3>
+<p>Cek apakah brankas kita sudah terisi.</p>
+<p><strong>Perintah:</strong></p>
+<pre><code class="language-bash">ls -l /etc/apache2/ssl/
+</code></pre>
+<p><strong>Hasil Sukses:</strong>
+Harus ada dua file:</p>
+<ol>
+<li><code>apache.crt</code> (Sertifikat/KTP Publik).</li>
+<li><code>apache.key</code> (Kunci Rahasia).</li>
+</ol>
+<p>Jika dua file itu ada, berarti Anda sudah memegang &ldquo;Lisensi Keamanan&rdquo;. Sekarang tinggal kita pasang di pintu toko.</p>
+<hr />
+<p><em>(Segmen 1 Selesai. Lanjut ke Segmen 2: Pemasangan Gembok&hellip;)</em></p>
+<hr />
+<h1 id="bab-3-web-hosting-master_1">📖 BAB 3: WEB HOSTING MASTER</h1>
+<h2 id="part-13-menggembok-situs-segmen-2">(Part 13) Menggembok Situs: Segmen 2</h2>
+<p><strong>(Apache SSL Configuration)</strong></p>
+<h3 id="tagline_1">🏷️ TAGLINE</h3>
+<p><em>&ldquo;Memasang Gembok pada Pintu Utama&rdquo;</em></p>
+<hr />
+<h3 id="konsep-warung-kopi-analogi_1">☕ KONSEP &ldquo;WARUNG KOPI&rdquo; (Analogi)</h3>
+<p>Di Segmen 1, kita sudah punya Gembok dan Kunci (<code>.crt</code> dan <code>.key</code>). Tapi gembok itu masih dikantongi, belum dipasang di pintu.</p>
+<p>Sekarang, kita akan memberitahu Satpam Mall (Apache):
+<em>&ldquo;Pak Satpam, tolong untuk toko <code>www.teungku.edu</code>, aktifkan pintu khusus (Port 443). Dan kalau ada tamu masuk lewat situ, periksa KTP Digital ini dulu ya.&rdquo;</em></p>
+<p>Kita akan mengedit file konfigurasi khusus SSL bawaan Apache (<code>default-ssl</code>).</p>
+<hr />
+<h3 id="misi-operasi-segmen-2">🎯 MISI OPERASI (Segmen 2)</h3>
+<ol>
+<li>Mengedit konfigurasi <code>default-ssl</code> agar menunjuk ke sertifikat buatan kita.</li>
+<li>Mengaktifkan situs SSL.</li>
+<li>Verifikasi Browser (Menghadapi Peringatan Keamanan).</li>
+</ol>
+<hr />
+<h3 id="langkah-eksekusi-segmen-2">💻 LANGKAH EKSEKUSI (Segmen 2)</h3>
+<h4 id="tahap-a-memasang-gembok-edit-config">TAHAP A: Memasang Gembok (Edit Config)</h4>
+<p><strong>1. Edit File Config SSL Default:</strong></p>
+<pre><code class="language-bash">nano /etc/apache2/sites-available/default-ssl
+</code></pre>
+<p><strong>2. Arahkan ke Sertifikat Kita:</strong>
+Cari baris <code>SSLCertificateFile</code> dan <code>SSLCertificateKeyFile</code>.
+Ubah jalur (path)-nya agar mengarah ke file yang kita buat di Segmen 1.</p>
+<pre><code class="language-apache">    # Arahkan ke KTP Kita
+    SSLCertificateFile    /etc/apache2/ssl/apache.crt
+
+    # Arahkan ke Kunci Kita
+    SSLCertificateKeyFile /etc/apache2/ssl/apache.key
+</code></pre>
+<p><strong>3. Pastikan ServerName (Opsional tapi Bagus):</strong>
+Tepat di bawah <code>ServerAdmin</code>, tambahkan:</p>
+<pre><code class="language-apache">    ServerName www.teungku.edu
+</code></pre>
+<p>Simpan (<code>Ctrl+O</code>) dan keluar (<code>Ctrl+X</code>).</p>
+<hr />
+<h4 id="tahap-b-aktivasi-pintu-aman">TAHAP B: Aktivasi Pintu Aman</h4>
+<p><strong>1. Aktifkan Situs SSL:</strong></p>
+<pre><code class="language-bash">a2ensite default-ssl
+</code></pre>
+<ul>
+<li><strong>Hasil:</strong> <code>Enabling site default-ssl</code>.</li>
+</ul>
+<p><strong>2. Restart Apache:</strong></p>
+<pre><code class="language-bash">service apache2 restart
+</code></pre>
+<ul>
+<li><strong>Hasil:</strong> <code>[ ok ] ...</code>.</li>
+</ul>
+<hr />
+<h3 id="pojok-benang-merah-real-case-study_1">🚧 POJOK &ldquo;BENANG MERAH&rdquo; (Real Case Study)</h3>
+<p><strong>Kasus:</strong> &ldquo;Mas, Apache gagal restart! Error!&rdquo;
+<strong>Penyebab:</strong> Salah ketik nama file atau path di TAHAP A. Misal nulis <code>apache.key</code> padahal filenya <code>apache.key</code> (eh sama? Maksudnya typo huruf, misal <code>apache.ky</code>).
+<strong>Solusi:</strong> Cek ulang nama file dengan <code>ls /etc/apache2/ssl</code>, pastikan sama persis dengan yang ditulis di <code>nano</code>.</p>
+<hr />
+<h3 id="momen-ka-boom-verification-part-13">📸 MOMEN &ldquo;KA-BOOM!&rdquo; (Verification Part 13)</h3>
+<p>Ini adalah momen paling unik, karena &ldquo;Error&rdquo; di browser justru menandakan &ldquo;Sukses&rdquo;.</p>
+<p><strong>1. Buka Browser (Windows 7):</strong>
+Ketik alamat dengan protokol <strong>HTTPS</strong>:
+<code>https://www.teungku.edu</code></p>
+<p><strong>2. REAKSI BROWSER (The Warning):</strong>
+Browser akan menampilkan layar merah/kuning besar:</p>
+<blockquote>
+<p><strong>&ldquo;Your connection is not private&rdquo;</strong> atau <strong>&ldquo;Potential Security Risk Ahead&rdquo;</strong>.</p>
+</blockquote>
+<p><strong>JANGAN PANIK! INI SUKSES!</strong></p>
+<ul>
+<li><strong>Kenapa muncul?</strong> Karena KTP (Sertifikat) kita buatan sendiri, bukan buatan lembaga resmi. Browser curiga.</li>
+<li><strong>Kenapa ini Sukses?</strong> Karena browser <em>mendeteksi</em> adanya enkripsi SSL. Kalau gagal, browser cuma bakal bilang &ldquo;Site can&rsquo;t be reached&rdquo;.</li>
+</ul>
+<p><strong>3. Lanjutkan (Proceed):</strong></p>
+<ul>
+<li>Klik <strong>Advanced</strong>.</li>
+<li>Klik <strong>Proceed to www.teungku.edu (unsafe)</strong> atau <strong>Add Exception</strong>.</li>
+</ul>
+<p><strong>4. Hasil Akhir:</strong>
+Anda akan melihat website &ldquo;It works!&rdquo; seperti biasa.
+TAPI, lihat di <em>Address Bar</em>:</p>
+<ul>
+<li>Ada <strong>Ikon Gembok</strong> (Mungkin ada tanda seru/coret merah, tapi Gemboknya ada).</li>
+<li>Alamatnya dimulai dengan <strong>https://</strong>.</li>
+</ul>
+<p>Selamat! Website Anda sekarang anti-sadap. Data yang lewat sudah diacak oleh mesin enkripsi yang Anda nyalakan.</p>
+<hr />
+<p><strong>🏁 PENUTUP PART 13:</strong>
+Anda sudah berhasil mengamankan jalur komunikasi.
+Sekarang server Anda sudah sangat mirip dengan hosting profesional:</p>
+<ul>
+<li>Punya Domain (DNS).</li>
+<li>Punya Web Server (Apache/PHP).</li>
+<li>Punya Database (MySQL).</li>
+<li>Punya Subdomain/VirtualHost (Blog).</li>
+<li>Punya Keamanan (SSL).</li>
+</ul>
+<p>Satu lagi fitur hosting yang belum kita punya: <strong>Hosting Paket Hemat</strong>.
+Bagaimana kalau teman Anda, Budi, mau numpang bikin web di server Anda tapi dia cuma user biasa, bukan admin?</p>
+<p>Di <strong>(Part 14) Paket Hemat Hosting (UserDir)</strong>, kita akan memberikan Budi ruang pribadi untuk berkarya.</p>
+    </div>
+    
+    <nav class="article-footer-nav">
+        <a href="../../blog.html" class="cta-button">← Kembali ke Blog</a>
+    </nav>
+    
+</article>
+    </main>
+    
+    <footer>
+        <p>&copy; 2026 - Teungku Zulkifli. Dibuat dengan ❤️</p>
+    </footer>
+    
+    <div class="floating-lang-switcher">
+        <div class="lang-options">
+            <button id="lang-id">ID</button>
+            <button id="lang-en">EN</button>
+        </div>
+        <button class="lang-globe-btn" aria-label="Pilih Bahasa">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+        </button>
+    </div>
+    
+    <script src="../../assets/js/languages.js"></script>
+    <script src="../../assets/js/main.script.js" defer></script>
+    
+</body>
+</html>

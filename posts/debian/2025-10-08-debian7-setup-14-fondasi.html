@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>(Part 15): Install & Konfigurasi Proxy Squid3 - Teungku Zulkifli</title>
+    <meta name="description" content="">
+    <meta name="author" content="Teungku Zulkifli">
+    
+    <meta property="og:title" content="(Part 15): Install & Konfigurasi Proxy Squid3 - Teungku Zulkifli">
+    <meta property="og:description" content="">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://teungku.me">
+    
+    <link rel="stylesheet" href="../../assets/css/main.style.css">
+    
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="../../index.html" class="logo">Teungku Zulkifli</a>
+            <ul id="nav-links">
+                <li><a data-lang="common.navHome" href="../../index.html#home">Beranda</a></li>
+                <li><a data-lang="common.navAbout" href="../../index.html#about">Tentang</a></li>
+                <li><a data-lang="common.navContact" href="../../index.html#contact">Kontak</a></li>
+                <li><a data-lang="common.navProjects" href="../../projects.html">Proyek</a></li>
+                <li><a data-lang="common.navBlog" href="../../blog.html">Blog</a></li>
+            </ul>
+            <button id="hamburger-btn" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+    
+    <main>
+<article id="article-content">
+    
+    <header class="article-header">
+        <h1>(Part 15): Install & Konfigurasi Proxy Squid3</h1>
+        
+        <div class="article-meta">
+            <span class="meta-item">
+                📅 <time datetime="2025-10-08">2025-10-08</time>
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                🏷️ Course
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                ✍️ Teungku Zulkifli
+            </span>
+        </div>
+        
+        <div class="article-tags">
+            <span class="article-tag">#debian-server-series</span>
+        </div>
+    </header>
+    
+    <hr class="article-divider">
+    
+    <div class="article-body">
+        <iframe src="https://www.youtube.com/embed/JBF8OZOBAqg?controls=0&modestbranding=1&rel=0&disablekb=1&autoplay=0" style="display:block;margin:auto;border:none;width:100%;max-width:960px;height:540px;" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+<h1 id="dokumentasi-debian-di-hyper-v-part-15-install-konfigurasi-proxy-squid3">Dokumentasi Debian di Hyper V (Part 15): Install &amp; Konfigurasi Proxy Squid3</h1>
+<p><strong>Catatan Perjalanan &amp; Solusi Praktis untuk VM Debian 7.8.0 &ldquo;Wheezy&rdquo;</strong></p>
+<hr />
+<h2 id="pendahuluan">Pendahuluan 🚀</h2>
+<p>Selamat datang di catatan perjalanan saya dalam membangun sebuah server dari nol! Dokumen ini lebih dari sekadar terjemahan; ini adalah sebuah logbook praktis dari proses konfigurasi awal server <strong>Debian 7.8.0 &ldquo;Wheezy&rdquo;</strong>. Setiap langkah di dalamnya tidak hanya diriset, tetapi juga telah dipraktikkan, diuji, dan yang terpenting, dilengkapi dengan solusi untuk setiap masalah tak terduga yang muncul di tengah jalan.</p>
+<p>Tujuannya adalah untuk menciptakan sebuah panduan yang jujur dan mudah diikuti, terutama bagi mereka yang mungkin menempuh jalur yang sama dengan perangkat lunak versi lama ini. Semoga catatan ini bisa menjadi peta yang berguna, menunjukkan bukan hanya jalan yang lurus, tetapi juga cara melewati setiap rintangan.</p>
+<h3 id="credits-referensi">Credits &amp; Referensi</h3>
+<p>Proses ini tidak akan berjalan lancar tanpa sumber daya dan bantuan yang luar biasa. Kredit sepenuhnya diberikan kepada:</p>
+<ul>
+<li><strong><a href="https://www.server-world.info/en/note?os=Debian_7.0">Server-World</a></strong>: Sebagai referensi utama dan panduan dasar untuk semua tahapan konfigurasi. Panduan mereka yang komprehensif menjadi titik awal dari petualangan ini.</li>
+<li><strong>Gemini (Model AI Google)</strong>: Sebagai mitra diskusi interaktif, asisten riset, dan &ldquo;pengumpul data&rdquo;. Gemini membantu dalam menerjemahkan konsep, mendiagnosis masalah unik (seperti error GPG dan repositori arsip), serta menyusun penjelasan langkah demi langkah yang detail.</li>
+</ul>
+<hr />
+<p>Mari kita masuk ke <strong>BAB 5</strong>.</p>
+<p>Server Anda sudah sangat pintar (bisa hosting, bisa email). Tapi&hellip; server yang pintar juga harus <strong>aman</strong>. Jangan sampai internet yang Anda bagikan ke klien (Windows 7) dipakai untuk hal-hal yang tidak produktif atau berbahaya.</p>
+<p>Kita akan memasang <strong>Gerbang Tol (Proxy)</strong>.
+Di Part 15 ini, kita fokus pada <strong>Pondasi Proxy-nya dulu (Squid3)</strong>. Kita akan membuatnya &ldquo;Transparan&rdquo;, artinya klien tidak perlu setting apa-apa di browser, tapi otomatis kena filter.</p>
+<hr />
+<h1 id="bab-5-keamanan-kontrol">📖 BAB 5: KEAMANAN &amp; KONTROL</h1>
+<p><em>(Sang Penjaga Gerbang)</em></p>
+<h2 id="part-15-gerbang-internet-squid3-transparent-proxy">(Part 15) Gerbang Internet: Squid3 Transparent Proxy</h2>
+<p><strong>(Caching &amp; Monitoring Gateway)</strong></p>
+<h3 id="tagline">🏷️ TAGLINE</h3>
+<p><em>&ldquo;Satpam Gaib yang Mengawasi Setiap Langkah Klien&rdquo;</em></p>
+<hr />
+<h3 id="konsep-warung-kopi-analogi">☕ KONSEP &ldquo;WARUNG KOPI&rdquo; (Analogi)</h3>
+<ol>
+<li>
+<p><strong>Proxy (Perantara):</strong>
+    Bayangkan Anda (Windows 7) mau beli barang di Toko (Internet).
+    Tanpa Proxy, Anda jalan sendiri ke toko.
+    Dengan Proxy (Squid), Anda nitip ke <strong>Satpam</strong>.</p>
+<ul>
+<li>Anda: <em>&ldquo;Pak, tolong belikan Google.com&rdquo;</em></li>
+<li>Satpam: <em>&ldquo;Oke, saya ambilkan.&rdquo;</em> -&gt; Pergi ke Google -&gt; Balik bawa data -&gt; Kasih ke Anda.</li>
+<li><strong>Keuntungannya:</strong> Satpam bisa mencatat apa yang Anda beli, dan kalau barangnya sudah ada di pos satpam (Cache), dia gak perlu jalan jauh lagi (Internet lebih cepat).</li>
+</ul>
+</li>
+<li>
+<p><strong>Transparent Proxy (Satpam Gaib):</strong>
+    Biasanya, Anda harus setting browser: <em>&ldquo;Gunakan Proxy 192.168.10.1&rdquo;</em>. Itu ribet.
+    <strong>Transparent Proxy</strong> itu licik. Anda merasa jalan langsung ke toko, tapi di tengah jalan, Router (IPTables) membelokkan Anda paksa ke Pos Satpam tanpa Anda sadari.</p>
+</li>
+</ol>
+<p><img src="https://encrypted-tbn0.gstatic.com/licensed-image?q=tbn:ANd9GcQ5ztolMOI-9LSw3HJU2GPJNriv_QMikPENNmS-MTfxrHK2IGfdSRl4C5wZx3lCVrh4linG4XQn8FFB3EVOlJ31A_IaC06xM3QRUCl-drH6MgTNeIw" width="400"></p>
+<hr />
+<h3 id="misi-operasi">🎯 MISI OPERASI</h3>
+<ol>
+<li>Menginstal <strong>Squid3</strong> (Mesin Proxy).</li>
+<li>Mengonfigurasi mode <strong>Transparent</strong> (Agar klien tidak perlu setting browser).</li>
+<li>Memasang jebakan <strong>IPTables</strong> (Membelokkan paksa traffic Web ke Proxy).</li>
+<li>Memonitor aktivitas klien secara <em>Live</em>.</li>
+</ol>
+<hr />
+<h3 id="persiapan">🛠️ PERSIAPAN</h3>
+<ul>
+<li>Login sebagai <strong>root</strong>.</li>
+<li>Pastikan Windows 7 konek internet via Debian (hasil Part 6 &amp; 7).</li>
+</ul>
+<hr />
+<h3 id="langkah-eksekusi">💻 LANGKAH EKSEKUSI</h3>
+<h4 id="tahap-a-merekrut-satpam-instalasi-squid">TAHAP A: Merekrut Satpam (Instalasi Squid)</h4>
+<p>Kita pakai versi 3 yang stabil di Debian 7.</p>
+<p><strong>1. Instal Paket:</strong></p>
+<pre><code class="language-bash">apt-get install squid3 -y
+</code></pre>
+<p><strong>2. Backup Konfigurasi (Wajib!):</strong>
+File config Squid itu panjangnya ribuan baris. Kalau salah edit, pusing carinya.</p>
+<pre><code class="language-bash">cp /etc/squid3/squid.conf /etc/squid3/squid.conf.backup
+</code></pre>
+<hr />
+<h4 id="tahap-b-buku-panduan-satpam-squidconf">TAHAP B: Buku Panduan Satpam (<code>squid.conf</code>)</h4>
+<p>Kita harus mengedit file konfigurasi raksasa ini.</p>
+<p><strong>1. Buka File Config:</strong></p>
+<pre><code class="language-bash">nano /etc/squid3/squid.conf
+</code></pre>
+<p><strong>2. Edit Port &amp; Mode Transparan:</strong>
+Gunakan fitur pencarian Nano (<code>Ctrl+W</code>) untuk mencari kata kunci.</p>
+<ul>
+<li><strong>Cari:</strong> <code>http_port 3128</code></li>
+<li><strong>Ubah menjadi:</strong>
+    <code>bash
+    http_port 3128 transparent</code>
+    <em>(Kata &ldquo;transparent&rdquo; inilah kuncinya!)</em></li>
+</ul>
+<p><strong>3. Edit Cache Manager (Opsional tapi Bagus):</strong></p>
+<ul>
+<li><strong>Cari:</strong> <code>cache_mgr</code></li>
+<li><strong>Ubah menjadi:</strong> <code>cache_mgr admin@teungku.edu</code> (Biar kalau error, email kita yang muncul).</li>
+</ul>
+<p><strong>4. Buka Izin Akses (ACL - Access Control List):</strong>
+Secara default, Squid menolak semua orang. Kita harus izinkan jaringan lokal (<code>192.168.10.0</code>).</p>
+<ul>
+<li>
+<p><strong>Cari:</strong> <code>INSERT YOUR OWN RULE</code> (Tekan <code>Ctrl+W</code> lalu ketik <code>INSERT YOUR</code>).</p>
+</li>
+<li>
+<p>Tepat <strong>DI BAWAH</strong> tulisan itu, tambahkan baris ini:</p>
+<p>```bash</p>
+<h1 id="izinkan-jaringan-lokal-teungku">Izinkan Jaringan Lokal Teungku</h1>
+<p>acl jaringan_lokal src 192.168.10.0/24
+http_access allow jaringan_lokal
+```</p>
+</li>
+</ul>
+<p><strong>5. Simpan dan Keluar:</strong>
+<code>Ctrl+O</code>, <code>Enter</code>, <code>Ctrl+X</code>.</p>
+<p><strong>6. Restart Squid (Agak Lama):</strong>
+Squid butuh waktu untuk membangun database cache.</p>
+<pre><code class="language-bash">service squid3 restart
+</code></pre>
+<hr />
+<h4 id="tahap-c-memasang-jebakan-iptables-redirect">TAHAP C: Memasang Jebakan (IPTables Redirect)</h4>
+<p>Squid sudah jalan di Port 3128. Tapi Windows 7 berselancar lewat Port 80. Mereka tidak ketemu.
+Kita harus paksa belokkan Port 80 ke 3128.</p>
+<p><strong>1. Pasang Aturan Redirect:</strong></p>
+<pre><code class="language-bash">iptables -t nat -A PREROUTING -s 192.168.10.0/24 -p tcp --dport 80 -j REDIRECT --to-port 3128
+</code></pre>
+<p><em>(Artinya: Hai NAT, kalau ada paket dari Jaringan Lokal mau ke Port 80 (Web), BELOKKAN ke Port 3128).</em></p>
+<p><strong>2. Simpan Permanen:</strong>
+Ingat, IPTables itu pelupa.</p>
+<pre><code class="language-bash">iptables-save &gt; /etc/iptables/rules.v4
+</code></pre>
+<hr />
+<h3 id="pojok-benang-merah-real-case-study">🚧 POJOK &ldquo;BENANG MERAH&rdquo; (Real Case Study)</h3>
+<p><strong>Kasus:</strong> &ldquo;Mas, Squid sudah jalan, tapi internet di Windows 7 malah <strong>MATI TOTAL</strong> (Timeout)?&rdquo;</p>
+<p><strong>Penyebab:</strong></p>
+<ol>
+<li><strong>Lupa ACL (Tahap B-4):</strong> Anda menyalakan proxy, tapi lupa memberi izin (<code>http_access allow</code>). Akibatnya Squid menolak koneksi.</li>
+<li><strong>Salah Ketik IPTables:</strong> Salah port atau salah IP.</li>
+</ol>
+<p><strong>Solusi:</strong>
+Cek status squid: <code>service squid3 status</code>.
+Jika mati, cek config lagi. Jika hidup tapi internet mati, cek log di Tahap Verifikasi di bawah ini.</p>
+<hr />
+<h3 id="momen-ka-boom-verification-part-15">📸 MOMEN &ldquo;KA-BOOM!&rdquo; (Verification Part 15)</h3>
+<p>Ini adalah momen paling keren. Kita akan mengintip apa yang dilakukan Windows 7 secara <em>Live</em>.</p>
+<p><strong>1. Buka Monitor Log (Di Terminal Debian):</strong>
+Kita gunakan perintah <code>tail -f</code> (buntut yang mengikuti).</p>
+<pre><code class="language-bash">tail -f /var/log/squid3/access.log
+</code></pre>
+<p><em>(Terminal akan diam menunggu&hellip;)</em></p>
+<p><strong>2. Buka Browser (Di Windows 7):</strong></p>
+<ul>
+<li>Buka <code>detik.com</code> atau <code>kompas.com</code>.</li>
+<li>Buka beberapa website lain.</li>
+</ul>
+<p><strong>3. LIHAT TERMINAL DEBIAN:</strong>
+Apakah teksnya berjalan cepat (scrolling)?
+Anda akan melihat baris-baris seperti:
+<code>16789... 192.168.10.100 ... GET http://detik.com ... TCP_MISS/200 ...</code></p>
+<ul>
+<li><strong>192.168.10.100:</strong> Itu IP Windows 7.</li>
+<li><strong>GET http://&hellip;:</strong> Itu situs yang dia buka.</li>
+</ul>
+<p>Jika log itu bergerak saat Anda browsing, <strong>SELAMAT!</strong> 🕵️‍♂️
+Anda telah berhasil memasang <strong>Gerbang Pengawas (Proxy)</strong>. Tidak ada satu pun website yang dibuka klien yang lolos dari pantauan Anda.</p>
+<hr />
+<p><strong>🏁 PENUTUP PART 15:</strong>
+Sekarang kita punya kuasa untuk <em>melihat</em>. Tapi kita belum punya kuasa untuk <em>melarang</em>.
+Klien masih bisa buka situs apa saja (Judi, Porno, dll), dan kita cuma bisa menonton log-nya.</p>
+<p>Kita butuh &ldquo;Polisi Galak&rdquo; yang berdiri di samping Satpam Squid. Polisi itu bernama <strong>SquidGuard</strong>.</p>
+<p>Di <strong>(Part 16) Polisi Konten (SquidGuard Anti-Judol)</strong>, kita akan memasukkan daftar situs terlarang dan memblokirnya otomatis.</p>
+    </div>
+    
+    <nav class="article-footer-nav">
+        <a href="../../blog.html" class="cta-button">← Kembali ke Blog</a>
+    </nav>
+    
+</article>
+    </main>
+    
+    <footer>
+        <p>&copy; 2026 - Teungku Zulkifli. Dibuat dengan ❤️</p>
+    </footer>
+    
+    <div class="floating-lang-switcher">
+        <div class="lang-options">
+            <button id="lang-id">ID</button>
+            <button id="lang-en">EN</button>
+        </div>
+        <button class="lang-globe-btn" aria-label="Pilih Bahasa">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+        </button>
+    </div>
+    
+    <script src="../../assets/js/languages.js"></script>
+    <script src="../../assets/js/main.script.js" defer></script>
+    
+</body>
+</html>

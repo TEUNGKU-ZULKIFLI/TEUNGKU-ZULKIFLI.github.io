@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>(Part 10): Install dan Konfigurasi Mail Server - Teungku Zulkifli</title>
+    <meta name="description" content="">
+    <meta name="author" content="Teungku Zulkifli">
+    
+    <meta property="og:title" content="(Part 10): Install dan Konfigurasi Mail Server - Teungku Zulkifli">
+    <meta property="og:description" content="">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://teungku.me">
+    
+    <link rel="stylesheet" href="../../assets/css/main.style.css">
+    
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="../../index.html" class="logo">Teungku Zulkifli</a>
+            <ul id="nav-links">
+                <li><a data-lang="common.navHome" href="../../index.html#home">Beranda</a></li>
+                <li><a data-lang="common.navAbout" href="../../index.html#about">Tentang</a></li>
+                <li><a data-lang="common.navContact" href="../../index.html#contact">Kontak</a></li>
+                <li><a data-lang="common.navProjects" href="../../projects.html">Proyek</a></li>
+                <li><a data-lang="common.navBlog" href="../../blog.html">Blog</a></li>
+            </ul>
+            <button id="hamburger-btn" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+    
+    <main>
+<article id="article-content">
+    
+    <header class="article-header">
+        <h1>(Part 10): Install dan Konfigurasi Mail Server</h1>
+        
+        <div class="article-meta">
+            <span class="meta-item">
+                📅 <time datetime="2025-10-03">2025-10-03</time>
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                🏷️ Course
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                ✍️ Teungku Zulkifli
+            </span>
+        </div>
+        
+        <div class="article-tags">
+            <span class="article-tag">#debian-server-series</span>
+        </div>
+    </header>
+    
+    <hr class="article-divider">
+    
+    <div class="article-body">
+        <iframe src="https://www.youtube.com/embed/aKe8M4RBrpk?controls=0&modestbranding=1&rel=0&disablekb=1&autoplay=0" style="display:block;margin:auto;border:none;width:100%;max-width:960px;height:540px;" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+<h1 id="dokumentasi-debian-di-hyper-v-part-10-install-dan-konfigurasi-mail-server">Dokumentasi Debian di Hyper V (Part 10): Install dan Konfigurasi Mail Server</h1>
+<p><strong>Catatan Perjalanan &amp; Solusi Praktis untuk VM Debian 7.8.0 &ldquo;Wheezy&rdquo;</strong></p>
+<hr />
+<h2 id="pendahuluan">Pendahuluan 🚀</h2>
+<p>Selamat datang di catatan perjalanan saya dalam membangun sebuah server dari nol! Dokumen ini lebih dari sekadar terjemahan; ini adalah sebuah logbook praktis dari proses konfigurasi awal server <strong>Debian 7.8.0 &ldquo;Wheezy&rdquo;</strong>. Setiap langkah di dalamnya tidak hanya diriset, tetapi juga telah dipraktikkan, diuji, dan yang terpenting, dilengkapi dengan solusi untuk setiap masalah tak terduga yang muncul di tengah jalan.</p>
+<p>Tujuannya adalah untuk menciptakan sebuah panduan yang jujur dan mudah diikuti, terutama bagi mereka yang mungkin menempuh jalur yang sama dengan perangkat lunak versi lama ini. Semoga catatan ini bisa menjadi peta yang berguna, menunjukkan bukan hanya jalan yang lurus, tetapi juga cara melewati setiap rintangan.</p>
+<h3 id="credits-referensi">Credits &amp; Referensi</h3>
+<p>Proses ini tidak akan berjalan lancar tanpa sumber daya dan bantuan yang luar biasa. Kredit sepenuhnya diberikan kepada:</p>
+<ul>
+<li><strong><a href="https://www.server-world.info/en/note?os=Debian_7.0">Server-World</a></strong>: Sebagai referensi utama dan panduan dasar untuk semua tahapan konfigurasi. Panduan mereka yang komprehensif menjadi titik awal dari petualangan ini.</li>
+<li><strong>Gemini (Model AI Google)</strong>: Sebagai mitra diskusi interaktif, asisten riset, dan &ldquo;pengumpul data&rdquo;. Gemini membantu dalam menerjemahkan konsep, mendiagnosis masalah unik (seperti error GPG dan repositori arsip), serta menyusun penjelasan langkah demi langkah yang detail.</li>
+</ul>
+<hr />
+<p>Selamat datang di <strong>BAB 4</strong>! Ini adalah bab yang sangat krusial.</p>
+<p>Di Bab sebelumnya, server kita sudah bisa melayani website. Sekarang, kita akan membuat server ini bisa <strong>berkirim surat (Email)</strong> layaknya Gmail atau Yahoo, tapi versi pribadi.</p>
+<p>Karena Mail Server itu sistemnya cukup kompleks (melibatkan DNS, Pengirim, Penerima, dan Klien), kita akan membaginya menjadi <strong>3 Segmen</strong> agar tidak meledak kepalanya:</p>
+<ul>
+<li><strong>Segmen 1:</strong> Menyiapkan Papan Penunjuk Arah (DNS MX) &amp; Kantor Pos Pengirim (Postfix).</li>
+<li><strong>Segmen 2:</strong> Menyiapkan Kotak Surat Penerima (Dovecot).</li>
+<li><strong>Segmen 3:</strong> Mengirim Surat dari Windows 7 (Thunderbird).</li>
+</ul>
+<p>Mari kita mulai membangun Kantor Pos kita!</p>
+<hr />
+<h1 id="bab-4-komunikasi-kolaborasi">📖 BAB 4: KOMUNIKASI &amp; KOLABORASI</h1>
+<p><em>(Kantor Pos Digital)</em></p>
+<h2 id="part-10-mail-server-lengkap-segmen-1">(Part 10) Mail Server Lengkap: Segmen 1</h2>
+<p><strong>(DNS MX Record &amp; Postfix MTA)</strong></p>
+<h3 id="tagline">🏷️ TAGLINE</h3>
+<p><em>&ldquo;Membangun Kantor Pos dan Mengatur Rute Pengiriman&rdquo;</em></p>
+<hr />
+<h3 id="konsep-warung-kopi-analogi">☕ KONSEP &ldquo;WARUNG KOPI&rdquo; (Analogi)</h3>
+<p>Untuk mengirim email, kita butuh 3 komponen utama:</p>
+<ol>
+<li><strong>DNS (MX Record):</strong> Ini adalah <strong>Papan Petunjuk Jalan</strong>. Kalau ada surat untuk <code>@teungku.edu</code>, tukang pos harus tahu gedung mana yang menerimanya. Tanpa ini, surat nyasar.</li>
+<li><strong>Postfix (MTA):</strong> Ini adalah <strong>Pak Pos / Truk Pengirim</strong>. Tugasnya mengangkut surat dari pengirim dan mengantarnya sampai ke gedung tujuan. Dia tidak menyimpan surat, cuma mengantar.</li>
+<li><strong>Dovecot (MDA):</strong> (Nanti di Segmen 2). Ini adalah <strong>Kotak Surat Pribadi</strong>. Setelah Pak Pos (Postfix) sampai, dia menaruh surat di sini agar bisa diambil pemiliknya.</li>
+</ol>
+<p>Di Segmen 1 ini, kita akan memasang Papan Petunjuk (DNS) dan merekrut Pak Pos (Postfix).</p>
+<p><img src="https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcRrCt3swTegCVt0LVpuZ2CewEU4nB3_AAyHhlKqxrc5Z0nVax91jhgr24BDb7gs8oxjW7Tje9ufnjFXFR5jMVnfKcwMao6MY9DUJTEaDEGFw80mako" width="400"></p>
+<hr />
+<h3 id="misi-operasi-segmen-1">🎯 MISI OPERASI (Segmen 1)</h3>
+<ol>
+<li>Menambahkan <strong>MX Record</strong> (Mail Exchanger) di DNS Server.</li>
+<li>Menginstal <strong>Postfix</strong> (Mesin Pengirim Email).</li>
+<li>Mengonfigurasi format penyimpanan surat menjadi <strong>Maildir</strong> (Format modern, bukan Mbox jadul).</li>
+</ol>
+<hr />
+<h3 id="persiapan">🛠️ PERSIAPAN</h3>
+<ul>
+<li>Login sebagai <strong>root</strong>.</li>
+<li>Pastikan DNS (Bind9) dari Part 3 berjalan lancar.</li>
+</ul>
+<hr />
+<h3 id="langkah-eksekusi-segmen-1">💻 LANGKAH EKSEKUSI (Segmen 1)</h3>
+<h4 id="tahap-a-memasang-papan-petunjuk-dns-mx">TAHAP A: Memasang Papan Petunjuk (DNS MX)</h4>
+<p>Sebelum instal aplikasi mail, dunia harus tahu kalau <code>teungku.edu</code> punya server email.</p>
+<p><strong>1. Edit File Forward DNS:</strong>
+Buka file database domain yang kita buat di Part 3.</p>
+<pre><code class="language-bash">nano /etc/bind/db.teungku.edu
+</code></pre>
+<p><strong>2. Tambahkan Record MX (Mail Exchanger):</strong>
+Tambahkan baris ini di bawah <em>NS Record</em> atau di bagian bawah file.
+<em>(Perhatikan titik di akhir domain!)</em></p>
+<pre><code class="language-dns">; Record untuk Mail Server
+@       IN      MX      10      debian.teungku.edu.
+</code></pre>
+<ul>
+<li><strong>MX:</strong> Tipe record untuk mail.</li>
+<li><strong>10:</strong> Prioritas (Makin kecil makin prioritas).</li>
+<li><strong>debian.teungku.edu.:</strong> Alamat server yang menangani email.</li>
+</ul>
+<p><strong>3. Tambahkan Record Subdomain Mail (Opsional tapi Bagus):</strong>
+Biar keren bisa akses <code>mail.teungku.edu</code>.</p>
+<pre><code class="language-dns">mail    IN      A       192.168.10.1
+</code></pre>
+<p>Simpan (<code>Ctrl+O</code>) dan keluar.</p>
+<p><strong>4. Update Serial Number &amp; Restart:</strong></p>
+<ul>
+<li><strong>PENTING:</strong> Ubah angka <strong>Serial</strong> di bagian atas file <code>db.teungku.edu</code> (tambah 1 angka) agar perubahan terbaca.</li>
+<li>Restart Bind9:
+    <code>bash
+    service bind9 restart</code></li>
+</ul>
+<hr />
+<h4 id="tahap-b-merekrut-pak-pos-instalasi-postfix">TAHAP B: Merekrut Pak Pos (Instalasi Postfix)</h4>
+<p><strong>1. Instal Paket:</strong></p>
+<pre><code class="language-bash">apt-get install postfix -y
+</code></pre>
+<p><strong>2. ⚠️ JEBAKAN BATMAN (Layar Konfigurasi):</strong>
+Akan muncul layar biru/merah/abu-abu. Jawab dengan hati-hati!</p>
+<ul>
+<li><strong>General type of mail configuration:</strong>
+    Pilih: <strong>Internet Site</strong> (Tekan Enter).</li>
+<li><strong>System mail name:</strong>
+    Isi dengan domain utama: <code>teungku.edu</code> (Tekan Enter).
+    <em>(Jangan pakai <code>www</code> atau <code>debian</code>, cukup domain induknya).</em></li>
+</ul>
+<hr />
+<h4 id="tahap-c-mengatur-format-surat-maildir">TAHAP C: Mengatur Format Surat (Maildir)</h4>
+<p>Secara default, Postfix pakai format kuno (Mbox) di mana semua surat ditumpuk jadi satu file. Kita mau format modern (Maildir) di mana 1 surat = 1 file.</p>
+<p><strong>1. Edit Konfigurasi Postfix:</strong></p>
+<pre><code class="language-bash">nano /etc/postfix/main.cf
+</code></pre>
+<p><strong>2. Tambahkan Baris Sakti:</strong>
+Gulir ke <strong>HALAMAN PALING BAWAH</strong>. Tambahkan baris ini:</p>
+<pre><code class="language-bash"># Gunakan format Maildir (Folder)
+home_mailbox = Maildir/
+</code></pre>
+<p><em>(Perhatikan huruf M besar dan tanda garis miring di akhir).</em></p>
+<p><strong>3. Restart Postfix:</strong></p>
+<pre><code class="language-bash">service postfix restart
+</code></pre>
+<hr />
+<h3 id="pojok-benang-merah-real-case-study">🚧 POJOK &ldquo;BENANG MERAH&rdquo; (Real Case Study)</h3>
+<p><strong>Kasus:</strong> &ldquo;Mas, saya sudah kirim email test, tapi kok gak nyampe? Log bilang <em>&lsquo;Host or domain name not found&rsquo;</em>.&rdquo;</p>
+<p><strong>Penyebab:</strong>
+Anda lupa <strong>TAHAP A (DNS)</strong> atau lupa restart Bind9. Postfix mau kirim surat ke <code>teungku.edu</code>, dia tanya ke DNS: &ldquo;Siapa yang urus surat di teungku.edu?&rdquo;. Kalau DNS diam saja (karena tidak ada MX Record), suratnya dikembalikan (Bouncing).</p>
+<p><strong>Solusi:</strong>
+Cek DNS dengan perintah: <code>dig teungku.edu MX</code>.
+Harus muncul di bagian ANSWER: <code>teungku.edu. ... IN MX 10 debian.teungku.edu.</code></p>
+<hr />
+<h3 id="momen-ka-boom-verification-segmen-1">📸 MOMEN &ldquo;KA-BOOM!&rdquo; (Verification Segmen 1)</h3>
+<p>Kita cek apakah Pak Pos sudah siap kerja.</p>
+<p><strong>1. Cek Port SMTP:</strong>
+Email berjalan di Port 25.</p>
+<pre><code class="language-bash">netstat -tlnp | grep 25
+</code></pre>
+<ul>
+<li><strong>Hasil:</strong> <code>tcp ... 0.0.0.0:25 ... LISTEN ... master</code> (Master adalah proses Postfix).</li>
+</ul>
+<p><strong>2. Cek DNS MX:</strong></p>
+<pre><code class="language-bash">nslookup -type=mx teungku.edu
+</code></pre>
+<ul>
+<li><strong>Hasil:</strong>
+    <code>teungku.edu     mail exchanger = 10 debian.teungku.edu.</code></li>
+</ul>
+<p>Jika Port 25 terbuka dan DNS MX muncul, <strong>Segmen 1 SUKSES!</strong>
+Kantor pos sudah berdiri, Pak Pos sudah siap. Tapi&hellip; suratnya mau ditaruh di mana? Kita belum punya kotak surat.</p>
+<p>Di <strong>Segmen 2</strong>, kita akan menginstal <strong>Dovecot</strong> (Kotak Surat) agar user bisa mengambil email mereka.</p>
+<p>Sekarang kita masuk ke <strong>Segmen 2</strong>. Pak Pos (Postfix) sudah siap mengantar surat, tapi dia bingung: <em>&ldquo;Ini surat mau ditaruh di mana? Gak ada kotak suratnya!&ldquo;</em></p>
+<p>Di sini kita butuh <strong>Dovecot</strong>. Dovecot bertugas menyediakan kotak surat dan melayani pemilik rumah saat mau mengambil suratnya.</p>
+<hr />
+<h1 id="bab-4-komunikasi-kolaborasi_1">📖 BAB 4: KOMUNIKASI &amp; KOLABORASI</h1>
+<h2 id="part-10-mail-server-lengkap-segmen-2">(Part 10) Mail Server Lengkap: Segmen 2</h2>
+<p><strong>(Dovecot POP3/IMAP Server)</strong></p>
+<h3 id="tagline_1">🏷️ TAGLINE</h3>
+<p><em>&ldquo;Menyiapkan Kotak Surat dan Layanan Pengambilan&rdquo;</em></p>
+<hr />
+<h3 id="konsep-warung-kopi-analogi_1">☕ KONSEP &ldquo;WARUNG KOPI&rdquo; (Analogi)</h3>
+<ol>
+<li><strong>Postfix (MTA):</strong> Kurir Ekspedisi. Tugasnya <strong>Mengantar</strong> surat dari luar ke server.</li>
+<li><strong>Dovecot (MDA/POP3/IMAP):</strong> Resepsionis Apartemen. Tugasnya <strong>Menyimpan</strong> surat yang diantar kurir ke kotak masing-masing penghuni, dan <strong>Melayani</strong> penghuni yang mau ambil surat.</li>
+</ol>
+<p>Tanpa Dovecot, surat cuma numpuk di gudang Postfix dan user tidak bisa mengambilnya lewat HP/Laptop.</p>
+<p><strong>Ada 2 Cara Ambil Surat (Protokol):</strong></p>
+<ul>
+<li><strong>POP3:</strong> Surat diambil, dibawa pulang, lalu <em>dibakar</em> salinannya di server. (Hemat storage server, tapi surat cuma ada di satu HP).</li>
+<li><strong>IMAP:</strong> Surat dibaca di server. (Surat tetap ada di server, bisa dibaca dari HP, Laptop, Tablet secara bersamaan). Kita akan aktifkan keduanya.</li>
+</ul>
+<p><img src="https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcQqgET3s_FxPSGds9y5i05HLBgyXHpZ8bnS6iM7LliJHakt0y2IHPrV7Fmpywp-YGbXO9jx5roid_4ZLUcH49h3SuuhCLWpcA5G4fyiAJFRnjUfrBg" width="400"></p>
+<hr />
+<h3 id="misi-operasi-segmen-2">🎯 MISI OPERASI (Segmen 2)</h3>
+<ol>
+<li>Menginstal <strong>Dovecot</strong> (Layanan POP3 dan IMAP).</li>
+<li>Menyamakan format penyimpanan surat dengan Postfix (<strong>Maildir</strong>).</li>
+<li>Melonggarkan aturan keamanan login (agar Windows 7 mudah connect tanpa SSL ribet).</li>
+</ol>
+<hr />
+<h3 id="persiapan_1">🛠️ PERSIAPAN</h3>
+<ul>
+<li>Login sebagai <strong>root</strong>.</li>
+<li>Pastikan Postfix di Segmen 1 sudah dikonfigurasi pakai <code>Maildir/</code>.</li>
+</ul>
+<hr />
+<h3 id="langkah-eksekusi-segmen-2">💻 LANGKAH EKSEKUSI (Segmen 2)</h3>
+<h4 id="tahap-a-merekrut-resepsionis-instalasi">TAHAP A: Merekrut Resepsionis (Instalasi)</h4>
+<p>Kita butuh paket untuk POP3 dan IMAP.</p>
+<p><strong>1. Instal Paket:</strong></p>
+<pre><code class="language-bash">apt-get install dovecot-pop3d dovecot-imapd -y
+</code></pre>
+<hr />
+<h4 id="tahap-b-sinkronisasi-lokasi-surat-penting">TAHAP B: Sinkronisasi Lokasi Surat (PENTING!)</h4>
+<p>Ingat di Segmen 1 kita suruh Postfix taruh surat di folder <code>Maildir/</code>?
+Nah, kita harus kasih tau Dovecot hal yang sama. Kalau beda, Dovecot bakal cari surat di tempat yang salah.</p>
+<p><strong>1. Edit Config Mail:</strong></p>
+<pre><code class="language-bash">nano /etc/dovecot/conf.d/10-mail.conf
+</code></pre>
+<p><strong>2. Cari dan Ubah Lokasi:</strong>
+Cari baris <code>mail_location = mbox:~/mail:INBOX=/var/mail/%u</code>.
+Beri tanda <code>#</code> (matikan) baris itu.</p>
+<p>Tambahkan (atau aktifkan) baris ini:</p>
+<pre><code class="language-bash">mail_location = maildir:~/Maildir
+</code></pre>
+<p><em>(Pastikan ejaan <code>Maildir</code> sama persis dengan yang di Postfix!).</em></p>
+<p>Simpan (<code>Ctrl+O</code>) dan keluar.</p>
+<hr />
+<h4 id="tahap-c-melonggarkan-pintu-masuk-auth">TAHAP C: Melonggarkan Pintu Masuk (Auth)</h4>
+<p>Secara default, Dovecot sangat paranoid. Dia melarang user login pakai password biasa (plaintext) kecuali pakai SSL/HTTPS. Karena kita di lab lokal, kita izinkan dulu password biasa biar tidak error.</p>
+<p><strong>1. Edit Config Auth:</strong></p>
+<pre><code class="language-bash">nano /etc/dovecot/conf.d/10-auth.conf
+</code></pre>
+<p><strong>2. Izinkan Plaintext Auth:</strong>
+Cari baris <code>#disable_plaintext_auth = yes</code>.
+Hilangkan tanda <code>#</code> dan ubah <code>yes</code> jadi <code>no</code>.</p>
+<pre><code class="language-bash">disable_plaintext_auth = no
+</code></pre>
+<p><em>(Artinya: &ldquo;Jangan matikan login biasa. Biarkan saja.&rdquo;)</em></p>
+<p>Simpan dan keluar.</p>
+<p><strong>3. Restart Dovecot:</strong></p>
+<pre><code class="language-bash">service dovecot restart
+</code></pre>
+<hr />
+<h3 id="pojok-benang-merah-real-case-study_1">🚧 POJOK &ldquo;BENANG MERAH&rdquo; (Real Case Study)</h3>
+<p><strong>Kasus:</strong> &ldquo;Mas, dari Windows 7 gagal connect terus. Errornya <strong>&lsquo;Plaintext authentication disallowed on non-secure (SSL/TLS) connections&rsquo;</strong>.&rdquo;</p>
+<p><strong>Penyebab:</strong>
+Anda lupa <strong>TAHAP C</strong>. Dovecot menolak password Anda karena dianggap tidak aman (tidak dienkripsi SSL).</p>
+<p><strong>Solusi:</strong>
+Pastikan <code>disable_plaintext_auth = no</code> sudah diset dan service sudah direstart. Ini solusi paling ampuh untuk praktikum pemula.</p>
+<hr />
+<h3 id="momen-ka-boom-verification-segmen-2">📸 MOMEN &ldquo;KA-BOOM!&rdquo; (Verification Segmen 2)</h3>
+<p>Kita cek apakah Resepsionis (Dovecot) sudah buka loket.</p>
+<p><strong>1. Cek Port POP3 (110) dan IMAP (143):</strong></p>
+<pre><code class="language-bash">netstat -tlnp | grep dovecot
+</code></pre>
+<p><strong>Hasil Sukses:</strong>
+Harus muncul daftar port yang didengarkan (LISTEN):</p>
+<ul>
+<li><code>0.0.0.0:110</code> (POP3)</li>
+<li><code>0.0.0.0:143</code> (IMAP)</li>
+<li>(Mungkin ada port 993/995 juga untuk versi SSL-nya).</li>
+</ul>
+<p>Jika port-port itu sudah terbuka, <strong>Segmen 2 SUKSES!</strong>
+Server sudah siap 100%.</p>
+<p>Sekarang tinggal satu langkah lagi: <strong>Mengirim Surat</strong>.
+Tapi siapa yang mau kirim? Masa kirim lewat terminal hitam? Gak asik.
+Di <strong>Segmen 3</strong>, kita akan menggunakan aplikasi <strong>Thunderbird</strong> di Windows 7 untuk mengirim email layaknya profesional.
+Siap! Ini adalah <strong>Final Boss</strong> untuk BAB 4.</p>
+<p>Kantor Pos (Postfix) sudah buka, Kotak Surat (Dovecot) sudah terpasang. Tapi server itu masih sunyi senyap karena belum ada yang kirim surat.</p>
+<p>Kita tidak akan mengirim email lewat layar hitam (Terminal). Itu cara kuno.
+Kita akan menggunakan <strong>Mozilla Thunderbird</strong> di Windows 7. Ini adalah aplikasi Email Client profesional (mirip Outlook). Kita akan buktikan bahwa server rakitan kita bisa dipakai layaknya server Gmail sungguhan.</p>
+<p>Mari kita selesaikan BAB 4!</p>
+<hr />
+<h1 id="bab-4-komunikasi-kolaborasi_2">📖 BAB 4: KOMUNIKASI &amp; KOLABORASI</h1>
+<h2 id="part-10-mail-server-lengkap-segmen-3">(Part 10) Mail Server Lengkap: Segmen 3</h2>
+<p><strong>(Thunderbird Client &amp; Testing)</strong></p>
+<h3 id="tagline_2">🏷️ TAGLINE</h3>
+<p><em>&ldquo;Menulis Surat Cinta Digital dari Windows&rdquo;</em></p>
+<hr />
+<h3 id="konsep-warung-kopi-analogi_2">☕ KONSEP &ldquo;WARUNG KOPI&rdquo; (Analogi)</h3>
+<ol>
+<li><strong>Server (Debian):</strong> Adalah <strong>Kantor Pos Pusat</strong>. Dia diam saja menunggu orang datang.</li>
+<li><strong>Client (Thunderbird):</strong> Adalah <strong>Sekretaris Pribadi</strong> Anda di Windows 7.
+    Anda tidak perlu jalan kaki ke kantor pos. Anda cukup bilang ke Sekretaris: <em>&ldquo;Tolong kirim surat ke Budi.&rdquo;</em>
+    Sekretaris (Thunderbird) yang akan lari ke Server, mengetuk pintu Postfix (Port 25) untuk kirim, dan mengetuk pintu Dovecot (Port 143) untuk cek surat masuk.</li>
+</ol>
+<hr />
+<h3 id="misi-operasi-segmen-3">🎯 MISI OPERASI (Segmen 3)</h3>
+<ol>
+<li>Membuat user baru bernama <strong><code>budi</code></strong> (Agar <code>teungku</code> punya teman curhat).</li>
+<li>Menginstal &amp; Mengonfigurasi <strong>Thunderbird</strong> di Windows 7.</li>
+<li>Simulasi kirim email dari <code>teungku</code> ke <code>budi</code>.</li>
+</ol>
+<hr />
+<h3 id="persiapan_2">🛠️ PERSIAPAN</h3>
+<ul>
+<li>Login <strong>root</strong> di Debian.</li>
+<li>Nyalakan <strong>Windows 7</strong>. Pastikan sudah terinstal <strong>Mozilla Thunderbird</strong> (Jika belum, download installernya lewat internet sharing yang sudah kita buat di Part 7).</li>
+</ul>
+<hr />
+<h3 id="langkah-eksekusi-segmen-3">💻 LANGKAH EKSEKUSI (Segmen 3)</h3>
+<h4 id="tahap-a-menambah-penduduk-create-user">TAHAP A: Menambah Penduduk (Create User)</h4>
+<p>Masak kirim email ke diri sendiri? Kita butuh teman.</p>
+<p><strong>1. Buat User Budi:</strong></p>
+<pre><code class="language-bash">adduser budi
+</code></pre>
+<p><em>(Isi password yang mudah diingat, misal <code>1</code>. Enter-enter saja sisanya).</em></p>
+<p><strong>2. (Opsional) Install Telnet:</strong>
+Untuk debugging nanti jika perlu.</p>
+<pre><code class="language-bash">apt-get install telnet -y
+</code></pre>
+<hr />
+<h4 id="tahap-b-setting-sekretaris-thunderbird-config">TAHAP B: Setting Sekretaris (Thunderbird Config)</h4>
+<p>Pindah ke <strong>Windows 7</strong>. Buka aplikasi <strong>Mozilla Thunderbird</strong>.</p>
+<p><strong>1. Setup Akun Baru:</strong></p>
+<ul>
+<li>Klik <strong>&ldquo;Email&rdquo;</strong> atau <strong>&ldquo;Create a new account&rdquo;</strong>.</li>
+<li>Pilih <strong>&ldquo;Skip this and use my existing email&rdquo;</strong>.</li>
+</ul>
+<p><strong>2. Isi Identitas:</strong></p>
+<ul>
+<li><strong>Your name:</strong> <code>Teungku Admin</code></li>
+<li><strong>Email address:</strong> <code>teungku@teungku.edu</code></li>
+<li><strong>Password:</strong> (Password login Linux user <code>teungku</code>)</li>
+<li><strong>Uncheck</strong> &ldquo;Remember password&rdquo; (Opsional).</li>
+<li>Klik <strong>Continue</strong>.</li>
+</ul>
+<p><strong>3. Momen Menegangkan (Auto-Config):</strong>
+Thunderbird akan mencoba menebak settingan server.</p>
+<ul>
+<li>Biasanya dia akan gagal atau <em>loading</em> lama. <strong>JANGAN TUNGGU!</strong></li>
+<li>Klik tombol <strong>Manual config</strong> di kiri bawah.</li>
+</ul>
+<p><strong>4. Isi Konfigurasi Manual (PENTING!):</strong>
+Isi tabelnya persis seperti ini:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Protocol</th>
+<th style="text-align: left;">Server Hostname</th>
+<th style="text-align: left;">Port</th>
+<th style="text-align: left;">SSL</th>
+<th style="text-align: left;">Authentication</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Incoming</strong></td>
+<td style="text-align: left;"><code>192.168.10.1</code></td>
+<td style="text-align: left;"><strong>143</strong></td>
+<td style="text-align: left;"><strong>None</strong></td>
+<td style="text-align: left;">Normal password</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Outgoing</strong></td>
+<td style="text-align: left;"><code>192.168.10.1</code></td>
+<td style="text-align: left;"><strong>25</strong></td>
+<td style="text-align: left;"><strong>None</strong></td>
+<td style="text-align: left;">Normal password</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><em>Username:</em> <code>teungku</code> (Tanpa @teungku.edu)</li>
+</ul>
+<p><strong>5. Eksekusi:</strong></p>
+<ul>
+<li>Klik <strong>Re-test</strong>.</li>
+<li>Klik <strong>Done</strong>.</li>
+<li><strong>Peringatan Keamanan:</strong> Muncul <em>&ldquo;Warning: You are sending password unencrypted&hellip;&rdquo;</em>.<ul>
+<li>Centang <strong>&ldquo;I understand the risks&rdquo;</strong>.</li>
+<li>Klik <strong>Done</strong>.</li>
+</ul>
+</li>
+</ul>
+<p><em>(Jika berhasil, Anda akan masuk ke Inbox Teungku).</em></p>
+<hr />
+<h4 id="tahap-c-kirim-surat-pertama-the-test">TAHAP C: Kirim Surat Pertama (The Test)</h4>
+<p><strong>1. Tulis Surat:</strong></p>
+<ul>
+<li>Klik tombol <strong>Write</strong>.</li>
+<li><strong>To:</strong> <code>budi@teungku.edu</code></li>
+<li><strong>Subject:</strong> <code>Tes Server Baru</code></li>
+<li><strong>Isi:</strong> &ldquo;Halo Budi, ini email pertama dari server rakitan kita!&ldquo;</li>
+</ul>
+<p><strong>2. Kirim:</strong></p>
+<ul>
+<li>Klik <strong>Send</strong>.</li>
+<li>Jika tidak ada error, kotak <em>Write</em> akan tertutup.</li>
+</ul>
+<hr />
+<h3 id="pojok-benang-merah-real-case-study_2">🚧 POJOK &ldquo;BENANG MERAH&rdquo; (Real Case Study)</h3>
+<p><strong>Kasus:</strong> &ldquo;Mas, pas klik Send, muncul error <strong>&lsquo;Relay Access Denied&rsquo;</strong> atau <strong>&lsquo;SMTP Error&rsquo;</strong>.&rdquo;</p>
+<p><strong>Penyebab:</strong>
+Postfix (Port 25) secara default hanya mengizinkan pengiriman dari &ldquo;Localhost&rdquo;. Dia menolak kiriman dari IP <code>192.168.10.x</code> (Windows 7) karena dianggap orang asing.</p>
+<p><strong>Solusi:</strong>
+Kita harus mengenalkan jaringan lokal ke Postfix.</p>
+<ol>
+<li>Di Debian: <code>nano /etc/postfix/main.cf</code></li>
+<li>Cari baris <code>mynetworks = ...</code></li>
+<li>Tambahkan network kita di situ.
+    Contoh: <code>mynetworks = 127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128 192.168.10.0/24</code></li>
+<li>Restart Postfix: <code>service postfix restart</code>.</li>
+<li>Coba kirim lagi dari Thunderbird.</li>
+</ol>
+<hr />
+<h3 id="momen-ka-boom-verification-segmen-3">📸 MOMEN &ldquo;KA-BOOM!&rdquo; (Verification Segmen 3)</h3>
+<p>Email sudah terkirim (Sent), tapi apakah sampai? Kita cek di server Debian (karena kita belum login Thunderbird sebagai Budi).</p>
+<p><strong>Cek Kotak Surat Budi (Di Terminal Debian):</strong></p>
+<p>Ketik perintah ini:</p>
+<pre><code class="language-bash">ls -l /home/budi/Maildir/new/
+</code></pre>
+<p><strong>Hasil Sukses:</strong>
+Jika ada <strong>file aneh</strong> (kombinasi angka dan huruf) di dalam folder itu, BERARTI SUKSES!
+Itu adalah file surat yang baru saja Anda kirim.</p>
+<p>Kalau mau baca isinya lewat terminal:</p>
+<pre><code class="language-bash">cat /home/budi/Maildir/new/*
+</code></pre>
+<p>Anda akan melihat teks: <em>&ldquo;Halo Budi, ini email pertama&hellip;&rdquo;</em> beserta header teknisnya.</p>
+<hr />
+<p><strong>🏁 PENUTUP RESMI BAB 4:</strong></p>
+<p><strong>MISSION ACCOMPLISHED!</strong> 🎊
+Server Anda resmi menjadi <strong>Mail Server</strong>.</p>
+<ol>
+<li>Bisa kirim email antar user (<code>teungku</code> -&gt; <code>budi</code>).</li>
+<li>Bisa diakses pakai aplikasi keren (Thunderbird).</li>
+<li>Punya penyimpanan modern (Maildir).</li>
+</ol>
+<p>Server Anda sekarang sudah sangat padat fitur.
+Web? Ada. Database? Ada. Email? Ada. File Sharing? Ada.</p>
+<p>Tapi&hellip; semakin banyak fitur, semakin banyak celah keamanan. Karyawan kantor (Windows 7) bisa saja menyalahgunakan internet untuk buka situs judi atau download virus.</p>
+<p>Kita butuh <strong>SATPAM GALAK</strong>.
+Di <strong>BAB 5: KEAMANAN &amp; KONTROL</strong>, kita akan membangun tembok api terakhir. Kita akan memblokir situs-situs terlarang.</p>
+    </div>
+    
+    <nav class="article-footer-nav">
+        <a href="../../blog.html" class="cta-button">← Kembali ke Blog</a>
+    </nav>
+    
+</article>
+    </main>
+    
+    <footer>
+        <p>&copy; 2026 - Teungku Zulkifli. Dibuat dengan ❤️</p>
+    </footer>
+    
+    <div class="floating-lang-switcher">
+        <div class="lang-options">
+            <button id="lang-id">ID</button>
+            <button id="lang-en">EN</button>
+        </div>
+        <button class="lang-globe-btn" aria-label="Pilih Bahasa">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+        </button>
+    </div>
+    
+    <script src="../../assets/js/languages.js"></script>
+    <script src="../../assets/js/main.script.js" defer></script>
+    
+</body>
+</html>

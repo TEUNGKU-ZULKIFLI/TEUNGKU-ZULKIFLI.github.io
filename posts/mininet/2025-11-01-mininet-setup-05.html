@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Tahapan 05: Topology Linear Custom - Teungku Zulkifli</title>
+    <meta name="description" content="">
+    <meta name="author" content="Teungku Zulkifli">
+    
+    <meta property="og:title" content="Tahapan 05: Topology Linear Custom - Teungku Zulkifli">
+    <meta property="og:description" content="">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://teungku.me">
+    
+    <link rel="stylesheet" href="../../assets/css/main.style.css">
+    
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="../../index.html" class="logo">Teungku Zulkifli</a>
+            <ul id="nav-links">
+                <li><a data-lang="common.navHome" href="../../index.html#home">Beranda</a></li>
+                <li><a data-lang="common.navAbout" href="../../index.html#about">Tentang</a></li>
+                <li><a data-lang="common.navContact" href="../../index.html#contact">Kontak</a></li>
+                <li><a data-lang="common.navProjects" href="../../projects.html">Proyek</a></li>
+                <li><a data-lang="common.navBlog" href="../../blog.html">Blog</a></li>
+            </ul>
+            <button id="hamburger-btn" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+    
+    <main>
+<article id="article-content">
+    
+    <header class="article-header">
+        <h1>Tahapan 05: Topology Linear Custom</h1>
+        
+        <div class="article-meta">
+            <span class="meta-item">
+                📅 <time datetime="2025-11-01">2025-11-01</time>
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                🏷️ Course
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                ✍️ Teungku Zulkifli
+            </span>
+        </div>
+        
+        <div class="article-tags">
+            <span class="article-tag">#mininet-series</span>
+        </div>
+    </header>
+    
+    <hr class="article-divider">
+    
+    <div class="article-body">
+        <iframe src="https://www.youtube.com/embed/yr6hPOEFkXU?controls=0&modestbranding=1&rel=0&disablekb=1&autoplay=0" style="display:block;margin:auto;border:none;width:100%;max-width:960px;height:540px;" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+<h1 id="panduan-lengkap-mininet-di-hyper-v-part-5-topology-third-hard">🧠 Panduan Lengkap  Mininet di Hyper-V (Part 5): TOPOLOGY THIRD HARD</h1>
+<h2 id="pendahuluan">🚀 Pendahuluan</h2>
+<p><strong><code>Mininet</code></strong> adalah simulator jaringan ringan berbasis Linux yang memungkinkan kita membuat topologi jaringan virtual untuk belajar dan menguji protokol seperti OpenFlow. Cocok untuk pelajar, peneliti, dan pengembang jaringan.</br></p>
+<p><strong><code>ONOS</code></strong> (Open Network Operating System) adalah sistem operasi yang dirancang untuk membantu penyedia layanan jaringan membangun jaringan berbasis perangkat lunak (SDN) dengan tingkat skalabilitas, ketersediaan, dan kinerja yang tinggi. ONOS berfungsi sebagai kontroler SDN yang mengelola komponen jaringan seperti switch dan link, serta menjalankan program perangkat lunak untuk menyediakan layanan komunikasi kepada perangkat akhir dan jaringan sekitarnya. Dengan arsitektur modularnya, ONOS memungkinkan penyesuaian yang lebih mudah dan meningkatkan ketersediaan jaringan.</br></p>
+<p><strong><code>Topology</code></strong> Topologi mengacu pada bagaimana suatu jaringan diorganisasikan. Setiap jaringan terdiri dari node yang berbeda dan node ini terhubung satu sama lain dengan link. Tautan ini dapat didefinisikan baik secara fisik maupun logis. Dengan kata lain, topologi adalah desain atau tata letak dari elemen-elemen jaringan, termasuk komputer, server, printer, router, dan perangkat lainnya, serta bagaimana mereka terhubung.</br></p>
+<h3 id="referensi-resmi">📚 Referensi Resmi</h3>
+<ul>
+<li><a href="http://mininet.org/">Mininet.org</a></li>
+<li><a href="https://wiki.onosproject.org/display/ONOS/ONOS">ONOS</a></li>
+<li><a href="https://hub.docker.com/r/onosproject/onos/">Docker ONOS</a></li>
+<li><a href="https://github.com/ArnoTroch/ONOS-Tutorial/blob/main/README.md">Github Ref</a></li>
+</ul>
+<hr />
+<h2 id="tujuan-konsep">🎯 Tujuan &amp; Konsep</h2>
+<ul>
+<li>Tujuan kita di tahap ini adalah membuat file Python baru untuk <code>topologi linear</code> kita, di mana kita akan menggunakan <code>looping</code>.</li>
+<li>Kita akan berhenti mengetik <code>s1</code>, <code>s2</code>, <code>s3</code> satu per satu. Kita akan belajar menggunakan perulangan <code>(looping)</code> Python <code>(for)</code> untuk membuat jaringan secara terprogram. Ini adalah skill yang sangat penting dan menjadi inti dari otomatisasi jaringan.</li>
+</ul>
+<hr />
+<h2 id="prasyarat">🧰 Prasyarat</h2>
+<ul>
+<li>Windows 11 Pro atau Enterprise (Hyper-V hanya tersedia di edisi ini).</li>
+<li>Hyper-V sudah aktif (bisa diaktifkan lewat &ldquo;Turn Windows features on or off&rdquo;).</li>
+<li>Koneksi internet untuk update dan instalasi paket.</li>
+<li>Sudah ada VM mininet <a href="https://teungku-zulkifli.github.io/article.html?post=_posts/kuliah/2035-10-10-mininet-setup-01.md"><code>Belum Ada ?👆🏻</code></a></li>
+<li>Sudah bisa remote VM Mininet</li>
+</ul>
+<hr />
+<h2 id="langkah-langkah-eksekusi"><strong>🛠️ Langkah-langkah Eksekusi</strong></h2>
+<h3 id="tahap-1-membuat-kerangka-skrip-python"><strong>Tahap 1: Membuat Kerangka Skrip Python</strong></h3>
+<h4 id="1-buat-file-python-baru"><strong>1. Buat File Python Baru</strong></h4>
+<pre><code class="language-bash">nano ~/mininet/custom/linear_custom.py
+</code></pre>
+<p>Pertama, buat file<code>.py</code> baru di dalam direktori <code>mininet/custom</code>. Mari kita beri nama <code>linear_custom.py</code>.</p>
+<h4 id="2-tulis-kode-kerangka-boilerplate"><strong>2. Tulis Kode Kerangka (Boilerplate)</strong></h4>
+<pre><code class="language-bash">#!/usr/bin/python
+
+&quot;&quot;&quot;
+Skrip Topologi Linear Kustom (Level Hard)
+
+Tujuan: Membuat 3 switch dan 3 host menggunakan looping 'for'.
+
+Struktur:
+Setiap host terhubung ke switch-nya (h1-s1, h2-s2, h3-s3).
+Semua switch terhubung berantai (s1-s2, s2-s3).
+&quot;&quot;&quot;
+
+from mininet.topo import Topo
+
+class LinearTopo( Topo ):
+    &quot;Topologi linear kustom (N=3) dengan looping.&quot;
+
+    def __init__( self ):
+        &quot;Membuat topologi linear kustom.&quot;
+
+        # Inisialisasi topologi
+        Topo.__init__( self )
+
+        # --- (DI SINI KITA AKAN MENAMBAHKAN LOOPING 'FOR' DI 2/3) ---
+        pass
+
+
+# Baris ini WAJIB ada di akhir file
+topos = { 'mylinear': ( lambda: LinearTopo() ) }
+</code></pre>
+<p>Ini adalah kode minimal yang dibutuhkan setiap file topologi Mininet. Salin dan tempel (<code>paste</code>) kode ini ke dalam editor <code>nano</code>:</p>
+<h4 id="3-simpan-dan-keluar"><strong>3. Simpan dan Keluar</strong></h4>
+<p>Tekan <code>Ctrl + O</code> (tahan Ctrl lalu tekan O) untuk menyimpan.
+Tekan <code>Enter</code> untuk mengonfirmasi nama file.
+Tekan <code>Ctrl + X</code> untuk keluar dari nano.</p>
+<h4 id="penjelasan-kode-materi-dikit"><strong>Penjelasan Kode (Materi Dikit):</strong></h4>
+<ul>
+<li><code>from mininet.topo import Topo</code>: Ini seperti bilang, &ldquo;Hei Python, kita mau meminjam <code>cetakan</code> topologi standar dari Mininet.&rdquo;</li>
+<li><code>class LinearTopo( Topo ):</code>: Kita membuat &ldquo;cetakan&rdquo; baru kita sendiri bernama LinearTopo yang didasarkan pada &ldquo;cetakan&rdquo; standar Mininet.</li>
+<li><code>def __init__( self ):</code>: Ini adalah fungsi &ldquo;konstruktor&rdquo; atau &ldquo;cetakan utama&rdquo;. Semua perintah untuk addHost atau addSwitch akan diletakkan di dalam sini.</li>
+<li><code>topos = { ... }</code>: Ini adalah &ldquo;daftar isi&rdquo; untuk Mininet. Baris ini memberitahu Mininet, &ldquo;Jika seseorang menjalankan perintah <code>--topo mylinear</code>, tolong gunakan kelas LinearTopo yang ada di file ini.&rdquo;</li>
+</ul>
+<h3 id="tahap-2-menambahkan-komponen-nodes-links"><strong>Tahap 2: Menambahkan Komponen (Nodes &amp; Links)</strong></h3>
+<h4 id="1-buka-file-python-anda"><strong>1. Buka File Python Anda</strong></h4>
+<pre><code class="language-bash">nano ~/mininet/custom/linear_custom.py
+</code></pre>
+<p>Gunakan editor <code>nano</code> untuk mengedit file yang sudah Anda buat.</p>
+<h4 id="2-ganti-kode-dengan-versi-lengkap-ini"><strong>2. Ganti Kode dengan Versi Lengkap Ini</strong></h4>
+<pre><code class="language-code">#!/usr/bin/python
+
+&quot;&quot;&quot;
+Skrip Topologi Linear Kustom (Level Hard)
+Tujuan: Membuat 3Switch &amp; 3Host menggunakan loop
+Struktur:
+Setiap host terhubung ke switchnya h1=&gt;s1, h2=&gt;s2, h3=&gt;s3.
+Semua switch terhubung berantai s1=&gt;s2, s2=&gt;s3.
+&quot;&quot;&quot;
+
+from mininet.topo import Topo
+
+class LinearTopo( Topo ):
+    &quot;Topologi linear kustom N=3 dengan loop.&quot;
+
+    def __init__( self ):
+        &quot;Membuat topologi linear kustom.&quot;
+
+        # Inisialisasi topologi
+        Topo.__init__( self )
+
+        # --- Mulai penambahan kode ---
+
+        # Tentukan jumlah switch/host yang kita inginkan
+        N = 3
+
+        # Kita butuh &quot;kantong&quot; untuk menyimpan host dan switch
+        # yang kita buat di dalam loop
+        switches = []
+        hosts = []
+
+        # Loop 1: Buat semua switch dan host
+        # 'i' akan berisi 0, lalu 1, lalu 2
+        for i in range( N ):
+            # Buat host (h1, h2, h3)
+            h = self.addHost( f'h{i+1}' )
+            hosts.append(h)
+
+            # Buat switch (s1, s2, s3)
+            s = self.addSwitch( f's{i+1}' )
+            switches.append(s)
+
+            # Sambungkan host ke switch-nya masing-masing
+            # (h1-s1), (h2-s2), (h3-s3)
+            self.addLink( h, s )
+
+        # Loop 2: Sambungkan switch secara berantai
+        # Kita hanya perlu loop N-1 kali (2 kali)
+        for i in range( N - 1 ):
+            # Sambungkan switch[i] ke switch[i+1]
+            # Saat i=0: sambungkan switches[0] (s1) ke switches[1] (s2)
+            # Saat i=1: sambungkan switches[1] (s2) ke switches[2] (s3)
+            self.addLink( switches[i], switches[i+1] )
+
+        # --- Selesai penambahan kode ---
+
+
+# Baris WAJIB
+topos = { 'mylinear': ( lambda: LinearTopo() ) }
+</code></pre>
+<p>Hapus semua isi file lama dan ganti dengan kode di atas ini.</p>
+<h4 id="3-simpan-dan-keluar_1"><strong>3. Simpan dan Keluar</strong></h4>
+<p>Tekan <code>Ctrl + O</code> (tahan Ctrl lalu tekan O) untuk menyimpan.
+Tekan <code>Enter</code> untuk mengonfirmasi nama file.
+Tekan <code>Ctrl + X</code> untuk keluar dari nano.</p>
+<h4 id="penjelasan-kode-materi-dikit_1"><strong>Penjelasan Kode (Materi Dikit):</strong></h4>
+<ul>
+<li><code>N = 3</code>: Kita membuat variabel agar jika nanti Anda ingin membuat 10 switch, Anda tinggal ganti angka ini menjadi <code>10</code>.</li>
+<li><code>switches = []</code>: Kita membuat <code>"daftar belanja"</code> kosong untuk menampung semua switch yang kita buat.</li>
+<li><code>for i in range( N )</code>: Ini adalah inti dari looping. Python akan mengulangi kode di bawahnya sebanyak <code>N</code> kali (3 kali). Variabel <code>i</code> akan bernilai <code>0</code>, lalu <code>1</code>, lalu <code>2</code>.</li>
+<li><code>f'h{i+1}'</code>: Ini disebut <code>"f-string"</code>. Ini adalah cara canggih untuk membuat nama.</li>
+<li>Saat <code>i=0</code>, <code>i+1</code> adalah <code>1</code>, jadi namanya menjadi <code>'h1'</code>.</li>
+<li>Saat <code>i=1</code>, <code>i+1</code> adalah <code>2</code>, jadi namanya menjadi <code>'h2'</code>.</li>
+<li><code>switches.append(s)</code>: Memasukkan switch <code>s</code> yang baru dibuat ke dalam <code>"daftar belanja"</code> switches kita.</li>
+<li><code>for i in range( N - 1 )</code>: Ini adalah <code>loop kedua</code>. Untuk 3 switch, kita hanya butuh <code>2 "kabel"</code> penghubung <code>(s1-s2 dan s2-s3)</code>. Karena itu kita loop <code>N-1</code> (atau 2) kali.</li>
+<li><code>self.addLink( switches[i], switches[i+1] )</code>: Ini adalah bagian paling cerdas. Kita mengambil switch dari <code>"daftar belanja"</code> kita.</li>
+<li>Saat <code>i=0</code>: <code>switches[0]</code> (s1) disambungkan ke <code>switches[1]</code> (s2).</li>
+<li>Saat <code>i=1</code>: <code>switches[1]</code> (s2) disambungkan ke <code>switches[2]</code> (s3).</li>
+</ul>
+<h3 id="tahap-3-menjalankan-skrip-dan-verifikasi"><strong>Tahap 3: Menjalankan Skrip dan Verifikasi</strong></h3>
+<h4 id="1-pastikan-mata-onos-anda-menyala"><strong>1. Pastikan &ldquo;Mata&rdquo; ONOS Anda Menyala</strong></h4>
+<pre><code class="language-bash">docker ps
+</code></pre>
+<p>Pastikan Anda melihat kontainer onos dalam status Up. Jika tidak, jalankan:</p>
+<pre><code class="language-bash">docker start onos
+</code></pre>
+<h4 id="2-jalankan-mininet-dengan-cetakan-kustom-anda"><strong>2. Jalankan Mininet dengan &ldquo;Cetakan&rdquo; Kustom Anda</strong></h4>
+<h5 id="penting-anda-berada-di-direktori-homemininetmininetcustom-kembalilah-ke-direktori-home-anda-dulu-agar-path-nya-benar"><strong><code>PENTING:</code></strong> Anda berada di direktori <code>/home/mininet/mininet/custom</code>. Kembalilah ke direktori home Anda dulu agar path-nya benar.</h5>
+<pre><code class="language-bash">cd ~
+</code></pre>
+<h5 id="jalankan-perintah-kustom"><strong>Jalankan Perintah Kustom:</strong></h5>
+<pre><code class="language-bash">sudo mn --custom ~/mininet/custom/linear_custom.py --topo mylinear --switch ovs,protocols=OpenFlow14 --controller remote,ip=127.0.0.1,port=6653
+</code></pre>
+<h4 id="3-verifikasi-total"><strong>3. Verifikasi Total</strong></h4>
+<h5 id="layar-1-komputer-utama-anda-web-ui">Layar 1: Komputer Utama Anda (Web UI)</h5>
+<h6 id="buka-browser-anda-dan-refresh-halaman-onos-http1921682018181onosui">Buka browser Anda dan Refresh halaman ONOS (http://192.168.20.1:8181/onos/ui).</h6>
+<h6 id="boom-anda-akan-melihat-topologi-rantai-3-switch-yang-baru-saja-anda-buat-secara-terprogram"><code>BOOM!</code> Anda akan melihat topologi rantai 3-switch yang baru saja Anda buat secara terprogram.</h6>
+<h5 id="layar-2-terminal-mininet-anda-cli">Layar 2: Terminal Mininet Anda (CLI)</h5>
+<h6 id="di-dalam-mininet-jalankan-tes-konektivitas">Di dalam mininet&gt;, jalankan tes konektivitas:</h6>
+<pre><code class="language-bash">mininet&gt; pingall
+</code></pre>
+<p>Hasilnya akan sukses <code>0% dropped</code>. Ini membuktikan <code>h1</code> bisa mengirim ping ke <code>h3</code> dengan melompati <code>s2</code>, berkat routing cerdas dari ONOS.</p>
+<h4 id="penjelasan-kode-materi-dikit_2"><strong>Penjelasan Kode (Materi Dikit):</strong></h4>
+<ul>
+<li><code>--custom ~/mininet/custom/linear_custom.py</code>: Ini adalah perintah yang memberitahu Mininet, &ldquo;Jangan pakai topologi bawaanmu. Tolong muat &lsquo;cetakan&rsquo; dari file ini.&rdquo;</li>
+<li><code>--topo mylinear</code>: Ini adalah perintah yang memberitahu Mininet, &ldquo;Dari dalam file itu, tolong gunakan &lsquo;cetakan&rsquo; yang bernama &lsquo;mylinear&rsquo;.&rdquo; (Ingat, nama ini kita definisikan di baris <code>topos = { ... }</code>).</li>
+</ul>
+<hr />
+<h3 id="pencapaian-anda">Pencapaian Anda</h3>
+<ul>
+<li>[x] (Custom EZ): Berhasil membuat file .py untuk topologi single.</li>
+<li>[x] (Custom Beginner): Berhasil membuat file .py untuk topologi tree manual.</li>
+<li>[x] (Custom Hard): Berhasil menggunakan looping Python untuk membuat topologi linear secara terprogram.</li>
+<li>[ ] Mengenal Lebih mendalam (Konsep Virtualisasi Jaringan VPLS)</li>
+</ul>
+<hr />
+    </div>
+    
+    <nav class="article-footer-nav">
+        <a href="../../blog.html" class="cta-button">← Kembali ke Blog</a>
+    </nav>
+    
+</article>
+    </main>
+    
+    <footer>
+        <p>&copy; 2026 - Teungku Zulkifli. Dibuat dengan ❤️</p>
+    </footer>
+    
+    <div class="floating-lang-switcher">
+        <div class="lang-options">
+            <button id="lang-id">ID</button>
+            <button id="lang-en">EN</button>
+        </div>
+        <button class="lang-globe-btn" aria-label="Pilih Bahasa">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+        </button>
+    </div>
+    
+    <script src="../../assets/js/languages.js"></script>
+    <script src="../../assets/js/main.script.js" defer></script>
+    
+</body>
+</html>

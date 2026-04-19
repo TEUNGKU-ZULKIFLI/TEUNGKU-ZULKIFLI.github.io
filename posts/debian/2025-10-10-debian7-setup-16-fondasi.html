@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>(Part 17): Installasi & Konfigurasi Bashrc, HTOP, MC, GUI - Teungku Zulkifli</title>
+    <meta name="description" content="">
+    <meta name="author" content="Teungku Zulkifli">
+    
+    <meta property="og:title" content="(Part 17): Installasi & Konfigurasi Bashrc, HTOP, MC, GUI - Teungku Zulkifli">
+    <meta property="og:description" content="">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://teungku.me">
+    
+    <link rel="stylesheet" href="../../assets/css/main.style.css">
+    
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="../../index.html" class="logo">Teungku Zulkifli</a>
+            <ul id="nav-links">
+                <li><a data-lang="common.navHome" href="../../index.html#home">Beranda</a></li>
+                <li><a data-lang="common.navAbout" href="../../index.html#about">Tentang</a></li>
+                <li><a data-lang="common.navContact" href="../../index.html#contact">Kontak</a></li>
+                <li><a data-lang="common.navProjects" href="../../projects.html">Proyek</a></li>
+                <li><a data-lang="common.navBlog" href="../../blog.html">Blog</a></li>
+            </ul>
+            <button id="hamburger-btn" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+    
+    <main>
+<article id="article-content">
+    
+    <header class="article-header">
+        <h1>(Part 17): Installasi & Konfigurasi Bashrc, HTOP, MC, GUI</h1>
+        
+        <div class="article-meta">
+            <span class="meta-item">
+                📅 <time datetime="2025-10-10">2025-10-10</time>
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                🏷️ Course
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                ✍️ Teungku Zulkifli
+            </span>
+        </div>
+        
+        <div class="article-tags">
+            <span class="article-tag">#debian-server-series</span>
+        </div>
+    </header>
+    
+    <hr class="article-divider">
+    
+    <div class="article-body">
+        <iframe src="https://www.youtube.com/embed/XEOexJIa41Q?controls=0&modestbranding=1&rel=0&disablekb=1&autoplay=0" style="display:block;margin:auto;border:none;width:100%;max-width:960px;height:540px;" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+<h1 id="dokumentasi-debian-di-hyper-v-part-17-installasi-konfigurasi-bashrc-htop-mc-gui">Dokumentasi Debian di Hyper V (Part 17): Installasi &amp; Konfigurasi Bashrc, HTOP, MC, GUI</h1>
+<p><strong>Catatan Perjalanan &amp; Solusi Praktis untuk VM Debian 7.8.0 &ldquo;Wheezy&rdquo;</strong></p>
+<hr />
+<h2 id="pendahuluan">Pendahuluan 🚀</h2>
+<p>Selamat datang di catatan perjalanan saya dalam membangun sebuah server dari nol! Dokumen ini lebih dari sekadar terjemahan; ini adalah sebuah logbook praktis dari proses konfigurasi awal server <strong>Debian 7.8.0 &ldquo;Wheezy&rdquo;</strong>. Setiap langkah di dalamnya tidak hanya diriset, tetapi juga telah dipraktikkan, diuji, dan yang terpenting, dilengkapi dengan solusi untuk setiap masalah tak terduga yang muncul di tengah jalan.</p>
+<p>Tujuannya adalah untuk menciptakan sebuah panduan yang jujur dan mudah diikuti, terutama bagi mereka yang mungkin menempuh jalur yang sama dengan perangkat lunak versi lama ini. Semoga catatan ini bisa menjadi peta yang berguna, menunjukkan bukan hanya jalan yang lurus, tetapi juga cara melewati setiap rintangan.</p>
+<h3 id="credits-referensi">Credits &amp; Referensi</h3>
+<p>Proses ini tidak akan berjalan lancar tanpa sumber daya dan bantuan yang luar biasa. Kredit sepenuhnya diberikan kepada:</p>
+<ul>
+<li><strong><a href="https://www.server-world.info/en/note?os=Debian_7.0">Server-World</a></strong>: Sebagai referensi utama dan panduan dasar untuk semua tahapan konfigurasi. Panduan mereka yang komprehensif menjadi titik awal dari petualangan ini.</li>
+<li><strong>Gemini (Model AI Google)</strong>: Sebagai mitra diskusi interaktif, asisten riset, dan &ldquo;pengumpul data&rdquo;. Gemini membantu dalam menerjemahkan konsep, mendiagnosis masalah unik (seperti error GPG dan repositori arsip), serta menyusun penjelasan langkah demi langkah yang detail.</li>
+</ul>
+<hr />
+<h1 id="bab-1-the-genesis-lanjutan">📖 BAB 1: THE GENESIS (Lanjutan)</h1>
+<h2 id="part-17-a-makeover-tampilan-bashrc-utilities">(Part 17-A) Makeover Tampilan: Bashrc &amp; Utilities</h2>
+<p><strong>(Visual Enhancement &amp; Productivity Tools)</strong></p>
+<h3 id="tagline">🏷️ TAGLINE</h3>
+<p><em>&ldquo;Mengubah Layar Hitam Membosankan Menjadi Kokpit Hacker&rdquo;</em></p>
+<hr />
+<h3 id="konsep-warung-kopi-analogi">☕ KONSEP &ldquo;WARUNG KOPI&rdquo; (Analogi)</h3>
+<p>Bayangkan Anda adalah pilot.
+Terminal bawaan Debian (<code>root@debian:~#</code>) itu ibarat <strong>Dashboard Mobil Pick-up Tua</strong>. Fungsinya ada, tapi cuma jarum speedometer, hitam putih, dan membosankan. Kalau nyetir 10 jam, mata pasti lelah.</p>
+<p>Kita akan memodifikasinya menjadi <strong>Kokpit Pesawat Tempur</strong>.</p>
+<ol>
+<li><strong>Bashrc (Prompt):</strong> Kita pasang indikator warna-warni dan Emoji. Jadi kita tahu siapa kita, jam berapa sekarang, dan ada di folder mana, hanya dengan sekali lirik.</li>
+<li><strong>Nano Color:</strong> Kita ganti kertas polos dengan kertas stabilo. Kode program akan berwarna-warni sesuai fungsinya, meminimalisir salah baca.</li>
+<li><strong>Utilities (Htop/MC):</strong> Kita pasang radar canggih. Daripada menebak-nebak performa server, kita lihat grafiknya secara <em>real-time</em>.</li>
+</ol>
+<hr />
+<h3 id="misi-operasi">🎯 MISI OPERASI</h3>
+<ol>
+<li>Mengubah tampilan Prompt (<code>PS1</code>) menjadi gaya Hacker Emoji.</li>
+<li>Mengaktifkan warna pada teks editor <code>nano</code>.</li>
+<li>Menginstal alat bantu visual: <code>htop</code> (Task Manager) dan <code>mc</code> (File Manager).</li>
+</ol>
+<hr />
+<h3 id="persiapan">🛠️ PERSIAPAN</h3>
+<ul>
+<li>Login sebagai user yang ingin dipercantik (bisa <code>root</code> atau user biasa).</li>
+<li>Pastikan koneksi internet lancar (untuk install <code>htop</code>).</li>
+</ul>
+<hr />
+<h3 id="langkah-eksekusi">💻 LANGKAH EKSEKUSI</h3>
+<h4 id="tahap-a-operasi-plastik-terminal-bashrc">TAHAP A: Operasi Plastik Terminal (.bashrc)</h4>
+<p>Kita akan mengedit file skrip yang dijalankan setiap kali Anda login.</p>
+<p><strong>1. Buka File Konfigurasi:</strong></p>
+<pre><code class="language-bash">nano ~/.bashrc
+</code></pre>
+<p><strong>2. Aktifkan Warna Wajib:</strong>
+Cari baris <code>#force_color_prompt=yes</code>.
+<strong>Hapus tanda <code>#</code></strong> di depannya agar menjadi:</p>
+<pre><code class="language-bash">force_color_prompt=yes
+</code></pre>
+<p><strong>3. Suntikkan DNA Emoji (Ganti Prompt):</strong>
+Cari baris yang dimulai dengan <code>if [ "$color_prompt" = yes ]; then</code>.
+Di bawahnya ada baris <code>PS1=...</code>. Beri tanda <code>#</code> (matikan) baris lama itu, dan tambahkan baris &ldquo;Spesial Racikan Kita&rdquo; di bawahnya:</p>
+<pre><code class="language-bash"># Prompt Emoji Hacker Style (2 Baris)
+# Baris 1: Jam (Merah) - User@Host (Hijau) - Folder (Biru)
+# Baris 2: Alien (Kuning) sebagai penunjuk ketik
+PS1='${debian_chroot:+($debian_chroot)}\[\033[01;31m\]⏰ \t \[\033[01;32m\]👨🏻‍💻 \u@\h\[\033[00m\]:\[\033[01;34m\]📂 \w\[\033[00m\]\n\[\033[1;33m\]👽 \$ \[\033[00m\]'
+</code></pre>
+<p>Bisa juga jika mau simple saja tanpa emoji:</p>
+<pre><code class="language-bash">PS1='${debian_chroot:+($debian_chroot)}\[\033[01;31m\]\t \[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+</code></pre>
+<ul>
+<li>Penjelasan: Ini akan menampilkan <strong><code>Jam</code></strong> (<code>\t</code>) <strong>warna merah</strong>, <strong><code>User@Host</code></strong> <strong>warna hijau</strong>, dan <strong><code>Folder</code></strong> <strong>warna biru</strong>.</li>
+</ul>
+<p><strong>4. Simpan dan Keluar:</strong>
+<code>Ctrl+O</code>, <code>Enter</code>, <code>Ctrl+X</code>.</p>
+<p><strong>5. Terapkan Perubahan (Tanpa Logout):</strong></p>
+<pre><code class="language-bash">source ~/.bashrc
+</code></pre>
+<p><em>(Lihat perbedaannya! Terminal Anda sekarang harusnya punya jam, warna, dan alien).</em></p>
+<hr />
+<h4 id="tahap-b-mewarnai-editor-nano-syntax-highlighting">TAHAP B: Mewarnai Editor (Nano Syntax Highlighting)</h4>
+<p>Supaya mata tidak sakit saat ngoding konfigurasi.</p>
+<p><strong>1. Edit Config Nano Global:</strong></p>
+<pre><code class="language-bash">nano /etc/nanorc
+</code></pre>
+<p><em>(Anda mungkin harus pakai <code>sudo</code> atau login root)</em>.</p>
+<p><strong>2. Aktifkan Pewarnaan:</strong>
+Gulir ke bagian paling bawah file (tekan <code>Ctrl+W</code> lalu <code>Ctrl+V</code> berkali-kali).
+Cari baris-baris yang diawali <code>include</code>. Hapus tanda <code>#</code> pada bahasa yang sering dipakai:</p>
+<pre><code class="language-bash">include &quot;/usr/share/nano/nanorc.nanorc&quot;
+include &quot;/usr/share/nano/sh.nanorc&quot;
+include &quot;/usr/share/nano/html.nanorc&quot;
+include &quot;/usr/share/nano/php.nanorc&quot;
+# Dan lain-lain sesuai selera
+</code></pre>
+<p>Simpan dan keluar.</p>
+<hr />
+<h4 id="tahap-c-instalasi-radar-canggih-utilities">TAHAP C: Instalasi Radar Canggih (Utilities)</h4>
+<p>Kita instal alat bantu visual.</p>
+<p><strong>1. Instal Paket:</strong></p>
+<pre><code class="language-bash">apt-get install htop mc -y
+</code></pre>
+<p><strong>2. Kenalan dengan Alat Baru:</strong></p>
+<ul>
+<li><strong>Htop:</strong> Ketik <code>htop</code>.
+    Ini adalah pengganti <code>top</code>. Anda bisa melihat grafik CPU (Bar warna-warni), penggunaan RAM, dan daftar proses. Tekan <code>F10</code> atau <code>q</code> untuk keluar.</li>
+<li><strong>Midnight Commander:</strong> Ketik <code>mc</code>.
+    Ini adalah File Manager layar ganda (seperti Windows Explorer zaman dulu). Anda bisa copy file dari kiri ke kanan tanpa ngetik perintah panjang. Tekan <code>F10</code> untuk keluar.</li>
+</ul>
+<hr />
+<h3 id="pojok-benang-merah-real-case-study">🚧 POJOK &ldquo;BENANG MERAH&rdquo; (Real Case Study)</h3>
+<p><strong>Kasus:</strong> &ldquo;Mas, kok Alien dan Jam-nya jadi kotak-kotak (□ □)?&rdquo;
+<strong>Penyebab:</strong> Masalah ini bukan di Debian, tapi di <strong>Windows/Laptop Anda</strong>. Font di CMD/Putty Windows 7 belum mendukung Emoji modern.
+<strong>Solusi:</strong></p>
+<ol>
+<li>Abaikan saja (Fungsi tetap jalan).</li>
+<li>Gunakan terminal modern di Windows (seperti Git Bash atau VS Code Remote).</li>
+<li>Ganti font di setting Putty menjadi font yang support emoji (misal <em>Consolas</em> atau <em>Nerd Fonts</em>).</li>
+</ol>
+<p><strong>Kasus:</strong> &ldquo;Saya sudah edit <code>.bashrc</code> tapi kok tampilannya nggak berubah?&rdquo;
+<strong>Penyebab:</strong> Lupa menjalankan perintah sakti <code>source</code>.
+<strong>Solusi:</strong> Ketik <code>source ~/.bashrc</code> atau logout dan login lagi.</p>
+<hr />
+<h3 id="momen-ka-boom-verification">📸 MOMEN &ldquo;KA-BOOM!&rdquo; (Verification)</h3>
+<ol>
+<li><strong>Cek Prompt:</strong>
+    Lihat terminal Anda. Apakah ada <strong>Jam</strong> yang berjalan? Apakah ada <strong>Alien</strong> <code>👽</code> di baris bawah? Jika ya, Anda sudah resmi jadi <em>Stylish Admin</em>.</li>
+<li><strong>Cek Nano:</strong>
+    Buka file html sembarang: <code>nano /var/www/index.html</code>. (Jika belum ada buat saja).
+    Apakah tag <code>&lt;html&gt;</code> berwarna (bukan putih polos)?</li>
+<li><strong>Cek Htop:</strong>
+    Jalankan <code>htop</code>. Apakah bar CPU bergerak-gerak warna-warni?</li>
+</ol>
+<hr />
+<p>Selamat! Kita telah tiba di <strong>BAB TERAKHIR</strong> dari perjalanan panjang &ldquo;The Server Journey&rdquo;.</p>
+<p>Kita sudah melewati masa-masa sulit: layar hitam, teks putih, konfigurasi yang bikin pusing, dan error yang bikin jantungan.
+Sekarang, sebagai hadiah atas kerja keras Anda, kita akan melakukan <strong>Transformasi Visual</strong>. Kita akan menyulap server yang &ldquo;angker&rdquo; ini menjadi komputer yang ramah dengan tampilan Desktop (GUI).</p>
+<p>Mari kita tutup seri ini dengan santai dan menyenangkan!</p>
+<hr />
+<h1 id="bab-6-transformasi-visual">📖 BAB 6: TRANSFORMASI VISUAL</h1>
+<p><em>(Bonus Track)</em></p>
+<h2 id="part-17-b-menuju-desktop-instalasi-gui-xfce">(Part 17-B) Menuju Desktop: Instalasi GUI XFCE</h2>
+<p><strong>(Graphical User Interface Transformation)</strong></p>
+<h3 id="tagline_1">🏷️ TAGLINE</h3>
+<p><em>&ldquo;Meninggalkan Zaman Batu CLI, Menuju Peradaban Modern GUI&rdquo;</em></p>
+<hr />
+<h3 id="konsep-warung-kopi-analogi_1">☕ KONSEP &ldquo;WARUNG KOPI&rdquo; (Analogi)</h3>
+<ol>
+<li>
+<p><strong>CLI (Command Line Interface):</strong>
+    Ini adalah kondisi server kita sekarang. Ibarat <strong>Ruang Mesin Kapal Selam</strong>. Isinya cuma tuas, tombol manual, dan kabel. Efisien, cepat, tapi membosankan dan menyeramkan bagi orang awam. Tidak ada Mouse, tidak ada Wallpaper.</p>
+</li>
+<li>
+<p><strong>GUI (Graphical User Interface):</strong>
+    Ini adalah <strong>Ruang Tamu</strong>. Ada sofa, ada lukisan (wallpaper), dan kita bisa menyuruh orang dengan menunjuk jari (Mouse/Klik).
+    Namun, Ruang Tamu butuh tempat luas dan AC dingin. Artinya: GUI memakan lebih banyak <strong>RAM dan CPU</strong> daripada CLI.</p>
+</li>
+<li>
+<p><strong>Kenapa XFCE?</strong>
+    Ada banyak jenis Desktop di Linux (GNOME, KDE, dll).
+    Kita pilih <strong>XFCE</strong> karena dia ibarat <strong>Mobil LCGC (Low Cost Green Car)</strong>. Dia irit bensin (RAM), ringan, tapi tetap punya AC dan Radio (Fitur Lengkap). Cocok untuk server VM kita yang sumber dayanya terbatas.</p>
+</li>
+</ol>
+<hr />
+<h3 id="misi-operasi_1">🎯 MISI OPERASI</h3>
+<ol>
+<li>Menginstal <strong>Xorg</strong> (Pondasi Grafis/Kanvas).</li>
+<li>Menginstal <strong>XFCE4</strong> (Perabotan Desktop/Furniture).</li>
+<li>Menginstal <strong>Slim</strong> (Satpam Login Grafis).</li>
+<li>Login menggunakan Mouse untuk pertama kalinya!</li>
+</ol>
+<hr />
+<h3 id="persiapan_1">🛠️ PERSIAPAN</h3>
+<ul>
+<li>Login sebagai <strong>root</strong>.</li>
+<li><strong>Koneksi Internet Stabil:</strong> Ini adalah instalasi dengan ukuran file terbesar di seluruh seri ini (Ratusan MB). Siapkan kuota!</li>
+<li><strong>RAM VM:</strong> Pastikan VM Anda punya RAM minimal 512MB (Disarankan 1GB). Kalau cuma 256MB, kasihan XFCE-nya sesak napas.</li>
+</ul>
+<hr />
+<h3 id="langkah-eksekusi_1">💻 LANGKAH EKSEKUSI</h3>
+<h4 id="tahap-a-membeli-perabotan-instalasi-paket">TAHAP A: Membeli Perabotan (Instalasi Paket)</h4>
+<p>Kita borong semua kebutuhan dalam satu perintah.</p>
+<p><strong>1. Update Dulu (SOP):</strong></p>
+<pre><code class="language-bash">apt-get update
+</code></pre>
+<p><strong>2. Instal Paket Komplit:</strong>
+Ketik perintah ini dan tekan Enter. Lalu pergilah menyeduh kopi, karena ini akan memakan waktu lumayan lama.</p>
+<pre><code class="language-bash">apt-get install xorg xfce4 slim -y
+</code></pre>
+<ul>
+<li><strong>xorg:</strong> Ini adalah &ldquo;kabel VGA virtual&rdquo; yang memungkinkan layar menampilkan gambar.</li>
+<li><strong>xfce4:</strong> Ini adalah Desktop-nya (Taskbar, Start Menu, Window Manager).</li>
+<li><strong>slim:</strong> Simple Login Manager. Ini adalah layar login grafis yang menggantikan <code>login:</code> hitam putih.</li>
+</ul>
+<hr />
+<h4 id="tahap-b-menyalakan-listrik-aktivasi-gui">TAHAP B: Menyalakan Listrik (Aktivasi GUI)</h4>
+<p>Setelah instalasi selesai (prompt kembali ke <code>#</code>), biasanya sistem belum langsung masuk ke GUI.</p>
+<p><strong>1. Start Manual (Cara Cepat):</strong></p>
+<pre><code class="language-bash">/etc/init.d/slim start
+</code></pre>
+<p><em>Atau, cara paling bersih adalah me-reboot server:</em></p>
+<p><strong>2. Reboot Server:</strong></p>
+<pre><code class="language-bash">reboot
+</code></pre>
+<hr />
+<h3 id="pojok-benang-merah-real-case-study_1">🚧 POJOK &ldquo;BENANG MERAH&rdquo; (Real Case Study)</h3>
+<p><strong>Kasus:</strong> &ldquo;Mas, Desktopnya sudah muncul, tapi saya <strong>kangen layar hitam</strong>! Saya mau ngetik perintah server lagi, tapi bingung carinya di mana.&rdquo;</p>
+<p><strong>Solusi 1 (Terminal Emulator):</strong>
+Di dalam Desktop XFCE, Klik <strong>Menu (Pojok Kiri Bawah/Atas)</strong> -&gt; <strong>Accessories</strong> -&gt; <strong>Terminal</strong>.
+Rasanya sama persis seperti layar hitam, tapi sekarang ada di dalam jendela yang bisa digeser-geser.</p>
+<p><strong>Solusi 2 (Tombol Matriks):</strong>
+Linux punya fitur <strong>TTY Switching</strong>. Anda bisa pindah dimensi dari GUI ke CLI murni kapan saja.</p>
+<ul>
+<li>Tekan: <strong><code>Ctrl</code> + <code>Alt</code> + <code>F1</code></strong> (Layar akan berubah jadi hitam total/CLI).</li>
+<li>Mau balik ke Desktop? Tekan: <strong><code>Ctrl</code> + <code>Alt</code> + <code>F7</code></strong>.</li>
+</ul>
+<p><strong>Kasus:</strong> &ldquo;Mas, kok jadi lambat banget ya?&rdquo;
+<strong>Penyebab:</strong> Itu harga yang harus dibayar. GUI memakan RAM. Kalau terasa berat, kembali ke Solusi 2 (TTY 1) untuk performa maksimal.</p>
+<hr />
+<h3 id="momen-ka-boom-verification-part-17-b">📸 MOMEN &ldquo;KA-BOOM!&rdquo; (Verification Part 17-B)</h3>
+<p><strong>1. The New Look:</strong>
+Setelah reboot, Anda tidak lagi melihat teks berjalan cepat.
+Anda akan melihat <strong>Layar Login Grafis (Slim)</strong>. Biasanya ada gambar latar belakang yang artistik.</p>
+<p><strong>2. Login:</strong></p>
+<ul>
+<li>Ketik Username: <code>teungku</code> (atau root).</li>
+<li>Tekan Enter.</li>
+<li>Ketik Password.</li>
+</ul>
+<p><strong>3. Welcome Home:</strong>
+Jika berhasil, Anda akan melihat:</p>
+<ul>
+<li><strong>Wallpaper</strong> Tikus XFCE (atau default Debian).</li>
+<li><strong>Taskbar</strong> (Panel) di atas atau bawah.</li>
+<li>Kursor Mouse yang bisa digerakkan!</li>
+</ul>
+<p>Coba klik <strong>Menu Aplikasi</strong> -&gt; Buka <strong>File Manager</strong>.
+Lihatlah folder-folder server Anda sekarang tampil sebagai ikon folder kuning yang cantik, bukan lagi teks <code>drwxr-xr-x</code>.</p>
+<hr />
+<h1 id="grand-closing-the-end-of-journey">🏁 GRAND CLOSING: THE END OF JOURNEY</h1>
+<p><strong>LUAR BIASA!</strong> 🎊🎉🚀</p>
+<p>Anda telah menamatkan <strong>DOKUMENTASI LENGKAP DEBIAN 7 SERVER</strong>.
+Dari sebuah layar hitam kosong di Part 1, kini Anda memiliki mesin tempur yang mampu:</p>
+<ol>
+<li><strong>Mengatur Jaringan</strong> (Router, Bridge, DHCP).</li>
+<li><strong>Menjadi Identitas</strong> (DNS, NTP).</li>
+<li><strong>Melayani Web</strong> (Apache, PHP, MySQL, VirtualHost, SSL, UserDir).</li>
+<li><strong>Menyimpan File</strong> (Samba, FTP).</li>
+<li><strong>Berkirim Surat</strong> (Postfix, Dovecot).</li>
+<li><strong>Menjaga Keamanan</strong> (Squid, SquidGuard).</li>
+<li><strong>Tampil Menawan</strong> (XFCE GUI).</li>
+</ol>
+<p>Ini bukan sekadar tugas praktikum. Ini adalah simulasi nyata bagaimana internet bekerja. Ilmu yang Anda tulis di dokumen ini adalah pondasi dari Cloud Computing, DevOps, dan System Administration masa kini.</p>
+<p><strong>Terima kasih telah berjuang sampai baris kode terakhir!</strong>
+<em>Server Shutdown initiated&hellip;</em> 👋😄</p>
+    </div>
+    
+    <nav class="article-footer-nav">
+        <a href="../../blog.html" class="cta-button">← Kembali ke Blog</a>
+    </nav>
+    
+</article>
+    </main>
+    
+    <footer>
+        <p>&copy; 2026 - Teungku Zulkifli. Dibuat dengan ❤️</p>
+    </footer>
+    
+    <div class="floating-lang-switcher">
+        <div class="lang-options">
+            <button id="lang-id">ID</button>
+            <button id="lang-en">EN</button>
+        </div>
+        <button class="lang-globe-btn" aria-label="Pilih Bahasa">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+        </button>
+    </div>
+    
+    <script src="../../assets/js/languages.js"></script>
+    <script src="../../assets/js/main.script.js" defer></script>
+    
+</body>
+</html>

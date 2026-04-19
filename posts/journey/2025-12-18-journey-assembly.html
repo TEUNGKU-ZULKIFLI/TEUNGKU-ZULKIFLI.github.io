@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Untitled - Teungku Zulkifli</title>
+    <meta name="description" content="">
+    <meta name="author" content="Teungku Zulkifli">
+    
+    <meta property="og:title" content="Untitled - Teungku Zulkifli">
+    <meta property="og:description" content="">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://teungku.me">
+    
+    <link rel="stylesheet" href="../../assets/css/main.style.css">
+    
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="../../index.html" class="logo">Teungku Zulkifli</a>
+            <ul id="nav-links">
+                <li><a data-lang="common.navHome" href="../../index.html#home">Beranda</a></li>
+                <li><a data-lang="common.navAbout" href="../../index.html#about">Tentang</a></li>
+                <li><a data-lang="common.navContact" href="../../index.html#contact">Kontak</a></li>
+                <li><a data-lang="common.navProjects" href="../../projects.html">Proyek</a></li>
+                <li><a data-lang="common.navBlog" href="../../blog.html">Blog</a></li>
+            </ul>
+            <button id="hamburger-btn" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+    
+    <main>
+<article id="article-content">
+    
+    <header class="article-header">
+        <h1>Untitled</h1>
+        
+        <div class="article-meta">
+            <span class="meta-item">
+                📅 <time datetime="1970-01-01">1970-01-01</time>
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                🏷️ Uncategorized
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                ✍️ Teungku Zulkifli
+            </span>
+        </div>
+        
+    </header>
+    
+    <hr class="article-divider">
+    
+    <div class="article-body">
+        <div align="center">
+    <picture>
+    <img src="https://www.nasm.us/images/nasmlogw.png" width="400" alt="NASM Logo">
+    </picture>
+    <h1 align="center">🚀 Journey 01: Menembus Jantung Komputer dengan Assembly (x86)</h1>
+    <p align="center">
+    <b>Low-Level Fundamental: Understanding How CPU and Kernel Communicates</b><br/>
+    Laboratorium: Debian 7 "Wheezy" i386 | NASM | GNU Linker
+    </p>
+</div>
+
+<hr />
+<h3 id="1-pendahuluan-bertamu-ke-rumah-cpu">1. Pendahuluan: Bertamu ke Rumah CPU</h3>
+<p>Dalam perjalanan ini, saya meninggalkan kenyamanan bahasa tingkat tinggi. Saya menggunakan <strong>Assembly x86</strong>, bahasa yang langsung memanipulasi <strong>Register CPU</strong>. Di sini tidak ada variabel gaib; yang ada hanyalah aliran data fisik antar register dan alamat memori.</p>
+<h3 id="2-required-persiapan-lab">2. Required (Persiapan Lab)</h3>
+<ul>
+<li><strong>Arsitektur:</strong> i386 (32-bit) Memilih 32-bit agar struktur register lebih mudah dipahami pemula (EAX, EBX, ECX, EDX).</li>
+<li><strong>Toolchain:</strong></li>
+<li><code>nasm</code>: Mengubah instruksi menjadi <em>Machine Code</em>.</li>
+<li><code>ld</code>: Menghubungkan kode kita dengan protokol eksekusi sistem operasi (ELF).</li>
+</ul>
+<hr />
+<h3 id="3-langkah-langkah-eksperimen-logika">3. Langkah-Langkah &amp; Eksperimen Logika</h3>
+<h4 id="langkah-01-the-silent-success-sys_exit">🔴 Langkah 01: The Silent Success (sys_exit)</h4>
+<p><strong>Tujuan:</strong> Memahami cara mengakhiri program secara elegan di mata sistem operasi.</p>
+<pre><code class="language-assembly">; exit.asm
+section .text
+    global _start
+_start:
+    mov eax, 1    ; Syscall number for sys_exit
+    mov ebx, 0    ; Exit status 0 (Success)
+    int 0x80      ; Interrupt to call kernel
+
+</code></pre>
+<ul>
+<li><strong>Analogi:</strong> Seperti mematikan saklar lampu dengan benar agar tidak terjadi korsleting.</li>
+<li><strong>Result:</strong> Perintah <code>echo $?</code> menghasilkan <code>0</code>, tanda komunikasi dengan Kernel sukses.</li>
+</ul>
+<h4 id="langkah-02-03-the-digital-pulse-sys_write">🟡 Langkah 02 &amp; 03: The Digital Pulse (sys_write)</h4>
+<p><strong>Tujuan:</strong> Memahami bagaimana teks muncul di layar melalui alokasi memori statis.</p>
+<pre><code class="language-assembly">; pulse.asm
+section .data
+    msg db 'Hello!', 10  ; 10 adalah kode ASCII untuk New Line
+    len equ $ - msg      ; Trik assembler untuk menghitung panjang data secara otomatis
+
+section .text
+    global _start
+_start:
+    mov eax, 4      ; Syscall sys_write
+    mov ebx, 1      ; File descriptor (1 = stdout/layar)
+    mov ecx, msg    ; Pointer: Alamat memori teks kita
+    mov edx, len    ; Panjang data
+    int 0x80
+
+</code></pre>
+<ul>
+<li><strong>Insight:</strong> Tanpa angka <code>10</code> (Line Feed), output menyatu dengan prompt terminal. Komputer tidak punya &ldquo;perasaan&rdquo;, dia hanya mencetak apa yang kita minta secara literal.</li>
+</ul>
+<h4 id="checkpoint-the-interactive-greeting-sys_read">🟢 Checkpoint: The Interactive Greeting (sys_read)</h4>
+<p><strong>Tujuan:</strong> Mengelola memori dinamis (input user) menggunakan buffer.</p>
+<pre><code class="language-assembly">; greet.asm
+section .bss
+    name resb 16    ; Memesan 16 byte &quot;tanah kosong&quot; di RAM
+
+section .text
+    global _start
+_start:
+    ; (Input Section)
+    mov eax, 3      ; Syscall sys_read
+    mov ebx, 0      ; File descriptor (0 = stdin/keyboard)
+    mov ecx, name   ; Simpan ke buffer 'name'
+    mov edx, 16     ; Batas maksimal input
+    int 0x80
+    ; (Output Section memanggil kembali 'name' yang sudah terisi)
+
+</code></pre>
+<ul>
+<li><strong>Analogi:</strong> Kita menyediakan kotak kosong (<code>.bss</code>), menunggu user mengisinya, lalu mengambil isi kotak tersebut untuk diproses kembali.</li>
+</ul>
+<hr />
+<h3 id="4-kesimpulan-impact">4. Kesimpulan &amp; Impact</h3>
+<ul>
+<li><strong>Pointers:</strong> Saya kini paham bahwa variabel sebenarnya adalah label untuk sebuah alamat di memori fisik.</li>
+<li><strong>Kernel Call:</strong> Program tidak bisa berjalan sendirian; ia harus meminta izin ke Kernel (via <code>int 0x80</code>) untuk mengakses hardware.</li>
+<li><strong>Efficiency:</strong> Saya melihat betapa ringannya program hasil kompilasi Assembly (hanya beberapa ratus byte!).</li>
+</ul>
+<p><strong>Next Stop:</strong> Migrasi ke <strong>Bahasa C</strong> Saya akan melihat bagaimana C bertindak sebagai &ldquo;Penerjemah&rdquo; yang membungkus kerumitan instruksi Assembly ini menjadi fungsi yang lebih manusiawi tanpa kehilangan kontrol pada memori.</p>
+<hr />
+<div align="center">
+<p><b>Created with ❤️ by Teungku | 🤖 Gemini</b></p>
+<p><i>"Understanding the bits before the bytes."</i></p>
+</div>
+    </div>
+    
+    <nav class="article-footer-nav">
+        <a href="../../blog.html" class="cta-button">← Kembali ke Blog</a>
+    </nav>
+    
+</article>
+    </main>
+    
+    <footer>
+        <p>&copy; 2026 - Teungku Zulkifli. Dibuat dengan ❤️</p>
+    </footer>
+    
+    <div class="floating-lang-switcher">
+        <div class="lang-options">
+            <button id="lang-id">ID</button>
+            <button id="lang-en">EN</button>
+        </div>
+        <button class="lang-globe-btn" aria-label="Pilih Bahasa">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+        </button>
+    </div>
+    
+    <script src="../../assets/js/languages.js"></script>
+    <script src="../../assets/js/main.script.js" defer></script>
+    
+</body>
+</html>

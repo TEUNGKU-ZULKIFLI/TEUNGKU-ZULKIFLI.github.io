@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>(Part 6): Install dan Konfigurasi DHCP Server pada Windows 7 - Teungku Zulkifli</title>
+    <meta name="description" content="">
+    <meta name="author" content="Teungku Zulkifli">
+    
+    <meta property="og:title" content="(Part 6): Install dan Konfigurasi DHCP Server pada Windows 7 - Teungku Zulkifli">
+    <meta property="og:description" content="">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://teungku.me">
+    
+    <link rel="stylesheet" href="../../assets/css/main.style.css">
+    
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="../../index.html" class="logo">Teungku Zulkifli</a>
+            <ul id="nav-links">
+                <li><a data-lang="common.navHome" href="../../index.html#home">Beranda</a></li>
+                <li><a data-lang="common.navAbout" href="../../index.html#about">Tentang</a></li>
+                <li><a data-lang="common.navContact" href="../../index.html#contact">Kontak</a></li>
+                <li><a data-lang="common.navProjects" href="../../projects.html">Proyek</a></li>
+                <li><a data-lang="common.navBlog" href="../../blog.html">Blog</a></li>
+            </ul>
+            <button id="hamburger-btn" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+    
+    <main>
+<article id="article-content">
+    
+    <header class="article-header">
+        <h1>(Part 6): Install dan Konfigurasi DHCP Server pada Windows 7</h1>
+        
+        <div class="article-meta">
+            <span class="meta-item">
+                📅 <time datetime="2025-09-29">2025-09-29</time>
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                🏷️ Course
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                ✍️ Teungku Zulkifli
+            </span>
+        </div>
+        
+        <div class="article-tags">
+            <span class="article-tag">#debian-server-series</span>
+        </div>
+    </header>
+    
+    <hr class="article-divider">
+    
+    <div class="article-body">
+        <iframe src="https://www.youtube.com/embed/OMVJFczcDBE?controls=0&modestbranding=1&rel=0&disablekb=1&autoplay=0" style="display:block;margin:auto;border:none;width:100%;max-width:960px;height:540px;" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+<h1 id="dokumentasi-debian-di-hyper-v-part-6-install-dan-konfigurasi-dhcp-server-pada-windows-7">Dokumentasi Debian di Hyper V (Part 6): Install dan Konfigurasi DHCP Server pada Windows 7</h1>
+<p><strong>Catatan Perjalanan &amp; Solusi Praktis untuk VM Debian 7.8.0 &ldquo;Wheezy&rdquo;</strong></p>
+<hr />
+<h2 id="pendahuluan">Pendahuluan 🚀</h2>
+<p>Selamat datang di catatan perjalanan saya dalam membangun sebuah server dari nol! Dokumen ini lebih dari sekadar terjemahan; ini adalah sebuah logbook praktis dari proses konfigurasi awal server <strong>Debian 7.8.0 &ldquo;Wheezy&rdquo;</strong>. Setiap langkah di dalamnya tidak hanya diriset, tetapi juga telah dipraktikkan, diuji, dan yang terpenting, dilengkapi dengan solusi untuk setiap masalah tak terduga yang muncul di tengah jalan.</p>
+<p>Tujuannya adalah untuk menciptakan sebuah panduan yang jujur dan mudah diikuti, terutama bagi mereka yang mungkin menempuh jalur yang sama dengan perangkat lunak versi lama ini. Semoga catatan ini bisa menjadi peta yang berguna, menunjukkan bukan hanya jalan yang lurus, tetapi juga cara melewati setiap rintangan.</p>
+<h3 id="credits-referensi">Credits &amp; Referensi</h3>
+<p>Proses ini tidak akan berjalan lancar tanpa sumber daya dan bantuan yang luar biasa. Kredit sepenuhnya diberikan kepada:</p>
+<ul>
+<li><strong><a href="https://www.server-world.info/en/note?os=Debian_7.0">Server-World</a></strong>: Sebagai referensi utama dan panduan dasar untuk semua tahapan konfigurasi. Panduan mereka yang komprehensif menjadi titik awal dari petualangan ini.</li>
+<li><strong>Gemini (Model AI Google)</strong>: Sebagai mitra diskusi interaktif, asisten riset, dan &ldquo;pengumpul data&rdquo;. Gemini membantu dalam menerjemahkan konsep, mendiagnosis masalah unik (seperti error GPG dan repositori arsip), serta menyusun penjelasan langkah demi langkah yang detail.</li>
+</ul>
+<hr />
+<h1 id="bab-2-jaringan-konektivitas">📖 BAB 2: JARINGAN &amp; KONEKTIVITAS</h1>
+<h2 id="part-6-mengatur-klien-segmen-1">(Part 6) Mengatur Klien: Segmen 1</h2>
+<p><strong>(Instalasi &amp; Konfigurasi DHCP Server)</strong></p>
+<h3 id="tagline">🏷️ TAGLINE</h3>
+<p><em>&ldquo;Mempekerjakan Resepsionis Pembagi Tiket Otomatis&rdquo;</em></p>
+<hr />
+<h3 id="konsep-warung-kopi-analogi">☕ KONSEP &ldquo;WARUNG KOPI&rdquo; (Analogi)</h3>
+<p>Bayangkan server Anda adalah <strong>Hotel Bintang 5</strong>.</p>
+<ul>
+<li><strong>Part 7 (Router):</strong> Kita sudah membangun jalan raya menuju hotel.</li>
+<li><strong>Part 6 (DHCP):</strong> Tamu (Windows 7) berdatangan.<ul>
+<li>Kalau <strong>TANPA DHCP (Manual):</strong> Setiap tamu harus nulis formulir sendiri, nyari nomor kamar kosong sendiri. Ribet dan sering bentrok (IP Conflict).</li>
+<li><strong>DENGAN DHCP:</strong> Kita punya <strong>Resepsionis</strong>. Tamu datang, Resepsionis langsung bilang: <em>&ldquo;Selamat datang! Ini kunci kamar No. 101, ini peta hotel, dan ini password Wi-Fi.&rdquo;</em> Tamu tinggal terima beres.</li>
+</ul>
+</li>
+</ul>
+<p>Tugas kita sekarang: Melatih Resepsionis (DHCP Server) agar membagikan kunci yang benar.</p>
+<hr />
+<h3 id="misi-operasi-segmen-1">🎯 MISI OPERASI (Segmen 1)</h3>
+<ol>
+<li>Menginstal paket <code>isc-dhcp-server</code>.</li>
+<li>Membuat aturan pembagian IP (Pool, Gateway, DNS).</li>
+<li><strong>CRITICAL:</strong> Mengarahkan DHCP agar bekerja di jembatan <code>br0</code> (Bukan <code>eth0</code>).</li>
+</ol>
+<hr />
+<h3 id="persiapan">🛠️ PERSIAPAN</h3>
+<ul>
+<li>Login sebagai <strong>root</strong>.</li>
+<li>Pastikan <code>br0</code> sudah aktif (hasil Part 4) dengan IP <code>192.168.10.1</code>.</li>
+</ul>
+<hr />
+<h3 id="langkah-eksekusi-segmen-1">💻 LANGKAH EKSEKUSI (Segmen 1)</h3>
+<h4 id="tahap-a-memanggil-resepsionis-instalasi">TAHAP A: Memanggil Resepsionis (Instalasi)</h4>
+<p><strong>1. Instal Paket:</strong></p>
+<pre><code class="language-bash">apt-get install isc-dhcp-server -y
+</code></pre>
+<blockquote>
+<p><strong>⚠️ Awas Jantung Copot:</strong>
+Di akhir instalasi, Anda akan melihat pesan merah: <code>[FAIL] Starting ISC DHCP server: dhcpd check syslog... failed!</code>
+<strong>JANGAN PANIK.</strong> Itu normal 100%. Dia gagal karena kita belum kasih &ldquo;Buku Panduan&rdquo; (Config) dan belum kasih tau dia harus berdiri di pintu mana.</p>
+</blockquote>
+<hr />
+<h4 id="tahap-b-menulis-buku-panduan-dhcpdconf">TAHAP B: Menulis Buku Panduan (dhcpd.conf)</h4>
+<p>Kita harus kasih tau IP mana saja yang boleh disewa.</p>
+<p><strong>1. Backup File Asli:</strong></p>
+<pre><code class="language-bash">cp /etc/dhcp/dhcpd.conf /etc/dhcp/dhcpd.conf.backup
+</code></pre>
+<p><strong>2. Edit Konfigurasi:</strong></p>
+<pre><code class="language-bash">nano /etc/dhcp/dhcpd.conf
+</code></pre>
+<p><strong>3. Masukkan Aturan Hotel Kita:</strong>
+Hapus semua isinya (atau taruh di paling bawah), dan masukkan konfigurasi bersih ini:</p>
+<pre><code class="language-bash"># === KONFIGURASI DHCP HOTEL TEUNGKU ===
+
+# Identitas Jaringan
+option domain-name &quot;teungku.edu&quot;;
+option domain-name-servers 192.168.10.1, 8.8.8.8;
+
+# Waktu Sewa (Detik)
+default-lease-time 600;
+max-lease-time 7200;
+
+# Menjadikan Server ini sebagai Otoritas Utama
+authoritative;
+
+# Kolam IP (Subnet)
+# Ingat: Network kita 192.168.10.0
+subnet 192.168.10.0 netmask 255.255.255.0 {
+    # Rentang IP yang disewakan (Kamar 100 s/d 200)
+    range 192.168.10.100 192.168.10.200;
+
+    # Pintu Keluar ke Internet (Gateway dari Part 7)
+    option routers 192.168.10.1;
+
+    # Alamat Broadcast
+    option broadcast-address 192.168.10.255;
+}
+</code></pre>
+<p>Simpan (<code>Ctrl+O</code>) dan keluar.</p>
+<hr />
+<h4 id="tahap-c-menempatkan-posisi-interface-fix">TAHAP C: Menempatkan Posisi (Interface Fix)</h4>
+<p>Ini adalah langkah yang sering dilupakan (seperti di draft Anda). Karena kita pakai <strong>Bridge (Part 4)</strong>, kita harus ubah targetnya.</p>
+<p><strong>1. Edit File Default:</strong></p>
+<pre><code class="language-bash">nano /etc/default/isc-dhcp-server
+</code></pre>
+<p><strong>2. Ubah Target Interface:</strong>
+Cari baris <code>INTERFACES=""</code>.
+Ubah menjadi <code>br0</code> (Jembatan kita).</p>
+<pre><code class="language-bash">INTERFACES=&quot;br0&quot;
+</code></pre>
+<p><em>(Jangan isi <code>eth0</code>, karena <code>eth0</code> sekarang cuma kabel buntung tanpa IP!)</em>.</p>
+<p>Simpan dan keluar.</p>
+<p><strong>3. Nyalakan Resepsionis:</strong></p>
+<pre><code class="language-bash">/etc/init.d/isc-dhcp-server start
+</code></pre>
+<ul>
+<li><strong>Hasil:</strong> Sekarang harus muncul <code>[ ok ] Starting ISC DHCP server</code>.</li>
+</ul>
+<hr />
+<h3 id="pojok-benang-merah-real-case-study">🚧 POJOK &ldquo;BENANG MERAH&rdquo; (Real Case Study)</h3>
+<p><strong>Kasus:</strong> &ldquo;Mas, config sudah benar, tapi pas start tetep <code>failed</code>!&rdquo;
+<strong>Diagnosis:</strong> Cek log error dengan perintah <code>tail /var/log/syslog</code>.
+<strong>Penyebab Umum:</strong> Ada <strong>titik koma (;)</strong> yang kurang di file <code>dhcpd.conf</code>. DHCP sangat rewel soal tanda baca.
+<strong>Solusi:</strong> Periksa lagi file konfigurasinya pelan-pelan.</p>
+<hr />
+<p><em>(Segmen 1 Selesai. Server sudah siap membagi IP. Sekarang saatnya kita pindah ke Windows 7 di Segmen 2&hellip;)</em></p>
+<hr />
+<h1 id="bab-2-jaringan-konektivitas_1">📖 BAB 2: JARINGAN &amp; KONEKTIVITAS</h1>
+<h2 id="part-6-mengatur-klien-segmen-2">(Part 6) Mengatur Klien: Segmen 2</h2>
+<p><strong>(Windows 7 Setup &amp; Verification)</strong></p>
+<h3 id="tagline_1">🏷️ TAGLINE</h3>
+<p><em>&ldquo;Saatnya Tamu Menikmati Fasilitas Hotel&rdquo;</em></p>
+<hr />
+<h3 id="konsep-warung-kopi-analogi_1">☕ KONSEP &ldquo;WARUNG KOPI&rdquo; (Analogi)</h3>
+<p>Server sudah siap. Sekarang kita nyalakan komputer tamu (Windows 7).
+Tugas kita cuma satu: Pastikan kabel Windows 7 dicolok ke <strong>Terminal Kuningan (<code>br0</code>/Host-Only)</strong> yang sama dengan server. Kalau colokannya beda, ya sinyalnya nggak nyampe.</p>
+<p><img src="https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcSEe1Fp1OwU5_jrYX356ZH3Q8t-VmuV4OAulHMdfrfepSarj8qzXpA9sPZ28VmxquwDm9n1IzMPmUL2jY_wY66TN7ZozCsMd_vv-4MpBEkkTKbV4Ds" width="400"></p>
+<hr />
+<h3 id="misi-operasi-segmen-2">🎯 MISI OPERASI (Segmen 2)</h3>
+<ol>
+<li>Menyamakan Adapter Virtual Windows 7 dengan Debian.</li>
+<li>Meminta IP Otomatis.</li>
+<li>Tes Browsing (Momen Kebenaran).</li>
+</ol>
+<hr />
+<h3 id="langkah-eksekusi-segmen-2">💻 LANGKAH EKSEKUSI (Segmen 2)</h3>
+<h4 id="tahap-a-penyesuaian-kabel-virtual">TAHAP A: Penyesuaian Kabel Virtual</h4>
+<p><strong>Lakukan ini di VirtualBox/VMware/Hyper-V:</strong></p>
+<ol>
+<li>Matikan/Pause sebentar Windows 7 (jika nyala).</li>
+<li>Buka <strong>Settings</strong> -&gt; <strong>Network</strong>.</li>
+<li>Pastikan Adapter Network diset ke <strong>Host-Only Adapter</strong>.<ul>
+<li><em>Penting:</em> Harus sama persis dengan Adapter 1 (<code>eth0/br0</code>) milik Debian.</li>
+</ul>
+</li>
+<li>Nyalakan Windows 7.</li>
+</ol>
+<hr />
+<h4 id="tahap-b-request-ip-di-windows-7">TAHAP B: Request IP (Di Windows 7)</h4>
+<ol>
+<li>Masuk ke Windows 7.</li>
+<li>Buka <strong>Control Panel</strong> -&gt; <strong>Network and Sharing Center</strong>.</li>
+<li>Klik <strong>Change adapter settings</strong>.</li>
+<li>Klik kanan <strong>Local Area Connection</strong> -&gt; <strong>Properties</strong>.</li>
+<li>Pilih <strong>Internet Protocol Version 4 (TCP/IPv4)</strong> -&gt; <strong>Properties</strong>.</li>
+<li>Pilih:<ul>
+<li>🔘 <strong>Obtain an IP address automatically</strong></li>
+<li>🔘 <strong>Obtain DNS server address automatically</strong></li>
+</ul>
+</li>
+<li>Klik OK dan Close.</li>
+</ol>
+<p><em>(Tunggu sebentar sampai ikon loading di pojok kanan bawah berhenti).</em></p>
+<hr />
+<h3 id="momen-ka-boom-verification-part-6">📸 MOMEN &ldquo;KA-BOOM!&rdquo; (Verification Part 6)</h3>
+<p>Ini adalah momen pembuktian untuk Part 7 (Router) dan Part 6 (DHCP) sekaligus.</p>
+<p><strong>1. Cek Tiket (IP Address):</strong>
+Buka CMD di Windows 7, ketik:</p>
+<pre><code class="language-cmd">ipconfig /all
+</code></pre>
+<ul>
+<li><strong>Hasil Sukses:</strong><ul>
+<li>IPv4 Address: <code>192.168.10.1xx</code> (Antara 100-200).</li>
+<li>Default Gateway: <code>192.168.10.1</code> (IP Debian).</li>
+<li>DNS Servers: <code>192.168.10.1</code> (IP Debian).</li>
+<li>Connection-specific DNS Suffix: <code>teungku.edu</code>.</li>
+</ul>
+</li>
+</ul>
+<p><strong>2. Cek Koneksi Lokal:</strong></p>
+<pre><code class="language-cmd">ping 192.168.10.1
+</code></pre>
+<p><em>(Harus Reply. Artinya Windows dan Debian sudah salaman).</em></p>
+<p><strong>3. Cek Koneksi Internet (Final Boss):</strong>
+Buka Browser (Internet Explorer/Chrome) di Windows 7.
+Buka: <code>google.com</code> atau <code>youtube.com</code>.</p>
+<ul>
+<li><strong>Hasil:</strong> Jika website terbuka, <strong>SELAMAT!</strong> 🎉
+    Anda berhasil membangun Gateway Internet sendiri. Windows 7 berselancar menggunakan &ldquo;tumpangan&rdquo; dari Debian.</li>
+</ul>
+<hr />
+<p><strong>🏁 PENUTUP PART 6:</strong>
+Sekarang kita punya ekosistem jaringan yang hidup!</p>
+<ul>
+<li>Debian sebagai Bos (Router, DNS, DHCP).</li>
+<li>Windows 7 sebagai Karyawan (Klien).</li>
+</ul>
+<p>Selanjutnya, kita akan membuat mereka bisa <strong>saling kirim file</strong> layaknya komputer kantor.</p>
+    </div>
+    
+    <nav class="article-footer-nav">
+        <a href="../../blog.html" class="cta-button">← Kembali ke Blog</a>
+    </nav>
+    
+</article>
+    </main>
+    
+    <footer>
+        <p>&copy; 2026 - Teungku Zulkifli. Dibuat dengan ❤️</p>
+    </footer>
+    
+    <div class="floating-lang-switcher">
+        <div class="lang-options">
+            <button id="lang-id">ID</button>
+            <button id="lang-en">EN</button>
+        </div>
+        <button class="lang-globe-btn" aria-label="Pilih Bahasa">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+        </button>
+    </div>
+    
+    <script src="../../assets/js/languages.js"></script>
+    <script src="../../assets/js/main.script.js" defer></script>
+    
+</body>
+</html>

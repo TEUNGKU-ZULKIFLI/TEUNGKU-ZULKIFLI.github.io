@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Tahapan 04: Topology Tree Custom - Teungku Zulkifli</title>
+    <meta name="description" content="">
+    <meta name="author" content="Teungku Zulkifli">
+    
+    <meta property="og:title" content="Tahapan 04: Topology Tree Custom - Teungku Zulkifli">
+    <meta property="og:description" content="">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://teungku.me">
+    
+    <link rel="stylesheet" href="../../assets/css/main.style.css">
+    
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="../../index.html" class="logo">Teungku Zulkifli</a>
+            <ul id="nav-links">
+                <li><a data-lang="common.navHome" href="../../index.html#home">Beranda</a></li>
+                <li><a data-lang="common.navAbout" href="../../index.html#about">Tentang</a></li>
+                <li><a data-lang="common.navContact" href="../../index.html#contact">Kontak</a></li>
+                <li><a data-lang="common.navProjects" href="../../projects.html">Proyek</a></li>
+                <li><a data-lang="common.navBlog" href="../../blog.html">Blog</a></li>
+            </ul>
+            <button id="hamburger-btn" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+    
+    <main>
+<article id="article-content">
+    
+    <header class="article-header">
+        <h1>Tahapan 04: Topology Tree Custom</h1>
+        
+        <div class="article-meta">
+            <span class="meta-item">
+                📅 <time datetime="2025-10-31">2025-10-31</time>
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                🏷️ Course
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                ✍️ Teungku Zulkifli
+            </span>
+        </div>
+        
+        <div class="article-tags">
+            <span class="article-tag">#mininet-series</span>
+        </div>
+    </header>
+    
+    <hr class="article-divider">
+    
+    <div class="article-body">
+        <iframe src="https://www.youtube.com/embed/3sOGQxwXLhQ?controls=0&modestbranding=1&rel=0&disablekb=1&autoplay=0" style="display:block;margin:auto;border:none;width:100%;max-width:960px;height:540px;" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+<h1 id="panduan-lengkap-mininet-di-hyper-v-part-4-topology-second-beginner">🧠 Panduan Lengkap  Mininet di Hyper-V (Part 4): TOPOLOGY SECOND BEGINNER</h1>
+<h2 id="pendahuluan">🚀 Pendahuluan</h2>
+<p><strong><code>Mininet</code></strong> adalah simulator jaringan ringan berbasis Linux yang memungkinkan kita membuat topologi jaringan virtual untuk belajar dan menguji protokol seperti OpenFlow. Cocok untuk pelajar, peneliti, dan pengembang jaringan.</br></p>
+<p><strong><code>ONOS</code></strong> (Open Network Operating System) adalah sistem operasi yang dirancang untuk membantu penyedia layanan jaringan membangun jaringan berbasis perangkat lunak (SDN) dengan tingkat skalabilitas, ketersediaan, dan kinerja yang tinggi. ONOS berfungsi sebagai kontroler SDN yang mengelola komponen jaringan seperti switch dan link, serta menjalankan program perangkat lunak untuk menyediakan layanan komunikasi kepada perangkat akhir dan jaringan sekitarnya. Dengan arsitektur modularnya, ONOS memungkinkan penyesuaian yang lebih mudah dan meningkatkan ketersediaan jaringan.</br></p>
+<p><strong><code>Topology</code></strong> Topologi mengacu pada bagaimana suatu jaringan diorganisasikan. Setiap jaringan terdiri dari node yang berbeda dan node ini terhubung satu sama lain dengan link. Tautan ini dapat didefinisikan baik secara fisik maupun logis. Dengan kata lain, topologi adalah desain atau tata letak dari elemen-elemen jaringan, termasuk komputer, server, printer, router, dan perangkat lainnya, serta bagaimana mereka terhubung.</br></p>
+<h3 id="referensi-resmi">📚 Referensi Resmi</h3>
+<ul>
+<li><a href="http://mininet.org/">Mininet.org</a></li>
+<li><a href="https://wiki.onosproject.org/display/ONOS/ONOS">ONOS</a></li>
+<li><a href="https://hub.docker.com/r/onosproject/onos/">Docker ONOS</a></li>
+<li><a href="https://github.com/ArnoTroch/ONOS-Tutorial/blob/main/README.md">Github Ref</a></li>
+</ul>
+<hr />
+<h2 id="tujuan-konsep">🎯 Tujuan &amp; Konsep</h2>
+<ul>
+<li>Tujuan kita di tahap ini adalah membuat file Python baru khusus untuk topologi pohon kita.</li>
+<li>Kita akan mereplikasi topologi <code>tree,depth=2,fanout=2</code> yang sudah kita kenal, tapi kali ini kita yang membangunnya <code>bata</code> demi <code>bata</code>.</li>
+</ul>
+<hr />
+<h2 id="prasyarat">🧰 Prasyarat</h2>
+<ul>
+<li>Windows 11 Pro atau Enterprise (Hyper-V hanya tersedia di edisi ini).</li>
+<li>Hyper-V sudah aktif (bisa diaktifkan lewat &ldquo;Turn Windows features on or off&rdquo;).</li>
+<li>Koneksi internet untuk update dan instalasi paket.</li>
+<li>Sudah ada VM mininet <a href="https://teungku-zulkifli.github.io/article.html?post=_posts/kuliah/2035-10-10-mininet-setup-01.md"><code>Belum Ada ?👆🏻</code></a></li>
+<li>Sudah bisa remote VM Mininet</li>
+</ul>
+<hr />
+<h2 id="langkah-langkah-eksekusi"><strong>🛠️ Langkah-langkah Eksekusi</strong></h2>
+<h3 id="tahap-1-membuat-kerangka-skrip-python"><strong>Tahap 1: Membuat Kerangka Skrip Python</strong></h3>
+<h4 id="1-buat-file-python-baru"><strong>1. Buat File Python Baru</strong></h4>
+<pre><code class="language-bash">nano ~/mininet/custom/tree_custom.py
+</code></pre>
+<p>Pertama, buat file<code>.py</code> baru di dalam direktori <code>mininet/custom</code>. Mari kita beri nama <code>tree_custom.py</code>.</p>
+<h4 id="2-tulis-kode-kerangka-boilerplate"><strong>2. Tulis Kode Kerangka (Boilerplate)</strong></h4>
+<pre><code class="language-bash">#!/usr/bin/python
+
+&quot;&quot;&quot;
+Skrip Topologi Tree Kustom (Level Beginner)
+depth=2, fanout=2
+&quot;&quot;&quot;
+
+from mininet.topo import Topo
+
+class TreeTopo( Topo ):
+    &quot;Topologi pohon sederhana: depth=2, fanout=2.&quot;
+
+    def __init__( self ):
+        &quot;Membuat topologi pohon kustom.&quot;
+
+        # Inisialisasi topologi
+        Topo.__init__( self )
+
+        # --- (DI SINI KITA AKAN MENAMBAHKAN KODE DI LANGKAH 2/3) ---
+        # Kita akan menggunakan looping (perulangan) di sini!
+        pass
+
+
+# Baris ini WAJIB ada di akhir file
+# Kali ini, kita beri nama 'mytree' agar berbeda
+topos = { 'mytree': ( lambda: TreeTopo() ) }
+</code></pre>
+<p>Ini adalah kode minimal yang dibutuhkan setiap file topologi Mininet. Salin dan tempel (<code>paste</code>) kode ini ke dalam editor <code>nano</code>:</p>
+<h4 id="3-simpan-dan-keluar"><strong>3. Simpan dan Keluar</strong></h4>
+<p>Tekan <code>Ctrl + O</code> (tahan Ctrl lalu tekan O) untuk menyimpan.
+Tekan <code>Enter</code> untuk mengonfirmasi nama file.
+Tekan <code>Ctrl + X</code> untuk keluar dari nano.</p>
+<h4 id="penjelasan-kode-materi-dikit"><strong>Penjelasan Kode (Materi Dikit):</strong></h4>
+<p><code>from mininet.topo import Topo</code>: Ini seperti bilang, &ldquo;Hei Python, kita mau meminjam &lsquo;cetakan&rsquo; topologi standar dari Mininet.&rdquo;</p>
+<p><code>class TreeTopo( Topo ):</code>: Kita membuat &ldquo;cetakan&rdquo; baru kita sendiri bernama TreeTopo yang didasarkan pada &ldquo;cetakan&rdquo; standar Mininet.</p>
+<p><code>def __init__( self ):</code>: Ini adalah fungsi &ldquo;konstruktor&rdquo; atau &ldquo;cetakan utama&rdquo;. Semua perintah untuk addHost atau addSwitch akan diletakkan di dalam sini.</p>
+<p><code>topos = { ... }</code>: Ini adalah &ldquo;daftar isi&rdquo; untuk Mininet. Baris ini memberitahu Mininet, &ldquo;Jika seseorang menjalankan perintah <code>--topo mytree</code>, tolong gunakan kelas TreeTopo yang ada di file ini.&rdquo;</p>
+<h3 id="tahap-2-membangun-arsitektur-pohon-nodes-links"><strong>Tahap 2: Membangun Arsitektur Pohon (Nodes &amp; Links)</strong></h3>
+<h4 id="1-buka-file-python-anda"><strong>1. Buka File Python Anda</strong></h4>
+<pre><code class="language-bash">nano ~/mininet/custom/tree_custom.py
+</code></pre>
+<p>Gunakan editor <code>nano</code> untuk mengedit file yang sudah Anda buat.</p>
+<h4 id="2-ganti-kode-dengan-versi-lengkap-ini"><strong>2. Ganti Kode dengan Versi Lengkap Ini</strong></h4>
+<pre><code class="language-code">#!/usr/bin/python
+
+&quot;&quot;&quot;
+Skrip Topologi Tree Kustom (Level Beginner)
+depth=2, fanout=2
+&quot;&quot;&quot;
+
+from mininet.topo import Topo
+
+class TreeTopo( Topo ):
+    &quot;Topologi pohon sederhana: depth=2, fanout=2.&quot;
+
+    def __init__( self ):
+        &quot;Membuat topologi pohon kustom.&quot;
+
+        # Inisialisasi topologi
+        Topo.__init__( self )
+
+        # --- Mulai penambahan kode ---
+
+        # 1. Tambahkan Switch &quot;Akar&quot; (Level 1)
+        s1 = self.addSwitch( 's1' )
+
+        # 2. Tambahkan Switch &quot;Cabang&quot; (Level 2)
+        s2 = self.addSwitch( 's2' )
+        s3 = self.addSwitch( 's3' )
+
+        # 3. Tambahkan Host &quot;Daun&quot;
+        h1 = self.addHost( 'h1' )
+        h2 = self.addHost( 'h2' )
+        h3 = self.addHost( 'h3' )
+        h4 = self.addHost( 'h4' )
+
+        # 4. Tambahkan Links (Kabel)
+
+        # Hubungkan Akar (s1) ke Cabang (s2, s3)
+        self.addLink( s1, s2 )
+        self.addLink( s1, s3 )
+
+        # Hubungkan Cabang (s2) ke Daunnya (h1, h2)
+        self.addLink( s2, h1 )
+        self.addLink( s2, h2 )
+
+        # Hubungkan Cabang (s3) ke Daunnya (h3, h4)
+        self.addLink( s3, h3 )
+        self.addLink( s3, h4 )
+
+        # --- Selesai penambahan kode ---
+
+
+# Baris ini WAJIB ada di akhir file
+# Kali ini, kita beri nama 'mytree' agar berbeda
+topos = { 'mytree': ( lambda: TreeTopo() ) }
+</code></pre>
+<p>Hapus semua isi file lama dan ganti dengan kode di atas ini.</p>
+<h4 id="3-simpan-dan-keluar_1"><strong>3. Simpan dan Keluar</strong></h4>
+<p>Tekan <code>Ctrl + O</code> (tahan Ctrl lalu tekan O) untuk menyimpan.
+Tekan <code>Enter</code> untuk mengonfirmasi nama file.
+Tekan <code>Ctrl + X</code> untuk keluar dari nano.</p>
+<h4 id="penjelasan-kode-materi-dikit_1"><strong>Penjelasan Kode (Materi Dikit):</strong></h4>
+<ul>
+<li>
+<p>Tidak ada <code>looping</code> dulu! Kita sengaja melakukannya secara manual (<code>s1</code>, <code>s2</code>, <code>s3``...</code>) untuk benar-benar memahami strukturnya. Kita akan pakai <code>looping</code> di level <code>Hard</code>.</p>
+</li>
+<li>
+<p>Logikanya sangat sederhana: kita membuat semua <code>benda</code> (<code>switch</code> dan <code>host</code>) terlebih dahulu, baru kemudian kita <code>menyambungkan kabel</code> <code>(addLink)</code> di antara mereka sesuai dengan diagram pohon yang kita inginkan.</p>
+</li>
+</ul>
+<h3 id="tahap-3-menjalankan-skrip-dan-verifikasi"><strong>Tahap 3: Menjalankan Skrip dan Verifikasi</strong></h3>
+<h4 id="1-pastikan-mata-onos-anda-menyala"><strong>1. Pastikan &ldquo;Mata&rdquo; ONOS Anda Menyala</strong></h4>
+<pre><code class="language-bash">docker ps
+</code></pre>
+<p>Pastikan Anda melihat kontainer onos dalam status Up. Jika tidak, jalankan:</p>
+<pre><code class="language-bash">docker start onos
+</code></pre>
+<h4 id="2-jalankan-mininet-dengan-cetakan-kustom-anda"><strong>2. Jalankan Mininet dengan &ldquo;Cetakan&rdquo; Kustom Anda</strong></h4>
+<h5 id="penting-anda-berada-di-direktori-homemininetmininetcustom-kembalilah-ke-direktori-home-anda-dulu-agar-path-nya-benar"><strong><code>PENTING:</code></strong> Anda berada di direktori <code>/home/mininet/mininet/custom</code>. Kembalilah ke direktori home Anda dulu agar path-nya benar.</h5>
+<pre><code class="language-bash">cd ~
+</code></pre>
+<h5 id="jalankan-perintah-kustom"><strong>Jalankan Perintah Kustom:</strong></h5>
+<pre><code class="language-bash">sudo mn --custom ~/mininet/custom/tree_custom.py --topo mytree --switch ovs,protocols=OpenFlow14 --controller remote,ip=127.0.0.1,port=6653
+</code></pre>
+<h4 id="3-verifikasi-total"><strong>3. Verifikasi Total</strong></h4>
+<h5 id="layar-1-komputer-utama-anda-web-ui">Layar 1: Komputer Utama Anda (Web UI)</h5>
+<h6 id="buka-browser-anda-dan-refresh-halaman-onos-http1921682018181onosui">Buka browser Anda dan Refresh halaman ONOS (http://192.168.20.1:8181/onos/ui).</h6>
+<h6 id="boom-anda-akan-melihat-topologi-pohon-yang-anda-buat-1-switch-akar-s1-terhubung-ke-2-switch-cabang-s2-s3-dan-4-host-terhubung-di-bawahnya"><code>BOOM!</code> Anda akan melihat topologi pohon yang Anda buat: 1 <code>switch akar</code> (<code>s1</code>) terhubung ke 2 <code>switch cabang</code> (<code>s2</code>, <code>s3</code>), dan <code>4 host</code> terhubung di bawahnya.</h6>
+<h5 id="layar-2-terminal-mininet-anda-cli">Layar 2: Terminal Mininet Anda (CLI)</h5>
+<h6 id="di-dalam-mininet-jalankan-tes-konektivitas">Di dalam mininet&gt;, jalankan tes konektivitas:</h6>
+<pre><code class="language-bash">mininet&gt; pingall
+</code></pre>
+<p>Hasilnya akan sukses <code>0% dropped</code>, membuktikan bahwa ONOS (<code>reactive.fwd</code>) berhasil mengendalikan topologi kustom Anda.</p>
+<h4 id="penjelasan-kode-materi-dikit_2"><strong>Penjelasan Kode (Materi Dikit):</strong></h4>
+<ul>
+<li><code>--custom ~/mininet/custom/tree_custom.py</code>: Ini adalah shortcut untuk direktori <code>home</code> Anda (<code>/home/mininet</code>). Dengan menentukan path lengkap ini, Mininet akan menemukan file Anda di mana pun Anda berada.</li>
+<li><code>--topo mytree</code>: Ini memberitahu Mininet untuk menggunakan <code>cetakan</code> bernama <code>mytree</code> yang kita definisikan di <code>topos = { ... }</code> di dalam file skrip Anda.</li>
+</ul>
+<hr />
+    </div>
+    
+    <nav class="article-footer-nav">
+        <a href="../../blog.html" class="cta-button">← Kembali ke Blog</a>
+    </nav>
+    
+</article>
+    </main>
+    
+    <footer>
+        <p>&copy; 2026 - Teungku Zulkifli. Dibuat dengan ❤️</p>
+    </footer>
+    
+    <div class="floating-lang-switcher">
+        <div class="lang-options">
+            <button id="lang-id">ID</button>
+            <button id="lang-en">EN</button>
+        </div>
+        <button class="lang-globe-btn" aria-label="Pilih Bahasa">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+        </button>
+    </div>
+    
+    <script src="../../assets/js/languages.js"></script>
+    <script src="../../assets/js/main.script.js" defer></script>
+    
+</body>
+</html>

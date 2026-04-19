@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>(Part 1): Instalasi Server dari Awal - Teungku Zulkifli</title>
+    <meta name="description" content="">
+    <meta name="author" content="Teungku Zulkifli">
+    
+    <meta property="og:title" content="(Part 1): Instalasi Server dari Awal - Teungku Zulkifli">
+    <meta property="og:description" content="">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://teungku.me">
+    
+    <link rel="stylesheet" href="../../assets/css/main.style.css">
+    
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="../../index.html" class="logo">Teungku Zulkifli</a>
+            <ul id="nav-links">
+                <li><a data-lang="common.navHome" href="../../index.html#home">Beranda</a></li>
+                <li><a data-lang="common.navAbout" href="../../index.html#about">Tentang</a></li>
+                <li><a data-lang="common.navContact" href="../../index.html#contact">Kontak</a></li>
+                <li><a data-lang="common.navProjects" href="../../projects.html">Proyek</a></li>
+                <li><a data-lang="common.navBlog" href="../../blog.html">Blog</a></li>
+            </ul>
+            <button id="hamburger-btn" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+    
+    <main>
+<article id="article-content">
+    
+    <header class="article-header">
+        <h1>(Part 1): Instalasi Server dari Awal</h1>
+        
+        <div class="article-meta">
+            <span class="meta-item">
+                📅 <time datetime="2025-09-24">2025-09-24</time>
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                🏷️ Course
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                ✍️ Teungku Zulkifli
+            </span>
+        </div>
+        
+        <div class="article-tags">
+            <span class="article-tag">#debian-server-series</span>
+        </div>
+    </header>
+    
+    <hr class="article-divider">
+    
+    <div class="article-body">
+        <iframe src="https://www.youtube.com/embed/p4zs7A_xUks?controls=0&modestbranding=1&rel=0&disablekb=1&autoplay=0" style="display:block;margin:auto;border:none;width:100%;max-width:960px;height:540px;" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+<h1 id="dokumentasi-debian-di-hyper-v-part-1-instalasi-server-dari-awal">Dokumentasi Debian di Hyper-V (Part 1): Instalasi Server dari Awal</h1>
+<p><strong>Catatan Perjalanan &amp; Solusi Praktis untuk VM Debian 7.8.0 &ldquo;Wheezy&rdquo;</strong></p>
+<hr />
+<h2 id="pendahuluan">Pendahuluan 🚀</h2>
+<p>Selamat datang di catatan perjalanan saya dalam membangun sebuah server dari nol! Dokumen ini lebih dari sekadar terjemahan; ini adalah sebuah logbook praktis dari proses konfigurasi awal server <strong>Debian 7.8.0 &ldquo;Wheezy&rdquo;</strong>. Setiap langkah di dalamnya tidak hanya diriset, tetapi juga telah dipraktikkan, diuji, dan yang terpenting, dilengkapi dengan solusi untuk setiap masalah tak terduga yang muncul di tengah jalan.</p>
+<p>Tujuannya adalah untuk menciptakan sebuah panduan yang jujur dan mudah diikuti, terutama bagi mereka yang mungkin menempuh jalur yang sama dengan perangkat lunak versi lama ini. Semoga catatan ini bisa menjadi peta yang berguna, menunjukkan bukan hanya jalan yang lurus, tetapi juga cara melewati setiap rintangan.</p>
+<h3 id="credits-referensi">Credits &amp; Referensi</h3>
+<p>Proses ini tidak akan berjalan lancar tanpa sumber daya dan bantuan yang luar biasa. Kredit sepenuhnya diberikan kepada:</p>
+<ul>
+<li><strong><a href="https://www.server-world.info/en/note?os=Debian_7.0">Server-World</a></strong>: Sebagai referensi utama dan panduan dasar untuk semua tahapan konfigurasi. Panduan mereka yang komprehensif menjadi titik awal dari petualangan ini.</li>
+<li>
+<p><strong>Gemini (Model AI Google)</strong>: Sebagai mitra diskusi interaktif, asisten riset, dan &ldquo;pengumpul data&rdquo;. Gemini membantu dalam menerjemahkan konsep, mendiagnosis masalah unik (seperti error GPG dan repositori arsip), serta menyusun penjelasan langkah demi langkah yang detail.</p>
+</li>
+<li>
+<p><strong><a href="https://www.debian.org/releases/bookworm/i386/">Panduan Instalasi Debian GNU/Linux</a></strong>: Sebagai acuan dan upgrade literasi supaya SDM up to date</p>
+</li>
+</ul>
+<hr />
+<h1 id="bab-1-the-genesis-pondasi-kehidupan-server">📖 BAB 1: THE GENESIS (Pondasi Kehidupan Server)</h1>
+<h2 id="part-1-instalasi-server-dari-awal-membangkitkan-the-legend-debian-7">(Part 1) Instalasi Server dari Awal: Membangkitkan &ldquo;The Legend&rdquo; Debian 7</h2>
+<h3 id="tagline">🏷️ TAGLINE</h3>
+<p><em>&ldquo;Membangun Fondasi yang Kokoh di atas Tanah Virtual&rdquo;</em></p>
+<hr />
+<h3 id="konsep-warung-kopi-analogi">☕ KONSEP &ldquo;WARUNG KOPI&rdquo; (Analogi)</h3>
+<p>Bayangkan Anda ingin belajar menjadi mekanik mobil handal.
+Alih-alih langsung belajar di mobil Tesla yang serba otomatis (Debian 12/Ubuntu terbaru), kita akan belajar membongkar <strong>Toyota Kijang Kapsul tahun 90-an (Debian 7 Wheezy)</strong>.</p>
+<p>Kenapa? Karena mobil tua memaksa kita mengerti mesin secara manual. Tidak ada sensor canggih, tidak ada bantuan AI. Jika Anda bisa menyetir mobil tua ini, Anda bisa menyetir mobil apa saja di masa depan.</p>
+<p>Dan karena kita tidak punya &ldquo;Garasi Fisik&rdquo; (Server Fisik), kita akan menggunakan <strong>Hyper-V / VMware</strong> sebagai &ldquo;Simulator Bengkel&rdquo; kita. Aman, gratis, dan kalau meledak, tinggal <em>delete</em> dan buat baru!</p>
+<hr />
+<h3 id="misi-operasi">🎯 MISI OPERASI</h3>
+<p>Dalam misi pertama ini, target kita sederhana tapi krusial:</p>
+<ol>
+<li>Merakit &ldquo;Mesin Virtual&rdquo; (CPU, RAM, HDD).</li>
+<li>Menginstal Nyawa (OS Debian 7) ke dalam mesin tersebut.</li>
+<li>Berhasil Login ke layar hitam legendaris (CLI).</li>
+</ol>
+<hr />
+<h3 id="persiapan-bahan-mise-en-place">🛠️ PERSIAPAN BAHAN (Mise en Place)</h3>
+<p>Jangan perang tanpa senjata. Siapkan ini di laptop Anda:</p>
+<ol>
+<li><strong>Platform Virtualisasi:</strong> Hyper-V (Bawaan Windows) atau VMware Workstation.</li>
+<li><strong>Bahan Bakar Utama:</strong> File ISO <a href="https://www.google.com/search?q=https://archive.debian.org/debian/dists/wheezy/main/installer-amd64/current/images/netboot/mini.iso">Debian 7 (Wheezy)</a> <em>(Catatan: Karena ini versi lawas, pastikan link unduhnya valid dari archive).</em></li>
+<li><strong>Kopi/Snack:</strong> Wajib. Instalasi butuh waktu menunggu.</li>
+</ol>
+<hr />
+<h3 id="langkah-eksekusi-the-action">💻 LANGKAH EKSEKUSI (The Action)</h3>
+<h4 id="tahap-a-merakit-hardware-virtual-hyper-vvmware">TAHAP A: Merakit Hardware Virtual (Hyper-V/VMware)</h4>
+<p>Kita perlu membuat &ldquo;Wadah&rdquo; komputer kosong dulu.</p>
+<ol>
+<li><strong>New Virtual Machine:</strong> Beri nama keren, misal <code>Debian 7 Server</code>.</li>
+<li><strong>Generation:</strong> Pilih <strong>Generation 1</strong> (Paling kompatibel untuk OS lawas).</li>
+<li><strong>RAM (Memory):</strong> Cukup <strong>1024 MB (1 GB)</strong>. Linux tanpa grafis itu sangat ringan!</li>
+<li><strong>Network:</strong> Pilih <strong>NAT</strong> atau <strong>Bridge</strong> (agar nanti bisa dicolok internet).</li>
+<li><strong>Hard Disk:</strong> Alokasikan <strong>15 GB</strong> - 20 GB. (Cukup untuk lab ini).</li>
+<li><strong>Instalasi Media:</strong> Arahkan ke file <strong>ISO Debian 7</strong> yang sudah diunduh.</li>
+</ol>
+<blockquote>
+<p><strong>💡 Tips Pro:</strong> Jangan lupa masuk ke <em>Settings</em> VM Anda, pastikan urutan <em>Boot</em>-nya dimulai dari CD/DVD (ISO) dulu, baru Hard Disk.</p>
+</blockquote>
+<hr />
+<h4 id="tahap-b-proses-instalasi-os-langkah-demi-langkah">TAHAP B: Proses Instalasi OS (Langkah Demi Langkah)</h4>
+<p>Nyalakan VM (<code>Start</code>), dan ikuti panduan &ldquo;Satu Jalur&rdquo; ini. Jika tidak disebutkan, biarkan <em>Default</em>.</p>
+<p><strong>1. The Greeting:</strong></p>
+<ul>
+<li>Pilih <strong>Install</strong> (Teks biasa) saja. Tidak perlu <em>Graphical Install</em> biar terasa &ldquo;Hacker&rdquo;-nya.</li>
+</ul>
+<p><strong>2. Bahasa &amp; Lokasi (Penting!):</strong></p>
+<ul>
+<li><strong>Language:</strong> <code>English</code> (Wajib! Jangan pakai Indo, nanti bingung membedakan <em>error log</em>).</li>
+<li><strong>Location:</strong> <code>Other</code> -&gt; <code>Asia</code> -&gt; <code>Indonesia</code>.</li>
+<li><strong>Locales:</strong> <code>United States - en_US.UTF-8</code>.</li>
+<li><strong>Keyboard:</strong> <code>American English</code>.</li>
+</ul>
+<p><strong>3. Jaringan &amp; Identitas:</strong></p>
+<ul>
+<li><strong>Hostname:</strong> <code>debian</code> (atau nama unik server Anda).</li>
+<li><strong>Domain Name:</strong> Kosongkan saja (tekan Enter).</li>
+</ul>
+<p><strong>4. Kunci Rahasia (User &amp; Password):</strong></p>
+<ul>
+<li><strong>Root Password:</strong> Masukkan password admin tertinggi. <em>Saran Lab:</em> Buat simpel saja (misal: <code>123</code> atau samakan dengan user) agar tidak lupa.</li>
+<li><strong>Full Name:</strong> Isi nama Anda (misal: <code>Teungku</code>).</li>
+<li><strong>Username:</strong> Biarkan default (misal: <code>teungku</code>).</li>
+<li><strong>User Password:</strong> Masukkan password untuk user biasa.</li>
+</ul>
+<p><strong>5. Waktu &amp; Partisi (The Disk):</strong></p>
+<ul>
+<li><strong>Timezone:</strong> Pilih sesuai lokasi (<code>Western</code> untuk WIB).</li>
+<li><strong>Partition Method:</strong> <code>Guided - use entire disk</code> (Paling aman untuk pemula).</li>
+<li><strong>Select Disk:</strong> Tekan Enter pada disk virtual 15GB Anda.</li>
+<li><strong>Scheme:</strong> <code>All files in one partition</code> (Recommended for new users).</li>
+<li><strong>Finish:</strong> Pilih <code>Finish partitioning and write changes to disk</code>.</li>
+<li><strong>Confirm:</strong> Pilih <strong>YES</strong> (Ini poin <em>no return</em>, data akan ditulis).</li>
+</ul>
+<p><strong>6. Instalasi Paket (The Core):</strong></p>
+<ul>
+<li><strong>Scan another CD?</strong> <code>No</code>.</li>
+<li><strong>Use Network Mirror?</strong> <code>No</code> (PENTING! Karena repo Debian 7 sudah mati/archive, ini akan error kalau di-Yes-kan).</li>
+<li><strong>Participate Survey?</strong> <code>No</code>.</li>
+<li><strong>Software Selection (KRUSIAL):</strong><ul>
+<li>Hapus centang pada <em>Desktop Environment</em>.</li>
+<li>Hapus centang pada <em>Print Server</em>.</li>
+<li><strong>Pastikan HANYA mencentang:</strong> <code>Standard System Utilities</code>.</li>
+<li><em>(Kita ingin server bersih/barebone, kita instal sisanya nanti secara manual).</em></li>
+</ul>
+</li>
+</ul>
+<p><strong>7. Sentuhan Terakhir:</strong></p>
+<ul>
+<li><strong>Install GRUB Boot Loader?</strong> <code>Yes</code>.</li>
+<li><strong>Finish Installation:</strong> <code>Continue</code>. Mesin akan Reboot.</li>
+</ul>
+<hr />
+<h3 id="pojok-benang-merah-real-case-study">🚧 POJOK &ldquo;BENANG MERAH&rdquo; (Real Case Study)</h3>
+<p>Di tahap ini, Anda mungkin panik saat melihat pesan error:</p>
+<blockquote>
+<p><em>&ldquo;Bad Archive Mirror&rdquo;</em> atau <em>&ldquo;Cannot Access Repository&rdquo;</em></p>
+</blockquote>
+<p><strong>Tenang, itu BUKAN salah Anda.</strong>
+Ingat, kita memakai Debian 7 (Rilis tahun 2013). Server penyimpanan paket (Repository) resminya sudah dipindahkan ke museum digital (Archive). Installer mencoba menghubungi server yang sudah mati.</p>
+<p><strong>Solusinya?</strong> Lewati saja langkah <em>Network Mirror</em> saat instalasi (pilih <code>No</code>). Kita akan memperbaiki alamat repositori ini secara manual di <strong>Part 2</strong> nanti. <em>It&rsquo;s part of the game!</em></p>
+<hr />
+<h3 id="momen-ka-boom-verification">📸 MOMEN &ldquo;KA-BOOM!&rdquo; (Verification)</h3>
+<p>Setelah reboot, Anda tidak akan melihat Desktop cantik. Anda akan melihat layar hitam dengan kursor berkedip. Inilah wajah asli server.</p>
+<p>Jika Anda melihat ini:</p>
+<pre><code class="language-bash">Debian GNU/Linux 7 debian tty1
+
+debian login: _
+</code></pre>
+<p><strong>SELAMAT! 🥳</strong>
+Misi Part 1 Sukses Besar! Coba login:</p>
+<ol>
+<li>Ketik username: <code>root</code></li>
+<li>Ketik password: (password yang Anda buat tadi, tidak akan muncul bintangnya/invisible).</li>
+</ol>
+<p>Jika muncul prompt: <code>root@debian:~#</code>, berarti Anda resmi menjadi pemilik Server Linux.</p>
+<p><strong>Next Step:</strong> Server ini masih &ldquo;polos&rdquo; dan belum punya koneksi ke gudang aplikasi yang benar. Kita akan perbaiki &ldquo;Jantung&rdquo;-nya di Part 2.</p>
+    </div>
+    
+    <nav class="article-footer-nav">
+        <a href="../../blog.html" class="cta-button">← Kembali ke Blog</a>
+    </nav>
+    
+</article>
+    </main>
+    
+    <footer>
+        <p>&copy; 2026 - Teungku Zulkifli. Dibuat dengan ❤️</p>
+    </footer>
+    
+    <div class="floating-lang-switcher">
+        <div class="lang-options">
+            <button id="lang-id">ID</button>
+            <button id="lang-en">EN</button>
+        </div>
+        <button class="lang-globe-btn" aria-label="Pilih Bahasa">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+        </button>
+    </div>
+    
+    <script src="../../assets/js/languages.js"></script>
+    <script src="../../assets/js/main.script.js" defer></script>
+    
+</body>
+</html>

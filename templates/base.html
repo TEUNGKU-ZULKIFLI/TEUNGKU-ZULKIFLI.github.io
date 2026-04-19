@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="{{ lang | default('id') }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    {# === META TAGS DINAMIS === #}
+    <title>{% block title %}{{ site_name | default('Teungku Zulkifli') }}{% endblock %}</title>
+    <meta name="description" content="{% block description %}{{ site_description | default('Portofolio dan blog Teungku Zulkifli') }}{% endblock %}">
+    <meta name="author" content="{{ site_author | default('Teungku Zulkifli') }}">
+    
+    {# === OPEN GRAPH (untuk preview di sosmed) === #}
+    <meta property="og:title" content="{% block og_title %}{{ self.title() }}{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}{{ self.description() }}{% endblock %}">
+    <meta property="og:type" content="{% block og_type %}website{% endblock %}">
+    <meta property="og:url" content="{% block og_url %}{{ site_url | default('https://teungku.me') }}{% endblock %}">
+    
+    {# === CSS === #}
+    <link rel="stylesheet" href="{{ asset_path | default('') }}assets/css/main.style.css">
+    
+    {# === EXTRA HEAD (untuk halaman tertentu) === #}
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+    {# === HEADER === #}
+    <header>
+        <nav>
+            <a href="{{ asset_path | default('') }}index.html" class="logo">Teungku Zulkifli</a>
+            <ul id="nav-links">
+                <li><a data-lang="common.navHome" href="{{ asset_path | default('') }}index.html#home">Beranda</a></li>
+                <li><a data-lang="common.navAbout" href="{{ asset_path | default('') }}index.html#about">Tentang</a></li>
+                <li><a data-lang="common.navContact" href="{{ asset_path | default('') }}index.html#contact">Kontak</a></li>
+                <li><a data-lang="common.navProjects" href="{{ asset_path | default('') }}projects.html">Proyek</a></li>
+                <li><a data-lang="common.navBlog" href="{{ asset_path | default('') }}blog.html">Blog</a></li>
+            </ul>
+            <button id="hamburger-btn" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+    
+    {# === MAIN CONTENT === #}
+    <main>
+        {% block content %}
+        <p>Konten kosong</p>
+        {% endblock %}
+    </main>
+    
+    {# === FOOTER === #}
+    <footer>
+        <p>&copy; {{ current_year | default(2025) }} - Teungku Zulkifli. Dibuat dengan ❤️</p>
+    </footer>
+    
+    {# === LANGUAGE SWITCHER === #}
+    <div class="floating-lang-switcher">
+        <div class="lang-options">
+            <button id="lang-id">ID</button>
+            <button id="lang-en">EN</button>
+        </div>
+        <button class="lang-globe-btn" aria-label="Pilih Bahasa">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+        </button>
+    </div>
+    
+    {# === SCRIPTS === #}
+    <script src="{{ asset_path | default('') }}assets/js/languages.js"></script>
+    <script src="{{ asset_path | default('') }}assets/js/main.script.js" defer></script>
+    
+    {# === EXTRA SCRIPTS (untuk halaman tertentu) === #}
+    {% block extra_scripts %}{% endblock %}
+</body>
+</html>

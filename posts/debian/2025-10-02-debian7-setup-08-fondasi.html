@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>(Part 9): Install dan Konfigurasi Database Mysql & PhpMyAdmin - Teungku Zulkifli</title>
+    <meta name="description" content="">
+    <meta name="author" content="Teungku Zulkifli">
+    
+    <meta property="og:title" content="(Part 9): Install dan Konfigurasi Database Mysql & PhpMyAdmin - Teungku Zulkifli">
+    <meta property="og:description" content="">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://teungku.me">
+    
+    <link rel="stylesheet" href="../../assets/css/main.style.css">
+    
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="../../index.html" class="logo">Teungku Zulkifli</a>
+            <ul id="nav-links">
+                <li><a data-lang="common.navHome" href="../../index.html#home">Beranda</a></li>
+                <li><a data-lang="common.navAbout" href="../../index.html#about">Tentang</a></li>
+                <li><a data-lang="common.navContact" href="../../index.html#contact">Kontak</a></li>
+                <li><a data-lang="common.navProjects" href="../../projects.html">Proyek</a></li>
+                <li><a data-lang="common.navBlog" href="../../blog.html">Blog</a></li>
+            </ul>
+            <button id="hamburger-btn" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+    
+    <main>
+<article id="article-content">
+    
+    <header class="article-header">
+        <h1>(Part 9): Install dan Konfigurasi Database Mysql & PhpMyAdmin</h1>
+        
+        <div class="article-meta">
+            <span class="meta-item">
+                📅 <time datetime="2025-10-02">2025-10-02</time>
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                🏷️ Course
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                ✍️ Teungku Zulkifli
+            </span>
+        </div>
+        
+        <div class="article-tags">
+            <span class="article-tag">#debian-server-series</span>
+        </div>
+    </header>
+    
+    <hr class="article-divider">
+    
+    <div class="article-body">
+        <iframe src="https://www.youtube.com/embed/sfyh6qfrUC4?controls=0&modestbranding=1&rel=0&disablekb=1&autoplay=0" style="display:block;margin:auto;border:none;width:100%;max-width:960px;height:540px;" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+<h1 id="dokumentasi-debian-di-hyper-v-part-9-install-dan-konfigurasi-database-mysql-phpmyadmin">Dokumentasi Debian di Hyper V (Part 9): Install dan Konfigurasi Database Mysql &amp; PhpMyAdmin</h1>
+<p><strong>Catatan Perjalanan &amp; Solusi Praktis untuk VM Debian 7.8.0 &ldquo;Wheezy&rdquo;</strong></p>
+<hr />
+<h2 id="pendahuluan">Pendahuluan 🚀</h2>
+<p>Selamat datang di catatan perjalanan saya dalam membangun sebuah server dari nol! Dokumen ini lebih dari sekadar terjemahan; ini adalah sebuah logbook praktis dari proses konfigurasi awal server <strong>Debian 7.8.0 &ldquo;Wheezy&rdquo;</strong>. Setiap langkah di dalamnya tidak hanya diriset, tetapi juga telah dipraktikkan, diuji, dan yang terpenting, dilengkapi dengan solusi untuk setiap masalah tak terduga yang muncul di tengah jalan.</p>
+<p>Tujuannya adalah untuk menciptakan sebuah panduan yang jujur dan mudah diikuti, terutama bagi mereka yang mungkin menempuh jalur yang sama dengan perangkat lunak versi lama ini. Semoga catatan ini bisa menjadi peta yang berguna, menunjukkan bukan hanya jalan yang lurus, tetapi juga cara melewati setiap rintangan.</p>
+<h3 id="credits-referensi">Credits &amp; Referensi</h3>
+<p>Proses ini tidak akan berjalan lancar tanpa sumber daya dan bantuan yang luar biasa. Kredit sepenuhnya diberikan kepada:</p>
+<ul>
+<li><strong><a href="https://www.server-world.info/en/note?os=Debian_7.0">Server-World</a></strong>: Sebagai referensi utama dan panduan dasar untuk semua tahapan konfigurasi. Panduan mereka yang komprehensif menjadi titik awal dari petualangan ini.</li>
+<li><strong>Gemini (Model AI Google)</strong>: Sebagai mitra diskusi interaktif, asisten riset, dan &ldquo;pengumpul data&rdquo;. Gemini membantu dalam menerjemahkan konsep, mendiagnosis masalah unik (seperti error GPG dan repositori arsip), serta menyusun penjelasan langkah demi langkah yang detail.</li>
+</ul>
+<hr />
+<p>Ruko (Apache) sudah ada, Dapur (PHP) sudah ngebul. Sekarang kita butuh <strong>Gudang (Database)</strong> untuk menyimpan data pelanggan, stok barang, dan rahasia perusahaan.</p>
+<p>Tanpa Database, website kita pelupa. Kalau server restart, semua data hilang. Dengan Database, data tersimpan abadi.</p>
+<p>Karena Part 9 ini melibatkan instalasi dua komponen besar (Database Engine &amp; GUI Manager), saya bagi menjadi <strong>2 Segmen</strong> agar tidak pusing.</p>
+<ul>
+<li><strong>Segmen 1:</strong> Membangun Gudang Data (MySQL Server).</li>
+<li><strong>Segmen 2:</strong> Memasang Manajer Gudang (PhpMyAdmin).</li>
+</ul>
+<p>Mari kita mulai!</p>
+<hr />
+<h1 id="bab-3-web-hosting-master">📖 BAB 3: WEB HOSTING MASTER</h1>
+<h2 id="part-9-manajemen-data-segmen-1">(Part 9) Manajemen Data: Segmen 1</h2>
+<p><strong>(MySQL Server Installation)</strong></p>
+<h3 id="tagline">🏷️ TAGLINE</h3>
+<p><em>&ldquo;Membangun Gudang Besi untuk Menyimpan Ingatan&rdquo;</em></p>
+<hr />
+<h3 id="konsep-warung-kopi-analogi">☕ KONSEP &ldquo;WARUNG KOPI&rdquo; (Analogi)</h3>
+<p>Bayangkan <strong>PHP</strong> adalah <strong>Koki</strong>. Dia jago masak, tapi dia tidak punya kantong.
+Kalau ada pelanggan yang titip pesan: <em>&ldquo;Mas, simpan nama saya ya&rdquo;</em>, si Koki bingung mau taruh di mana.</p>
+<p>Maka kita bangun <strong>Gudang (MySQL)</strong>.
+MySQL adalah lemari arsip raksasa. Koki (PHP) tinggal teriak: <em>&ldquo;Hei MySQL, simpan data &lsquo;Teungku&rsquo; di Laci Nomor 5!&ldquo;</em>
+Besoknya, Koki bisa minta lagi: <em>&ldquo;Hei MySQL, siapa nama orang di Laci Nomor 5 tadi?&rdquo;</em></p>
+<p>Jadi, MySQL adalah <strong>Memori Jangka Panjang</strong> server kita.</p>
+<hr />
+<h3 id="misi-operasi-segmen-1">🎯 MISI OPERASI (Segmen 1)</h3>
+<ol>
+<li>Menginstal <strong>MySQL Server</strong> (Mesin Database).</li>
+<li>Membuat <strong>Password Root</strong> khusus Database (Ingat: Ini BEDA dengan password login Linux!).</li>
+<li>Menguji apakah gudang bisa dibuka lewat terminal.</li>
+</ol>
+<hr />
+<h3 id="persiapan">🛠️ PERSIAPAN</h3>
+<ul>
+<li>Login sebagai <strong>root</strong>.</li>
+<li>Siapkan password baru yang kuat tapi mudah diingat (untuk database).</li>
+</ul>
+<hr />
+<h3 id="langkah-eksekusi-segmen-1">💻 LANGKAH EKSEKUSI (Segmen 1)</h3>
+<h4 id="tahap-a-membangun-gudang-instalasi">TAHAP A: Membangun Gudang (Instalasi)</h4>
+<p><strong>1. Jalankan Perintah Instalasi:</strong>
+Kita butuh Server (gudangnya) dan Client (kunci pembukanya).</p>
+<pre><code class="language-bash">apt-get install mysql-server mysql-client -y
+</code></pre>
+<p><strong>2. MOMEN KRUSIAL (Layar Merah/Biru/Pink):</strong>
+Di tengah instalasi, layar akan berubah warna dan meminta password.</p>
+<ul>
+<li><strong>New password for the MySQL &ldquo;root&rdquo; user:</strong> Masukkan password (misal: <code>admin123</code>).</li>
+<li><strong>Repeat password:</strong> Masukkan lagi password yang sama.</li>
+</ul>
+<blockquote>
+<p><strong>⚠️ PERINGATAN:</strong>
+Jangan dikosongkan! Kalau kosong, nanti PhpMyAdmin sering error/menolak login.
+Ingat baik-baik password ini. Ini adalah <strong>Kunci Gudang</strong>.</p>
+</blockquote>
+<hr />
+<h4 id="tahap-b-mengamankan-gudang-security-script">TAHAP B: Mengamankan Gudang (Security Script)</h4>
+<p>MySQL bawaan pabrik masih agak longgar keamanannya. Kita kencangkan bautnya.</p>
+<p><strong>1. Jalankan Skrip Pengaman:</strong></p>
+<pre><code class="language-bash">mysql_secure_installation
+</code></pre>
+<p><strong>2. Jawab Pertanyaan Security:</strong></p>
+<ul>
+<li><em>Enter current password for root:</em> Masukkan password yang tadi Anda buat.</li>
+<li><em>Change the root password?</em> <strong>n</strong> (No, kan baru aja dibuat).</li>
+<li><em>Remove anonymous users?</em> <strong>Y</strong> (Hapus user hantu).</li>
+<li><em>Disallow root login remotely?</em> <strong>Y</strong> (Biar gak dibobol dari luar).</li>
+<li><em>Remove test database?</em> <strong>Y</strong> (Hapus database sampah).</li>
+<li><em>Reload privilege tables now?</em> <strong>Y</strong> (Terapkan sekarang).</li>
+</ul>
+<hr />
+<h3 id="pojok-benang-merah-real-case-study">🚧 POJOK &ldquo;BENANG MERAH&rdquo; (Real Case Study)</h3>
+<p><strong>Kasus:</strong> &ldquo;Mas, saya lupa password MySQL saya pas instalasi tadi! Gimana dong?&rdquo;</p>
+<p><strong>Solusi Darurat:</strong>
+Merestet password root MySQL itu ribet (harus matikan service, nyalakan mode safe, dll).
+<strong>Pencegahan:</strong> Catat password MySQL Anda SEKARANG JUGA di Notepad/Kertas. Bedakan dengan password login Linux biar aman, tapi untuk Lab, disamakan dulu tidak apa-apa biar tidak lupa.</p>
+<hr />
+<h3 id="momen-ka-boom-verification-segmen-1">📸 MOMEN &ldquo;KA-BOOM!&rdquo; (Verification Segmen 1)</h3>
+<p>Mari kita coba masuk ke dalam gudang lewat pintu belakang (Terminal).</p>
+<p><strong>1. Login ke MySQL:</strong></p>
+<pre><code class="language-bash">mysql -u root -p
+</code></pre>
+<p><em>(Artinya: Masuk MySQL sebagai user root, dan tanyakan password).</em></p>
+<p><strong>2. Masukkan Password:</strong>
+Ketik password MySQL Anda (tidak akan muncul bintangnya).</p>
+<p><strong>3. Hasil Sukses:</strong>
+Prompt terminal akan berubah dari <code>root@debian:~#</code> menjadi:</p>
+<pre><code class="language-mysql">mysql&gt;
+</code></pre>
+<p>Jika sudah muncul tulisan <code>mysql&gt;</code>, berarti Anda sudah berada di dalam gudang data.</p>
+<p><strong>4. Cek Rak (Database):</strong>
+Ketik perintah ini (akhiri dengan titik koma):</p>
+<pre><code class="language-mysql">show databases;
+</code></pre>
+<ul>
+<li><strong>Hasil:</strong> Muncul daftar database bawaan (<code>information_schema</code>, <code>mysql</code>, dll).</li>
+</ul>
+<p><strong>5. Keluar:</strong>
+Ketik: <code>exit</code></p>
+<hr />
+<p><em>(Segmen 1 Selesai. Gudang sudah jadi, tapi gelap gulita karena cuma pakai teks hitam putih. Di Segmen 2, kita akan pasang lampu dan meja resepsionis canggih bernama </em><em>PhpMyAdmin</em><em>&hellip;)</em></p>
+<p>Analogi: <em>&ldquo;MySQL itu &lsquo;Raja Gudang&rsquo;, tapi dia galak (cuma mau ngomong pakai teks hitam putih). Jadi kita butuh &lsquo;Juru Bicara&rsquo; yang ganteng dan ramah (UI), yaitu </em><em>PhpMyAdmin</em><em>.&rdquo;</em></p>
+<p>Mari kita pasang &ldquo;Wajah Ganteng&rdquo; untuk database kita.</p>
+<hr />
+<h1 id="bab-3-web-hosting-master_1">📖 BAB 3: WEB HOSTING MASTER</h1>
+<h2 id="part-9-manajemen-data-segmen-2">(Part 9) Manajemen Data: Segmen 2</h2>
+<p><strong>(PhpMyAdmin Installation)</strong></p>
+<h3 id="tagline_1">🏷️ TAGLINE</h3>
+<p><em>&ldquo;Mengelola Gudang Data Tanpa Mengotori Tangan&rdquo;</em></p>
+<hr />
+<h3 id="konsep-warung-kopi-analogi_1">☕ KONSEP &ldquo;WARUNG KOPI&rdquo; (Analogi)</h3>
+<p>Di Segmen 1, kita masuk ke MySQL lewat terminal (<code>mysql -u root -p</code>). Itu ibarat masuk gudang gelap bawa senter. Mau cari barang harus hapal kode letak raknya (<code>SELECT * FROM...</code>). Ribet!</p>
+<p><strong>PhpMyAdmin</strong> adalah <strong>Ruang Kontrol (Control Room)</strong>.
+Dia punya tampilan grafis (Web), tombol-tombol yang jelas, dan tabel yang rapi. Kita bisa membuat database, melihat data, dan menghapus data hanya dengan <strong>Klik Mouse</strong>. Tidak perlu ngetik kode aneh-aneh lagi.</p>
+<hr />
+<h3 id="misi-operasi-segmen-2">🎯 MISI OPERASI (Segmen 2)</h3>
+<ol>
+<li>Menginstal <strong>PhpMyAdmin</strong>.</li>
+<li><strong>MOMEN KRUSIAL:</strong> Menghubungkan PhpMyAdmin dengan Apache (Jangan salah pencet tombol!).</li>
+<li>Login ke Dashboard Database lewat Browser.</li>
+</ol>
+<hr />
+<h3 id="persiapan_1">🛠️ PERSIAPAN</h3>
+<ul>
+<li>Login sebagai <strong>root</strong>.</li>
+<li><strong>Kopi masih panas?</strong> Karena Anda butuh fokus tingkat dewa di langkah instalasi ini. Salah pencet tombol = Error 404.</li>
+</ul>
+<hr />
+<h3 id="langkah-eksekusi-segmen-2">💻 LANGKAH EKSEKUSI (Segmen 2)</h3>
+<h4 id="tahap-a-memanggil-sang-manajer-instalasi">TAHAP A: Memanggil Sang Manajer (Instalasi)</h4>
+<p><strong>1. Jalankan Perintah Instalasi:</strong></p>
+<pre><code class="language-bash">apt-get install phpmyadmin -y
+</code></pre>
+<p><strong>2. ⚠️ JEBAKAN BATMAN (Web Server Selection):</strong>
+Akan muncul layar biru/merah/abu-abu yang bertanya: <em>&ldquo;Web server to reconfigure automatically:&rdquo;</em>
+Pilihannya: <code>[ ] apache2</code> dan <code>[ ] lighttpd</code>.</p>
+<ul>
+<li><strong>JANGAN LANGSUNG TEKAN ENTER!</strong></li>
+<li>Tekan <strong>SPASI</strong> (Spacebar) pada <code>apache2</code> sampai muncul tanda bintang <code>[*] apache2</code>.</li>
+<li>Baru tekan <strong>TAB</strong> ke tombol <code>&lt;Ok&gt;</code>, lalu <strong>ENTER</strong>.</li>
+</ul>
+<blockquote>
+<p><em>Kalau Anda lupa tekan Spasi, PhpMyAdmin tidak akan nyambung ke Apache. Akibatnya: 404 Not Found.</em></p>
+</blockquote>
+<p><strong>3. Konfigurasi Database (dbconfig-common):</strong>
+Muncul pertanyaan: <em>&ldquo;Configure database for phpmyadmin with dbconfig-common?&rdquo;</em></p>
+<ul>
+<li>Pilih <strong>\&lt;Yes&gt;</strong>.</li>
+</ul>
+<p><strong>4. Password Aplikasi:</strong>
+Muncul: <em>&ldquo;Password of the database&rsquo;s administrative user:&rdquo;</em></p>
+<ul>
+<li>Masukkan password root MySQL yang Anda buat di Segmen 1 (misal <code>admin123</code>).</li>
+<li>Jika diminta <em>&ldquo;MySQL application password for phpmyadmin&rdquo;</em>: Masukkan password yang sama lagi biar tidak bingung.</li>
+</ul>
+<hr />
+<h4 id="tahap-b-penyelamatan-darurat-opsional-tapi-sering-terjadi">TAHAP B: Penyelamatan Darurat (Opsional tapi Sering Terjadi)</h4>
+<p>Jika di langkah A-2 Anda tidak sengaja melakukan kesalahan (lupa tekan spasi), Apache tidak akan tahu keberadaan PhpMyAdmin.</p>
+<p>Kita buat &ldquo;Jalan Pintas&rdquo; manual agar pasti aman.</p>
+<p><strong>1. Edit Config Apache:</strong></p>
+<pre><code class="language-bash">nano /etc/apache2/apache2.conf
+</code></pre>
+<p><strong>2. Tambahkan di Baris Paling Bawah:</strong></p>
+<pre><code class="language-bash"># Include PhpMyAdmin
+Include /etc/phpmyadmin/apache.conf
+</code></pre>
+<p><strong>3. Restart Apache:</strong></p>
+<pre><code class="language-bash">/etc/init.d/apache2 restart
+</code></pre>
+<hr />
+<h3 id="pojok-benang-merah-real-case-study_1">🚧 POJOK &ldquo;BENANG MERAH&rdquo; (Real Case Study)</h3>
+<p><strong>Kasus:</strong> &ldquo;Mas, instalasi sukses. Tapi pas buka <code>teungku.edu/phpmyadmin</code>, browser bilang <strong>404 Not Found</strong>.&rdquo;</p>
+<p><strong>Penyebab:</strong>
+Ingat &ldquo;Jebakan Batman&rdquo; di Tahap A-2? 99% pemula lupa menekan <strong>SPASI</strong> saat memilih <code>apache2</code>. Mereka langsung Enter, jadi Apache tidak terpilih.</p>
+<p><strong>Solusi:</strong>
+Lakukan <strong>TAHAP B</strong> di atas. Itu memaksa Apache untuk membaca konfigurasi PhpMyAdmin secara manual. Masalah pasti beres.</p>
+<hr />
+<h3 id="momen-ka-boom-verification-part-9">📸 MOMEN &ldquo;KA-BOOM!&rdquo; (Verification Part 9)</h3>
+<p>Pindah ke <strong>Windows 7</strong> (Klien).</p>
+<p><strong>1. Buka Browser:</strong>
+Ketik alamat: <code>http://www.teungku.edu/phpmyadmin</code></p>
+<p><strong>2. Halaman Login:</strong>
+Anda harusnya melihat logo <strong>phpMyAdmin</strong> dan kolom login.</p>
+<ul>
+<li><strong>Username:</strong> <code>root</code></li>
+<li><strong>Password:</strong> (Password MySQL yang Anda buat di Segmen 1).</li>
+</ul>
+<p><strong>3. Dashboard:</strong>
+Jika berhasil login, Anda akan melihat tampilan grafis database.
+Coba klik tab <strong>Databases</strong>. Anda akan melihat gudang data yang tadinya cuma tulisan teks, sekarang jadi tabel yang cantik.</p>
+<hr />
+<p><strong>🏁 PENUTUP RESMI BAB 3 - PART 9:</strong>
+Gudang Data (MySQL) dan Manajernya (PhpMyAdmin) sudah siap kerja.
+Server Anda sekarang sudah punya tumpukan lengkap: <strong>LAMP Stack</strong> (Linux, Apache, MySQL, PHP).</p>
+<p><strong>Apa Selanjutnya?</strong>
+Ruko kita (<code>teungku.edu</code>) sudah penuh fasilitas. Tapi&hellip; bagaimana kalau kita mau buka cabang ruko lain? Misal <code>blog.teungku.edu</code> atau <code>toko.teungku.edu</code> di server yang sama?</p>
+<p>Di <strong>(Part 12) Hosting Banyak Web (Virtual Host)</strong>, kita akan belajar trik sulap membagi satu server menjadi banyak website.</p>
+    </div>
+    
+    <nav class="article-footer-nav">
+        <a href="../../blog.html" class="cta-button">← Kembali ke Blog</a>
+    </nav>
+    
+</article>
+    </main>
+    
+    <footer>
+        <p>&copy; 2026 - Teungku Zulkifli. Dibuat dengan ❤️</p>
+    </footer>
+    
+    <div class="floating-lang-switcher">
+        <div class="lang-options">
+            <button id="lang-id">ID</button>
+            <button id="lang-en">EN</button>
+        </div>
+        <button class="lang-globe-btn" aria-label="Pilih Bahasa">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+        </button>
+    </div>
+    
+    <script src="../../assets/js/languages.js"></script>
+    <script src="../../assets/js/main.script.js" defer></script>
+    
+</body>
+</html>

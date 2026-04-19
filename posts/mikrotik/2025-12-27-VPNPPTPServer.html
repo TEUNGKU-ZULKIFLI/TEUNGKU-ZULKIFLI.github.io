@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Terowongan Rahasia (VPN PPTP Server) - Teungku Zulkifli</title>
+    <meta name="description" content="">
+    <meta name="author" content="Teungku Zulkifli">
+    
+    <meta property="og:title" content="Terowongan Rahasia (VPN PPTP Server) - Teungku Zulkifli">
+    <meta property="og:description" content="">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://teungku.me">
+    
+    <link rel="stylesheet" href="../../assets/css/main.style.css">
+    
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="../../index.html" class="logo">Teungku Zulkifli</a>
+            <ul id="nav-links">
+                <li><a data-lang="common.navHome" href="../../index.html#home">Beranda</a></li>
+                <li><a data-lang="common.navAbout" href="../../index.html#about">Tentang</a></li>
+                <li><a data-lang="common.navContact" href="../../index.html#contact">Kontak</a></li>
+                <li><a data-lang="common.navProjects" href="../../projects.html">Proyek</a></li>
+                <li><a data-lang="common.navBlog" href="../../blog.html">Blog</a></li>
+            </ul>
+            <button id="hamburger-btn" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+    
+    <main>
+<article id="article-content">
+    
+    <header class="article-header">
+        <h1>Terowongan Rahasia (VPN PPTP Server)</h1>
+        
+        <div class="article-meta">
+            <span class="meta-item">
+                📅 <time datetime="2025-12-27">2025-12-27</time>
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                🏷️ Course
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                ✍️ Teungku Zulkifli
+            </span>
+        </div>
+        
+        <div class="article-tags">
+            <span class="article-tag">#mikrotik-series</span>
+        </div>
+    </header>
+    
+    <hr class="article-divider">
+    
+    <div class="article-body">
+        <h1 id="dokumentasi-lab-mikrotik-misi-4">📂 DOKUMENTASI LAB MIKROTIK: MISI 4</h1>
+<h2 id="a-tujuan-misi">A. TUJUAN MISI</h2>
+<p>Membuat jalur koneksi privat (Tunnel) yang memungkinkan Client mengakses Router secara aman, menembus batasan firewall, dan seolah-olah berada di jaringan lokal router meskipun diakses dari jauh.</p>
+<hr />
+<h2 id="b-konsep-dasar-teori-daging">B. KONSEP DASAR (TEORI DAGING) 🥩</h2>
+<h3 id="1-vpn-virtual-private-network">1. VPN (Virtual Private Network)</h3>
+<p>Bayangkan sebuah pipa selang air yang kita taruh di dasar laut. Air di dalam selang (Data VPN) tidak akan bercampur dengan air laut (Internet Publik).
+* <strong>Tunneling:</strong> Teknik membungkus paket data di dalam paket lain.</p>
+<h3 id="2-pptp-point-to-point-tunneling-protocol">2. PPTP (Point-to-Point Tunneling Protocol)</h3>
+<p>Protokol VPN &ldquo;Klasik&rdquo; buatan Microsoft.
+* <strong>Kelebihan:</strong> Ringan, mudah, support bawaan di hampir semua OS (Windows 7/10/11, Android lama). Tidak butuh aplikasi tambahan.
+* <strong>Port:</strong> Menggunakan TCP Port <strong>1723</strong>.</p>
+<h3 id="3-logika-ip-public-vs-ip-tunnel">3. Logika IP Public vs IP Tunnel</h3>
+<ul>
+<li><strong>Destination Address:</strong> Alamat fisik Router (Pintu Masuk). Di Lab ini: <code>192.168.50.1</code>.</li>
+<li><strong>Local/Remote Address:</strong> Alamat virtual setelah masuk terowongan.</li>
+<li><em>Local:</em> IP Router di dalam terowongan (<code>10.10.10.1</code>).</li>
+<li><em>Remote:</em> IP yang dipinjamkan ke Client (<code>10.10.10.2</code>).</li>
+</ul>
+<hr />
+<h2 id="c-langkah-pengerjaan">C. LANGKAH PENGERJAAN</h2>
+<h3 id="1-skenario">1. Skenario</h3>
+<p>Client (Windows 7) ingin mengakses Router. Namun, IP Client (<code>192.168.50.50</code>) diblokir oleh Firewall (Misi 3). Solusinya: Masuk lewat jalur belakang (VPN).</p>
+<h3 id="2-konfigurasi-mikrotik-server">2. Konfigurasi Mikrotik (Server)</h3>
+<p><strong>Langkah 1: Aktifkan Server</strong></p>
+<pre><code class="language-bash">/interface pptp-server server set enabled=yes
+</code></pre>
+<p><em>Mengaktifkan fitur penerima tamu.</em></p>
+<p><strong>Langkah 2: Buat Akun (Secrets)</strong></p>
+<pre><code class="language-bash">/ppp secret add name=&quot;teungku-edu&quot; password=&quot;12345&quot; service=pptp local-address=10.10.10.1 remote-address=10.10.10.2
+</code></pre>
+<p><em>Menentukan Username, Password, dan IP Address yang akan diberikan.</em></p>
+<p><strong>Langkah 3: Izin Firewall (Chain Input)</strong></p>
+<pre><code class="language-bash">/ip firewall filter add chain=input protocol=tcp dst-port=1723 action=accept comment=&quot;Izin Masuk VPN PPTP&quot; place-before=0
+</code></pre>
+<p><em>Satpam (Firewall) diperintah untuk mengizinkan paket Port 1723 (PPTP) masuk. Rule ditaruh paling atas (index 0) agar prioritas.</em></p>
+<h3 id="3-konfigurasi-client-windows-7">3. Konfigurasi Client (Windows 7)</h3>
+<ul>
+<li><strong>Setup:</strong> <code>Control Panel</code> <strong><code>&gt;</code></strong> <code>Network and Sharing</code> <strong><code>&gt;</code></strong> <code>Setup New Connection</code> <strong><code>&gt;</code></strong> <code>Connect to Workplace</code> <strong><code>&gt;</code></strong> <code>Use my Internet Connection (VPN)</code>.</li>
+<li><strong>Target IP:</strong> <code>192.168.50.1</code> (IP Fisik Router).</li>
+<li><strong>Credential:</strong> User <code>teungku-edu</code>, Pass <code>12345</code>.</li>
+</ul>
+<h3 id="4-hasil-pengujian-verification">4. Hasil Pengujian (Verification)</h3>
+<ul>
+<li><strong>Status:</strong> Connected.</li>
+<li><strong>IP Check (<code>ipconfig</code>):</strong> Muncul adapter baru (PPP) dengan IP <code>10.10.10.2</code>.</li>
+<li><strong>Konektivitas:</strong></li>
+<li>Ping ke <code>192.168.50.1</code> -&gt; <strong>RTO</strong> (Masih terblokir Firewall Misi 3, ini normal &amp; bagus).</li>
+<li>
+<p>Ping ke <code>10.10.10.1</code> -&gt; <strong>Reply</strong> (Sukses tembus lewat jalur VPN).</p>
+</li>
+<li>
+<p><strong>Cek Sisi Router:</strong> <code>/ppp active print</code> menunjukkan user <code>teungku-edu</code> sedang online.</p>
+</li>
+</ul>
+<hr />
+<h2 id="d-kesimpulan">D. KESIMPULAN</h2>
+<p>Misi 4 sukses. Kita berhasil membangun infrastruktur VPN sederhana. Client kini memiliki &ldquo;identitas ganda&rdquo;: IP Asli (yang diblokir) dan IP VPN (yang punya akses VIP). Teknik ini adalah dasar dari <em>Remote Working</em> (Waring From Home).</p>
+<hr />
+    </div>
+    
+    <nav class="article-footer-nav">
+        <a href="../../blog.html" class="cta-button">← Kembali ke Blog</a>
+    </nav>
+    
+</article>
+    </main>
+    
+    <footer>
+        <p>&copy; 2026 - Teungku Zulkifli. Dibuat dengan ❤️</p>
+    </footer>
+    
+    <div class="floating-lang-switcher">
+        <div class="lang-options">
+            <button id="lang-id">ID</button>
+            <button id="lang-en">EN</button>
+        </div>
+        <button class="lang-globe-btn" aria-label="Pilih Bahasa">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+        </button>
+    </div>
+    
+    <script src="../../assets/js/languages.js"></script>
+    <script src="../../assets/js/main.script.js" defer></script>
+    
+</body>
+</html>

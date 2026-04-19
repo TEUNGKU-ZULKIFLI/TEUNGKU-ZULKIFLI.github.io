@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>The Server Journey: Debian 7 Legacy - Teungku Zulkifli</title>
+    <meta name="description" content="">
+    <meta name="author" content="Teungku Zulkifli">
+    
+    <meta property="og:title" content="The Server Journey: Debian 7 Legacy - Teungku Zulkifli">
+    <meta property="og:description" content="">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://teungku.me">
+    
+    <link rel="stylesheet" href="../../assets/css/main.style.css">
+    
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="../../index.html" class="logo">Teungku Zulkifli</a>
+            <ul id="nav-links">
+                <li><a data-lang="common.navHome" href="../../index.html#home">Beranda</a></li>
+                <li><a data-lang="common.navAbout" href="../../index.html#about">Tentang</a></li>
+                <li><a data-lang="common.navContact" href="../../index.html#contact">Kontak</a></li>
+                <li><a data-lang="common.navProjects" href="../../projects.html">Proyek</a></li>
+                <li><a data-lang="common.navBlog" href="../../blog.html">Blog</a></li>
+            </ul>
+            <button id="hamburger-btn" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+    
+    <main>
+<article id="article-content">
+    
+    <header class="article-header">
+        <h1>The Server Journey: Debian 7 Legacy</h1>
+        
+        <div class="article-meta">
+            <span class="meta-item">
+                📅 <time datetime="2025-09-23">2025-09-23</time>
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                🏷️ Course
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                ✍️ Teungku
+            </span>
+        </div>
+        
+        <div class="article-tags">
+            <span class="article-tag">#debian-server-series</span>
+        </div>
+    </header>
+    
+    <hr class="article-divider">
+    
+    <div class="article-body">
+        <div align="center">
+
+  <picture>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Openlogo-debianV2.svg/1200px-Openlogo-debianV2.svg.png" width="180" alt="Debian Logo">
+  </picture>
+
+  <h1 align="center">🐧 The Server Journey</h1>
+
+  <p align="center">
+    <b>From Zero to Hero: Building a Complete Server Infrastructure on Virtual Machine</b><br/>
+    Panduan Praktis, Fun, dan Terstruktur untuk Menaklukkan Debian 7 "Wheezy"
+  </p>
+
+  <p align="center">
+    <a href="https://www.debian.org/">
+      <img src="https://img.shields.io/badge/OS-Debian%207%20Wheezy-A81D33?style=for-the-badge&logo=debian&logoColor=white" alt="Debian 7"/>
+    </a>
+    <img src="https://img.shields.io/badge/Status-COMPLETED-success?style=for-the-badge" alt="Status"/>
+    <a href="https://www.youtube.com/playlist?list=PLuXdnSVJrUhnw4DwdwEvab-AHj1p1qD0F">
+      <img src="https://img.shields.io/badge/YouTube-Watch%20Playlist-red?style=for-the-badge&logo=youtube&logoColor=white" alt="Playlist"/>
+    </a>
+  </p>
+
+</div>
+
+<hr />
+<h2 id="video-playlist">📺 Video Playlist</h2>
+<p>Ingin melihat langsung prakteknya? Klik gambar di bawah untuk memutar seluruh Playlist di YouTube!</p>
+<div align="center">
+  <a href="https://www.youtube.com/playlist?list=PLuXdnSVJrUhnw4DwdwEvab-AHj1p1qD0F" target="_blank">
+    <img src="https://img.youtube.com/vi/p4zs7A_xUks/maxresdefault.jpg" width="600" alt="Watch The Server Journey Playlist" style="border-radius: 10px; border: 4px solid #A81D33;">
+  </a>
+  <p><i>👆 Klik banner untuk membuka Playlist Lengkap</i></p>
+</div>
+
+<hr />
+<h2 id="roadmap-dokumentasi">🗺️ Roadmap &amp; Dokumentasi</h2>
+<p>Berikut adalah urutan pembelajaran yang disusun berdasarkan <strong>Topik (BAB)</strong> agar mudah dipahami, dilengkapi dengan link Dokumentasi Tertulis dan Video Tutorial per bagian.</p>
+<h3 id="bab-1-the-genesis">🧱 BAB 1: THE GENESIS</h3>
+<blockquote>
+<p><strong>&ldquo;Pondasi Kehidupan Server&rdquo;</strong> — <em>Merakit besi tua menjadi mesin yang bernapas.</em></p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Status</th>
+<th style="text-align: center;">Part</th>
+<th style="text-align: left;">Misi &amp; Tutorial</th>
+<th style="text-align: center;">Video</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;"><strong>01</strong></td>
+<td style="text-align: left;"><strong>Instalasi Server dari Awal</strong><br/><em>&ldquo;Membangkitkan The Legend Debian 7&rdquo;</em></td>
+<td style="text-align: center;"><a href="https://youtu.be/p4zs7A_xUks"><img alt="YT" src="https://img.shields.io/badge/Play-red?style=flat-square&amp;logo=youtube&amp;logoColor=white" /></a></td>
+</tr>
+<tr>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;"><strong>02</strong></td>
+<td style="text-align: left;"><strong>Konfigurasi Dasar</strong><br/><em>&ldquo;Jantung &amp; Nadi: Repository &amp; Network&rdquo;</em></td>
+<td style="text-align: center;"><a href="https://youtu.be/ggZwSLdpRyQ"><img alt="YT" src="https://img.shields.io/badge/Play-red?style=flat-square&amp;logo=youtube&amp;logoColor=white" /></a></td>
+</tr>
+<tr>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;"><strong>03</strong></td>
+<td style="text-align: left;"><strong>Identitas Server</strong><br/><em>&ldquo;Siapa Saya? Dimana Saya? (NTP, SSH, DNS)&rdquo;</em></td>
+<td style="text-align: center;"><a href="https://youtu.be/9q8slK0ADcQ"><img alt="YT" src="https://img.shields.io/badge/Play-red?style=flat-square&amp;logo=youtube&amp;logoColor=white" /></a></td>
+</tr>
+<tr>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;"><strong>04</strong></td>
+<td style="text-align: left;"><strong>Jembatan Penghubung</strong><br/><em>&ldquo;Membangun Terminal Listrik Virtual (Bridge)&rdquo;</em></td>
+<td style="text-align: center;"><a href="https://youtu.be/FEd7o51UY0Y"><img alt="YT" src="https://img.shields.io/badge/Play-red?style=flat-square&amp;logo=youtube&amp;logoColor=white" /></a></td>
+</tr>
+<tr>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;"><strong>17A</strong></td>
+<td style="text-align: left;"><strong>Makeover Tampilan CLI</strong><br/><em>&ldquo;Kokpit Hacker: Bashrc &amp; Utilities&rdquo;</em></td>
+<td style="text-align: center;"><a href="https://youtu.be/XEOexJIa41Q"><img alt="YT" src="https://img.shields.io/badge/Play-red?style=flat-square&amp;logo=youtube&amp;logoColor=white" /></a></td>
+</tr>
+</tbody>
+</table>
+<p><br/></p>
+<h3 id="bab-2-jaringan-konektivitas">🚦 BAB 2: JARINGAN &amp; KONEKTIVITAS</h3>
+<blockquote>
+<p><strong>&ldquo;Sang Pengatur Lalu Lintas&rdquo;</strong> — <em>Server mulai dermawan, membagikan koneksi ke tetangga.</em></p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Status</th>
+<th style="text-align: center;">Part</th>
+<th style="text-align: left;">Misi &amp; Tutorial</th>
+<th style="text-align: center;">Video</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;"><strong>07</strong></td>
+<td style="text-align: left;"><strong>Menjadi Router</strong><br/><em>&ldquo;Membuka Keran Air Internet (NAT)&rdquo;</em></td>
+<td style="text-align: center;"><a href="https://youtu.be/nznAZGlkP48"><img alt="YT" src="https://img.shields.io/badge/Play-red?style=flat-square&amp;logo=youtube&amp;logoColor=white" /></a></td>
+</tr>
+<tr>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;"><strong>06</strong></td>
+<td style="text-align: left;"><strong>Mengatur Klien</strong><br/><em>&ldquo;Resepsionis Pembagi Tiket (DHCP)&rdquo;</em></td>
+<td style="text-align: center;"><a href="https://youtu.be/OMVJFczcDBE"><img alt="YT" src="https://img.shields.io/badge/Play-red?style=flat-square&amp;logo=youtube&amp;logoColor=white" /></a></td>
+</tr>
+<tr>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;"><strong>11</strong></td>
+<td style="text-align: left;"><strong>Berbagi File Lokal</strong><br/><em>&ldquo;Jembatan Persahabatan (Samba)&rdquo;</em></td>
+<td style="text-align: center;"><a href="https://youtu.be/JI25CTbgnis"><img alt="YT" src="https://img.shields.io/badge/Play-red?style=flat-square&amp;logo=youtube&amp;logoColor=white" /></a></td>
+</tr>
+<tr>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;"><strong>08</strong></td>
+<td style="text-align: left;"><strong>Transfer File Aman</strong><br/><em>&ldquo;Truk Baja Pengantar Paket (SFTP)&rdquo;</em></td>
+<td style="text-align: center;"><a href="https://youtu.be/WahLoPUczfA"><img alt="YT" src="https://img.shields.io/badge/Play-red?style=flat-square&amp;logo=youtube&amp;logoColor=white" /></a></td>
+</tr>
+</tbody>
+</table>
+<p><br/></p>
+<h3 id="bab-3-web-hosting-master">🌐 BAB 3: WEB HOSTING MASTER</h3>
+<blockquote>
+<p><strong>&ldquo;Menjadi Hostinger Mini&rdquo;</strong> — <em>Membangun Ruko Digital untuk menampilkan website.</em></p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Status</th>
+<th style="text-align: center;">Part</th>
+<th style="text-align: left;">Misi &amp; Tutorial</th>
+<th style="text-align: center;">Video</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;"><strong>05</strong></td>
+<td style="text-align: left;"><strong>Membangun Web Server</strong><br/><em>&ldquo;Ruko, Dapur, dan Koki (Apache &amp; PHP)&rdquo;</em></td>
+<td style="text-align: center;"><a href="https://youtu.be/2nWfMydtnzc"><img alt="YT" src="https://img.shields.io/badge/Play-red?style=flat-square&amp;logo=youtube&amp;logoColor=white" /></a></td>
+</tr>
+<tr>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;"><strong>09</strong></td>
+<td style="text-align: left;"><strong>Manajemen Data</strong><br/><em>&ldquo;Gudang Arsip &amp; Manajer Ganteng (MySQL)&rdquo;</em></td>
+<td style="text-align: center;"><a href="https://youtu.be/sfyh6qfrUC4"><img alt="YT" src="https://img.shields.io/badge/Play-red?style=flat-square&amp;logo=youtube&amp;logoColor=white" /></a></td>
+</tr>
+<tr>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;"><strong>12</strong></td>
+<td style="text-align: left;"><strong>Hosting Banyak Web</strong><br/><em>&ldquo;Satu Gedung, Seribu Toko (VirtualHost)&rdquo;</em></td>
+<td style="text-align: center;"><a href="https://youtu.be/aHwVLrsRfr0"><img alt="YT" src="https://img.shields.io/badge/Play-red?style=flat-square&amp;logo=youtube&amp;logoColor=white" /></a></td>
+</tr>
+<tr>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;"><strong>13</strong></td>
+<td style="text-align: left;"><strong>Menggembok Situs</strong><br/><em>&ldquo;Pintu Baja &amp; KTP Digital (SSL/HTTPS)&rdquo;</em></td>
+<td style="text-align: center;"><a href="https://youtu.be/hnhcRUBBfSU"><img alt="YT" src="https://img.shields.io/badge/Play-red?style=flat-square&amp;logo=youtube&amp;logoColor=white" /></a></td>
+</tr>
+<tr>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;"><strong>14</strong></td>
+<td style="text-align: left;"><strong>Paket Hemat Hosting</strong><br/><em>&ldquo;Kamar Kost Mahasiswa (UserDir)&rdquo;</em></td>
+<td style="text-align: center;"><a href="https://youtu.be/W96IMb0NYEQ"><img alt="YT" src="https://img.shields.io/badge/Play-red?style=flat-square&amp;logo=youtube&amp;logoColor=white" /></a></td>
+</tr>
+</tbody>
+</table>
+<p><br/></p>
+<h3 id="bab-4-komunikasi-kolaborasi">📮 BAB 4: KOMUNIKASI &amp; KOLABORASI</h3>
+<blockquote>
+<p><strong>&ldquo;Kantor Pos Digital&rdquo;</strong> — <em>Server bisa berkirim surat cinta elektronik.</em></p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Status</th>
+<th style="text-align: center;">Part</th>
+<th style="text-align: left;">Misi &amp; Tutorial</th>
+<th style="text-align: center;">Video</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;"><strong>10</strong></td>
+<td style="text-align: left;"><strong>Mail Server Lengkap</strong><br/><em>&ldquo;Pos, Kotak Surat, dan Sekretaris&rdquo;</em></td>
+<td style="text-align: center;"><a href="https://youtu.be/aKe8M4RBrpk"><img alt="YT" src="https://img.shields.io/badge/Play-red?style=flat-square&amp;logo=youtube&amp;logoColor=white" /></a></td>
+</tr>
+</tbody>
+</table>
+<p><br/></p>
+<h3 id="bab-5-keamanan-kontrol">🛡️ BAB 5: KEAMANAN &amp; KONTROL</h3>
+<blockquote>
+<p><strong>&ldquo;Sang Penjaga Gerbang&rdquo;</strong> — <em>Memastikan internet aman dari konten negatif.</em></p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Status</th>
+<th style="text-align: center;">Part</th>
+<th style="text-align: left;">Misi &amp; Tutorial</th>
+<th style="text-align: center;">Video</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;"><strong>15</strong></td>
+<td style="text-align: left;"><strong>Gerbang Internet</strong><br/><em>&ldquo;Satpam Gaib Transparan (Proxy Squid)&rdquo;</em></td>
+<td style="text-align: center;"><a href="https://youtu.be/JBF8OZOBAqg"><img alt="YT" src="https://img.shields.io/badge/Play-red?style=flat-square&amp;logo=youtube&amp;logoColor=white" /></a></td>
+</tr>
+<tr>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;"><strong>16</strong></td>
+<td style="text-align: left;"><strong>Polisi Konten</strong><br/><em>&ldquo;Polisi Galak Anti-Judol (SquidGuard)&rdquo;</em></td>
+<td style="text-align: center;"><a href="https://youtu.be/l5C7JbDvJos"><img alt="YT" src="https://img.shields.io/badge/Play-red?style=flat-square&amp;logo=youtube&amp;logoColor=white" /></a></td>
+</tr>
+</tbody>
+</table>
+<p><br/></p>
+<h3 id="bab-6-transformasi-visual">🎨 BAB 6: TRANSFORMASI VISUAL</h3>
+<blockquote>
+<p><strong>&ldquo;Evolusi Peradaban&rdquo;</strong> — <em>Hadiah untuk mata yang lelah melihat layar hitam.</em></p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Status</th>
+<th style="text-align: center;">Part</th>
+<th style="text-align: left;">Misi &amp; Tutorial</th>
+<th style="text-align: center;">Video</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;"><strong>17B</strong></td>
+<td style="text-align: left;"><strong>Menuju Desktop GUI</strong><br/><em>&ldquo;Meninggalkan Zaman Batu CLI (XFCE)&rdquo;</em></td>
+<td style="text-align: center;"><a href="https://youtu.be/XEOexJIa41Q"><img alt="YT" src="https://img.shields.io/badge/Play-red?style=flat-square&amp;logo=youtube&amp;logoColor=white" /></a></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<div align="center">
+  <p><b>Created with ❤️ by Teungku</b></p>
+  <img src="https://img.shields.io/badge/Debian-The%20Legend-A81D33?style=flat-square&logo=debian">
+  <img src="https://img.shields.io/badge/Server-Production%20Ready-blue?style=flat-square">
+</div>
+    </div>
+    
+    <nav class="article-footer-nav">
+        <a href="../../blog.html" class="cta-button">← Kembali ke Blog</a>
+    </nav>
+    
+</article>
+    </main>
+    
+    <footer>
+        <p>&copy; 2026 - Teungku Zulkifli. Dibuat dengan ❤️</p>
+    </footer>
+    
+    <div class="floating-lang-switcher">
+        <div class="lang-options">
+            <button id="lang-id">ID</button>
+            <button id="lang-en">EN</button>
+        </div>
+        <button class="lang-globe-btn" aria-label="Pilih Bahasa">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+        </button>
+    </div>
+    
+    <script src="../../assets/js/languages.js"></script>
+    <script src="../../assets/js/main.script.js" defer></script>
+    
+</body>
+</html>

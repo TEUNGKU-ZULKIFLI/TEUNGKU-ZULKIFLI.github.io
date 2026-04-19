@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Monitoring & Diagnosa (The Network Doctor) - Teungku Zulkifli</title>
+    <meta name="description" content="">
+    <meta name="author" content="Teungku Zulkifli">
+    
+    <meta property="og:title" content="Monitoring & Diagnosa (The Network Doctor) - Teungku Zulkifli">
+    <meta property="og:description" content="">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://teungku.me">
+    
+    <link rel="stylesheet" href="../../assets/css/main.style.css">
+    
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="../../index.html" class="logo">Teungku Zulkifli</a>
+            <ul id="nav-links">
+                <li><a data-lang="common.navHome" href="../../index.html#home">Beranda</a></li>
+                <li><a data-lang="common.navAbout" href="../../index.html#about">Tentang</a></li>
+                <li><a data-lang="common.navContact" href="../../index.html#contact">Kontak</a></li>
+                <li><a data-lang="common.navProjects" href="../../projects.html">Proyek</a></li>
+                <li><a data-lang="common.navBlog" href="../../blog.html">Blog</a></li>
+            </ul>
+            <button id="hamburger-btn" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+    
+    <main>
+<article id="article-content">
+    
+    <header class="article-header">
+        <h1>Monitoring & Diagnosa (The Network Doctor)</h1>
+        
+        <div class="article-meta">
+            <span class="meta-item">
+                📅 <time datetime="2025-12-28">2025-12-28</time>
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                🏷️ Course
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                ✍️ Teungku Zulkifli
+            </span>
+        </div>
+        
+        <div class="article-tags">
+            <span class="article-tag">#mikrotik-series</span>
+        </div>
+    </header>
+    
+    <hr class="article-divider">
+    
+    <div class="article-body">
+        <h1 id="dokumentasi-lab-mikrotik-misi-5">📂 DOKUMENTASI LAB MIKROTIK: MISI 5</h1>
+<h2 id="a-tujuan-misi">A. TUJUAN MISI</h2>
+<p>Menguasai alat diagnosa untuk memantau lalu lintas jaringan secara <em>Real-time</em> (Torch), merekam sejarah penggunaan bandwidth/resource (Graphing), dan mencatat kejadian sistem (Logging).</p>
+<hr />
+<h2 id="b-konsep-dasar-teori-daging">B. KONSEP DASAR (TEORI DAGING) 🥩</h2>
+<h3 id="1-torch-stetoskop-jaringan">1. Torch (Stetoskop Jaringan)</h3>
+<p>Alat untuk melihat trafik yang sedang berjalan <em>detik ini juga</em>.
+* <strong>Fungsi:</strong> Menangkap basah IP mana yang sedang download besar atau melakukan Ping.
+* <strong>Parameter:</strong> Bisa filter berdasarkan Src IP, Dst IP, Protocol (TCP/UDP/ICMP), dan Port.</p>
+<h3 id="2-graphing-rekam-medis">2. Graphing (Rekam Medis)</h3>
+<p>Alat untuk melihat sejarah. Jika Torch adalah &ldquo;Video&rdquo;, Graphing adalah &ldquo;Foto Album&rdquo;.
+* <strong>Resource:</strong> Mencatat beban CPU, Memory, dan Disk usage.
+* <strong>Interface:</strong> Mencatat trafik Download/Upload (bps) Harian, Mingguan, Bulanan.
+* <strong>Akses:</strong> Hasilnya dilihat via Web Browser (<code>http://IP-Router/graphs</code>).</p>
+<h3 id="3-logging-buku-harian">3. Logging (Buku Harian)</h3>
+<p>Catatan tekstual tentang apa saja yang terjadi di router.
+* <strong>Penting untuk:</strong> Melacak kapan VPN putus, kapan user login gagal, atau error hardware.</p>
+<hr />
+<h2 id="c-langkah-pengerjaan">C. LANGKAH PENGERJAAN</h2>
+<h3 id="1-monitoring-real-time-torch">1. Monitoring Real-Time (TORCH)</h3>
+<p>Kita memantau aktivitas Ping dari Client.</p>
+<p><strong>A. Metode GUI (Winbox)</strong>
+* <strong>Menu:</strong> Tools &gt; Torch.
+* <strong>Interface:</strong> <code>ether1-LAN-HostOnly</code> (Jalur ke Client).
+* <strong>Filter:</strong> Centang <em>Src. Address</em>, <em>Dst. Address</em>, <em>Protocol</em>, <em>Port</em>.
+* <strong>Action:</strong> Start.</p>
+<p><strong>B. Metode CLI (Terminal)</strong></p>
+<pre><code class="language-bash">/tool torch interface=ether1-LAN-HostOnly src-address=192.168.50.50/32 dst-address=0.0.0.0/0 ip-protocol=any port=any
+</code></pre>
+<p><em>Hasil:</em> Terdeteksi protokol <strong>ICMP</strong> (Ping) berjalan dari <code>192.168.50.50</code> ke <code>192.168.50.1</code>.</p>
+<hr />
+<h3 id="2-monitoring-sejarah-graphing">2. Monitoring Sejarah (GRAPHING)</h3>
+<p>Kita mengaktifkan pencatatan grafik agar bisa dilihat via Web.</p>
+<p><strong>A. Persiapan Firewall (PENTING)</strong>
+Agar Web Graphing bisa dibuka, Rule Firewall Misi 3 (Blokir Web Router) harus dimatikan sementara.</p>
+<pre><code class="language-bash">/ip firewall filter set numbers=2 disabled=yes
+</code></pre>
+<p><em>(Asumsi Rule no.2 adalah rule Drop TCP Port 80).</em></p>
+<p><strong>B. Metode GUI (Winbox)</strong>
+* <strong>Menu:</strong> Tools &gt; Graphing.
+* <strong>Interface Rules:</strong> Add (+) &gt; Interface: <code>ether1-LAN-HostOnly</code> &gt; Allow Address: <code>0.0.0.0/0</code> &gt; Store on Disk: <code>Checked</code>.
+* <strong>Resource Rules:</strong> Add (+) &gt; Allow Address: <code>0.0.0.0/0</code> &gt; Store on Disk: <code>Checked</code>.</p>
+<p><strong>C. Metode CLI (Terminal)</strong></p>
+<pre><code class="language-bash">/tool graphing interface add interface=ether1-LAN-HostOnly allow-address=0.0.0.0/0 store-on-disk=yes
+</code></pre>
+<pre><code class="language-bash">/tool graphing resource add allow-address=0.0.0.0/0 store-on-disk=yes
+</code></pre>
+<p><strong>D. Hasil Pengujian (Via Browser)</strong>
+* <strong>URL:</strong> Akses <code>http://192.168.50.1/graphs</code> dari Browser Client.
+* <strong>Output:</strong> Terlihat grafik batang/garis (Hijau/Biru) untuk trafik <code>ether1</code> dan grafik penggunaan CPU/Memory/Disk.</p>
+<hr />
+<h3 id="3-pencatatan-kejadian-logging">3. Pencatatan Kejadian (LOGGING)</h3>
+<p>Kita memantau aktivitas User VPN (Connect/Disconnect).</p>
+<p><strong>A. Metode CLI (Live Monitoring)</strong>
+Kita menggunakan perintah <code>follow</code> untuk melihat log berjalan real-time.</p>
+<pre><code class="language-bash">/log print follow
+</code></pre>
+<p><strong>B. Hasil Pengujian</strong>
+Saat User VPN (<code>TEUNGKU.Tbk</code>) melakukan koneksi/diskoneksi, muncul log:</p>
+<pre><code>&lt;pptp-teungku-edu&gt;: authenticated
+&lt;pptp-teungku-edu&gt;: using encoding - MPPE128 stateless
+&lt;pptp-teungku-edu&gt;: connected
+</code></pre>
+<p><em>Diagnosa:</em> Koneksi VPN berhasil, otentikasi sukses, enkripsi aktif.</p>
+<hr />
+<h2 id="d-kesimpulan">D. KESIMPULAN</h2>
+<p>Misi 5 Sukses. Router kini tidak lagi &ldquo;Blackbox&rdquo;. Kita bisa melihat isinya (Torch), masa lalunya (Graphing), dan catatannya (Log). Kemampuan ini sangat vital untuk troubleshooting masalah jaringan di masa depan.</p>
+<hr />
+    </div>
+    
+    <nav class="article-footer-nav">
+        <a href="../../blog.html" class="cta-button">← Kembali ke Blog</a>
+    </nav>
+    
+</article>
+    </main>
+    
+    <footer>
+        <p>&copy; 2026 - Teungku Zulkifli. Dibuat dengan ❤️</p>
+    </footer>
+    
+    <div class="floating-lang-switcher">
+        <div class="lang-options">
+            <button id="lang-id">ID</button>
+            <button id="lang-en">EN</button>
+        </div>
+        <button class="lang-globe-btn" aria-label="Pilih Bahasa">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+        </button>
+    </div>
+    
+    <script src="../../assets/js/languages.js"></script>
+    <script src="../../assets/js/main.script.js" defer></script>
+    
+</body>
+</html>

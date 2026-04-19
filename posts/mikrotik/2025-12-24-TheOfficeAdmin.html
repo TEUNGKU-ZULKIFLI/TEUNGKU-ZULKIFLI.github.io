@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Otomatisasi & Manajemen Dasar (The Office Admin) - Teungku Zulkifli</title>
+    <meta name="description" content="">
+    <meta name="author" content="Teungku Zulkifli">
+    
+    <meta property="og:title" content="Otomatisasi & Manajemen Dasar (The Office Admin) - Teungku Zulkifli">
+    <meta property="og:description" content="">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://teungku.me">
+    
+    <link rel="stylesheet" href="../../assets/css/main.style.css">
+    
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="../../index.html" class="logo">Teungku Zulkifli</a>
+            <ul id="nav-links">
+                <li><a data-lang="common.navHome" href="../../index.html#home">Beranda</a></li>
+                <li><a data-lang="common.navAbout" href="../../index.html#about">Tentang</a></li>
+                <li><a data-lang="common.navContact" href="../../index.html#contact">Kontak</a></li>
+                <li><a data-lang="common.navProjects" href="../../projects.html">Proyek</a></li>
+                <li><a data-lang="common.navBlog" href="../../blog.html">Blog</a></li>
+            </ul>
+            <button id="hamburger-btn" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+    
+    <main>
+<article id="article-content">
+    
+    <header class="article-header">
+        <h1>Otomatisasi & Manajemen Dasar (The Office Admin)</h1>
+        
+        <div class="article-meta">
+            <span class="meta-item">
+                📅 <time datetime="2025-12-24">2025-12-24</time>
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                🏷️ Course
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                ✍️ Teungku Zulkifli
+            </span>
+        </div>
+        
+        <div class="article-tags">
+            <span class="article-tag">#mikrotik-series</span>
+        </div>
+    </header>
+    
+    <hr class="article-divider">
+    
+    <div class="article-body">
+        <h1 id="dokumentasi-lab-mikrotik-misi-1">📂 DOKUMENTASI LAB MIKROTIK: MISI 1</h1>
+<h2 id="a-tujuan-misi">A. TUJUAN MISI</h2>
+<p>Mengubah sistem jaringan manual menjadi otomatis. Client (Windows 7) tidak perlu lagi setting IP satu per satu. Router bertindak sebagai pengelola pusat yang membagikan akses internet, memberi alamat IP, dan mencatat siapa saja yang terhubung.</p>
+<hr />
+<h2 id="b-konsep-dasar-kamus-pemula">B. KONSEP DASAR (KAMUS PEMULA) 🧠</h2>
+<h3 id="1-dhcp-server-sang-resepsionis">1. DHCP Server (Sang Resepsionis)</h3>
+<ul>
+<li><strong>Teknis:</strong> <em>Dynamic Host Configuration Protocol</em>.</li>
+<li><strong>Bahasa Manusia:</strong> Bayangkan resepsionis hotel. Saat tamu (Client) datang, resepsionis otomatis memberikan nomor kamar (IP Address) dan kunci akses. Tamu tidak perlu milih kamar sendiri (bisa bentrok).</li>
+<li><strong>Lease Time:</strong> Durasi &ldquo;sewa&rdquo; kamar. Jika waktu habis, IP bisa ditarik kembali atau diperpanjang.</li>
+</ul>
+<h3 id="2-static-lease-tamu-vvip">2. Static Lease (Tamu VVIP)</h3>
+<ul>
+<li><strong>Teknis:</strong> <em>Reservation based on MAC Address</em>.</li>
+<li><strong>Bahasa Manusia:</strong> Meskipun pembagian kamarnya otomatis, kita mem-booking nomor khusus (misal: IP <code>192.168.50.50</code>) khusus untuk Bos (Komputer Teungku-PC). Kapanpun Bos datang, kamarnya pasti itu, tidak akan diberikan ke orang lain.</li>
+</ul>
+<h3 id="3-nat-masquerade-topeng-pesta">3. NAT Masquerade (Topeng Pesta)</h3>
+<ul>
+<li><strong>Teknis:</strong> <em>Network Address Translation</em>.</li>
+<li><strong>Bahasa Manusia:</strong> Satpam di gerbang. Orang luar (Internet) tidak boleh tahu siapa yang ada di dalam rumah (IP Lokal <code>192.168.x.x</code>). Jadi, setiap kali orang dalam mau keluar internetan, Satpam memakaikan &ldquo;Topeng&rdquo; (IP Publik Router). Internet hanya tahu yang minta data adalah Satpam (Router), bukan orang dalam.</li>
+</ul>
+<h3 id="4-arp-buku-tamu">4. ARP (Buku Tamu)</h3>
+<ul>
+<li><strong>Teknis:</strong> <em>Address Resolution Protocol</em>.</li>
+<li><strong>Bahasa Manusia:</strong> Daftar yang mencocokkan Wajah Asli (MAC Address Hardware) dengan Nama Panggilan (IP Address). Tanpa buku ini, paket data nyasar karena Router bingung IP sekian milik HP/Laptop yang mana.</li>
+</ul>
+<h3 id="5-backup-vs-export">5. Backup vs Export</h3>
+<ul>
+<li><strong>Backup (<code>.backup</code>):</strong> Seperti <em>Save Game</em> di PS/Game. Menyimpan segalanya (termasuk password). Hanya bisa di-load di router yang sama.</li>
+<li><strong>Export (<code>.rsc</code>):</strong> Seperti <em>Cheat Sheet</em> atau contekan skrip. Isinya teks yang bisa dibaca manusia. Berguna untuk dipelajari atau dicopy ke router berbeda tipe.</li>
+</ul>
+<hr />
+<h2 id="c-langkah-pengerjaan-summary">C. LANGKAH PENGERJAAN (SUMMARY)</h2>
+<h3 id="1-setup-interface">1. Setup Interface</h3>
+<ul>
+<li><code>ether1</code> dinamakan <strong>LAN-HostOnly</strong> (Arah ke Client Lokal).</li>
+<li><code>ether2</code> dinamakan <strong>WAN-DefaultSwitch</strong> (Arah ke Internet).</li>
+</ul>
+<h3 id="2-koneksi-internet-wan">2. Koneksi Internet (WAN)</h3>
+<ul>
+<li>Mengaktifkan <strong>DHCP Client</strong> di <code>ether2</code> agar Router dapat internet dari ISP/Hyper-V.</li>
+<li>Mengaktifkan <strong>DNS</strong> (<code>allow-remote-requests=yes</code>) agar Router jadi server DNS lokal.</li>
+<li>Mengaktifkan <strong>NAT Masquerade</strong> di <code>ether2</code> agar Client bisa &ldquo;nebeng&rdquo; internetnya Router.</li>
+</ul>
+<h3 id="3-distribusi-ip-lan">3. Distribusi IP (LAN)</h3>
+<ul>
+<li>Membuat <strong>IP Address</strong> Gateway: <code>192.168.50.1/24</code>.</li>
+<li>Setting <strong>DHCP Server</strong> via Wizard:</li>
+<li><strong>Pool (Kolam IP):</strong> <code>192.168.50.10</code> s/d <code>192.168.50.50</code> (Hanya 40 perangkat).</li>
+<li><strong>Lease Time:</strong> 8 Jam (Jam kerja kantor).</li>
+</ul>
+<h3 id="4-penguncian-client-static-lease">4. Penguncian Client (Static Lease)</h3>
+<ul>
+<li>Target: <code>Teungku-PC</code>.</li>
+<li>Action: Diubah dari <em>Dynamic</em> menjadi <em>Static</em>.</li>
+<li>Hasil: Terkunci permanen di IP <code>192.168.50.50</code>.</li>
+</ul>
+<hr />
+<h2 id="d-hasil-pengujian-artifak">D. HASIL PENGUJIAN &amp; ARTIFAK</h2>
+<p><strong>1. Status Client (Windows 7 VM):</strong>
+* Mode Network: <strong>Obtain Automatically</strong>.
+* Hasil: Mendapat IP <code>192.168.50.50</code>, Gateway <code>192.168.50.1</code>.
+* Koneksi: Sukses ping ke <code>8.8.8.8</code> dan browsing.</p>
+<p><strong>2. File Backup (Disimpan di Drive E:\Mikrotik BackUp):</strong>
+* <code>Complete-DHCP.backup</code> (File Binary - 15KB)
+* <code>Settings-TheOfficeAdmin.rsc</code> (File Script - 1KB)</p>
+<hr />
+    </div>
+    
+    <nav class="article-footer-nav">
+        <a href="../../blog.html" class="cta-button">← Kembali ke Blog</a>
+    </nav>
+    
+</article>
+    </main>
+    
+    <footer>
+        <p>&copy; 2026 - Teungku Zulkifli. Dibuat dengan ❤️</p>
+    </footer>
+    
+    <div class="floating-lang-switcher">
+        <div class="lang-options">
+            <button id="lang-id">ID</button>
+            <button id="lang-en">EN</button>
+        </div>
+        <button class="lang-globe-btn" aria-label="Pilih Bahasa">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+        </button>
+    </div>
+    
+    <script src="../../assets/js/languages.js"></script>
+    <script src="../../assets/js/main.script.js" defer></script>
+    
+</body>
+</html>

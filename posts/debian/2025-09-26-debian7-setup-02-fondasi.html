@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>(Part 3): Konfigurasi NTP, SSH, DNS, DHCP Server - Teungku Zulkifli</title>
+    <meta name="description" content="">
+    <meta name="author" content="Teungku Zulkifli">
+    
+    <meta property="og:title" content="(Part 3): Konfigurasi NTP, SSH, DNS, DHCP Server - Teungku Zulkifli">
+    <meta property="og:description" content="">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://teungku.me">
+    
+    <link rel="stylesheet" href="../../assets/css/main.style.css">
+    
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="../../index.html" class="logo">Teungku Zulkifli</a>
+            <ul id="nav-links">
+                <li><a data-lang="common.navHome" href="../../index.html#home">Beranda</a></li>
+                <li><a data-lang="common.navAbout" href="../../index.html#about">Tentang</a></li>
+                <li><a data-lang="common.navContact" href="../../index.html#contact">Kontak</a></li>
+                <li><a data-lang="common.navProjects" href="../../projects.html">Proyek</a></li>
+                <li><a data-lang="common.navBlog" href="../../blog.html">Blog</a></li>
+            </ul>
+            <button id="hamburger-btn" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+    
+    <main>
+<article id="article-content">
+    
+    <header class="article-header">
+        <h1>(Part 3): Konfigurasi NTP, SSH, DNS, DHCP Server</h1>
+        
+        <div class="article-meta">
+            <span class="meta-item">
+                📅 <time datetime="2025-09-26">2025-09-26</time>
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                🏷️ Course
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                ✍️ Teungku Zulkifli
+            </span>
+        </div>
+        
+        <div class="article-tags">
+            <span class="article-tag">#debian-server-series</span>
+        </div>
+    </header>
+    
+    <hr class="article-divider">
+    
+    <div class="article-body">
+        <iframe src="https://www.youtube.com/embed/9q8slK0ADcQ?controls=0&modestbranding=1&rel=0&disablekb=1&autoplay=0" style="display:block;margin:auto;border:none;width:100%;max-width:960px;height:540px;" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+<h1 id="dokumentasi-debian-di-hyper-v-part-3-konfigurasi-ntp-ssh-dns-dhcp-server">Dokumentasi Debian di Hyper V (Part 3): Konfigurasi NTP, SSH, DNS, DHCP Server</h1>
+<p><strong>Catatan Perjalanan &amp; Solusi Praktis untuk VM Debian 7.8.0 &ldquo;Wheezy&rdquo;</strong></p>
+<hr />
+<h2 id="pendahuluan">Pendahuluan 🚀</h2>
+<p>Selamat datang di catatan perjalanan saya dalam membangun sebuah server dari nol! Dokumen ini lebih dari sekadar terjemahan; ini adalah sebuah logbook praktis dari proses konfigurasi awal server <strong>Debian 7.8.0 &ldquo;Wheezy&rdquo;</strong>. Setiap langkah di dalamnya tidak hanya diriset, tetapi juga telah dipraktikkan, diuji, dan yang terpenting, dilengkapi dengan solusi untuk setiap masalah tak terduga yang muncul di tengah jalan.</p>
+<p>Tujuannya adalah untuk menciptakan sebuah panduan yang jujur dan mudah diikuti, terutama bagi mereka yang mungkin menempuh jalur yang sama dengan perangkat lunak versi lama ini. Semoga catatan ini bisa menjadi peta yang berguna, menunjukkan bukan hanya jalan yang lurus, tetapi juga cara melewati setiap rintangan.</p>
+<h3 id="credits-referensi">Credits &amp; Referensi</h3>
+<p>Proses ini tidak akan berjalan lancar tanpa sumber daya dan bantuan yang luar biasa. Kredit sepenuhnya diberikan kepada:</p>
+<ul>
+<li><strong><a href="https://www.server-world.info/en/note?os=Debian_7.0">Server-World</a></strong>: Sebagai referensi utama dan panduan dasar untuk semua tahapan konfigurasi. Panduan mereka yang komprehensif menjadi titik awal dari petualangan ini.</li>
+<li><strong>Gemini (Model AI Google)</strong>: Sebagai mitra diskusi interaktif, asisten riset, dan &ldquo;pengumpul data&rdquo;. Gemini membantu dalam menerjemahkan konsep, mendiagnosis masalah unik (seperti error GPG dan repositori arsip), serta menyusun penjelasan langkah demi langkah yang detail.</li>
+</ul>
+<hr />
+<h1 id="bab-1-the-genesis-lanjutan">📖 BAB 1: THE GENESIS (Lanjutan)</h1>
+<h2 id="part-3-identitas-server-segmen-1">(Part 3) Identitas Server: Segmen 1</h2>
+<p><strong>(Network Architecture &amp; NTP)</strong></p>
+<h3 id="tagline">🏷️ TAGLINE</h3>
+<p><em>&ldquo;Membangun Dua Wajah dan Menyamakan Jam Tangan&rdquo;</em></p>
+<hr />
+<h3 id="konsep-warung-kopi-analogi">☕ KONSEP &ldquo;WARUNG KOPI&rdquo; (Analogi)</h3>
+<ol>
+<li>
+<p><strong>Dual Adapter (Wajah Ganda):</strong>
+    Bayangkan server Anda adalah sebuah <strong>Ruko (Rumah Toko)</strong>.</p>
+<ul>
+<li><strong>Pintu Depan (NAT/eth1):</strong> Menghadap jalan raya (Internet). Kurir paket (Update/Download) masuk lewat sini.</li>
+<li><strong>Pintu Belakang (Host-Only/eth0):</strong> Menghadap ke garasi pribadi (Laptop Anda). Hanya Anda (Admin) yang boleh masuk lewat sini untuk ngopi dan kerja. Aman dari maling jalan raya!</li>
+</ul>
+</li>
+<li>
+<p><strong>NTP (Network Time Protocol):</strong>
+    Pernah nonton film perampokan bank? <em>&ldquo;Samakan jam tangan kita&hellip; 3, 2, 1, Mark!&ldquo;</em>
+    Server butuh jam yang presisi. Kalau jam server ngaco (telat 5 menit saja), log keamanan jadi tidak valid, dan sertifikat SSL akan dianggap palsu. NTP adalah cara server mencocokkan jam tangannya dengan Jam Atom Dunia secara otomatis.</p>
+</li>
+</ol>
+<hr />
+<h3 id="misi-operasi-segmen-1">🎯 MISI OPERASI (Segmen 1)</h3>
+<ol>
+<li>Memasang dua kartu jaringan: <strong>Host-Only</strong> (untuk manajemen) dan <strong>NAT</strong> (untuk internet).</li>
+<li>Menginstal <strong>NTP</strong> agar waktu server akurat.</li>
+</ol>
+<hr />
+<h3 id="persiapan">🛠️ PERSIAPAN</h3>
+<ul>
+<li>Matikan dulu VM Debian Anda (<code>shutdown -h now</code>).</li>
+<li>Siapkan kopi, kita mainan konfigurasi IP lagi.</li>
+</ul>
+<hr />
+<h3 id="langkah-eksekusi-segmen-1">💻 LANGKAH EKSEKUSI (Segmen 1)</h3>
+<h4 id="tahap-a-setup-hardware-virtual-di-virtualboxhyper-v">TAHAP A: Setup Hardware Virtual (Di VirtualBox/Hyper-V)</h4>
+<p>Sebelum menyalakan server, kita pasang kabelnya dulu.</p>
+<p><strong>1. Setting Adapter di Host (Laptop Anda):</strong></p>
+<ul>
+<li>Buka Network Manager di VirtualBox/VMware.</li>
+<li>Pastikan ada adapter <strong>Host-Only</strong>.</li>
+<li>Set IP Host (Laptop) Anda jadi: <code>192.168.10.10</code> (Agar satu jaringan dengan server nanti).</li>
+<li><strong>PENTING:</strong> Matikan DHCP Server bawaan VirtualBox/VMware! Kita mau server Debian yang jadi bos DHCP nanti.</li>
+</ul>
+<p><strong>2. Setting Adapter di VM Debian:</strong></p>
+<ul>
+<li>Buka Settings VM Debian -&gt; Network.</li>
+<li><strong>Adapter 1:</strong> Ubah ke <strong>Host-only Adapter</strong>. (Ini jadi <code>eth0</code>).</li>
+<li><strong>Adapter 2:</strong> Ubah ke <strong>NAT</strong>. (Ini jadi <code>eth1</code>).</li>
+<li><em>Nyalakan VM Anda sekarang.</em></li>
+</ul>
+<hr />
+<h4 id="tahap-b-konfigurasi-peta-jaringan-interfaces">TAHAP B: Konfigurasi &ldquo;Peta Jaringan&rdquo; (Interfaces)</h4>
+<p>Login sebagai user biasa, lalu masuk mode admin (<code>sudo su</code> atau <code>su</code>).</p>
+<p><strong>1. Edit File Network:</strong></p>
+<pre><code class="language-bash">nano /etc/network/interfaces
+</code></pre>
+<p><strong>2. Masukkan Konfigurasi Wajah Ganda:</strong>
+Hapus isinya (atau sesuaikan) menjadi seperti ini:</p>
+<pre><code class="language-bash"># Loopback (Wajib ada)
+auto lo
+iface lo inet loopback
+
+# Wajah 1: Pintu Belakang (Manajemen Lokal)
+# Hubungkan ke Laptop via Host-Only
+allow-hotplug eth0
+iface eth0 inet static
+    address 192.168.10.1
+    netmask 255.255.255.0
+
+# Wajah 2: Pintu Depan (Internet)
+# Minta IP otomatis ke Router Virtual via NAT
+allow-hotplug eth1
+iface eth1 inet dhcp
+</code></pre>
+<p>Simpan (<code>Ctrl+O</code>) dan keluar.</p>
+<p><strong>3. Restart Network:</strong></p>
+<pre><code class="language-bash">/etc/init.d/networking restart
+</code></pre>
+<p><strong>4. Verifikasi Koneksi:</strong></p>
+<ul>
+<li>Cek Internet: <code>ping google.com</code> (Harus reply).</li>
+<li>Cek Lokal: <code>ping 192.168.10.10</code> (Harus reply ke Laptop Anda).</li>
+</ul>
+<hr />
+<h4 id="tahap-c-menyamakan-jam-ntp-setup">TAHAP C: Menyamakan Jam (NTP Setup)</h4>
+<p><strong>1. Instal NTP:</strong></p>
+<pre><code class="language-bash">apt-get install ntp -y
+</code></pre>
+<p><strong>2. Arahkan ke Server Indonesia (Agar Presisi):</strong></p>
+<pre><code class="language-bash">nano /etc/ntp.conf
+</code></pre>
+<p>Cari baris <code>server 0.debian.pool...</code> dst. Beri tanda <code>#</code> di depannya (matikan).
+Ganti dengan server lokal Indonesia:</p>
+<pre><code class="language-bash"># Server NTP Indonesia
+server 0.id.pool.ntp.org iburst
+server 1.id.pool.ntp.org iburst
+server 2.asia.pool.ntp.org iburst
+</code></pre>
+<p>Simpan dan keluar.</p>
+<p><strong>3. Restart NTP:</strong></p>
+<pre><code class="language-bash">/etc/init.d/ntp restart
+</code></pre>
+<hr />
+<h3 id="pojok-benang-merah-real-case-study">🚧 POJOK &ldquo;BENANG MERAH&rdquo; (Real Case Study)</h3>
+<p><strong>Kasus:</strong> Internet jalan (<code>ping google</code> aman), tapi tidak bisa ping ke Laptop (<code>192.168.10.10</code>).
+<strong>Penyebab:</strong> Firewall di Windows (Laptop) Anda memblokir ping masuk!
+<strong>Solusi:</strong> Matikan sementara Windows Firewall atau buat rule <em>ICMP Allow</em>. Atau, coba sebaliknya: Ping dari Laptop ke Server (<code>ping 192.168.10.1</code>). Kalau reply, berarti aman!</p>
+<hr />
+<h3 id="momen-ka-boom-verification-segmen-1">📸 MOMEN &ldquo;KA-BOOM!&rdquo; (Verification Segmen 1)</h3>
+<ol>
+<li>
+<p><strong>Cek Waktu:</strong>
+    Ketik: <code>ntpq -p</code></p>
+<ul>
+<li><strong>Hasil:</strong> Anda akan melihat daftar server (<code>.id.pool.ntp.org</code>). Tunggu beberapa menit, jika ada tanda bintang <code>*</code> di sebelah kirinya, berarti jam sudah sinkron akurat!</li>
+</ul>
+</li>
+<li>
+<p><strong>Cek IP:</strong>
+    Ketik: <code>ifconfig</code></p>
+<ul>
+<li><strong>Hasil:</strong><ul>
+<li><code>eth0</code>: <code>192.168.10.1</code> (Siap untuk manajemen).</li>
+<li><code>eth1</code>: <code>10.0.x.x</code> (Siap untuk internet).</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<hr />
+<p><em>(Segmen 1 Selesai. Lanjut ke Segmen 2: Kita akan mengamankan pintu manajemen ini dengan SSH Custom&hellip;)</em></p>
+<p>Sekarang kita masuk ke <strong>Segmen 2</strong>. Ini adalah bagian favorit saya karena kita akan bermain layaknya agen rahasia: <strong>Menyembunyikan pintu masuk server.</strong></p>
+<p>Di Segmen 1, kita sudah membuat &ldquo;Pintu Belakang&rdquo; (Host-Only Adapter). Di Segmen 2 ini, kita akan memasang kunci digital super aman di pintu tersebut.</p>
+<hr />
+<h1 id="bab-1-the-genesis-lanjutan_1">📖 BAB 1: THE GENESIS (Lanjutan)</h1>
+<h2 id="part-3-identitas-server-segmen-2">(Part 3) Identitas Server: Segmen 2</h2>
+<p><strong>(SSH Security &amp; Remote Access)</strong></p>
+<h3 id="tagline_1">🏷️ TAGLINE</h3>
+<p><em>&ldquo;Membangun Pintu Rahasia dan Membuang Kunci Cadangan&rdquo;</em></p>
+<hr />
+<h3 id="konsep-warung-kopi-analogi_1">☕ KONSEP &ldquo;WARUNG KOPI&rdquo; (Analogi)</h3>
+<p>Bayangkan server Anda adalah sebuah <strong>Brankas Bank</strong>.</p>
+<ol>
+<li><strong>Port 22 (Default SSH):</strong> Ini seperti menempelkan tulisan besar &ldquo;LUBANG KUNCI DI SINI&rdquo; di pintu brankas. Semua maling (bot/hacker) tahu ke mana harus mencongkel. Kita akan pindahkan lubang kuncinya ke tempat tersembunyi (<strong>Custom Port 2280</strong>).</li>
+<li><strong>Root Login:</strong> Ini seperti memperbolehkan penggunaan &ldquo;Kunci Master&rdquo; dari luar gedung. Kalau kunci ini dicuri, tamatlah riwayat bank. Kita akan melarang kunci master dipakai dari jauh. Admin harus masuk pakai kunci karyawan biasa (<strong>User</strong>), baru boleh buka brankas di dalam (<strong>Sudo</strong>).</li>
+<li><strong>Listen Address:</strong> Kita akan memaksa pintu ini hanya muncul di &ldquo;Lorong Pribadi&rdquo; (IP 192.168.10.1), bukan di jalan raya internet.</li>
+</ol>
+<hr />
+<h3 id="misi-operasi-segmen-2">🎯 MISI OPERASI (Segmen 2)</h3>
+<ol>
+<li>Menginstal paket <strong>OpenSSH Server</strong>.</li>
+<li>Mengganti Port standar (22) menjadi Port rahasia (<strong>2280</strong>).</li>
+<li>Mematikan izin login <strong>Root</strong>.</li>
+<li>Membatasi akses hanya dari jaringan lokal (Host-Only).</li>
+</ol>
+<hr />
+<h3 id="persiapan_1">🛠️ PERSIAPAN</h3>
+<ul>
+<li>Masih login di terminal Debian (bisa lewat Console VirtualBox/VMware).</li>
+<li>Pastikan IP <code>eth0</code> sudah <code>192.168.10.1</code> (Hasil Segmen 1).</li>
+</ul>
+<hr />
+<h3 id="langkah-eksekusi-segmen-2">💻 LANGKAH EKSEKUSI (Segmen 2)</h3>
+<h4 id="tahap-a-instalasi-backup">TAHAP A: Instalasi &amp; Backup</h4>
+<p><strong>1. Instal Paket SSH:</strong>
+Agar kita bisa me-remote server ini dari Windows (putty/cmd).</p>
+<pre><code class="language-bash">apt-get install ssh -y
+</code></pre>
+<p><strong>2. Backup Konfigurasi (SOP Wajib):</strong>
+Sebelum mengacak-acak keamanan, simpan file aslinya.</p>
+<pre><code class="language-bash">cp /etc/ssh/sshd_config /etc/ssh/sshd_config.backup
+</code></pre>
+<hr />
+<h4 id="tahap-b-modifikasi-buku-peraturan-ssh">TAHAP B: Modifikasi &ldquo;Buku Peraturan&rdquo; SSH</h4>
+<p>Kita edit konfigurasi utamanya.</p>
+<p><strong>1. Buka File Config:</strong></p>
+<pre><code class="language-bash">nano /etc/ssh/sshd_config
+</code></pre>
+<p><strong>2. Terapkan 3 Aturan Emas:</strong>
+Cari baris-baris di bawah ini, hilangkan tanda <code>#</code> jika ada, dan ubah nilainya:</p>
+<ul>
+<li>
+<p><strong>Aturan 1: Ganti Port</strong>
+    Cari <code>Port 22</code>. Ubah menjadi:</p>
+<p><code>bash
+Port 2280</code></p>
+<p><em>(Angka 2280 itu acak, Anda boleh pilih angka lain antara 1024-65535, tapi ingat angkanya!)</em></p>
+</li>
+<li>
+<p><strong>Aturan 2: Batasi Alamat (Listen Address)</strong>
+    Cari <code>ListenAddress 0.0.0.0</code> (Dengar dari semua arah). Ubah menjadi IP lokal kita:</p>
+<p><code>bash
+ListenAddress 192.168.10.1</code></p>
+<p><em>(Artinya: SSH tidak akan melayani permintaan dari internet/eth1).</em></p>
+</li>
+<li>
+<p><strong>Aturan 3: Matikan Root (PermitRootLogin)</strong>
+    Cari <code>PermitRootLogin yes</code>. Ubah menjadi:</p>
+<p><code>bash
+PermitRootLogin no</code></p>
+</li>
+</ul>
+<p><strong>3. Simpan dan Keluar:</strong>
+<code>Ctrl+O</code>, <code>Enter</code>, <code>Ctrl+X</code>.</p>
+<p><strong>4. Restart Layanan SSH:</strong></p>
+<pre><code class="language-bash">/etc/init.d/ssh restart
+</code></pre>
+<hr />
+<h3 id="pojok-benang-merah-real-case-study_1">🚧 POJOK &ldquo;BENANG MERAH&rdquo; (Real Case Study)</h3>
+<p><strong>Kasus:</strong> &ldquo;Mas, saya habis ganti port dan restart SSH, kok saya <strong>nggak bisa masuk</strong> lagi pakai Putty?&rdquo;</p>
+<p><strong>Penyebab:</strong></p>
+<ol>
+<li>Lupa ganti nomor port di Putty (masih pakai 22, padahal sudah jadi 2280).</li>
+<li>Salah ketik IP di <code>ListenAddress</code> (Typo itu mematikan!).</li>
+</ol>
+<p><strong>Solusi Penyelamatan:</strong>
+Jangan panik! Anda tidak terkunci total. Kembali ke jendela <strong>VirtualBox/VMware</strong> (Console Fisik). Login langsung di layar hitam itu, edit lagi file config-nya, perbaiki typo, restart service, dan coba lagi.
+<em>Inilah gunanya punya akses fisik (Console) vs akses remote (SSH).</em></p>
+<hr />
+<h3 id="momen-ka-boom-verification-segmen-2">📸 MOMEN &ldquo;KA-BOOM!&rdquo; (Verification Segmen 2)</h3>
+<p>Sekarang kita tinggalkan layar hitam Debian, kita pindah ke <strong>Windows (Laptop Host)</strong> Anda. Kita akan coba membobol server sendiri.</p>
+<p>Buka <strong>CMD</strong> atau <strong>PowerShell</strong> di Windows.</p>
+<p><strong>1. Tes Masuk Pintu Lama (Harus GAGAL):</strong></p>
+<pre><code class="language-cmd">ssh teungku@192.168.10.1
+</code></pre>
+<ul>
+<li><strong>Hasil:</strong> <code>Connection refused</code>. (Mantap! Pintu standar sudah ditembok).</li>
+</ul>
+<p><strong>2. Tes Masuk Pakai Root (Harus GAGAL):</strong></p>
+<pre><code class="language-cmd">ssh root@192.168.10.1 -p 2280
+</code></pre>
+<ul>
+<li><strong>Hasil:</strong> <code>Permission denied</code>. (Mantap! Bos besar dilarang masuk langsung).</li>
+</ul>
+<p><strong>3. Tes Masuk Jalur Rahasia (Harus SUKSES):</strong></p>
+<pre><code class="language-cmd">ssh teungku@192.168.10.1 -p 2280
+</code></pre>
+<p><em>(Ganti <code>teungku</code> dengan user Anda)</em></p>
+<ul>
+<li><strong>Hasil:</strong> Diminta password user teungku -&gt; Masuk! -&gt; Prompt berubah jadi <code>teungku@debian:~$</code>.</li>
+</ul>
+<p><strong>BONUS:</strong>
+Jika berhasil, mulai sekarang Anda bisa membuang jendela VirtualBox yang sempit itu. Gunakan <strong>Putty</strong> atau <strong>VS Code Remote SSH</strong> dengan Port 2280 untuk mengerjakan part-part selanjutnya. Jauh lebih nyaman, bisa copy-paste!</p>
+<hr />
+<p><em>(Segmen 2 Selesai. Kita lanjut ke Final Boss!  Part 3 di Segmen 3: DNS Server BIND9&hellip;)</em></p>
+<p>Siap! Ini adalah <strong>Final Boss</strong> dari Part 3.</p>
+<p>Konfigurasi DNS BIND9 terkenal sebagai salah satu konfigurasi yang paling <em>tricky</em> (menjebak) karena salah satu titik (<code>.</code>) atau titik koma (<code>;</code>) saja bisa membuat service gagal start.</p>
+<p>Tapi tenang, kita akan membuatnya menjadi masuk akal dan mudah diikuti.</p>
+<hr />
+<h1 id="bab-1-the-genesis-lanjutan_2">📖 BAB 1: THE GENESIS (Lanjutan)</h1>
+<h2 id="part-3-identitas-server-segmen-3">(Part 3) Identitas Server: Segmen 3</h2>
+<p><strong>(DNS Server BIND9)</strong></p>
+<h3 id="tagline_2">🏷️ TAGLINE</h3>
+<p><em>&ldquo;Membangun Buku Telepon Digital &amp; Stop Menghafal Angka&rdquo;</em></p>
+<hr />
+<h3 id="konsep-warung-kopi-analogi_2">☕ KONSEP &ldquo;WARUNG KOPI&rdquo; (Analogi)</h3>
+<p>Di dunia nyata, apakah Anda menghafal nomor HP teman Anda (misal: <code>0812-3456-7890</code>)? Tentu tidak. Anda menyimpan nomor itu dengan nama <strong>&ldquo;Budi&rdquo;</strong>. Saat mau nelpon, Anda cari &ldquo;Budi&rdquo;, dan HP Anda otomatis menelpon nomornya.</p>
+<p>Itulah <strong>DNS (Domain Name System)</strong>.</p>
+<ol>
+<li><strong>Forward Lookup:</strong> Kita tanya &ldquo;Siapa IP dari <code>debian.teungku.edu</code>?&rdquo; -&gt; DNS jawab <code>192.168.10.1</code>.</li>
+<li><strong>Reverse Lookup:</strong> Kita tanya &ldquo;Siapa pemilik IP <code>192.168.10.1</code>?&rdquo; -&gt; DNS jawab <code>debian.teungku.edu</code> (Seperti fitur Caller ID).</li>
+</ol>
+<p>Tanpa DNS, kita harus mengetik IP Address untuk mengakses website atau kirim email. Dengan DNS, kita punya identitas keren: <code>teungku.edu</code>.</p>
+<hr />
+<h3 id="misi-operasi-segmen-3">🎯 MISI OPERASI (Segmen 3)</h3>
+<ol>
+<li>Menginstal <strong>BIND9</strong> (Software DNS Paling Populer).</li>
+<li>Membuat Domain Lokal bernama <strong><code>teungku.edu</code></strong>.</li>
+<li>Mengatur agar server bisa dipanggil dengan nama, bukan cuma angka.</li>
+</ol>
+<hr />
+<h3 id="persiapan_2">🛠️ PERSIAPAN</h3>
+<ul>
+<li><strong>Fokus Tinggi:</strong> Konfigurasi ini sensitif terhadap <em>typo</em>.</li>
+<li>Pastikan IP Server sudah statis di <code>192.168.10.1</code>.</li>
+</ul>
+<hr />
+<h3 id="langkah-eksekusi-segmen-3">💻 LANGKAH EKSEKUSI (Segmen 3)</h3>
+<h4 id="tahap-a-instalasi-paket">TAHAP A: Instalasi Paket</h4>
+<p>Kita butuh <code>bind9</code> (servernya) dan <code>dnsutils</code> (alat tes/dig).</p>
+<pre><code class="language-bash">apt-get install bind9 dnsutils -y
+</code></pre>
+<hr />
+<h4 id="tahap-b-mendaftarkan-zona-daftar-isi">TAHAP B: Mendaftarkan Zona (Daftar Isi)</h4>
+<p>Kita harus memberitahu BIND9 bahwa kita adalah penguasa dari domain <code>teungku.edu</code>.</p>
+<p><strong>1. Edit File Zona Lokal:</strong></p>
+<pre><code class="language-bash">nano /etc/bind/named.conf.local
+</code></pre>
+<p><strong>2. Tambahkan Konfigurasi Ini:</strong>
+(Taruh di bawah, jangan hapus yang sudah ada).</p>
+<pre><code class="language-bash"># Zona Maju (Nama ke IP)
+zone &quot;teungku.edu&quot; {
+    type master;
+    file &quot;/etc/bind/db.teungku.edu&quot;;
+};
+
+# Zona Mundur (IP ke Nama)
+# Angka IP dibalik: 192.168.10.x menjadi 10.168.192
+zone &quot;10.168.192.in-addr.arpa&quot; {
+    type master;
+    file &quot;/etc/bind/db.192&quot;;
+};
+</code></pre>
+<p>Simpan (<code>Ctrl+O</code>) dan keluar.</p>
+<hr />
+<h4 id="tahap-c-membuat-file-database-isi-buku-telepon">TAHAP C: Membuat File Database (Isi Buku Telepon)</h4>
+<p>Sekarang kita buat file aslinya.</p>
+<p><strong>1. Buat File Forward (<code>db.teungku.edu</code>):</strong>
+Kita copy dari template agar tidak ngetik dari nol.</p>
+<pre><code class="language-bash">cp /etc/bind/db.local /etc/bind/db.teungku.edu
+nano /etc/bind/db.teungku.edu
+</code></pre>
+<p><strong>2. Edit Isinya (Hati-hati Titik!):</strong>
+Ubah <code>localhost.</code> menjadi <code>debian.teungku.edu.</code> (Ingat titik di akhir!).
+Ubah IP <code>127.0.0.1</code> menjadi <code>192.168.10.1</code>.</p>
+<p>Hasil akhirnya harus persis seperti ini:</p>
+<pre><code class="language-bash">; Forward Zone untuk teungku.edu
+$TTL    604800
+@       IN      SOA     debian.teungku.edu. root.teungku.edu. (
+                              2         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@       IN      NS      debian.teungku.edu.
+@       IN      A       192.168.10.1    ; IP Domain Utama
+debian  IN      A       192.168.10.1    ; Subdomain debian
+www     IN      A       192.168.10.1    ; Subdomain www
+</code></pre>
+<p>Simpan dan keluar.</p>
+<p><strong>3. Buat File Reverse (<code>db.192</code>):</strong>
+Copy dari template angka.</p>
+<pre><code class="language-bash">cp /etc/bind/db.127 /etc/bind/db.192
+nano /etc/bind/db.192
+</code></pre>
+<p><strong>4. Edit Isinya:</strong>
+Ubah <code>localhost.</code> menjadi <code>debian.teungku.edu.</code>
+Pada bagian paling bawah, ganti angka <code>1.0.0</code> menjadi <code>1</code> (Digit terakhir IP server kita).</p>
+<p>Hasil akhirnya:</p>
+<pre><code class="language-bash">; Reverse Zone
+$TTL    604800
+@       IN      SOA     debian.teungku.edu. root.teungku.edu. (
+                              1         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@       IN      NS      debian.teungku.edu.
+1       IN      PTR     debian.teungku.edu.
+</code></pre>
+<p>Simpan dan keluar.</p>
+<hr />
+<h4 id="tahap-d-aktivasi-pengecekan">TAHAP D: Aktivasi &amp; Pengecekan</h4>
+<p><strong>1. Restart BIND9:</strong></p>
+<pre><code class="language-bash">/etc/init.d/bind9 restart
+</code></pre>
+<p><em>Pastikan muncul <code>[ ok ]</code>. Jika <code>[ fail ]</code>, cek Pojok Benang Merah!</em></p>
+<p><strong>2. Arahkan Server ke Dirinya Sendiri:</strong>
+Agar server Debian menggunakan DNS-nya sendiri untuk bertanya.</p>
+<pre><code class="language-bash">nano /etc/resolv.conf
+</code></pre>
+<p>Pastikan baris paling atas adalah:</p>
+<pre><code class="language-bash">nameserver 192.168.10.1
+search teungku.edu
+</code></pre>
+<hr />
+<h3 id="pojok-benang-merah-real-case-study_2">🚧 POJOK &ldquo;BENANG MERAH&rdquo; (Real Case Study)</h3>
+<p><strong>Masalah:</strong> <code>[FAIL] Starting domain name service... bind9 failed!</code>
+<strong>Penyebab Paling Umum:</strong></p>
+<ol>
+<li><strong>Kurang Titik (.):</strong> Menulis <code>debian.teungku.edu</code> tanpa titik di akhir (<code>.</code>) di dalam file <code>db.*</code>.</li>
+<li><strong>Kurang Titik Koma (;):</strong> Di file <code>named.conf.local</code>, setiap baris dalam kurung kurawal <code>{}</code> harus diakhiri titik koma <code>;</code>.</li>
+</ol>
+<p><strong>Cara Detektif (Debugging):</strong>
+Gunakan perintah ini untuk mencari letak kesalahan:</p>
+<pre><code class="language-bash">named-checkconf -z
+</code></pre>
+<p>Ini akan memberitahu Anda: <em>&ldquo;Error on line 12: missing semicolon&rdquo;</em>. Sangat membantu!</p>
+<hr />
+<h3 id="momen-ka-boom-verification-segmen-3">📸 MOMEN &ldquo;KA-BOOM!&rdquo; (Verification Segmen 3)</h3>
+<p>Mari kita uji apakah &ldquo;Buku Telepon&rdquo; kita berfungsi. Gunakan perintah <code>nslookup</code> atau <code>dig</code>.</p>
+<p><strong>1. Tes Panggil Nama:</strong></p>
+<pre><code class="language-bash">nslookup debian.teungku.edu
+</code></pre>
+<ul>
+<li><strong>Hasil:</strong>
+    <code>Server:     192.168.10.1
+    Name:       debian.teungku.edu
+    Address:    192.168.10.1</code></li>
+</ul>
+<p><strong>2. Tes Panggil Nomor (Reverse):</strong></p>
+<pre><code class="language-bash">nslookup 192.168.10.1
+</code></pre>
+<ul>
+<li><strong>Hasil:</strong> <code>1.10.168.192.in-addr.arpa name = debian.teungku.edu.</code></li>
+</ul>
+<p><strong>3. Tes Ping:</strong></p>
+<pre><code class="language-bash">ping debian.teungku.edu
+</code></pre>
+<ul>
+<li><strong>Hasil:</strong> <code>PING debian.teungku.edu (192.168.10.1)...</code></li>
+</ul>
+<p>Jika <code>ping</code> berhasil merespons dari nama domain, <strong>SELAMAT!</strong> Server Anda sekarang punya identitas resmi. Anda tidak perlu lagi mengingat IP Address.</p>
+    </div>
+    
+    <nav class="article-footer-nav">
+        <a href="../../blog.html" class="cta-button">← Kembali ke Blog</a>
+    </nav>
+    
+</article>
+    </main>
+    
+    <footer>
+        <p>&copy; 2026 - Teungku Zulkifli. Dibuat dengan ❤️</p>
+    </footer>
+    
+    <div class="floating-lang-switcher">
+        <div class="lang-options">
+            <button id="lang-id">ID</button>
+            <button id="lang-en">EN</button>
+        </div>
+        <button class="lang-globe-btn" aria-label="Pilih Bahasa">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+        </button>
+    </div>
+    
+    <script src="../../assets/js/languages.js"></script>
+    <script src="../../assets/js/main.script.js" defer></script>
+    
+</body>
+</html>

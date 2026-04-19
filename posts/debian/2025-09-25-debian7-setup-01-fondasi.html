@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>(Part 2): Konfigurasi Dasar Server - Teungku Zulkifli</title>
+    <meta name="description" content="">
+    <meta name="author" content="Teungku Zulkifli">
+    
+    <meta property="og:title" content="(Part 2): Konfigurasi Dasar Server - Teungku Zulkifli">
+    <meta property="og:description" content="">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://teungku.me">
+    
+    <link rel="stylesheet" href="../../assets/css/main.style.css">
+    
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="../../index.html" class="logo">Teungku Zulkifli</a>
+            <ul id="nav-links">
+                <li><a data-lang="common.navHome" href="../../index.html#home">Beranda</a></li>
+                <li><a data-lang="common.navAbout" href="../../index.html#about">Tentang</a></li>
+                <li><a data-lang="common.navContact" href="../../index.html#contact">Kontak</a></li>
+                <li><a data-lang="common.navProjects" href="../../projects.html">Proyek</a></li>
+                <li><a data-lang="common.navBlog" href="../../blog.html">Blog</a></li>
+            </ul>
+            <button id="hamburger-btn" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+    
+    <main>
+<article id="article-content">
+    
+    <header class="article-header">
+        <h1>(Part 2): Konfigurasi Dasar Server</h1>
+        
+        <div class="article-meta">
+            <span class="meta-item">
+                📅 <time datetime="2025-09-25">2025-09-25</time>
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                🏷️ Course
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                ✍️ Teungku Zulkifli
+            </span>
+        </div>
+        
+        <div class="article-tags">
+            <span class="article-tag">#debian-server-series</span>
+        </div>
+    </header>
+    
+    <hr class="article-divider">
+    
+    <div class="article-body">
+        <iframe src="https://www.youtube.com/embed/ggZwSLdpRyQ?controls=0&modestbranding=1&rel=0&disablekb=1&autoplay=0" style="display:block;margin:auto;border:none;width:100%;max-width:960px;height:540px;" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+<h1 id="dokumentasi-debian-di-hyper-v-part-2-konfigurasi-dasar-server">Dokumentasi Debian di Hyper-V (Part 2): Konfigurasi Dasar Server</h1>
+<p><strong>Catatan Perjalanan &amp; Solusi Praktis untuk VM Debian 7.8.0 &ldquo;Wheezy&rdquo;</strong></p>
+<hr />
+<h2 id="pendahuluan">Pendahuluan 🚀</h2>
+<p>Selamat datang di catatan perjalanan saya dalam membangun sebuah server dari nol! Dokumen ini lebih dari sekadar terjemahan; ini adalah sebuah logbook praktis dari proses konfigurasi awal server <strong>Debian 7.8.0 &ldquo;Wheezy&rdquo;</strong>. Setiap langkah di dalamnya tidak hanya diriset, tetapi juga telah dipraktikkan, diuji, dan yang terpenting, dilengkapi dengan solusi untuk setiap masalah tak terduga yang muncul di tengah jalan.</p>
+<p>Tujuannya adalah untuk menciptakan sebuah panduan yang jujur dan mudah diikuti, terutama bagi mereka yang mungkin menempuh jalur yang sama dengan perangkat lunak versi lama ini. Semoga catatan ini bisa menjadi peta yang berguna, menunjukkan bukan hanya jalan yang lurus, tetapi juga cara melewati setiap rintangan.</p>
+<h3 id="credits-referensi">Credits &amp; Referensi</h3>
+<p>Proses ini tidak akan berjalan lancar tanpa sumber daya dan bantuan yang luar biasa. Kredit sepenuhnya diberikan kepada:</p>
+<ul>
+<li><strong><a href="https://www.server-world.info/en/note?os=Debian_7.0">Server-World</a></strong>: Sebagai referensi utama dan panduan dasar untuk semua tahapan konfigurasi. Panduan mereka yang komprehensif menjadi titik awal dari petualangan ini.</li>
+<li><strong>Gemini (Model AI Google)</strong>: Sebagai mitra diskusi interaktif, asisten riset, dan &ldquo;pengumpul data&rdquo;. Gemini membantu dalam menerjemahkan konsep, mendiagnosis masalah unik (seperti error GPG dan repositori arsip), serta menyusun penjelasan langkah demi langkah yang detail.</li>
+</ul>
+<hr />
+<h1 id="bab-1-the-genesis-lanjutan">📖 BAB 1: THE GENESIS (Lanjutan)</h1>
+<h2 id="part-2-konfigurasi-dasar-mengamankan-menstabilkan-server">(Part 2) Konfigurasi Dasar: Mengamankan &amp; Menstabilkan Server</h2>
+<h3 id="tagline">🏷️ TAGLINE</h3>
+<p><em>&ldquo;Memberi Alamat Tetap dan Mengunci Pintu Rumah&rdquo;</em></p>
+<hr />
+<h3 id="konsep-warung-kopi-analogi">☕ KONSEP &ldquo;WARUNG KOPI&rdquo; (Analogi)</h3>
+<p>Di Part 1, kita sudah membangun &ldquo;Rumah Kosong&rdquo; (Server). Tapi rumah ini masih berantakan:</p>
+<ol>
+<li><strong>Nomor Rumahnya Berubah-ubah (DHCP):</strong> Hari ini nomor 10, besok bisa nomor 99. Tukang pos (Client) bakal bingung. Kita harus paku <strong>Nomor Tetap (Static IP)</strong>.</li>
+<li><strong>Kunci Pintu Utama (Root) Terlalu Bebas:</strong> Siapapun yang tahu password bisa langsung masuk ke kamar utama. Kita harus buat aturan: &ldquo;Cuma anggota keluarga (Group Admin) yang boleh pegang kunci ini.&rdquo;</li>
+</ol>
+<hr />
+<h3 id="misi-operasi-segmen-1">🎯 MISI OPERASI (Segmen 1)</h3>
+<ol>
+<li>Menetapkan IP Address Statis (<code>192.168.10.1</code>).</li>
+<li>Membatasi akses perintah <code>su</code> (Switch User) hanya untuk kaum elit.</li>
+</ol>
+<hr />
+<h3 id="persiapan">🛠️ PERSIAPAN</h3>
+<ul>
+<li>Login sebagai <strong>root</strong>.</li>
+<li>Siapkan kopi, karena kita akan mengedit file konfigurasi jaringan.</li>
+</ul>
+<hr />
+<h3 id="langkah-eksekusi-segmen-1">💻 LANGKAH EKSEKUSI (Segmen 1)</h3>
+<h4 id="tahap-a-menetapkan-nomor-rumah-ip-statis">TAHAP A: Menetapkan &ldquo;Nomor Rumah&rdquo; (IP Statis)</h4>
+<p>Secara default, server kita minta IP ke router (DHCP). Kita ubah jadi permanen.</p>
+<p><strong>1. Backup Dulu (Hukum Wajib Admin):</strong>
+Sebelum mengacak-acak konfigurasi, simpan yang asli.</p>
+<pre><code class="language-bash">cp /etc/network/interfaces /etc/network/interfaces.backup
+</code></pre>
+<p><strong>2. Edit File Jaringan:</strong></p>
+<pre><code class="language-bash">nano /etc/network/interfaces
+</code></pre>
+<p><strong>3. Ubah Konfigurasi:</strong>
+Cari baris <code>iface eth0 inet dhcp</code>.
+<strong>Ubah</strong> menjadi seperti di bawah ini (sesuaikan dengan IP target Anda):</p>
+<pre><code class="language-bash"># The primary network interface
+allow-hotplug eth0
+# iface eth0 inet dhcp  &lt;-- Matikan DHCP (kasih pagar)
+
+# Konfigurasi STATIC (Tambahkan ini)
+iface eth0 inet static
+        address 192.168.10.1
+        netmask 255.255.255.0
+        gateway 192.168.10.254  # (Opsional, sesuaikan router Anda)
+</code></pre>
+<p>Simpan (<code>Ctrl+O</code>, <code>Enter</code>) dan keluar (<code>Ctrl+X</code>).</p>
+<p><strong>4. Terapkan Perubahan:</strong>
+Restart layanan networking.</p>
+<pre><code class="language-bash">/etc/init.d/networking restart
+</code></pre>
+<p><em>(Atau <code>ifdown eth0 &amp;&amp; ifup eth0</code>)</em>.</p>
+<hr />
+<h4 id="tahap-b-mengamankan-kunci-master-restrict-root">TAHAP B: Mengamankan &ldquo;Kunci Master&rdquo; (Restrict Root)</h4>
+<p>Kita batasi agar hanya user yang masuk grup <code>adm</code> yang boleh pakai perintah <code>su</code> untuk jadi root.</p>
+<p><strong>1. Masukkan User Anda ke Klub Elit:</strong>
+Misal user Anda <code>teungku</code>.</p>
+<pre><code class="language-bash">usermod -G adm teungku
+</code></pre>
+<p><strong>2. Edit Aturan PAM (Pluggable Authentication Modules):</strong>
+Ini adalah &ldquo;satpam&rdquo; yang menjaga pintu <code>su</code>.</p>
+<pre><code class="language-bash">nano /etc/pam.d/su
+</code></pre>
+<p><strong>3. Aktifkan Aturan &ldquo;Wheel/Admin&rdquo;:</strong>
+Cari baris ini (biasanya di bagian atas/tengah):</p>
+<pre><code class="language-bash"># auth       required   pam_wheel.so
+</code></pre>
+<p><strong>Hilangkan tanda <code>#</code></strong> di depannya agar aktif.
+Atau, jika barisnya aneh/berbeda (kasus Debian 7), <strong>tambahkan manual</strong> baris ini:</p>
+<pre><code class="language-bash">auth       required   pam_wheel.so group=adm
+</code></pre>
+<p>Simpan dan keluar.</p>
+<hr />
+<h3 id="momen-ka-boom-verification-segmen-1">📸 MOMEN &ldquo;KA-BOOM!&rdquo; (Verification Segmen 1)</h3>
+<p><strong>Tes Keamanan Root:</strong></p>
+<ol>
+<li>Buat user tumbal: <code>adduser penyusup</code></li>
+<li>Login sebagai penyusup: <code>su - penyusup</code></li>
+<li>Coba jadi root: <code>su</code></li>
+<li>Masukkan password root yang benar.</li>
+<li><strong>Hasil:</strong> <code>Permission denied</code>. (Sukses! Penyusup ditolak meskipun tahu password).</li>
+</ol>
+<p><strong>Tes IP Address:</strong></p>
+<ol>
+<li>Ketik: <code>ifconfig</code></li>
+<li>Lihat <code>eth0</code>.</li>
+<li><strong>Hasil:</strong> <code>inet addr: 192.168.10.1</code>. (Sukses! Nomor rumah sudah permanen).</li>
+</ol>
+<hr />
+<p><em>(Lanjut ke Segmen 2: Memperbaiki Jantung Sistem&hellip;)</em></p>
+<p>Siap! Kita lanjut menyelamatkan &ldquo;Jantung Server&rdquo; kita.</p>
+<p>Segmen 1 sudah mengamankan pintu dan memberi alamat rumah. Sekarang masalahnya: <strong>Kulkasnya kosong dan Toko Kelontong langganan sudah tutup permanen.</strong></p>
+<p>Kita harus mengarahkan server ini ke &ldquo;Gudang Arsip&rdquo; agar bisa download aplikasi lagi.</p>
+<hr />
+<h1 id="bab-1-the-genesis-lanjutan_1">📖 BAB 1: THE GENESIS (Lanjutan)</h1>
+<h2 id="part-2-konfigurasi-dasar-segmen-2">(Part 2) Konfigurasi Dasar: Segmen 2</h2>
+<p><strong>(Repository &amp; Update System)</strong></p>
+<h3 id="tagline_1">🏷️ TAGLINE</h3>
+<p><em>&ldquo;Menghidupkan Kembali Jalur Nadi yang Terputus&rdquo;</em></p>
+<hr />
+<h3 id="konsep-warung-kopi-analogi_1">☕ KONSEP &ldquo;WARUNG KOPI&rdquo; (Analogi)</h3>
+<p>Bayangkan Anda punya HP jadul (Debian 7) dan ingin download aplikasi di Play Store. Tapi saat dibuka, muncul pesan: <em>&ldquo;Store Closed / Connection Failed&rdquo;</em>.</p>
+<p>Kenapa? Karena server Debian 7 sudah <strong>End of Life (Mati Suri)</strong> sejak 2018. Server pusat (Repo Utama) sudah ditutup dan dipindahkan ke <strong>Museum Digital (Archive)</strong>.</p>
+<p>Secara default, server Anda masih mencoba menghubungi toko yang sudah tutup itu. Tugas kita sekarang adalah memberitahu server: <em>&ldquo;Hei, jangan ke toko lama! Pergilah ke Museum Arsip untuk ambil barang.&rdquo;</em></p>
+<hr />
+<h3 id="misi-operasi-segmen-2">🎯 MISI OPERASI (Segmen 2)</h3>
+<ol>
+<li>Mengganti alamat repository ke <code>archive.debian.org</code>.</li>
+<li>Melakukan <strong>Update</strong> (Ambil katalog barang baru).</li>
+<li>Melakukan <strong>Upgrade</strong> (Perbarui semua komponen usang).</li>
+</ol>
+<hr />
+<h3 id="persiapan_1">🛠️ PERSIAPAN</h3>
+<ul>
+<li>Pastikan server terkoneksi internet (Coba <code>ping google.com</code> dulu).</li>
+<li>Mental yang kuat menghadapi pesan <em>warning</em> (karena kita pakai barang antik).</li>
+</ul>
+<hr />
+<h3 id="langkah-eksekusi-segmen-2">💻 LANGKAH EKSEKUSI (Segmen 2)</h3>
+<h4 id="tahap-a-mengalihkan-jalur-ke-arsip-fix-sourceslist">TAHAP A: Mengalihkan Jalur ke Arsip (Fix Sources.list)</h4>
+<p>Ini adalah langkah penyelamatan. Kita ubah peta belanja server.</p>
+<p><strong>1. Backup File Lama (SOP Wajib):</strong></p>
+<pre><code class="language-bash">cp /etc/apt/sources.list /etc/apt/sources.list.backup
+</code></pre>
+<p><strong>2. Buka File Repository:</strong></p>
+<pre><code class="language-bash">nano /etc/apt/sources.list
+</code></pre>
+<p><strong>3. Operasi Jantung (Ganti Total):</strong>
+Hapus <strong>SEMUA</strong> tulisan di dalam file tersebut. Ganti dengan alamat &ldquo;Museum&rdquo; berikut ini:</p>
+<pre><code class="language-bash"># Repo Arsip Debian 7 (Wheezy)
+deb http://archive.debian.org/debian/ wheezy main contrib non-free
+deb-src http://archive.debian.org/debian/ wheezy main contrib non-free
+</code></pre>
+<blockquote>
+<p><strong>Catatan:</strong> <code>contrib</code> dan <code>non-free</code> ditambahkan jaga-jaga kalau kita butuh driver atau software tambahan nanti.</p>
+</blockquote>
+<p>Simpan (<code>Ctrl+O</code>, <code>Enter</code>) dan keluar (<code>Ctrl+X</code>).</p>
+<hr />
+<h4 id="tahap-b-update-upgrade-shopping-time">TAHAP B: Update &amp; Upgrade (Shopping Time)</h4>
+<p>Sekarang server sudah tahu jalan ke museum. Saatnya belanja.</p>
+<p><strong>1. Ambil Katalog Baru (Update):</strong></p>
+<pre><code class="language-bash">apt-get update
+</code></pre>
+<p><em>(Tunggu prosesnya. Anda akan melihat server mendownload file dari <code>archive.debian.org</code>)</em>.</p>
+<blockquote>
+<p><strong>⚠️ Awas Red Flag:</strong> Anda mungkin melihat error <code>GPG error: ... Key is expired</code>.
+<strong>JANGAN PANIK.</strong> Itu wajar. Kunci keamanan digitalnya sudah kadaluarsa karena saking tuanya. Selama tidak ada error <code>404 Not Found</code>, berarti koneksi <strong>BERHASIL</strong>.</p>
+</blockquote>
+<p><strong>2. Perbarui Seluruh Sistem (Upgrade):</strong>
+Sekarang kita update semua software usang di dalam server.</p>
+<pre><code class="language-bash">apt-get upgrade -y
+</code></pre>
+<p><em>(Biarkan proses berjalan. Ini bisa memakan waktu tergantung kecepatan internet).</em></p>
+<hr />
+<h3 id="pojok-benang-merah-real-case-study">🚧 POJOK &ldquo;BENANG MERAH&rdquo; (Real Case Study)</h3>
+<p>Di tahap ini, banyak pemula frustrasi. Mereka mengetik <code>apt-get install sysv-rc-conf</code> tapi muncul error:</p>
+<blockquote>
+<p><em>&ldquo;E: Unable to locate package&rdquo;</em></p>
+</blockquote>
+<p><strong>Analisis:</strong>
+Itu terjadi karena mereka melewati langkah <strong>Tahap A</strong>. Server masih mencari di toko yang tutup, jadi barangnya tidak ketemu.
+Setelah kita arahkan ke <code>archive.debian.org</code>, barulah server berkata: <em>&ldquo;Oh, barang itu ada di rak berdebu di pojok museum. Siap, saya ambilkan!&ldquo;</em></p>
+<hr />
+<h3 id="momen-ka-boom-verification-segmen-2">📸 MOMEN &ldquo;KA-BOOM!&rdquo; (Verification Segmen 2)</h3>
+<p>Bagaimana cara tahu &ldquo;Jantung&rdquo; server sudah berdetak normal? Coba instal satu aplikasi kecil yang sering dipakai admin.</p>
+<p><strong>Tes Instalasi:</strong></p>
+<pre><code class="language-bash">apt-get install sysv-rc-conf -y
+</code></pre>
+<p><strong>Hasil:</strong></p>
+<ul>
+<li>Jika muncul <code>Reading package lists... Done</code> dan proses instalasi berjalan lancar tanpa error <code>404</code>, maka <strong>Segmen 2 SUKSES BESAR!</strong></li>
+<li>Server Anda sekarang hidup kembali dan siap menginstal apa saja (Apache, Samba, Postfix, dll).</li>
+</ul>
+<hr />
+<p><em>(Kita lanjut ke!  </em><em>Segmen 3: Kenyamanan Kerja &amp; Tools</em><em> untuk menuntaskan Part 2&hellip;)</em>
+Siap! Ini adalah kepingan <em>puzzle</em> terakhir untuk Part 2. Kita akan mengubah lingkungan kerja yang &ldquo;gersang&rdquo; menjadi &ldquo;nyaman&rdquo; dan efisien.</p>
+<p>Setelah Segmen ini, server Anda bukan lagi sekadar &ldquo;kotak hitam&rdquo;, tapi &ldquo;ruang kerja profesional&rdquo;.</p>
+<hr />
+<h1 id="bab-1-the-genesis-lanjutan_2">📖 BAB 1: THE GENESIS (Lanjutan)</h1>
+<h2 id="part-2-konfigurasi-dasar-segmen-3">(Part 2) Konfigurasi Dasar: Segmen 3</h2>
+<p><strong>(Tools, Efficiency &amp; Sudo)</strong></p>
+<h3 id="tagline_2">🏷️ TAGLINE</h3>
+<p><em>&ldquo;Upgrade Senjata dan Delegasi Kekuasaan&rdquo;</em></p>
+<hr />
+<h3 id="konsep-warung-kopi-analogi_2">☕ KONSEP &ldquo;WARUNG KOPI&rdquo; (Analogi)</h3>
+<ol>
+<li><strong>Vim vs Vi:</strong> Editor bawaan (<code>vi</code>) itu ibarat <strong>Notepad</strong> biasa. Hitam putih, polos. Kita akan ganti dengan <strong>Vim</strong>, yang ibarat <strong>MS Word/VS Code</strong>. Dia punya warna (syntax highlighting), nomor baris, dan fitur canggih yang bikin mata tidak cepat lelah saat ngoding.</li>
+<li><strong>Sudo:</strong> Di Segmen 1, kita sudah mengunci Root (Master Key). Sekarang, kita kasih &ldquo;Kartu Akses Sementara&rdquo; (<strong>Sudo</strong>) ke user Anda. Jadi, Anda bisa bekerja sebagai rakyat biasa, tapi saat butuh akses admin, tinggal &ldquo;tempel kartu&rdquo; sebentar tanpa harus ganti baju jadi Root.</li>
+<li><strong>Alias:</strong> Ini nama panggilan. Daripada teriak <em>&ldquo;Christopher Alexander&rdquo;</em> (ngetik <code>ls -l --color=auto</code>), mending panggil <em>&ldquo;Chris&rdquo;</em> (ketik <code>ll</code>). Hemat jari, hemat waktu.</li>
+</ol>
+<hr />
+<h3 id="misi-operasi-segmen-3">🎯 MISI OPERASI (Segmen 3)</h3>
+<ol>
+<li>Menginstal &amp; Mempercantik Editor <strong>Vim</strong>.</li>
+<li>Menginstal <strong>Sudo</strong> dan mendaftarkan user Anda.</li>
+<li>Membuat <strong>Alias</strong> agar kerja lebih cepat dan aman.</li>
+</ol>
+<hr />
+<h3 id="persiapan_2">🛠️ PERSIAPAN</h3>
+<ul>
+<li>Masih login sebagai <strong>root</strong> (ini terakhir kalinya kita kerja full sebagai root!).</li>
+<li>Pastikan Segmen 2 sukses (agar bisa instal paket).</li>
+</ul>
+<hr />
+<h3 id="langkah-eksekusi-segmen-3">💻 LANGKAH EKSEKUSI (Segmen 3)</h3>
+<h4 id="tahap-a-upgrade-senjata-install-config-vim">TAHAP A: Upgrade Senjata (Install &amp; Config Vim)</h4>
+<p>Kita ganti editor teksnya dulu.</p>
+<p><strong>1. Instal Vim:</strong></p>
+<pre><code class="language-bash">apt-get install vim -y
+</code></pre>
+<p><strong>2. Bikin Konfigurasi Cantik (<code>.vimrc</code>):</strong>
+Kita buat &ldquo;resep&rdquo; agar Vim tampil berwarna dan ada nomor barisnya.</p>
+<pre><code class="language-bash">nano ~/.vimrc
+</code></pre>
+<p><em>(Atau <code>vi ~/.vimrc</code>)</em>.</p>
+<p><strong>3. Masukkan Resep Daging Ini:</strong>
+Copy-paste konfigurasi di bawah ini. Ini settingan <em>best practice</em> admin server:</p>
+<pre><code class="language-vim">set nocompatible      &quot; Gunakan fitur Vim modern
+syntax on             &quot; Aktifkan warna kode (PENTING!)
+set number            &quot; Tampilkan nomor baris
+set hlsearch          &quot; Highlight hasil pencarian
+set ignorecase        &quot; Pencarian tidak peduli huruf besar/kecil
+set showmatch         &quot; Tunjukkan pasangan kurung () [] {}
+set history=100       &quot; Simpan 100 history perintah
+set backspace=indent,eol,start  &quot; Agar tombol backspace berfungsi normal
+</code></pre>
+<p>Simpan (<code>Ctrl+O</code>, <code>Enter</code>) dan keluar.</p>
+<p><strong>4. Paksa Sistem Pakai Vim:</strong>
+Biar kalau kita ketik <code>vi</code>, yang keluar tetap <code>vim</code>.</p>
+<pre><code class="language-bash">nano /etc/profile
+</code></pre>
+<p>Tambahkan baris ini di paling bawah:</p>
+<pre><code class="language-bash">alias vi='vim'
+</code></pre>
+<hr />
+<h4 id="tahap-b-delegasi-kekuasaan-setup-sudo">TAHAP B: Delegasi Kekuasaan (Setup Sudo)</h4>
+<p>Memberi hak admin ke user biasa.</p>
+<p><strong>1. Instal Sudo:</strong></p>
+<pre><code class="language-bash">apt-get install sudo -y
+</code></pre>
+<p><strong>2. Edit Izin (Pakai <code>visudo</code>):</strong>
+<strong>JANGAN</strong> edit manual pakai nano/vim. Gunakan perintah sakti ini:</p>
+<pre><code class="language-bash">visudo
+</code></pre>
+<p><em>(Kenapa? Lihat di Pojok Benang Merah nanti!)</em></p>
+<p><strong>3. Daftarkan User Anda:</strong>
+Cari baris <code>root    ALL=(ALL:ALL) ALL</code>.
+Tambahkan user Anda (misal <code>teungku</code>) di bawahnya:</p>
+<pre><code class="language-bash">teungku    ALL=(ALL:ALL) ALL
+</code></pre>
+<p>Simpan (<code>Ctrl+O</code>) dan keluar (<code>Ctrl+X</code>).</p>
+<hr />
+<h4 id="tahap-c-jalan-pintas-alias">TAHAP C: Jalan Pintas (Alias)</h4>
+<p>Biar kerja cepat dan aman dari hapus file sembarangan.</p>
+<p><strong>1. Edit Profil Global:</strong>
+Kita taruh di <code>/etc/profile</code> agar berlaku untuk semua user.</p>
+<pre><code class="language-bash">nano /etc/profile
+</code></pre>
+<p><strong>2. Tambahkan di Bagian Paling Bawah:</strong></p>
+<pre><code class="language-bash"># Alias Keren
+alias ll='ls -l --color=auto'   # List detail berwarna
+alias l='ls -la --color=auto'   # List detail + file hidden
+alias rm='rm -i'                # Mode Aman: Tanya dulu sebelum hapus!
+alias cp='cp -i'                # Tanya dulu kalau mau nimpa file
+alias mv='mv -i'                # Tanya dulu kalau mau mindahin/nimpa
+</code></pre>
+<p>Simpan dan keluar.</p>
+<p><strong>3. Terapkan Sekarang:</strong>
+Agar tidak perlu logout-login.</p>
+<pre><code class="language-bash">source /etc/profile
+</code></pre>
+<hr />
+<h3 id="pojok-benang-merah-real-case-study_1">🚧 POJOK &ldquo;BENANG MERAH&rdquo; (Real Case Study)</h3>
+<p><strong>Kasus Fatal:</strong> Mengedit file <code>/etc/sudoers</code> pakai <code>nano</code> biasa.
+<strong>Kejadian:</strong> Admin lupa ngetik satu spasi atau salah koma, lalu save.
+<strong>Akibat:</strong> <strong>Sudo Error!</strong> Sistem terkunci. Tidak ada yang bisa jadi admin. Server harus di-boot lewat Rescue Mode (Ribet!).</p>
+<p><strong>Solusi:</strong> Selalu gunakan perintah <code>visudo</code>.
+Alat ini punya fitur <em>Syntax Check</em>. Kalau Anda salah ketik konfigurasi, <code>visudo</code> akan teriak dan <strong>menolak menyimpan file</strong>. Ini adalah jaring pengaman nyawa admin.</p>
+<hr />
+<h3 id="momen-ka-boom-verification-segmen-3">📸 MOMEN &ldquo;KA-BOOM!&rdquo; (Verification Segmen 3)</h3>
+<p>Mari kita buktikan transformasi server ini.</p>
+<p><strong>1. Tes Editor Cantik:</strong>
+Ketik: <code>vi /etc/network/interfaces</code></p>
+<ul>
+<li><strong>Hasil:</strong> Teks harus berwarna-warni (misal <code>iface</code> warna kuning/biru), dan di kiri ada nomor baris <code>1, 2, 3...</code>. Mata jadi adem!</li>
+</ul>
+<p><strong>2. Tes Alias &amp; Safety:</strong>
+Ketik: <code>ll</code></p>
+<ul>
+<li><strong>Hasil:</strong> Muncul daftar file panjang.
+    Buat file tes: <code>touch tes.txt</code>
+    Hapus file: <code>rm tes.txt</code></li>
+<li><strong>Hasil:</strong> Sistem bertanya <code>rm: remove regular empty file 'tes.txt'?</code>. (Safety aktif!).</li>
+</ul>
+<p><strong>3. Tes Sudo (Final Boss):</strong>
+Logout dulu: <code>exit</code>
+Login pakai user biasa: <code>teungku</code>
+Coba jadi admin: <code>sudo -i</code> atau <code>sudo ls /root</code></p>
+<ul>
+<li><strong>Hasil:</strong> Diminta password user teungku, dan <strong>BERHASIL</strong> masuk/akses root.</li>
+</ul>
+<hr />
+<p><strong>🏁 PENUTUP PART 2:</strong>
+Selamat! Anda baru saja menyelesaikan konfigurasi dasar server yang sangat solid.</p>
+<ol>
+<li>Rumah sudah punya alamat tetap (IP Static).</li>
+<li>Pintu sudah dikunci (Secure Root).</li>
+<li>Jantung sudah berdetak (Repo Archive).</li>
+<li>Alat kerja sudah canggih (Vim, Sudo, Alias).</li>
+</ol>
+<p>Server Anda sekarang <strong>SIAP TEMPUR</strong> untuk Part 3 (DNS &amp; DHCP). ! 🚀</p>
+    </div>
+    
+    <nav class="article-footer-nav">
+        <a href="../../blog.html" class="cta-button">← Kembali ke Blog</a>
+    </nav>
+    
+</article>
+    </main>
+    
+    <footer>
+        <p>&copy; 2026 - Teungku Zulkifli. Dibuat dengan ❤️</p>
+    </footer>
+    
+    <div class="floating-lang-switcher">
+        <div class="lang-options">
+            <button id="lang-id">ID</button>
+            <button id="lang-en">EN</button>
+        </div>
+        <button class="lang-globe-btn" aria-label="Pilih Bahasa">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+        </button>
+    </div>
+    
+    <script src="../../assets/js/languages.js"></script>
+    <script src="../../assets/js/main.script.js" defer></script>
+    
+</body>
+</html>

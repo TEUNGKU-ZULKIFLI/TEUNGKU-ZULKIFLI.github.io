@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>GNS3 Stage 1: The Silent Courier (Switching Deep Dive) - Teungku Zulkifli</title>
+    <meta name="description" content="">
+    <meta name="author" content="Teungku Zulkifli">
+    
+    <meta property="og:title" content="GNS3 Stage 1: The Silent Courier (Switching Deep Dive) - Teungku Zulkifli">
+    <meta property="og:description" content="">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://teungku.me">
+    
+    <link rel="stylesheet" href="../../assets/css/main.style.css">
+    
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="../../index.html" class="logo">Teungku Zulkifli</a>
+            <ul id="nav-links">
+                <li><a data-lang="common.navHome" href="../../index.html#home">Beranda</a></li>
+                <li><a data-lang="common.navAbout" href="../../index.html#about">Tentang</a></li>
+                <li><a data-lang="common.navContact" href="../../index.html#contact">Kontak</a></li>
+                <li><a data-lang="common.navProjects" href="../../projects.html">Proyek</a></li>
+                <li><a data-lang="common.navBlog" href="../../blog.html">Blog</a></li>
+            </ul>
+            <button id="hamburger-btn" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+    
+    <main>
+<article id="article-content">
+    
+    <header class="article-header">
+        <h1>GNS3 Stage 1: The Silent Courier (Switching Deep Dive)</h1>
+        
+        <div class="article-meta">
+            <span class="meta-item">
+                📅 <time datetime="2025-11-28">2025-11-28</time>
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                🏷️ Course
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                ✍️ Teungku Zulkifli
+            </span>
+        </div>
+        
+        <div class="article-tags">
+            <span class="article-tag">#gns3-series</span>
+        </div>
+    </header>
+    
+    <hr class="article-divider">
+    
+    <div class="article-body">
+        <p>Untuk <strong>Stage 1</strong> ini, kita akan bedah dulu konsep <strong>Switching</strong> sampai ke tulang-tulangnya pakai <em>built-in switch</em> GNS3 biar kita fokus ke logikanya, bukan ke command-nya dulu.</p>
+<p>Siapkan kopi, kita masuk ke mode <strong>Deep Dive tapi Santuy</strong>.</p>
+<hr />
+<h2 id="stage-1-the-silent-courier-switching-deep-dive">STAGE 1: The Silent Courier (Switching Deep Dive)</h2>
+<h3 id="logika-dasar-anak-sd-vs-profesor">🧠 Logika Dasar: Anak SD vs. Profesor</h3>
+<p>Sebelum kita klik-klik mouse, pahami ini dulu. Ini yang membedakan &ldquo;Orang IT yang cuma bisa setting&rdquo; sama &ldquo;Orang IT yang paham konsep&rdquo;.</p>
+<p><strong>Analoginya: Ruang Kelas SD</strong></p>
+<p>Bayangkan sebuah kelas berisi 30 murid.</p>
+<ol>
+<li><strong>Hub (Teknologi Purba/Bodoh):</strong><ul>
+<li>Guru (Pengirim) mau ngomong sama Budi.</li>
+<li>Guru pakai <strong>Toa Masjid</strong> teriak: &ldquo;BUDI, INI NILAI KAMU!&ldquo;</li>
+<li><strong>Efeknya:</strong> Satu kelas dengar (berisik/macet), privasi nol, Budi malu.</li>
+</ul>
+</li>
+<li><strong>Switch (Teknologi Pintar/Kita pakai ini):</strong><ul>
+<li>Guru mau ngomong sama Budi.</li>
+<li>Guru jalan pelan-pelan, nyamperin meja Budi, lalu bisik-bisik.</li>
+<li><strong>Efeknya:</strong> Murid lain tenang, data aman, efisien.</li>
+</ul>
+</li>
+</ol>
+<p><strong>Pertanyaan Expert-nya:</strong></p>
+<blockquote>
+<p>&ldquo;Kok Guru (Switch) tahu Budi duduk di meja mana?&rdquo;</p>
+</blockquote>
+<p>Jawabannya: Karena Guru punya <strong>Catatan Denah Duduk (MAC Address Table)</strong>.</p>
+<ul>
+<li><strong>MAC Address (Media Access Control):</strong> Ini adalah <strong>Wajah/Sidik Jari</strong> si murid. Gak bisa berubah seumur hidup.</li>
+<li><strong>IP Address:</strong> Ini adalah <strong>Nomor Meja</strong>. Bisa pindah-pindah. Hari ini duduk di meja 1, besok meja 2.</li>
+</ul>
+<p><strong>Jadi tugas Switch itu cuma satu:</strong> Menghafal <strong>Wajah (MAC)</strong> ini duduk di colokan kabel <strong>(Port)</strong> nomor berapa.</p>
+<hr />
+<h3 id="lab-time-membongkar-rahasia-switch">🛠️ Lab Time: Membongkar Rahasia Switch</h3>
+<p>Ayo kita praktikkan di GNS3. Kita akan melihat bagaimana Switch &ldquo;belajar&rdquo; menghafal wajah tadi.</p>
+<h4 id="langkah-1-bangun-topologi">Langkah 1: Bangun Topologi</h4>
+<ol>
+<li>Buka GNS3. Buat Project baru &ldquo;Belajar_Stage1&rdquo;.</li>
+<li>Tarik <strong>Ethernet Switch</strong> (bawaan GNS3, ikon kotak ada panah kiri-kanan).</li>
+<li>Tarik 2 buah <strong>VPCS</strong> (Virtual PC).</li>
+<li>Hubungkan kabel:<ul>
+<li>PC1 ke Switch Port 1.</li>
+<li>PC2 ke Switch Port 2.</li>
+</ul>
+</li>
+<li>Klik tombol <strong>Play/Start</strong> (Segitiga Hijau) di menu atas.</li>
+</ol>
+<h4 id="langkah-2-konfigurasi-ip-memberi-nomor-meja">Langkah 2: Konfigurasi IP (Memberi Nomor Meja)</h4>
+<p>Buka konsol (Klik kanan PC -&gt; Console).</p>
+<p><strong>Di PC1:</strong>
+Ketik:</p>
+<pre><code class="language-bash">ip 192.168.1.1/24
+</code></pre>
+<p><em>(Artinya: Woi PC1, kamu duduk di meja nomor 192.168.1.1)</em></p>
+<p><strong>Di PC2:</strong>
+Ketik:</p>
+<pre><code class="language-bash">ip 192.168.1.2/24
+</code></pre>
+<p><em>(Artinya: Woi PC2, kamu duduk di meja nomor 192.168.1.2)</em></p>
+<h4 id="langkah-3-the-expert-moment-analisis-arp">Langkah 3: The Expert Moment (Analisis ARP)</h4>
+<p>Ini bagian yang bikin kamu &ldquo;naik level&rdquo;. Jangan langsung ping!</p>
+<p>Saat PC1 mau ngirim data ke PC2, PC1 itu <strong>bodoh</strong>. Dia tahu IP tujuannya (192.168.1.2), tapi dia <strong>GAK TAHU</strong> MAC Address (Wajah) si PC2. Padahal di jaringan lokal, pengiriman paket itu butuh MAC Address, bukan IP.</p>
+<p>Maka terjadilah proses <strong>ARP (Address Resolution Protocol)</strong> atau &ldquo;Teriakan Bertanya&rdquo;.</p>
+<p>Coba ketik ini di <strong>PC1</strong>:</p>
+<pre><code class="language-bash">show arp
+</code></pre>
+<p>Pasti kosong (atau belum ada PC2). Karena mereka belum kenalan.</p>
+<p>Sekarang, lakukan PING dari <strong>PC1</strong>:</p>
+<pre><code class="language-bash">ping 192.168.1.2
+</code></pre>
+<p>Kalau sukses, ketik lagi di <strong>PC1</strong>:</p>
+<pre><code class="language-bash">show arp
+</code></pre>
+<p>Sekarang kamu akan lihat sesuatu seperti ini:
+<code>192.168.1.2  00:50:79:66:68:01</code> (Contoh MAC)</p>
+<p><strong>Apa yang baru saja terjadi? (Penjelasan Fun):</strong></p>
+<ol>
+<li><strong>PC1 Bingung:</strong> &ldquo;Bos nyuruh kirim paket ke 192.168.1.2, tapi gue gak tau dia siapa (MAC-nya berapa).&rdquo;</li>
+<li><strong>PC1 Teriak (Broadcast ARP):</strong> &ldquo;WOY! SIAPA YANG PUNYA IP 192.168.1.2? TOLONG JAWAB GUE!&rdquo; (Teriakan ini didengar semua orang yang nyolok ke Switch).</li>
+<li><strong>PC2 Menjawab:</strong> &ldquo;Itu gue! Nih MAC Address gue: 00:50&hellip; blabla.&rdquo;</li>
+<li><strong>PC1 Mencatat:</strong> &ldquo;Oke, sip. Disimpan di kontak.&rdquo;</li>
+<li><strong>Baru deh PING jalan.</strong></li>
+</ol>
+<p>Itulah kenapa Ping pertama kali itu sering <strong>RTO (Request Timed Out)</strong> atau agak lambat dikit di awal. Karena ada proses kenalan (ARP) dulu.</p>
+<hr />
+<h3 id="misi-tambahan-mengintip-dengan-wireshark-packet-sniffing">🕵️‍♂️ Misi Tambahan: Mengintip dengan Wireshark (Packet Sniffing)</h3>
+<p>Di GNS3, fitur paling <em>powerful</em> adalah kita bisa &ldquo;menyadap&rdquo; kabel.</p>
+<ol>
+<li>Di GNS3, arahkan mouse ke <strong>kabel</strong> antara PC1 dan Switch.</li>
+<li>Klik Kanan -&gt; <strong>Start Capture</strong>.</li>
+<li>Pilih OK (Wireshark akan terbuka).</li>
+<li>Balik ke Console PC1, lakukan Ping lagi.</li>
+<li>Lihat di Wireshark. Kamu akan melihat paket warna-warni.<ul>
+<li>Cari yang tulisannya <strong>ARP</strong>. Di situ tertulis &ldquo;Who has 192.168.1.2? Tell 192.168.1.1&rdquo;.</li>
+</ul>
+</li>
+</ol>
+<p>Itu buktinya! Bahwa di balik layar &ldquo;Switching&rdquo;, ada proses tanya-jawab alamat fisik (MAC Address).</p>
+<hr />
+<h3 id="rangkuman-level-ini">🎯 Rangkuman Level Ini</h3>
+<ol>
+<li><strong>Switch</strong> itu pintar, dia mengirim data berdasarkan <strong>MAC Address</strong>, bukan IP.</li>
+<li><strong>IP Address</strong> cuma dipakai untuk logis (nomor meja), tapi pengiriman fisik butuh <strong>MAC Address</strong> (wajah orangnya).</li>
+<li><strong>ARP</strong> adalah jembatan antara IP dan MAC. Tanpa ARP, jaringan lokal lumpuh.</li>
+</ol>
+<p>Gimana? Sudah kebayang bedanya &ldquo;Cuma nge-ping&rdquo; sama &ldquo;Paham apa yang terjadi saat nge-ping&rdquo;?</p>
+<p><strong>Next Stage!</strong> Untuk Stage 2 (Routing), Kita akan bikin dua &ldquo;Kelas&rdquo; yang berbeda supaya bisa saling ngobrol lewat perantara &ldquo;Guru BP&rdquo; (Router).</p>
+    </div>
+    
+    <nav class="article-footer-nav">
+        <a href="../../blog.html" class="cta-button">← Kembali ke Blog</a>
+    </nav>
+    
+</article>
+    </main>
+    
+    <footer>
+        <p>&copy; 2026 - Teungku Zulkifli. Dibuat dengan ❤️</p>
+    </footer>
+    
+    <div class="floating-lang-switcher">
+        <div class="lang-options">
+            <button id="lang-id">ID</button>
+            <button id="lang-en">EN</button>
+        </div>
+        <button class="lang-globe-btn" aria-label="Pilih Bahasa">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+        </button>
+    </div>
+    
+    <script src="../../assets/js/languages.js"></script>
+    <script src="../../assets/js/main.script.js" defer></script>
+    
+</body>
+</html>

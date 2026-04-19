@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>GNS3 Stage 2: ~~~ - Teungku Zulkifli</title>
+    <meta name="description" content="">
+    <meta name="author" content="Teungku Zulkifli">
+    
+    <meta property="og:title" content="GNS3 Stage 2: ~~~ - Teungku Zulkifli">
+    <meta property="og:description" content="">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://teungku.me">
+    
+    <link rel="stylesheet" href="../../assets/css/main.style.css">
+    
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="../../index.html" class="logo">Teungku Zulkifli</a>
+            <ul id="nav-links">
+                <li><a data-lang="common.navHome" href="../../index.html#home">Beranda</a></li>
+                <li><a data-lang="common.navAbout" href="../../index.html#about">Tentang</a></li>
+                <li><a data-lang="common.navContact" href="../../index.html#contact">Kontak</a></li>
+                <li><a data-lang="common.navProjects" href="../../projects.html">Proyek</a></li>
+                <li><a data-lang="common.navBlog" href="../../blog.html">Blog</a></li>
+            </ul>
+            <button id="hamburger-btn" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+    
+    <main>
+<article id="article-content">
+    
+    <header class="article-header">
+        <h1>GNS3 Stage 2: ~~~</h1>
+        
+        <div class="article-meta">
+            <span class="meta-item">
+                📅 <time datetime="2025-11-29">2025-11-29</time>
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                🏷️ Course
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">
+                ✍️ Teungku Zulkifli
+            </span>
+        </div>
+        
+        <div class="article-tags">
+            <span class="article-tag">#gns3-series</span>
+        </div>
+    </header>
+    
+    <hr class="article-divider">
+    
+    <div class="article-body">
+        <p>Masuk ke samudra (Routing). Siapkan Router c3725 kamu!</p>
+<hr />
+<h2 id="stage-2-the-border-control-routing-dasar">STAGE 2: The Border Control (Routing Dasar)</h2>
+<h3 id="logika-dasar-kenapa-switch-gagal-di-sini">🧠 Logika Dasar: Kenapa Switch Gagal di Sini?</h3>
+<p>Di Stage 1, PC1 dan PC2 ada di &ldquo;satu ruangan&rdquo; (Network yang sama: 192.168.1.x). Switch cuma butuh teriak (Broadcast ARP) untuk nemuin orang.</p>
+<p>Di Stage 2, kita akan pisahkan mereka ke <strong>dua gedung berbeda</strong> (Beda Network/Subnet).</p>
+<ul>
+<li><strong>Gedung A (Network 10):</strong> <code>192.168.10.x</code></li>
+<li><strong>Gedung B (Network 20):</strong> <code>192.168.20.x</code></li>
+</ul>
+<p><strong>Masalahnya:</strong>
+Teriakan ARP (Broadcast) itu <strong>TIDAK BISA</strong> nembus tembok gedung. Switch gak bisa meneruskan teriakan ke network lain.
+<strong>Solusinya:</strong>
+Kita butuh <strong>Router</strong>. Router adalah <strong>Satpam Pintu Gerbang</strong>. Kalau PC1 mau kirim ke Gedung B, dia gak perlu teriak nyari PC2. Dia cukup titip paketnya ke Satpam (Gateway), nanti Satpam yang urus cara nyebrangnya.</p>
+<hr />
+<h3 id="lab-time-menghidupkan-sang-router">🛠️ Lab Time: Menghidupkan Sang Router</h3>
+<h4 id="langkah-1-bangun-topologi">Langkah 1: Bangun Topologi</h4>
+<p>Buat project baru.</p>
+<ol>
+<li>Tarik <strong>Router c3725</strong> ke tengah layar.</li>
+<li>Tarik 2 <strong>VPCS</strong> (PC1 dan PC2).</li>
+<li>Hubungkan kabel (Perhatikan port-nya!):<ul>
+<li><strong>PC1</strong> colok ke Router <strong>FastEthernet0/0</strong> (kita sebut f0/0).</li>
+<li><strong>PC2</strong> colok ke Router <strong>FastEthernet0/1</strong> (kita sebut f0/1).</li>
+<li><em>Catatan: Kalau slot f0/1 gak ada, klik kanan router -&gt; configure -&gt; slots -&gt; tambah NM-1FE-TX di slot 1.</em></li>
+</ul>
+</li>
+<li>Nyalakan semua (Start).</li>
+</ol>
+<h4 id="langkah-2-setting-pc-kenalan-sama-konsep-gateway">Langkah 2: Setting PC (Kenalan sama Konsep Gateway)</h4>
+<p>Ini bedanya sama Stage 1. PC harus dikasih tahu: &ldquo;Kalau mau keluar gedung, lewat pintu mana?&rdquo;. Pintu itu adalah IP Router.</p>
+<p><strong>PC 1 (Warga Gedung A):</strong></p>
+<ul>
+<li>IP: <code>192.168.10.2</code></li>
+<li>Pintu Gerbang (Gateway): <code>192.168.10.1</code> (Ini nanti IP Router f0/0)</li>
+<li>Command di VPCS:
+    <code>bash
+    ip 192.168.10.2 192.168.10.1 24</code>
+    <em>(Format: ip [alamat_kita] [alamat_gateway] [subnet_mask_singkat])</em></li>
+</ul>
+<p><strong>PC 2 (Warga Gedung B):</strong></p>
+<ul>
+<li>IP: <code>192.168.20.2</code></li>
+<li>Pintu Gerbang (Gateway): <code>192.168.20.1</code> (Ini nanti IP Router f0/1)</li>
+<li>Command di VPCS:
+    <code>bash
+    ip 192.168.20.2 192.168.20.1 24</code></li>
+</ul>
+<h4 id="langkah-3-the-surgeon-mode-bedah-router-cisco">Langkah 3: The Surgeon Mode (Bedah Router Cisco)</h4>
+<p>Sekarang masuk ke konsol Router c3725. Tampilannya akan beda, lebih serem tapi keren. Ini &ldquo;bahasa&rdquo; standar engineer seluruh dunia.</p>
+<ol>
+<li>Klik kanan Router -&gt; <strong>Console</strong>.</li>
+<li>Kalau ditanya &ldquo;Would you like to enter initial configuration dialog? [yes/no]:&rdquo;, ketik <code>no</code> lalu Enter. (Kita mau setting manual, bukan dipandu wizard bawel).</li>
+<li>Tekan Enter sampai muncul <code>Router&gt;</code>.</li>
+</ol>
+<p>Ikuti ini:</p>
+<pre><code class="language-bash">Router&gt; enable
+</code></pre>
+<p><em>(Masuk ke mode admin/root. Tandanya berubah jadi <code>#</code>)</em></p>
+<pre><code class="language-bash">Router# configure terminal
+</code></pre>
+<p><em>(Masuk ke mode konfigurasi global. Tandanya berubah jadi <code>(config)#</code>. Kita mau rombak settingan)</em></p>
+<p><strong>Setting Pintu Kiri (arah ke PC1):</strong></p>
+<pre><code class="language-bash">Router(config)# interface fastEthernet 0/0
+Router(config-if)# ip address 192.168.10.1 255.255.255.0
+Router(config-if)# no shutdown
+Router(config-if)# exit
+</code></pre>
+<p><em>(PENTING: <code>no shutdown</code> itu wajib. Secara default, port router Cisco itu MATI. Harus dibangunin manual)</em></p>
+<p><strong>Setting Pintu Kanan (arah ke PC2):</strong></p>
+<pre><code class="language-bash">Router(config)# interface fastEthernet 0/1
+Router(config-if)# ip address 192.168.20.1 255.255.255.0
+Router(config-if)# no shutdown
+Router(config-if)# end
+</code></pre>
+<h4 id="langkah-4-verification-saatnya-pembuktian">Langkah 4: Verification (Saatnya Pembuktian)</h4>
+<p>Sekarang Router sudah punya dua kaki di dua dunia berbeda.</p>
+<ol>
+<li>
+<p>Cek apakah Router sudah &ldquo;bangun&rdquo;:</p>
+<p><code>bash
+show ip interface brief</code></p>
+<p>Pastikan status f0/0 dan f0/1 adalah <strong>UP</strong>.</p>
+</li>
+<li>
+<p>Cek &ldquo;Peta&rdquo; Router:</p>
+<p><code>bash
+show ip route</code></p>
+<p>Kamu harus melihat kode <code>C</code> (Connected).</p>
+<ul>
+<li>C 192.168.10.0 is directly connected&hellip;</li>
+<li>C 192.168.20.0 is directly connected&hellip;
+    <em>(Artinya: Router tahu, &ldquo;Oh, network 10 ada di tangan kiri, network 20 ada di tangan kanan&rdquo;.)</em></li>
+</ul>
+</li>
+<li>
+<p><strong>FINAL BOSS:</strong>
+    Buka Console <strong>PC1</strong>, lalu ping ke <strong>PC2</strong> (nyebrang router).</p>
+<p><code>bash
+ping 192.168.20.2</code></p>
+</li>
+</ol>
+<hr />
+<h3 id="analisis-expert-biar-gak-cuma-bisa-setting">🕵️‍♂️ Analisis Expert (Biar gak cuma bisa setting)</h3>
+<p>Kalau ping berhasil, perhatikan ini:</p>
+<ol>
+<li><strong>TTL (Time To Live):</strong> Kalau kamu ping sesama LAN (Stage 1), TTL biasanya 64 atau 128. Tapi kalau lewat Router, angka TTL akan <strong>berkurang 1</strong>.<ul>
+<li>Router itu &ldquo;memungut pajak&rdquo;. Setiap paket yang lewat router, umurnya dikurangi 1. Ini mekanisme supaya paket nyasar gak hidup selamanya di internet (Zombie Packet).</li>
+</ul>
+</li>
+<li><strong>Wireshark (Opsional tapi Seru):</strong><ul>
+<li>Kalau kamu sadap di kabel PC1, kamu akan lihat PC1 kirim ARP tanya: &ldquo;Who is 192.168.10.1 (Gateway)?&rdquo;. Dia <strong>TIDAK</strong> tanya &ldquo;Who is 192.168.20.2 (PC2)?&rdquo;.</li>
+<li>PC1 cuma peduli cara nyampai ke Pintu Gerbang. Masalah nyebrang ke PC2, itu urusan Router.</li>
+</ul>
+</li>
+</ol>
+<hr />
+<h3 id="misi-selesai">🚦 Misi Selesai?</h3>
+<p>Coba lakukan langkah di atas.
+Goalnya:</p>
+<ol>
+<li>PC1 bisa ping Gateway-nya sendiri.</li>
+<li>PC1 bisa ping Gateway seberang.</li>
+<li>PC1 bisa ping PC2.</li>
+</ol>
+<p>Kalau sukses (muncul Reply), kamu resmi jadi <strong>Network Admin Level 2</strong>. Kamu sudah bisa menghubungkan dua dunia!</p>
+<p><strong>Next Stage!</strong> Kalau sukses, kita akan bikin kekacauan di Stage 3 (Dynamic Routing) dimana kita akan pakai 3 Router sekaligus!</p>
+    </div>
+    
+    <nav class="article-footer-nav">
+        <a href="../../blog.html" class="cta-button">← Kembali ke Blog</a>
+    </nav>
+    
+</article>
+    </main>
+    
+    <footer>
+        <p>&copy; 2026 - Teungku Zulkifli. Dibuat dengan ❤️</p>
+    </footer>
+    
+    <div class="floating-lang-switcher">
+        <div class="lang-options">
+            <button id="lang-id">ID</button>
+            <button id="lang-en">EN</button>
+        </div>
+        <button class="lang-globe-btn" aria-label="Pilih Bahasa">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+        </button>
+    </div>
+    
+    <script src="../../assets/js/languages.js"></script>
+    <script src="../../assets/js/main.script.js" defer></script>
+    
+</body>
+</html>
