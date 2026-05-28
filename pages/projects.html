@@ -1,0 +1,23 @@
+<div class="projects-container" style="max-width: var(--container-max-width); margin: 0 auto; padding: 1rem 0;">
+    
+    <!-- Bagian Judul Utama -->
+    <div style="text-align: center; margin-bottom: 3rem;">
+        <h2 style="font-size: 2.25rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0.5rem;">
+            Etalase Proyek
+        </h2>
+        <p style="color: var(--text-secondary); font-size: 1.1rem;">
+            Kumpulan arsitektur sistem, lab jaringan, dan eksperimen kode saya.
+        </p>
+    </div>
+
+    <!-- 
+      Grid Kontainer untuk Kartu Proyek:
+      Menggunakan grid-template-columns dengan auto-fit dan minmax untuk 
+      membuat layout responsif secara otomatis tanpa perlu media queries rumit.
+    -->
+    <div id="projects-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
+        <!-- Kartu proyek akan disuntikkan secara dinamis ke sini oleh JavaScript -->
+        <p style="text-align:center; color:var(--text-muted); grid-column: 1 / -1;">Memuat daftar proyek...</p>
+    </div>
+
+</div>

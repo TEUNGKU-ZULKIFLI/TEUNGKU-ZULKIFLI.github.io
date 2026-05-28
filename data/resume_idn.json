@@ -1,0 +1,36 @@
+{
+    "header": {
+        "nama": "Teungku Zulkifli",
+        "jabatan": "Network & System Administrator",
+        "kontak": "Lhokseumawe, Aceh | teungkuzulkifli08@gmail.com | github.com/TEUNGKU-ZULKIFLI"
+    },
+    "profil": "Profesional TI dengan keahlian mendalam pada sistem operasi Linux (Debian) dan rekayasa jaringan. Terbiasa merancang topologi jaringan kompleks dan mengelola peladen dengan fokus pada keamanan serta otomatisasi.",
+    "pengalaman": [
+        {
+            "posisi": "Administrator Sistem Junior (Proyek Mandiri)",
+            "institusi": "Eksperimen Lab Lokal",
+            "periode": "2024 - Sekarang",
+            "deskripsi": [
+                "Merancang dan mengimplementasikan arsitektur peladen Debian 7.",
+                "Mengelola konfigurasi DNS (Bind9) dan Peladen Web (Apache/Nginx).",
+                "Mengotomatiskan tugas rutin pemeliharaan peladen menggunakan skrip Bash."
+            ]
+        },
+        {
+            "posisi": "Peneliti Topologi Jaringan",
+            "institusi": "Simulasi GNS3 & Mininet",
+            "periode": "2023 - 2024",
+            "deskripsi": [
+                "Mensimulasikan perutean dinamis OSPF dan BGP antar router virtual Cisco.",
+                "Menganalisa lalu lintas jaringan tingkat rendah untuk optimasi bandwidth."
+            ]
+        }
+    ],
+    "pendidikan": [
+        {
+            "gelar": "Teknik Informatika / Ilmu Komputer (Sesuaikan)",
+            "institusi": "Universitas / Instansi Anda",
+            "periode": "2020 - 2024"
+        }
+    ]
+}

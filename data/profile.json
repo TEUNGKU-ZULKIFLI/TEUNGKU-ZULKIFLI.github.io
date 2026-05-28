@@ -1,0 +1,61 @@
+{
+    "personal": {
+        "name": "Teungku Zulkifli",
+        "role": "Administrator Sistem & Jaringan",
+        "tagline": "Membangun infrastruktur peladen yang tangguh dan arsitektur jaringan yang terukur.",
+        "bio": "Saya adalah seorang profesional TI yang berpengalaman dan memiliki spesialisasi dalam sistem operasi Linux (khususnya Debian), rekayasa jaringan (Mikrotik, Cisco), serta pemahaman fundamental mengenai arsitektur sistem tingkat rendah (Low-Level). Saya memiliki minat yang besar terhadap otomatisasi dan pembelajaran berkelanjutan."
+    },
+    "contact": {
+        "email": "teungkuzulkifli08@gmail.com",
+        "github": "https://github.com/TEUNGKU-ZULKIFLI",
+        "linkedin": "https://linkedin.com/in/teungku-zulkifli08/",
+        "youtube": "https://www.youtube.com/@TEUNGKU-EDUCATION?sub_confirmation=1",
+        "instagram": "https://instagram.com/teungku_zulkifli",
+        "x": "https://x.com/TeungkuZ15976"
+    },
+    "skills": [
+        "Debian GNU/Linux", "Network Routing & Switching", "GNS3 / Mininet", "Python Scripting", "Bash Scripting", "Web Server (Apache/Nginx)"
+    ],
+    "projects": [
+        {
+            "id": "proj-1",
+            "title": "APOK FINTRACK, Offline-First Personal Finance Tracker",
+            "description": "Mengembangkan aplikasi mobile menggunakan Flutter dan SQLite untuk membantu pengguna mengelola anggaran pribadi melalui aturan 50/30/20.",
+            "tech": ["Flutter", "SQLite", "Dart"],
+            "link": "https://youtube.com/playlist?list=PLuXdnSVJrUhlPdxPsLkPj8o5QRjvfqQek&si=1DYkrLlrPohOKPiw",
+            "repo": "https://github.com/TEUNGKU-ZULKIFLI/finance_tracker/releases/tag/v1.0.0%2B1"
+        },
+        {
+            "id": "proj-2",
+            "title": "GACOROVER V1, Mobile Robot for IoRT Education",
+            "description": "Merancang platform robot mobil menggunakan ESP32 dan C++ (PlatformIO) untuk mendemonstrasikan konsep dasar Internet of Robotic Things (IoRT).",
+            "tech": ["ESP32", "C++", "PlatformIO"],
+            "link": "https://youtu.be/RF_6JotvamE",
+            "repo": "https://github.com/TEUNGKU-ZULKIFLI/InternetofRoboticThings/tree/release-v1"
+        },
+        {
+            "id": "proj-3",
+            "title": "SmartBin - IoT Waste Management",
+            "description": "Sistem tempat sampah pintar berbasis IoT yang terintegrasi dengan sensor ultrasonik & ESP8266 untuk REWARD POINT.",
+            "tech": ["Laravel", "IoT (ESP8266)", "Arduino C++", "Docker"],
+            "link": "#",
+            "repo": "https://github.com/TEUNGKU-ZULKIFLI/smartbin/releases/tag/1.0.0"
+        }
+    ],
+    "certifications": [
+        {
+            "id": "cert-1",
+            "name": "Belajar Dasar Pemrograman Web",
+            "issuer": "Dicoding Academy",
+            "year": "2024",
+            "url": "https://dicoding.com/certificates/0LZ0668ORZ65"
+        },
+        {
+            "id": "cert-2",
+            "name": "Belajar Dasar Pemrograman JavaScript",
+            "issuer": "Dicoding Academy",
+            "year": "2024",
+            "url": "https://dicoding.com/certificates/0LZ04202RP65"
+        }
+    ]
+}

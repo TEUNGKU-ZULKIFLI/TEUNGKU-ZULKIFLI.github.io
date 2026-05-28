@@ -1,0 +1,126 @@
+/* ========================================================================
+   SAPASAP A PANNAKAURNOS TI WEBSITE (CSS Nesting & Layout - Modern 2026)
+   Dagitoy nga estilo ti mangituray iti intero a layout ken interface.
+======================================================================== */
+
+/* 1. Reset ken Sapasap a Pangrugian */
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+}
+
+/* 2. Kangrunaan a Layout (App Shell) */
+#app-header {
+    background-color: var(--bg-secondary);
+    border-bottom: 1px solid var(--border-color);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(8px);
+    transition: background-color var(--transition-normal), border-color var(--transition-normal);
+
+    .header-container {
+        max-width: var(--container-max-width);
+        margin: 0 auto;
+        padding: 1rem 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .brand-title {
+        font-size: 1.25rem;
+        font-weight: 800;
+        color: var(--text-primary);
+        text-decoration: none;
+        letter-spacing: -0.025em;
+    }
+}
+
+/* 3. Navigasion ti Website */
+#main-nav {
+    display: flex;
+    gap: 1.5rem;
+
+    .nav-link {
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-size: 0.95rem;
+        font-weight: 500;
+        transition: color var(--transition-fast);
+        padding: 0.25rem 0;
+        position: relative;
+
+        &:hover {
+            color: var(--accent);
+        }
+
+        &.active {
+            color: var(--accent);
+            &::after {
+                content: '';
+                position: absolute;
+                bottom: -2px;
+                left: 0;
+                width: 100%;
+                height: 2px;
+                background-color: var(--accent);
+                border-radius: var(--radius-full);
+            }
+        }
+    }
+}
+
+/* 4. Kontainer ti linaon (Main Content Viewport) */
+#app-content {
+    flex: 1;
+    max-width: var(--container-max-width);
+    width: 100%;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+    animation: fadeIn var(--transition-normal) ease-in-out;
+}
+
+/* 5. Estilo ti Footer */
+#app-footer {
+    background-color: var(--bg-secondary);
+    border-top: 1px solid var(--border-color);
+    padding: 1.5rem;
+    text-align: center;
+    font-size: 0.875rem;
+    color: var(--text-muted);
+}
+
+/* 6. Animasion para iti Transition ti Panid */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 7. Responsive Desktop / Mobile Layout Setup */
+@media (max-width: 768px) {
+    #app-header {
+        .header-container {
+            flex-direction: column;
+            gap: 1rem;
+        }
+    }
+    
+    #main-nav {
+        gap: 1rem;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
