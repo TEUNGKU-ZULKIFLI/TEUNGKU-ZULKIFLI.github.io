@@ -1,9 +1,9 @@
 ---
 title: "Studi Kasus: Teungku Craft - E-Commerce"
 date: "2024-08-01"
-category: "Project"
-tags: ["WebStatic", "HTML", "CSS", "JavaScript"]
-status: "Completed"
+tags: [projects-series, WebStatic, HTML, CSS, JavaScript]
+excerpt: ""
+youtube_id: ""
 ---
 
 <!-- BAGIAN 1: GAMBARAN UMUM (ELEVATOR PITCH) -->

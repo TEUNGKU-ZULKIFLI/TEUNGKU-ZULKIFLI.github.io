@@ -1,9 +1,9 @@
 ---
 title: "Studi Kasus: OS-APOK (Web Portfolio)"
 date: "2025-01-02"
-category: "Project"
-tags: ["HTML", "CSS", "JS"]
-status: "Completed"
+tags: [projects-series, WebStatic, HTML, CSS, JavaScript]
+excerpt: ""
+youtube_id: ""
 ---
 
 Eksperimen frontend unik yang mensimulasikan antarmuka Sistem Operasi di dalam browser menggunakan HTML, CSS, dan JS murni.

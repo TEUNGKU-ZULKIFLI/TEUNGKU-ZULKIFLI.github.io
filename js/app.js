@@ -1,25 +1,204 @@
 /* ========================================================================
-   LOGIKA UTAMA APLIKASI (Router & Pengelola Data Portofolio)
+   LOGIKA UTAMA APLIKASI (Router, Manajemen Data, Cetak & Pengendali Tema)
 ======================================================================== */
 
-let dataProfil = null; // Menyimpan cache data profil
+let dataProfil = null;
+let dataResume = null;
+let dataBlogIndeks = null;
 
-// Mengambil data profil dari satu file JSON terpusat
+// Mengambil database profil
 async function ambilDataProfil() {
     if (dataProfil) return dataProfil;
     try {
         const respon = await fetch('data/profile.json');
-        if (!respon.ok) throw new Error('Gagal mengambil file JSON profil');
         dataProfil = await respon.json();
         return dataProfil;
-    } catch (error) {
-        console.error("Error data profil:", error);
+    } catch (e) {
+        console.error("Gagal memuat profil:", e);
         return null;
     }
 }
 
-// Menyuntikkan data dinamis ke elemen halaman spesifik
+// Mengambil database resume (CV) khusus
+async function ambilDataResume() {
+    if (dataResume) return dataResume;
+    try {
+        const respon = await fetch('data/resume_idn.json');
+        dataResume = await respon.json();
+        return dataResume;
+    } catch (e) {
+        console.error("Gagal memuat resume:", e);
+        return null;
+    }
+}
+
+// Mengambil database indeks artikel blog (.md) yang di-generate Python
+async function ambilIndeksBlog() {
+    if (dataBlogIndeks) return dataBlogIndeks;
+    try {
+        const respon = await fetch('_posts/posts-index.json');
+        dataBlogIndeks = await respon.json();
+        return dataBlogIndeks;
+    } catch (e) {
+        console.error("Gagal memuat indeks blog:", e);
+        return null;
+    }
+}
+
+// Fungsi pembantu untuk membuang Front Matter (YAML Metadata) dari konten mentah .md
+function bersihkanKontenMarkdown(teksMentah) {
+    const matches = teksMentah.match(/^---\s*[\r\n]+([\s\S]*?)[\r\n]+---\s*[\r\n]+/);
+    if (matches) {
+        return teksMentah.replace(matches[0], '');
+    }
+    return teksMentah;
+}
+
+// Fungsi Inti Pengendali & Pembuat Antarmuka Blog Dua Kolom
+async function inisialisasiKomponenBlog() {
+    const wadahNavigasi = document.getElementById('blog-navigation');
+    const indeks = await ambilIndeksBlog();
+
+    if (!indeks || !wadahNavigasi) return;
+    wadahNavigasi.innerHTML = '';
+
+    Object.keys(indeks).forEach(kategori => {
+        if (indeks[kategori].length === 0) return;
+
+        const grupKategori = document.createElement('div');
+        grupKategori.style.marginBottom = '1.25rem';
+
+        const labelKategori = document.createElement('h4');
+        labelKategori.style.cssText = 'font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--accent); margin-bottom: 0.5rem; padding-left: 0.25rem; border-left: 2px solid var(--border-color);';
+        labelKategori.textContent = kategori.replace('-', ' ');
+        grupKategori.appendChild(labelKategori);
+
+        const daftarLink = document.createElement('ul');
+        daftarLink.style.cssText = 'list-style: none; padding-left: 0.5rem; display: flex; flex-direction: column; gap: 0.4rem;';
+
+        indeks[kategori].forEach(artikel => {
+            const itemLi = document.createElement('li');
+            const linkArtikel = document.createElement('a');
+            linkArtikel.href = `#blog?buka=${kategori}/${artikel.filename}`;
+            linkArtikel.className = 'blog-sidebar-link';
+            linkArtikel.style.cssText = 'font-size: 0.9rem; color: var(--text-secondary); text-decoration: none; display: block; padding: 0.35rem 0.5rem; border-radius: var(--radius-sm); transition: all var(--transition-fast);';
+            linkArtikel.textContent = artikel.title;
+
+            linkArtikel.addEventListener('click', (e) => {
+                e.preventDefault();
+                window.location.hash = `#blog?buka=${kategori}/${artikel.filename}`;
+                tampilkanArtikel(artikel);
+            });
+
+            itemLi.appendChild(linkArtikel);
+            daftarLink.appendChild(itemLi);
+        });
+
+        grupKategori.appendChild(daftarLink);
+        wadahNavigasi.appendChild(grupKategori);
+    });
+
+    // Menghubungkan tombol "Kembali" di Mobile
+    const btnBack = document.getElementById('btn-back-to-list');
+    if (btnBack) {
+        btnBack.addEventListener('click', () => {
+            window.location.hash = '#blog'; // Reset hash ke indeks utama
+            const layout = document.querySelector('.blog-layout');
+            if (layout) layout.classList.remove('active-reading');
+        });
+    }
+
+    const hashSaatIni = window.location.hash;
+    if (hashSaatIni.includes('?buka=')) {
+        const pathTarget = hashSaatIni.split('?buka=')[1];
+        if (pathTarget) {
+            const [kat, file] = pathTarget.split('/');
+            if (indeks[kat]) {
+                const artikelDitemukan = indeks[kat].find(a => a.filename === file);
+                if (artikelDitemukan) {
+                    tampilkanArtikel(artikelDitemukan);
+                    return;
+                }
+            }
+        }
+    }
+}
+
+// Fungsi untuk menarik file .md asli dan merendernya ke Layar Pembaca
+async function tampilkanArtikel(metaArtikel) {
+    const wadahMembaca = document.getElementById('blog-content');
+    const layout = document.querySelector('.blog-layout');
+    
+    if (!wadahMembaca) return;
+
+    // Aktifkan mode membaca untuk menyembunyikan sidebar di mobile
+    if (layout) {
+        layout.classList.add('active-reading');
+    }
+
+    wadahMembaca.innerHTML = `<p style="text-align:center; color:var(--text-muted); padding:4rem;">📚 Membuka dokumen...</p>`;
+
+    // Sorot link aktif di sidebar
+    document.querySelectorAll('.blog-sidebar-link').forEach(link => {
+        if (link.getAttribute('href').endsWith(metaArtikel.filename)) {
+            link.style.backgroundColor = 'var(--bg-tertiary)';
+            link.style.color = 'var(--accent)';
+            link.style.fontWeight = '600';
+        } else {
+            link.style.backgroundColor = 'transparent';
+            link.style.color = 'var(--text-secondary)';
+            link.style.fontWeight = '500';
+        }
+    });
+
+    try {
+        const respon = await fetch(metaArtikel.filepath);
+        if (!respon.ok) throw new Error("File markdown gagal ditarik.");
+        
+        const teksMentah = await respon.text();
+        const teksMarkdownMurni = bersihkanKontenMarkdown(teksMentah);
+        const kontenHtmlHasilCompile = marked.parse(teksMarkdownMurni);
+
+        let lencanaTag = metaArtikel.tags.map(t => `<span class="tech-badge" style="font-size:0.75rem; background:var(--bg-tertiary); color:var(--text-secondary); padding:0.2rem 0.5rem; border-radius:var(--radius-sm); margin-right:0.4rem; display:inline-block;">${t}</span>`).join('');
+        
+        wadahMembaca.innerHTML = `
+            <div id="post-header" class="post-header-area" style="margin-bottom: 2rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1.5rem;">
+                <h1 style="font-size: 2.25rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0.5rem; line-height: 1.2;">${metaArtikel.title}</h1>
+                <div style="font-size: 0.9rem; color: var(--text-muted); display: flex; flex-wrap: wrap; gap: 1rem; align-items: center;">
+                    <span>📅 Terbit: <strong>${metaArtikel.date}</strong></span>
+                    <div class="post-tags-container">${lencanaTag}</div>
+                </div>
+            </div>
+            <div class="entry-content-markdown">
+                ${kontenHtmlHasilCompile}
+            </div>
+        `;
+
+        // SOLUSI WARN KUNING: Menggunakan requestAnimationFrame untuk menghindari forced reflow
+        requestAnimationFrame(() => {
+            const headerPost = document.getElementById('post-header');
+            if (headerPost) {
+                headerPost.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+
+    } catch (er) {
+        console.error(er);
+        wadahMembaca.innerHTML = `
+            <div style="text-align:center; padding: 4rem 1rem; color: var(--accent);">
+                <h3>⚠️ Kegagalan Memuat Catatan</h3>
+            </div>
+        `;
+    }
+}
+
+// Menyuntikkan data dinamis ke elemen halaman standar
 async function isiDataHalaman(namaHalaman) {
+    if (namaHalaman === 'blog') {
+        await inisialisasiKomponenBlog();
+        return;
+    }
+
     const data = await ambilDataProfil();
     if (!data) return;
 
@@ -28,119 +207,101 @@ async function isiDataHalaman(namaHalaman) {
         document.getElementById('hero-role').textContent = data.personal.role;
         document.getElementById('hero-tagline').textContent = data.personal.tagline;
     } 
-    
     else if (namaHalaman === 'about') {
         document.getElementById('about-bio').textContent = data.personal.bio;
         const wadahSkill = document.getElementById('skills-list');
         wadahSkill.innerHTML = ''; 
         data.skills.forEach(skill => {
             const badge = document.createElement('span');
-            badge.style.cssText = "padding: 0.5rem 1rem; background-color: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: var(--radius-sm); font-size: 0.9rem; font-weight: 500; color: var(--text-secondary);";
+            badge.className = 'skill-badge';
             badge.textContent = skill;
             wadahSkill.appendChild(badge);
         });
     }
-
-    // --- LOGIKA BARU: MEMPROSES HALAMAN PROYEK ---
     else if (namaHalaman === 'projects') {
         const gridProyek = document.getElementById('projects-grid');
-        gridProyek.innerHTML = ''; // Bersihkan teks "Memuat..."
-
+        gridProyek.innerHTML = '';
         data.projects.forEach(proyek => {
-            // Buat elemen kartu proyek
             const kartu = document.createElement('div');
-            // Menerapkan gaya "Card" modern
-            kartu.style.cssText = "background-color: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.5rem; display: flex; flex-direction: column; transition: transform var(--transition-fast), box-shadow var(--transition-fast); cursor: default;";
-            
-            // Efek hover sederhana menggunakan event listener karena kita pakai inline styles
-            kartu.addEventListener('mouseenter', () => {
-                kartu.style.transform = 'translateY(-4px)';
-                kartu.style.boxShadow = 'var(--shadow-md)';
-                kartu.style.borderColor = 'var(--accent)';
-            });
-            kartu.addEventListener('mouseleave', () => {
-                kartu.style.transform = 'translateY(0)';
-                kartu.style.boxShadow = 'none';
-                kartu.style.borderColor = 'var(--border-color)';
-            });
-
-            // Rakit isi kartu
-            let techBadges = proyek.tech.map(t => `<span style="font-size:0.75rem; background:var(--bg-tertiary); color:var(--text-secondary); padding:0.2rem 0.5rem; border-radius:var(--radius-sm); margin-right:0.4rem; margin-bottom:0.4rem; display:inline-block;">${t}</span>`).join('');
-            
+            kartu.className = 'project-card';
+            let techBadges = proyek.tech.map(t => `<span class="tech-badge">${t}</span>`).join('');
             kartu.innerHTML = `
-                <h3 style="font-size: 1.25rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.75rem;">${proyek.title}</h3>
-                <p style="font-size: 0.95rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem; flex-grow: 1;">${proyek.description}</p>
-                <div style="margin-bottom: 1.5rem;">${techBadges}</div>
-                <div style="display: flex; gap: 1rem; margin-top: auto; border-top: 1px solid var(--border-color); padding-top: 1rem;">
-                    <a href="${proyek.repo}" target="_blank" style="font-size: 0.9rem; font-weight: 600; color: var(--text-primary); text-decoration: none;">GitHub Repo &rarr;</a>
-                </div>
+                <h3 class="project-title">${proyek.title}</h3>
+                <p class="project-desc">${proyek.description}</p>
+                <div class="project-tech">${techBadges}</div>
+                <a href="${proyek.repo}" target="_blank" class="project-link">Repositori GitHub &rarr;</a>
             `;
             gridProyek.appendChild(kartu);
         });
     }
-    // --- LOGIKA BARU: MEMPROSES HALAMAN SERTIFIKASI ---
     else if (namaHalaman === 'sertifikasi') {
         const wadahSertifikat = document.getElementById('cert-list');
-        wadahSertifikat.innerHTML = ''; // Bersihkan teks "Memuat..."
-
-        if (data.certifications && data.certifications.length > 0) {
-            data.certifications.forEach(cert => {
-                const item = document.createElement('div');
-                item.style.cssText = "background-color: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.25rem 1.5rem; display: flex; justify-content: space-between; align-items: center; transition: background-color var(--transition-fast);";
-                
-                // Efek hover
-                item.addEventListener('mouseenter', () => item.style.backgroundColor = 'var(--bg-tertiary)');
-                item.addEventListener('mouseleave', () => item.style.backgroundColor = 'var(--bg-secondary)');
-
-                item.innerHTML = `
-                    <div>
-                        <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.25rem;">${cert.name}</h3>
-                        <p style="font-size: 0.9rem; color: var(--text-secondary);">${cert.issuer}</p>
-                    </div>
-                    <div style="text-align: right;">
-                        <span style="display: block; font-weight: 600; color: var(--accent); font-size: 1.1rem;">${cert.year}</span>
-                        ${cert.url !== "#" ? `<a href="${cert.url}" target="_blank" style="font-size: 0.8rem; color: var(--text-muted); text-decoration: underline;">Lihat Kredensial</a>` : ''}
-                    </div>
-                `;
-                wadahSertifikat.appendChild(item);
-            });
-        } else {
-            wadahSertifikat.innerHTML = `<p style="text-align:center; color:var(--text-muted);">Belum ada data sertifikasi.</p>`;
-        }
+        wadahSertifikat.innerHTML = '';
+        data.certifications.forEach(cert => {
+            const item = document.createElement('div');
+            item.className = 'cert-item';
+            item.innerHTML = `
+                <div class="cert-info">
+                    <h3>${cert.name}</h3>
+                    <p>${cert.issuer}</p>
+                </div>
+                <div class="cert-meta">
+                    <span class="cert-year">${cert.year}</span>
+                    ${cert.url !== "#" ? `<a href="${cert.url}" target="_blank" class="cert-link">Lihat Kredensial</a>` : ''}
+                </div>
+            `;
+            wadahSertifikat.appendChild(item);
+        });
     }
-    // --- LOGIKA BARU: MEMPROSES HALAMAN SERTIFIKASI ---
-    else if (namaHalaman === 'sertifikasi') {
-        const wadahSertifikat = document.getElementById('cert-list');
-        wadahSertifikat.innerHTML = ''; // Bersihkan teks "Memuat..."
+    else if (namaHalaman === 'contact') {
+        const emailEl = document.getElementById('contact-email');
+        emailEl.href = `mailto:${data.contact.email}`;
+        emailEl.textContent = data.contact.email;
+        document.getElementById('contact-github').href = data.contact.github;
+        document.getElementById('contact-linkedin').href = data.contact.linkedin;
+    }
+    else if (namaHalaman === 'resume') {
+        const cv = await ambilDataResume();
+        if (!cv) return;
 
-        if (data.certifications && data.certifications.length > 0) {
-            data.certifications.forEach(cert => {
-                const item = document.createElement('div');
-                item.style.cssText = "background-color: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.25rem 1.5rem; display: flex; justify-content: space-between; align-items: center; transition: background-color var(--transition-fast);";
-                
-                // Efek hover
-                item.addEventListener('mouseenter', () => item.style.backgroundColor = 'var(--bg-tertiary)');
-                item.addEventListener('mouseleave', () => item.style.backgroundColor = 'var(--bg-secondary)');
+        document.getElementById('cv-nama').textContent = cv.header.nama;
+        document.getElementById('cv-kontak').textContent = cv.header.kontak;
+        const tautanEl = document.getElementById('cv-tautan');
+        tautanEl.href = data.contact.github;
+        tautanEl.textContent = cv.header.tautan;
+        document.getElementById('cv-profil').textContent = cv.profil;
 
-                item.innerHTML = `
-                    <div>
-                        <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.25rem;">${cert.name}</h3>
-                        <p style="font-size: 0.9rem; color: var(--text-secondary);">${cert.issuer}</p>
-                    </div>
-                    <div style="text-align: right;">
-                        <span style="display: block; font-weight: 600; color: var(--accent); font-size: 1.1rem;">${cert.year}</span>
-                        ${cert.url !== "#" ? `<a href="${cert.url}" target="_blank" style="font-size: 0.8rem; color: var(--text-muted); text-decoration: underline;">Lihat Kredensial</a>` : ''}
-                    </div>
-                `;
-                wadahSertifikat.appendChild(item);
-            });
-        } else {
-            wadahSertifikat.innerHTML = `<p style="text-align:center; color:var(--text-muted);">Belum ada data sertifikasi.</p>`;
-        }
+        document.getElementById('cv-pendidikan').innerHTML = cv.pendidikan.map(p => `
+            <div class="cv-item">
+                <div class="cv-item-header"><span>${p.institusi}</span><span>${p.periode}</span></div>
+                <div class="cv-item-sub">${p.gelar} - ${p.lokasi}</div>
+                <ul class="cv-list">${p.poin.map(pt => `<li>${pt}</li>`).join('')}</ul>
+            </div>
+        `).join('');
+
+        document.getElementById('cv-pengalaman').innerHTML = cv.pengalaman.map(p => `
+            <div class="cv-item">
+                <div class="cv-item-header"><span>${p.perusahaan}</span><span>${p.periode}</span></div>
+                <div class="cv-item-sub">${p.posisi} - ${p.lokasi}</div>
+                <ul class="cv-list">${p.poin.map(pt => `<li>${pt}</li>`).join('')}</ul>
+            </div>
+        `).join('');
+
+        document.getElementById('cv-proyek').innerHTML = cv.proyek.map(p => `
+            <div class="cv-item">
+                <div class="cv-item-header"><span>${p.nama}</span><span>${p.periode}</span></div>
+                <div class="cv-item-sub">${p.peran}</div>
+                <ul class="cv-list">${p.poin.map(pt => `<li>${pt}</li>`).join('')}</ul>
+            </div>
+        `).join('');
+
+        document.getElementById('cv-skill-jaringan').textContent = cv.keahlian.jaringan_server;
+        document.getElementById('cv-skill-dev').textContent = cv.keahlian.pengembangan;
+        document.getElementById('cv-bahasa').textContent = cv.keahlian.bahasa;
     }
 }
 
-// Memuat file HTML halaman secara dinamis
+// Memuat file HTML halaman
 async function muatHalaman(namaHalaman) {
     const kontainerKonten = document.getElementById('app-content');
     kontainerKonten.innerHTML = `<p style="text-align:center; color:var(--text-muted); padding:2rem;">Memuat konten...</p>`;
@@ -154,14 +315,13 @@ async function muatHalaman(namaHalaman) {
     } catch (error) {
         kontainerKonten.innerHTML = `
             <div style="text-align:center; padding: 4rem;">
-                <h2 style="font-size: 1.75rem; margin-bottom:1rem;">🚧 Halaman Sedang Dibuat (Under Construction)</h2>
+                <h2 style="font-size: 1.75rem; margin-bottom:1rem;">🚧 Halaman Sedang Dibuat</h2>
                 <p style="color: var(--text-muted); font-size: 0.95rem;">Halaman ${namaHalaman} belum selesai dirakit.</p>
             </div>
         `;
     }
 }
 
-// Mengatur status navigasi aktif (Highlight menu)
 function aturNavigasiAktif(namaHalaman) {
     document.querySelectorAll('.nav-link').forEach(link => {
         link.classList.remove('active');
@@ -171,19 +331,44 @@ function aturNavigasiAktif(namaHalaman) {
     });
 }
 
-// Mengatur rute URL halaman
 function aturRute() {
-    let hash = window.location.hash.replace('#', '');
-    if (!hash) {
-        hash = 'home';
+    let hashMentah = window.location.hash.replace('#', '');
+    let namaHalaman = hashMentah.split('?')[0];
+
+    if (!namaHalaman) {
+        namaHalaman = 'home';
         window.history.replaceState(null, null, '#home');
     }
-    muatHalaman(hash);
-    aturNavigasiAktif(hash);
+    
+    muatHalaman(namaHalaman);
+    aturNavigasiAktif(namaHalaman);
 }
 
-// Inisialisasi awal saat halaman selesai dimuat
+// Pengendali Inisialisasi Tema
+function inisialisasiTema() {
+    const tombolTema = document.getElementById('theme-toggle');
+    if (!tombolTema) return;
+
+    const temaTersimpan = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+    if (temaTersimpan === 'dark' || (!temaTersimpan && prefersDark)) {
+        document.documentElement.classList.add('dark');
+        tombolTema.textContent = '☀️';
+    } else {
+        document.documentElement.classList.remove('dark');
+        tombolTema.textContent = '🌙';
+    }
+
+    tombolTema.addEventListener('click', () => {
+        const isDark = document.documentElement.classList.toggle('dark');
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        tombolTema.textContent = isDark ? '☀️' : '🌙';
+    });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     aturRute();
+    inisialisasiTema();
     window.addEventListener('hashchange', aturRute);
 });

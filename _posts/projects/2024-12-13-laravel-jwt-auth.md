@@ -1,9 +1,9 @@
 ---
 title: "Studi Kasus: Sistem Autentikasi Laravel JWT"
 date: "2024-12-13"
-category: "Project"
-tags: ["Auth", "Laravel", "JWT"]
-status: "Completed"
+tags: [projects-series, Auth, Laravel, JWT, PHP, Bearer]
+excerpt: ""
+youtube_id: ""
 ---
 
 Backend service yang aman mengimplementasikan Login, Register, dan manajemen token JWT (JSON Web Token)

@@ -1,11 +1,14 @@
 ---
 title: "Tahapan 06: Topology VPLS EZ"
 date: "2025-11-02"
-category: "Course"
-tags: ["mininet-series"]
+tags: [mininet-series, HyperV, ONOS, Docker]
+excerpt: "Mininet di Hyper-V (Part 6): TOPOLOGY VPLS EZ"
+youtube_id: "https://youtu.be/rrYD4ofdjco"
 ---
 
-<iframe src="https://www.youtube.com/embed/rrYD4ofdjco?controls=0&modestbranding=1&rel=0&disablekb=1&autoplay=0" style="display:block;margin:auto;border:none;width:100%;max-width:960px;height:540px;" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+<div class="video-container" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; margin: 1.5rem 0; border-radius: 8px; box-shadow: var(--shadow-md);">
+    <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;" src="https://www.youtube.com/embed/rrYD4ofdjco?" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
 
 # 🧠 Panduan Lengkap  Mininet di Hyper-V (Part 6): TOPOLOGY VPLS EZ
 

@@ -1,8 +1,9 @@
 ---
 title: "SmartBin: Sistem Manajemen Sampah Cerdas Berbasis IoT"
 date: "2025-01-02"
-category: "Project"
-tags: ["IoT", "Laravel", "Arduino", "Hardware"]
+tags: [projects-series, IoT, Laravel, Arduino, Hardware]
+excerpt: ""
+youtube_id: ""
 ---
 
 **SmartBin** adalah solusi *Internet of Things (IoT)* yang mengintegrasikan perangkat keras sensor dengan platform web untuk memantau kapasitas sampah secara *real-time* dan memberikan *reward point* otomatis kepada pengguna.

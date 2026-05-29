@@ -1,9 +1,9 @@
 ---
 title: "Studi Kasus: Aceh Ticket Travel Car (ATTC)"
 date: "2024-12-30"
-category: "Project"
-tags: ["System", "Flutter", "Mysql"]
-status: "Completed"
+tags: [projects-series, System, Flutter, Firebase, Dart, PHP, Mysql, Xampp]
+excerpt: ""
+youtube_id: ""
 ---
 
 Platform reservasi tiket travel mobil berbasis mobile. Memudahkan pencarian rute, cek ketersediaan, dan booking tiket antar kota.

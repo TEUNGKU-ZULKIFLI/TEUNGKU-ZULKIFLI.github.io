@@ -1,0 +1,149 @@
+/* ========================================================================
+   GAYA VISUAL KONTEN MARKDOWN (SOP Dokumentasi Modern 2026)
+======================================================================== */
+
+.markdown-body {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: var(--text-primary);
+
+    /* Judul Bab & Sub-Bab */
+    h1 {
+        font-size: 2.25rem;
+        font-weight: 800;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        border-bottom: 2px solid var(--border-color);
+        padding-bottom: 0.5rem;
+    }
+
+    h2 {
+        font-size: 1.65rem;
+        font-weight: 700;
+        margin-top: 1.75rem;
+        margin-bottom: 0.75rem;
+    }
+
+    h3 {
+        font-size: 1.35rem;
+        font-weight: 600;
+        margin-top: 1.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    p {
+        margin-bottom: 1.25rem;
+    }
+
+    /* Blok Kutipan / Kotak Analogi Sederhana (SOP) */
+    blockquote {
+        border-left: 4px solid var(--accent);
+        padding: 1rem 1.25rem;
+        background-color: var(--bg-tertiary);
+        border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+        font-style: italic;
+        color: var(--text-secondary);
+        margin: 1.5rem 0;
+
+        p { margin: 0; }
+    }
+
+    /* Inline Code (e.g. `sudo apt`) */
+    code {
+        font-family: var(--font-mono);
+        font-size: 0.9em;
+        background-color: var(--bg-tertiary);
+        color: var(--accent-text);
+        padding: 0.2rem 0.4rem;
+        border-radius: var(--radius-sm);
+        border: 1px solid var(--border-color);
+    }
+
+    /* Blok Kode (Code Block - pre) */
+    pre {
+        background-color: #0f172a; /* Slate 900 */
+        color: #f8fafc;
+        padding: 1.25rem;
+        border-radius: var(--radius-md);
+        overflow-x: auto;
+        margin-bottom: 1.5rem;
+        border: 1px solid #1e293b;
+        font-family: var(--font-mono);
+        font-size: 0.95rem;
+
+        code {
+            background-color: transparent !important;
+            border: none !important;
+            color: inherit !important;
+            padding: 0;
+            font-size: inherit;
+        }
+    }
+
+    /* Daftar List */
+    ul {
+        list-style-type: disc;
+        padding-left: 1.5rem;
+        margin-bottom: 1.25rem;
+    }
+
+    ol {
+        list-style-type: decimal;
+        padding-left: 1.5rem;
+        margin-bottom: 1.25rem;
+    }
+
+    li {
+        margin-bottom: 0.4rem;
+    }
+
+    /* Tabel Praktikum (SOP) */
+    table {
+        width: 100%;
+        margin-bottom: 1.5rem;
+        border-collapse: collapse;
+        font-size: 0.95rem;
+
+        th, td {
+            border: 1px solid var(--border-color);
+            padding: 0.75rem;
+            text-align: left;
+        }
+
+        th {
+            background-color: var(--bg-tertiary);
+            font-weight: 700;
+        }
+
+        tr:nth-child(even) {
+            background-color: var(--bg-primary);
+        }
+    }
+}
+
+/* Wadah Video YouTube Responsif (SOP) */
+.video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+    margin: 1.5rem 0;
+}
+
+.responsive-video-card {
+    position: relative;
+    padding-bottom: 56.25%; /* Rasio 16:9 */
+    height: 0;
+    overflow: hidden;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-color);
+
+    iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: 0;
+    }
+}

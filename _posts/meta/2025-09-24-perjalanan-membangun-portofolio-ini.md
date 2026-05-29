@@ -1,8 +1,9 @@
 ---
 title: "Dari Nol ke Publikasi: Perjalanan Membangun Portofolio Ini"
 date: "2025-09-24"
-category: "Meta"
-tags: ["personal-project"]
+tags: [meta-series]
+excerpt: "Mulai memikirkan karier lho ya"
+youtube_id: ""
 ---
 
 # Latar Belakang & Tujuan

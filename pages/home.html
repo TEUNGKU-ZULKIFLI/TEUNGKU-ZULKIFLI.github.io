@@ -1,24 +1,23 @@
-<div class="home-container" style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 60vh; text-align: center;">
-    
-    <!-- Elemen kosong ini akan diisi secara dinamis oleh JavaScript menggunakan data/profile.json -->
-    <h1 id="hero-name" style="font-size: 3rem; font-weight: 900; margin-bottom: 0.5rem; color: var(--text-primary);">
-        <!-- Akan diisi nama -->
-    </h1>
-    
-    <h2 id="hero-role" style="font-size: 1.5rem; font-weight: 500; color: var(--accent); margin-bottom: 1.5rem;">
-        <!-- Akan diisi role -->
-    </h2>
-    
-    <p id="hero-tagline" style="max-width: 600px; color: var(--text-secondary); font-size: 1.1rem; line-height: 1.6; margin-bottom: 2rem;">
-        <!-- Akan diisi tagline -->
-    </p>
+<div class="home-container">
+    <!-- Area Gambar Profil (Menggunakan SVG Ilustrasi Bawaan premium) -->
+    <div class="avatar-wrapper">
+        <!-- 
+          Jika Anda sudah memiliki foto profil asli, silakan hapus tag <svg> di bawah 
+          dan gunakan tag image ini:
+          <img src="assets/profile.jpg" alt="Foto Teungku Zulkifli">
+        -->
+        <svg class="default-avatar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+        </svg>
+    </div>
 
-    <div class="action-buttons" style="display: flex; gap: 1rem;">
-        <a href="#about" style="padding: 0.75rem 1.5rem; background-color: var(--accent); color: white; text-decoration: none; border-radius: var(--radius-md); font-weight: 600; transition: background var(--transition-fast);">
-            Tentang Saya (More About Me)
-        </a>
-        <a href="#projects" style="padding: 0.75rem 1.5rem; background-color: transparent; border: 1px solid var(--border-color); color: var(--text-primary); text-decoration: none; border-radius: var(--radius-md); font-weight: 600; transition: border-color var(--transition-fast);">
-            Lihat Proyek (View Projects)
-        </a>
+    <h1 id="hero-name" class="hero-name"></h1>
+    <h2 id="hero-role" class="hero-role"></h2>
+    <p id="hero-tagline" class="hero-tagline"></p>
+
+    <div class="action-buttons">
+        <a href="#about" class="btn-primary">Tentang Saya</a>
+        <a href="#projects" class="btn-secondary">Lihat Proyek</a>
     </div>
 </div>

@@ -1,9 +1,7 @@
 /* ========================================================================
-   SAPASAP A PANNAKAURNOS TI WEBSITE (CSS Nesting & Layout - Modern 2026)
-   Dagitoy nga estilo ti mangituray iti intero a layout ken interface.
+   GAYA VISUAL UTAMA PORTFOLIO (Modern CSS Nesting - Tanpa Inline Styles)
 ======================================================================== */
 
-/* 1. Reset ken Sapasap a Pangrugian */
 html {
     scroll-behavior: smooth;
 }
@@ -15,7 +13,7 @@ body {
     overflow-x: hidden;
 }
 
-/* 2. Kangrunaan a Layout (App Shell) */
+/* 1. Header & Navigasi Tanpa Hamburger Menu (Sangat Stabil) */
 #app-header {
     background-color: var(--bg-secondary);
     border-bottom: 1px solid var(--border-color);
@@ -43,7 +41,6 @@ body {
     }
 }
 
-/* 3. Navigasion ti Website */
 #main-nav {
     display: flex;
     gap: 1.5rem;
@@ -56,6 +53,7 @@ body {
         transition: color var(--transition-fast);
         padding: 0.25rem 0;
         position: relative;
+        white-space: nowrap;
 
         &:hover {
             color: var(--accent);
@@ -77,17 +75,16 @@ body {
     }
 }
 
-/* 4. Kontainer ti linaon (Main Content Viewport) */
+/* 2. Tata Letak Konten & Halaman Utama */
 #app-content {
     flex: 1;
     max-width: var(--container-max-width);
     width: 100%;
     margin: 0 auto;
-    padding: 2rem 1.5rem;
+    padding: 2.5rem 1.5rem;
     animation: fadeIn var(--transition-normal) ease-in-out;
 }
 
-/* 5. Estilo ti Footer */
 #app-footer {
     background-color: var(--bg-secondary);
     border-top: 1px solid var(--border-color);
@@ -97,30 +94,456 @@ body {
     color: var(--text-muted);
 }
 
-/* 6. Animasion para iti Transition ti Panid */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(8px);
+/* 3. Gaya Komponen Beranda (Home Component - Dilengkapi Avatar & Bingkai) */
+.home-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+    text-align: center;
+
+    .avatar-wrapper {
+        width: 140px;
+        height: 140px;
+        border-radius: var(--radius-full);
+        border: 4px solid var(--bg-secondary);
+        box-shadow: var(--shadow-lg);
+        margin-bottom: 1.5rem;
+        overflow: hidden;
+        background-color: var(--bg-tertiary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform var(--transition-normal);
+        position: relative;
+
+        &:hover {
+            transform: scale(1.05);
+        }
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .default-avatar {
+            width: 100%;
+            height: 100%;
+            color: var(--text-muted);
+            padding: 1.25rem;
+        }
     }
-    to {
-        opacity: 1;
-        transform: translateY(0);
+
+    .hero-name {
+        font-size: 3rem;
+        font-weight: 900;
+        margin-bottom: 0.5rem;
+        color: var(--text-primary);
+        letter-spacing: -0.03em;
+    }
+
+    .hero-role {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: var(--accent);
+        margin-bottom: 1.5rem;
+    }
+
+    .hero-tagline {
+        max-width: 600px;
+        color: var(--text-secondary);
+        font-size: 1.1rem;
+        line-height: 1.6;
+        margin-bottom: 2rem;
+    }
+
+    .action-buttons {
+        display: flex;
+        gap: 1rem;
+
+        .btn-primary {
+            padding: 0.75rem 1.5rem;
+            background-color: var(--accent);
+            color: white;
+            text-decoration: none;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            transition: background var(--transition-fast);
+            &:hover { background-color: var(--accent-hover); }
+        }
+
+        .btn-secondary {
+            padding: 0.75rem 1.5rem;
+            background-color: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            text-decoration: none;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            transition: all var(--transition-fast);
+            &:hover { border-color: var(--accent); color: var(--accent); }
+        }
     }
 }
 
-/* 7. Responsive Desktop / Mobile Layout Setup */
+/* 4. Gaya Komponen Tentang Saya (About Component) */
+.about-container {
+    max-width: var(--reader-max-width);
+    margin: 0 auto;
+
+    .section-title {
+        font-size: 2.25rem;
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+        border-bottom: 2px solid var(--border-color);
+        padding-bottom: 0.5rem;
+        color: var(--text-primary);
+    }
+
+    .profile-card {
+        background-color: var(--bg-secondary);
+        border: 1px solid var(--border-color);
+        padding: 1.5rem;
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-sm);
+        margin-bottom: 2rem;
+        font-size: 1.1rem;
+        line-height: 1.8;
+        color: var(--text-secondary);
+    }
+
+    .skills-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+
+        .skill-badge {
+            padding: 0.5rem 1rem;
+            background-color: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            transition: all var(--transition-fast);
+            &:hover { border-color: var(--accent); color: var(--accent); }
+        }
+    }
+}
+
+/* 5. Gaya Komponen Proyek (Projects Component) */
+.projects-container {
+    margin: 0 auto;
+
+    .projects-header {
+        text-align: center;
+        margin-bottom: 3rem;
+        h2 { font-size: 2.25rem; font-weight: 800; margin-bottom: 0.5rem; }
+        p { color: var(--text-secondary); font-size: 1.1rem; }
+    }
+
+    .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+    }
+
+    .project-card {
+        background-color: var(--bg-secondary);
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-md);
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+        
+        &:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--accent);
+        }
+
+        .project-title { font-size: 1.25rem; font-weight: 700; margin-bottom: 0.75rem; color: var(--text-primary); }
+        .project-desc { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem; flex-grow: 1; }
+        
+        .project-tech {
+            margin-bottom: 1.5rem;
+            .tech-badge {
+                font-size: 0.75rem;
+                background: var(--bg-tertiary);
+                color: var(--text-secondary);
+                padding: 0.2rem 0.5rem;
+                border-radius: var(--radius-sm);
+                margin-right: 0.4rem;
+                margin-bottom: 0.4rem;
+                display: inline-block;
+            }
+        }
+
+        .project-link {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--accent);
+            text-decoration: none;
+            margin-top: auto;
+            border-top: 1px solid var(--border-color);
+            padding-top: 1rem;
+            &:hover { color: var(--accent-hover); }
+        }
+    }
+}
+
+/* 6. Gaya Komponen Sertifikasi (Certifications Component) */
+.cert-container {
+    max-width: 800px;
+    margin: 0 auto;
+
+    .cert-header {
+        text-align: center;
+        margin-bottom: 3rem;
+        h2 { font-size: 2.25rem; font-weight: 800; margin-bottom: 0.5rem; }
+        p { color: var(--text-secondary); font-size: 1.1rem; }
+    }
+
+    .cert-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .cert-item {
+        background-color: var(--bg-secondary);
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-md);
+        padding: 1.25rem 1.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: background-color var(--transition-fast);
+
+        &:hover {
+            background-color: var(--bg-tertiary);
+        }
+
+        .cert-info {
+            h3 { font-size: 1.1rem; font-weight: 700; color: var(--text-primary); }
+            p { font-size: 0.9rem; color: var(--text-secondary); }
+        }
+
+        .cert-meta {
+            text-align: right;
+            .cert-year { display: block; font-weight: 700; color: var(--accent); font-size: 1.1rem; }
+            .cert-link { font-size: 0.8rem; color: var(--text-muted); text-decoration: underline; &:hover { color: var(--accent); } }
+        }
+    }
+}
+
+/* 7. Gaya Komponen Kontak (Contact Component) */
+.contact-container {
+    max-width: 600px;
+    margin: 0 auto;
+
+    .contact-header {
+        text-align: center;
+        margin-bottom: 2.5rem;
+        h2 { font-size: 2.25rem; font-weight: 800; margin-bottom: 0.5rem; }
+        p { color: var(--text-secondary); font-size: 1.1rem; }
+    }
+
+    .contact-card {
+        background-color: var(--bg-secondary);
+        border: 1px solid var(--border-color);
+        padding: 2rem;
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-sm);
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+
+        .contact-group {
+            h3 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); margin-bottom: 0.25rem; }
+            .contact-link { font-size: 1.25rem; font-weight: 700; color: var(--accent); text-decoration: none; word-break: break-all; }
+        }
+
+        .contact-social {
+            border-top: 1px solid var(--border-color);
+            padding-top: 1.5rem;
+            h3 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); margin-bottom: 0.75rem; }
+            
+            .social-buttons {
+                display: flex;
+                gap: 1rem;
+                
+                .btn-social {
+                    padding: 0.5rem 1rem;
+                    background-color: var(--bg-tertiary);
+                    border: 1px solid var(--border-color);
+                    border-radius: var(--radius-sm);
+                    font-size: 0.9rem;
+                    font-weight: 600;
+                    color: var(--text-primary);
+                    text-decoration: none;
+                    transition: all var(--transition-fast);
+                    &:hover { border-color: var(--accent); color: var(--accent); }
+                }
+            }
+        }
+    }
+}
+
+/* 8. Gaya Komponen Cetak Resume/CV (Resume Document CSS) */
+.resume-wrapper {
+    max-width: 900px;
+    margin: 0 auto;
+
+    .no-print {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+        background: var(--bg-secondary);
+        padding: 1rem;
+        border-radius: var(--radius-md);
+        border: 1px solid var(--border-color);
+        p { color: var(--text-secondary); font-size: 0.95rem; margin: 0; }
+        
+        .btn-print {
+            padding: 0.6rem 1.2rem;
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            cursor: pointer;
+            transition: background var(--transition-fast);
+            &:hover { background-color: var(--accent-hover); }
+        }
+    }
+}
+
+.cv-document {
+    background: #ffffff;
+    color: #0f172a;
+    padding: 3rem;
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-lg);
+    min-height: 297mm;
+    border: 1px solid var(--border-color);
+    font-family: var(--font-sans);
+
+    header {
+        text-align: center;
+        border-bottom: 2px solid #0f172a;
+        padding-bottom: 1rem;
+        margin-bottom: 1.5rem;
+        h1 { font-size: 2rem; font-weight: 800; color: #0f172a; margin-bottom: 0.25rem; }
+        p { font-size: 0.9rem; color: #475569; margin-bottom: 0.25rem; }
+        .cv-link { font-size: 0.9rem; font-weight: 600; color: var(--accent); text-decoration: none; }
+    }
+
+    .cv-section {
+        margin-bottom: 1.5rem;
+        
+        .cv-section-title {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: #0f172a;
+            border-bottom: 1px solid #cbd5e1;
+            padding-bottom: 0.25rem;
+            margin-bottom: 0.75rem;
+            letter-spacing: 0.05em;
+        }
+
+        .cv-p { font-size: 0.95rem; line-height: 1.6; color: #334155; text-align: justify; }
+        
+        .cv-item {
+            margin-bottom: 1rem;
+            .cv-item-header { display: flex; justify-content: space-between; font-weight: 700; }
+            .cv-item-sub { font-style: italic; font-size: 0.95rem; margin-bottom: 0.5rem; }
+            .cv-list {
+                padding-left: 1.25rem;
+                font-size: 0.9rem;
+                color: #475569;
+                li { margin-bottom: 0.25rem; }
+            }
+        }
+    }
+}
+
+/* 9. Efek Transisi Fade In */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* 10. Aturan Media Cetak (Print Media) */
+@media print {
+    #app-header, #app-footer, .no-print {
+        display: none !important;
+    }
+    #app-content {
+        padding: 0 !important;
+        margin: 0 !important;
+        max-width: 100% !important;
+    }
+    .cv-document {
+        box-shadow: none !important;
+        border: none !important;
+        padding: 0 !important;
+        background: #ffffff !important;
+        color: #000000 !important;
+    }
+    body {
+        background: #ffffff !important;
+        color: #000000 !important;
+    }
+    @page {
+        size: A4;
+        margin: 20mm;
+    }
+}
+
+/* 11. Tata Letak Navigasi Tanpa Hamburger Khusus Mobile (Modern Scrollable) */
 @media (max-width: 768px) {
     #app-header {
         .header-container {
             flex-direction: column;
-            gap: 1rem;
+            align-items: stretch;
+            padding: 0.75rem 1rem;
         }
     }
-    
+
+    .header-top-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        margin-bottom: 0.75rem;
+    }
+
     #main-nav {
-        gap: 1rem;
-        flex-wrap: wrap;
-        justify-content: center;
+        display: flex;
+        gap: 1.25rem;
+        overflow-x: auto;
+        white-space: nowrap;
+        padding-bottom: 0.5rem;
+        scrollbar-width: none; /* Hilangkan scrollbar Firefox */
+        -webkit-overflow-scrolling: touch; /* Momentum scroll iOS */
+
+        &::-webkit-scrollbar {
+            display: none; /* Hilangkan scrollbar Chrome/Safari */
+        }
+
+        .nav-link {
+            font-size: 0.9rem;
+            padding: 0.25rem 0.1rem;
+            
+            &.active::after {
+                height: 2px;
+                bottom: -4px;
+            }
+        }
     }
 }

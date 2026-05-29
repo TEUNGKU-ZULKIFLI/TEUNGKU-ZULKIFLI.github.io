@@ -1,0 +1,80 @@
+<!-- Layout Dinamis untuk Pengalaman Membaca Ala Dokumentasi Modern -->
+<div class="blog-layout">
+    
+    <!-- Sidebar Kategori (Ditransformasikan ke Index Cards di Mobile) -->
+    <aside id="blog-sidebar" class="blog-sidebar" style="width: 280px; flex-shrink: 0; border-right: 1px solid var(--border-color); padding-right: 1.5rem;">
+        <div style="margin-bottom: 1.5rem;">
+            <h3 style="font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); margin-bottom: 0.5rem;">Koleksi Catatan</h3>
+            <p style="font-size: 0.85rem; color: var(--text-secondary);">Pilih topik pembelajaran di bawah ini:</p>
+        </div>
+        <nav id="blog-navigation" style="display: flex; flex-direction: column; gap: 1.5rem;">
+            <p style="color: var(--text-muted); font-size: 0.9rem;">Memuat daftar topik...</p>
+        </nav>
+    </aside>
+
+    <!-- Konten Pembaca Utama -->
+    <article id="blog-reader" class="blog-reader-area" style="flex-grow: 1; max-width: var(--reader-max-width);">
+        <!-- Tombol Kembali (Hanya Terlihat di Mobile Saat Membaca Artikel) -->
+        <div id="mobile-back-button-container" class="no-print" style="display: none; margin-bottom: 1.5rem;">
+            <button id="btn-back-to-list" style="padding: 0.5rem 1rem; background-color: var(--bg-tertiary); border: 1px solid var(--border-color); border-radius: var(--radius-sm); color: var(--text-primary); font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem;">
+                &larr; Kembali ke Daftar Artikel
+            </button>
+        </div>
+
+        <div id="blog-content" class="markdown-body">
+            <!-- Pesan Selamat Datang Awal -->
+            <div style="text-align: center; padding: 4rem 1rem; color: var(--text-muted);">
+                <span style="font-size: 3rem; display: block; margin-bottom: 1rem;">📖</span>
+                <h3 style="font-size: 1.5rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Pusat Pembelajaran Mandiri</h3>
+                <p>Silakan pilih salah satu artikel di sidebar kiri untuk mulai membaca praktikum sistem, lab jaringan, atau catatan perjalanan karir saya.</p>
+            </div>
+        </div>
+    </article>
+
+</div>
+
+<!-- Aturan Responsif Pembagian View di Mobile (Clean Split Screen Layout) -->
+<style>
+    /* Desktop Layout */
+    .blog-layout {
+        display: flex;
+        gap: 2rem;
+        min-height: 75vh;
+    }
+
+    /* Mobile Layout Rule */
+    @media (max-width: 768px) {
+        .blog-layout {
+            flex-direction: column;
+            gap: 0;
+        }
+
+        /* Di mobile, kita sembunyikan salah satu panel secara kondisional 
+          menggunakan kelas kontrol JS (.active-reading) pada kontainer utama.
+        */
+        .blog-layout {
+            #blog-sidebar {
+                width: 100% !important;
+                border-right: none !important;
+                padding-right: 0 !important;
+                display: block; /* Default: tampilkan daftar indeks */
+            }
+            #blog-reader {
+                display: none; /* Default: sembunyikan area bacaan */
+            }
+        }
+
+        /* Saat masuk ke mode membaca artikel (.active-reading) */
+        .blog-layout.active-reading {
+            #blog-sidebar {
+                display: none; /* Sembunyikan daftar indeks */
+            }
+            #blog-reader {
+                display: block; /* Tampilkan area bacaan sepenuhnya */
+            }
+            #mobile-back-button-container {
+                display: block !important; /* Munculkan tombol kembali */
+            }
+        }
+    }
+</style>

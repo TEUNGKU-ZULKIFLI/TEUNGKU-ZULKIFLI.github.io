@@ -1,6 +1,14 @@
+---
+title: "Journey 01: Menembus Jantung Komputer dengan Assembly (x86)"
+date: "2025-12-18"
+tags: [journey-series, Assembly]
+excerpt: "Konsep Bahasa Manipulasi Memory Komputer dengan Assembly (x86)"
+youtube_id: ""
+---
+
 <div align="center">
     <picture>
-    <img src="https://www.nasm.us/images/nasmlogw.png" width="400" alt="NASM Logo">
+    <img src="https://www.nasm.us/images/nasmlogw.png" width="300" alt="NASM Logo">
     </picture>
     <h1 align="center">🚀 Journey 01: Menembus Jantung Komputer dengan Assembly (x86)</h1>
     <p align="center">

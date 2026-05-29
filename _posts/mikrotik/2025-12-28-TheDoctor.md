@@ -1,9 +1,25 @@
 ---
 title: "Monitoring & Diagnosa (The Network Doctor)"
 date: "2025-12-28"
-category: "Course"
-tags: ["mikrotik-series"]
+tags: [mikrotik-series, HyperV, MikroTikOS, Winbox]
+excerpt: "Konsep Dasar Torch, Graphing, Logging"
+youtube_id: [https://youtu.be/pz4vVBSpkZU, https://youtu.be/RQ_KDMAlS1I, https://youtu.be/Atxxceelvgk]
 ---
+
+<!-- MikroTik di Hyper-V (#8): Real-Time Monitoring Traffic via Torch (GUI & CLI) -->
+<div class="video-container" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; margin: 1.5rem 0; border-radius: 8px; box-shadow: var(--shadow-md);">
+    <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;" src="https://www.youtube.com/embed/pz4vVBSpkZU?" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
+<!-- MikroTik di Hyper-V (#9): Monitoring Trafik & Resource via Graphing (Web Based) -->
+<div class="video-container" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; margin: 1.5rem 0; border-radius: 8px; box-shadow: var(--shadow-md);">
+    <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;" src="https://www.youtube.com/embed/RQ_KDMAlS1I?" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
+<!-- MikroTik di Hyper-V (#10): Analisa Masalah Jaringan via System Logging -->
+<div class="video-container" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; margin: 1.5rem 0; border-radius: 8px; box-shadow: var(--shadow-md);">
+    <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;" src="https://www.youtube.com/embed/Atxxceelvgk?" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
 
 # 📂 DOKUMENTASI LAB MIKROTIK: MISI 5
 
