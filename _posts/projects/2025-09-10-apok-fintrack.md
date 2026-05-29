@@ -1,9 +1,9 @@
 ---
 title: "Studi Kasus: Apok FinTrack - Manajemen Keuangan"
 date: "2024-09-10"
-category: "Project"
-tags: ["System", "Flutter", "SQLite"]
-status: "Completed"
+tags: [projects-series, System, Flutter, Firebase, Dart, SQLite]
+excerpt: "Aplikasi mobile (Flutter) untuk mencatat arus kas harian, manajemen kartu, dan visualisasi data keuangan pribadi"
+youtube_id: "https://youtu.be/xuzCJAbGtBo"
 ---
 
 Aplikasi mobile (Flutter) untuk mencatat arus kas harian, manajemen kartu, dan visualisasi data keuangan pribadi.
@@ -49,4 +49,4 @@ Ceritakan satu tantangan teknis tersulit yang Anda hadapi dan bagaimana Anda men
 Jika ada, tambahkan screenshot tambahan atau GIF cara kerja aplikasi di sini.
 
 - [Link ke Repositori GitHub](https://github.com/TEUNGKU-ZULKIFLI/...)
-- [Link Demo Live (Jika ada)](...)
+- [Link Demo](https://youtu.be/xuzCJAbGtBo)

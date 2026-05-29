@@ -1,8 +1,9 @@
 ---
 title: "Lifehack Windows: Part-01"
 date: "2025-10-31"
-category: "LifeHack"
-tags: ["lifehack-win-series"]
+tags: [lifehacks-series, Windows, Junction, Symlink]
+excerpt: "Bebaskan Drive C dengan Junction & Symlink"
+youtube_id: ""
 ---
 
 # 💡 Lifehack Windows: Bebaskan Drive C dengan Junction & Symlink

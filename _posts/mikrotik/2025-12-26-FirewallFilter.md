@@ -1,9 +1,15 @@
 ---
 title: "Tembok Pertahanan (Firewall Filter - Input Chain)"
 date: "2025-12-26"
-category: "Course"
-tags: ["mikrotik-series"]
+tags: [mikrotik-series, HyperV, MikroTikOS, Winbox]
+excerpt: "Konsep Dasar Firewall"
+youtube_id: "https://youtu.be/zcGBjNMAkr8"
 ---
+
+<!-- MikroTik di Hyper-V (#6): Firewall Filter Strategy (Block Ping & WebFig Access) -->
+<div class="video-container" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; margin: 1.5rem 0; border-radius: 8px; box-shadow: var(--shadow-md);">
+    <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;" src="https://www.youtube.com/embed/zcGBjNMAkr8?" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
 
 # 📂 DOKUMENTASI LAB MIKROTIK: MISI 3
 

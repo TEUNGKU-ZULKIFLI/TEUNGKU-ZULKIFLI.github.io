@@ -1,0 +1,60 @@
+{
+    "header": {
+        "nama": "TEUNGKU ZULKIFLI",
+        "kontak": "Aceh, Indonesia | teungkuzulkifli08@gmail.com | +62 831 0585 1202",
+        "tautan": "LinkedIn | GitHub | YouTube"
+    },
+    "profil": "Mahasiswa tingkat akhir D4 Teknologi Rekayasa Komputer Jaringan di Politeknik Negeri Lhokseumawe dengan fondasi komprehensif di bidang infrastruktur IT, administrasi jaringan, dan pengembangan perangkat lunak. Selain sedang merancang sistem mitigasi otomatis (IPS) terhadap serangan brute force pada router MikroTik sebagai tugas akhir, saya juga aktif mengembangkan berbagai proyek nyata berbasis Web, Mobile (Flutter), dan Internet of Things (IoT). Saya sangat adaptif dalam mengadopsi teknologi baru, termasuk pemanfaatan AI-tools. Mencari peluang karir yang dinamis sebagai Network Engineer, IT Support, maupun Software/Web Developer.",
+    "pendidikan": [
+        {
+            "institusi": "POLITEKNIK NEGERI LHOKSEUMAWE",
+            "gelar": "Sarjana Terapan (S.Tr.) Teknologi Rekayasa Komputer Jaringan",
+            "lokasi": "Aceh, Indonesia",
+            "periode": "Agt 2022 - Agt 2026 (Diharapkan Lulus)",
+            "poin": [
+                "Mata Kuliah Relevan: Jaringan Komputer, Pemrograman, Sistem Tertanam (Embedded Systems), Internet of Things (IoT).",
+                "Keahlian yang Dikembangkan: Pengembangan Mobile (Flutter, Laravel), Implementasi Serat Optik (Fiber-Optic)."
+            ]
+        }
+    ],
+    "pengalaman": [
+        {
+            "perusahaan": "PT. TELKOM AKSES",
+            "posisi": "Technical Support Specialist (Intern)",
+            "lokasi": "Banda Aceh, Indonesia",
+            "periode": "Feb 2025 - Agt 2025",
+            "poin": [
+                "Melakukan penyambungan serat optik menggunakan fusion splicer serta pengujian OTDR untuk menjamin kualitas instalasi layanan FTTH.",
+                "Menyelesaikan gangguan jaringan dengan mendiagnosis kendala perangkat keras dan konektivitas saat kunjungan langsung ke pelanggan.",
+                "Menjaga kualitas layanan jaringan melalui kegiatan pemeliharaan FTTH proaktif dan penggantian perangkat.",
+                "Mendokumentasikan aktivitas teknis dan menyiapkan laporan menyeluruh untuk keperluan evaluasi kinerja internal."
+            ]
+        }
+    ],
+    "proyek": [
+        {
+            "nama": "GACOROVER V1",
+            "peran": "Robot Mobil untuk Edukasi IoRT (Lead Programmer)",
+            "periode": "Okt 2025",
+            "poin": [
+                "Merancang platform robot mobil menggunakan ESP32 dan C++ (PlatformIO) untuk mendemonstrasikan konsep dasar Internet of Robotic Things (IoRT).",
+                "Mengembangkan antarmuka kontrol multi-mode, termasuk terminal serial Bluetooth dan web server HTML lokal.",
+                "Mengimplementasikan logika kontrol motor presisi menggunakan modul L298N untuk mengeksekusi urutan gerakan otomatis."
+            ]
+        },
+        {
+            "nama": "APOK FINTRACK",
+            "peran": "Pelacak Keuangan Pribadi Offline-First (Developer)",
+            "periode": "Sep 2025",
+            "poin": [
+                "Mengembangkan aplikasi mobile menggunakan Flutter dan SQLite untuk mengelola anggaran pribadi melalui aturan 50/30/20.",
+                "Merancang sistem 'Smart Input' otomatis yang dilengkapi format mata uang IDR kustom."
+            ]
+        }
+    ],
+    "keahlian": {
+        "jaringan_server": "Mikrotik, GNS3, Implementasi Serat Optik, Administrasi Linux (Debian, Ubuntu), Proxmox, Manajemen Web Server (Apache2, MySQL, Mail Server).",
+        "pengembangan": "Flutter (Mobile), Laravel (Web), Git (Kontrol Versi), Python, Postman.",
+        "bahasa": "Indonesia (Native), Aceh (Native), Inggris (Beginner)"
+    }
+}

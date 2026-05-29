@@ -1,0 +1,728 @@
+{
+    "debian": [
+        {
+            "filename": "2025-10-10-debian7-setup-16-fondasi.md",
+            "filepath": "_posts/debian/2025-10-10-debian7-setup-16-fondasi.md",
+            "title": "(Part 17): Installasi & Konfigurasi Bashrc, HTOP, MC, GUI",
+            "date": "2025-10-10",
+            "tags": [
+                "debian-server-series",
+                "HyperV",
+                "DebianWheezy"
+            ],
+            "excerpt": "📖 BAB 6: TRANSFORMASI VISUAL | Menuju Desktop",
+            "youtube_ids": [
+                "XEOexJIa41Q"
+            ]
+        },
+        {
+            "filename": "2025-10-09-debian7-setup-15-fondasi.md",
+            "filepath": "_posts/debian/2025-10-09-debian7-setup-15-fondasi.md",
+            "title": "(Part 16): Install & Konfigurasi Polisi Konten SquidGuard",
+            "date": "2025-10-09",
+            "tags": [
+                "debian-server-series",
+                "HyperV",
+                "DebianWheezy"
+            ],
+            "excerpt": "📖 BAB 5: KEAMANAN & KONTROL | Polisi Konten",
+            "youtube_ids": [
+                "l5C7JbDvJos"
+            ]
+        },
+        {
+            "filename": "2025-10-08-debian7-setup-14-fondasi.md",
+            "filepath": "_posts/debian/2025-10-08-debian7-setup-14-fondasi.md",
+            "title": "(Part 15): Install & Konfigurasi Proxy Squid3",
+            "date": "2025-10-08",
+            "tags": [
+                "debian-server-series",
+                "HyperV",
+                "DebianWheezy"
+            ],
+            "excerpt": "📖 BAB 5: KEAMANAN & KONTROL | Gerbang Internet",
+            "youtube_ids": [
+                "JBF8OZOBAqg"
+            ]
+        },
+        {
+            "filename": "2025-10-07-debian7-setup-13-fondasi.md",
+            "filepath": "_posts/debian/2025-10-07-debian7-setup-13-fondasi.md",
+            "title": "(Part 14): Konfigurasi User Dir",
+            "date": "2025-10-07",
+            "tags": [
+                "debian-server-series",
+                "HyperV",
+                "DebianWheezy"
+            ],
+            "excerpt": "📖 BAB 3: WEB HOSTING MASTER | Paket Hemat Hosting",
+            "youtube_ids": [
+                "W96IMb0NYEQ"
+            ]
+        },
+        {
+            "filename": "2025-10-06-debian7-setup-12-fondasi.md",
+            "filepath": "_posts/debian/2025-10-06-debian7-setup-12-fondasi.md",
+            "title": "(Part 13): Konfigurasi SSL",
+            "date": "2025-10-06",
+            "tags": [
+                "debian-server-series",
+                "HyperV",
+                "DebianWheezy"
+            ],
+            "excerpt": "📖 BAB 3: WEB HOSTING MASTER | Menggembok Situs",
+            "youtube_ids": [
+                "hnhcRUBBfSU"
+            ]
+        },
+        {
+            "filename": "2025-10-05-debian7-setup-11-fondasi.md",
+            "filepath": "_posts/debian/2025-10-05-debian7-setup-11-fondasi.md",
+            "title": "(Part 12): Konfigurasi Hosting",
+            "date": "2025-10-05",
+            "tags": [
+                "debian-server-series",
+                "HyperV",
+                "DebianWheezy"
+            ],
+            "excerpt": "📖 BAB 3: WEB HOSTING MASTER | Hosting Banyak Web",
+            "youtube_ids": [
+                "aHwVLrsRfr0"
+            ]
+        },
+        {
+            "filename": "2025-10-04-debian7-setup-10-fondasi.md",
+            "filepath": "_posts/debian/2025-10-04-debian7-setup-10-fondasi.md",
+            "title": "(Part 11): Install dan Konfigurasi Samba Server",
+            "date": "2025-10-04",
+            "tags": [
+                "debian-server-series",
+                "HyperV",
+                "DebianWheezy"
+            ],
+            "excerpt": "📖 BAB 2: JARINGAN & KONEKTIVITAS | Berbagi File Lokal",
+            "youtube_ids": [
+                "JI25CTbgnis"
+            ]
+        },
+        {
+            "filename": "2025-10-03-debian7-setup-09-fondasi.md",
+            "filepath": "_posts/debian/2025-10-03-debian7-setup-09-fondasi.md",
+            "title": "(Part 10): Install dan Konfigurasi Mail Server",
+            "date": "2025-10-03",
+            "tags": [
+                "debian-server-series",
+                "HyperV",
+                "DebianWheezy"
+            ],
+            "excerpt": "📖 BAB 4: KOMUNIKASI & KOLABORASI | Mail Server Lengkap",
+            "youtube_ids": [
+                "aKe8M4RBrpk"
+            ]
+        },
+        {
+            "filename": "2025-10-02-debian7-setup-08-fondasi.md",
+            "filepath": "_posts/debian/2025-10-02-debian7-setup-08-fondasi.md",
+            "title": "(Part 9): Install dan Konfigurasi Database Mysql & PhpMyAdmin",
+            "date": "2025-10-02",
+            "tags": [
+                "debian-server-series",
+                "HyperV",
+                "DebianWheezy"
+            ],
+            "excerpt": "📖 BAB 3: WEB HOSTING MASTER | Manajemen Data",
+            "youtube_ids": [
+                "sfyh6qfrUC4"
+            ]
+        },
+        {
+            "filename": "2025-10-01-debian7-setup-07-fondasi.md",
+            "filepath": "_posts/debian/2025-10-01-debian7-setup-07-fondasi.md",
+            "title": "(Part 8): Tranfer File Aman Antara VSFTPD dengan SFTP",
+            "date": "2025-10-01",
+            "tags": [
+                "debian-server-series",
+                "HyperV",
+                "DebianWheezy"
+            ],
+            "excerpt": "📖 BAB 2: JARINGAN & KONEKTIVITAS | Transfer File Aman",
+            "youtube_ids": [
+                "WahLoPUczfA"
+            ]
+        },
+        {
+            "filename": "2025-09-30-debian7-setup-06-fondasi.md",
+            "filepath": "_posts/debian/2025-09-30-debian7-setup-06-fondasi.md",
+            "title": "(Part 7): Konfigurasi NAT Router Sharing Internet",
+            "date": "2025-09-30",
+            "tags": [
+                "debian-server-series",
+                "HyperV",
+                "DebianWheezy"
+            ],
+            "excerpt": "📖 BAB 2: JARINGAN & KONEKTIVITAS | Menjadi Router",
+            "youtube_ids": [
+                "nznAZGlkP48"
+            ]
+        },
+        {
+            "filename": "2025-09-29-debian7-setup-05-fondasi.md",
+            "filepath": "_posts/debian/2025-09-29-debian7-setup-05-fondasi.md",
+            "title": "(Part 6): Install dan Konfigurasi DHCP Server pada Windows 7",
+            "date": "2025-09-29",
+            "tags": [
+                "debian-server-series",
+                "HyperV",
+                "DebianWheezy"
+            ],
+            "excerpt": "📖 BAB 2: JARINGAN & KONEKTIVITAS | Mengatur Klien",
+            "youtube_ids": [
+                "OMVJFczcDBE"
+            ]
+        },
+        {
+            "filename": "2025-09-28-debian7-setup-04-fondasi.md",
+            "filepath": "_posts/debian/2025-09-28-debian7-setup-04-fondasi.md",
+            "title": "(Part 5): Konfigurasi Web Server, Apache2, Perl2, Php5",
+            "date": "2025-09-28",
+            "tags": [
+                "debian-server-series",
+                "HyperV",
+                "DebianWheezy"
+            ],
+            "excerpt": "📖 BAB 3: WEB HOSTING MASTER | Membangun Web Server",
+            "youtube_ids": [
+                "2nWfMydtnzc"
+            ]
+        },
+        {
+            "filename": "2025-09-27-debian7-setup-03-fondasi.md",
+            "filepath": "_posts/debian/2025-09-27-debian7-setup-03-fondasi.md",
+            "title": "(Part 4): Konfigurasi Bridge Adapter",
+            "date": "2025-09-27",
+            "tags": [
+                "debian-server-series",
+                "HyperV",
+                "DebianWheezy"
+            ],
+            "excerpt": "📖 BAB 1: THE GENESIS (Lanjutan) | Jembatan Penghubung & Makeover Tampilan",
+            "youtube_ids": [
+                "FEd7o51UY0Y"
+            ]
+        },
+        {
+            "filename": "2025-09-26-debian7-setup-02-fondasi.md",
+            "filepath": "_posts/debian/2025-09-26-debian7-setup-02-fondasi.md",
+            "title": "(Part 3): Konfigurasi NTP, SSH, DNS, DHCP Server",
+            "date": "2025-09-26",
+            "tags": [
+                "debian-server-series",
+                "HyperV",
+                "DebianWheezy"
+            ],
+            "excerpt": "📖 BAB 1: THE GENESIS (Lanjutan) | Identitas Server",
+            "youtube_ids": [
+                "9q8slK0ADcQ"
+            ]
+        },
+        {
+            "filename": "2025-09-25-debian7-setup-01-fondasi.md",
+            "filepath": "_posts/debian/2025-09-25-debian7-setup-01-fondasi.md",
+            "title": "(Part 2): Konfigurasi Dasar Server",
+            "date": "2025-09-25",
+            "tags": [
+                "debian-server-series",
+                "HyperV",
+                "DebianWheezy"
+            ],
+            "excerpt": "📖 BAB 1: THE GENESIS (Lanjutan) | Konfigurasi Dasar",
+            "youtube_ids": [
+                "ggZwSLdpRyQ"
+            ]
+        },
+        {
+            "filename": "2025-09-24-debian7-setup-00-fondasi.md",
+            "filepath": "_posts/debian/2025-09-24-debian7-setup-00-fondasi.md",
+            "title": "(Part 1): Instalasi Server dari Awal",
+            "date": "2025-09-24",
+            "tags": [
+                "debian-server-series",
+                "HyperV",
+                "DebianWheezy"
+            ],
+            "excerpt": "📖 BAB 1: THE GENESIS (Pondasi Kehidupan Server) | Membangkitkan `The Legend` Debian 7",
+            "youtube_ids": [
+                "p4zs7A_xUks"
+            ]
+        },
+        {
+            "filename": "2025-09-23-debian7.md",
+            "filepath": "_posts/debian/2025-09-23-debian7.md",
+            "title": "The Server Journey: Debian 7 Legacy",
+            "date": "2025-09-23",
+            "tags": [
+                "debian-server-series",
+                "HyperV",
+                "DebianWheezy"
+            ],
+            "excerpt": "From Zero to Hero: Building a Complete Server Infrastructure on Virtual Machine",
+            "youtube_ids": [
+                "https://www.youtube.com/playlist?list=PLuXdnSVJrUhnw4DwdwEvab-AHj1p1qD0F"
+            ]
+        }
+    ],
+    "gns3": [
+        {
+            "filename": "2025-12-01-gns3-stage4.md",
+            "filepath": "_posts/gns3/2025-12-01-gns3-stage4.md",
+            "title": "STAGE 4: The Firewall (Access Control List - ACL)",
+            "date": "2025-12-01",
+            "tags": [
+                "gns3-series",
+                "HyperV",
+                "GNS3"
+            ],
+            "excerpt": "Konsep Routing",
+            "youtube_ids": []
+        },
+        {
+            "filename": "2025-11-29-gns3-stage2.md",
+            "filepath": "_posts/gns3/2025-11-29-gns3-stage2.md",
+            "title": "STAGE 2: The Border Control (Routing Dasar)",
+            "date": "2025-11-29",
+            "tags": [
+                "gns3-series",
+                "HyperV",
+                "GNS3"
+            ],
+            "excerpt": "Konsep Routing",
+            "youtube_ids": []
+        },
+        {
+            "filename": "2025-11-30-gns3-stage3.md",
+            "filepath": "_posts/gns3/2025-11-30-gns3-stage3.md",
+            "title": "STAGE 3: The GPS System (Dynamic Routing - OSPF)",
+            "date": "2025-11-29",
+            "tags": [
+                "gns3-series",
+                "HyperV",
+                "GNS3"
+            ],
+            "excerpt": "Konsep Routing",
+            "youtube_ids": []
+        },
+        {
+            "filename": "2025-11-28-gns3-stage1.md",
+            "filepath": "_posts/gns3/2025-11-28-gns3-stage1.md",
+            "title": "STAGE 1: The Silent Courier (Switching Deep Dive)",
+            "date": "2025-11-28",
+            "tags": [
+                "gns3-series",
+                "HyperV",
+                "GNS3"
+            ],
+            "excerpt": "Konsep Switching",
+            "youtube_ids": []
+        }
+    ],
+    "journey": [
+        {
+            "filename": "2025-12-19-journey-c.md",
+            "filepath": "_posts/journey/2025-12-19-journey-c.md",
+            "title": "Journey 02: Membungkus Logika dengan Bahasa C",
+            "date": "2025-12-19",
+            "tags": [
+                "journey-series",
+                "C"
+            ],
+            "excerpt": "Konsep Bahasa Manipulasi Memory Komputer dengan Bahasa C",
+            "youtube_ids": []
+        },
+        {
+            "filename": "2025-12-18-journey-assembly.md",
+            "filepath": "_posts/journey/2025-12-18-journey-assembly.md",
+            "title": "Journey 01: Menembus Jantung Komputer dengan Assembly (x86)",
+            "date": "2025-12-18",
+            "tags": [
+                "journey-series",
+                "Assembly"
+            ],
+            "excerpt": "Konsep Bahasa Manipulasi Memory Komputer dengan Assembly (x86)",
+            "youtube_ids": []
+        }
+    ],
+    "life-hacks": [
+        {
+            "filename": "2025-10-31-junction-symboliclink.md",
+            "filepath": "_posts/life-hacks/2025-10-31-junction-symboliclink.md",
+            "title": "Lifehack Windows: Part-01",
+            "date": "2025-10-31",
+            "tags": [
+                "lifehacks-series",
+                "Windows",
+                "Junction",
+                "Symlink"
+            ],
+            "excerpt": "Bebaskan Drive C dengan Junction & Symlink",
+            "youtube_ids": []
+        }
+    ],
+    "meta": [
+        {
+            "filename": "2025-09-24-perjalanan-membangun-portofolio-ini.md",
+            "filepath": "_posts/meta/2025-09-24-perjalanan-membangun-portofolio-ini.md",
+            "title": "Dari Nol ke Publikasi: Perjalanan Membangun Portofolio Ini",
+            "date": "2025-09-24",
+            "tags": [
+                "meta-series"
+            ],
+            "excerpt": "Mulai memikirkan karier lho ya",
+            "youtube_ids": []
+        }
+    ],
+    "mikrotik": [
+        {
+            "filename": "2025-12-28-TheDoctor.md",
+            "filepath": "_posts/mikrotik/2025-12-28-TheDoctor.md",
+            "title": "Monitoring & Diagnosa (The Network Doctor)",
+            "date": "2025-12-28",
+            "tags": [
+                "mikrotik-series",
+                "HyperV",
+                "MikroTikOS",
+                "Winbox"
+            ],
+            "excerpt": "Konsep Dasar Torch, Graphing, Logging",
+            "youtube_ids": [
+                "pz4vVBSpkZU",
+                "RQ_KDMAlS1I",
+                "Atxxceelvgk"
+            ]
+        },
+        {
+            "filename": "2025-12-27-VPNPPTPServer.md",
+            "filepath": "_posts/mikrotik/2025-12-27-VPNPPTPServer.md",
+            "title": "Terowongan Rahasia (VPN PPTP Server)",
+            "date": "2025-12-27",
+            "tags": [
+                "mikrotik-series",
+                "HyperV",
+                "MikroTikOS",
+                "Winbox"
+            ],
+            "excerpt": "Konsep Dasar VPN, PPTP, dan IP Public & Tunnel",
+            "youtube_ids": [
+                "6ZpoeFc4di8"
+            ]
+        },
+        {
+            "filename": "2025-12-26-FirewallFilter.md",
+            "filepath": "_posts/mikrotik/2025-12-26-FirewallFilter.md",
+            "title": "Tembok Pertahanan (Firewall Filter - Input Chain)",
+            "date": "2025-12-26",
+            "tags": [
+                "mikrotik-series",
+                "HyperV",
+                "MikroTikOS",
+                "Winbox"
+            ],
+            "excerpt": "Konsep Dasar Firewall",
+            "youtube_ids": [
+                "zcGBjNMAkr8"
+            ]
+        },
+        {
+            "filename": "2025-12-25-BandwidthManagement.md",
+            "filepath": "_posts/mikrotik/2025-12-25-BandwidthManagement.md",
+            "title": "Bandwidth Management (Polisi Lalu Lintas)",
+            "date": "2025-12-25",
+            "tags": [
+                "mikrotik-series",
+                "HyperV",
+                "MikroTikOS",
+                "Winbox"
+            ],
+            "excerpt": "Konsep Dasar Bandwidth dan Simple Queue",
+            "youtube_ids": [
+                "584cWqFxz4I"
+            ]
+        },
+        {
+            "filename": "2025-12-24-TheOfficeAdmin.md",
+            "filepath": "_posts/mikrotik/2025-12-24-TheOfficeAdmin.md",
+            "title": "Otomatisasi & Manajemen Dasar (The Office Admin)",
+            "date": "2025-12-24",
+            "tags": [
+                "mikrotik-series",
+                "HyperV",
+                "MikroTikOS",
+                "Winbox"
+            ],
+            "excerpt": "Konsep Dasar DHCP, STATIC, NAT, ARP, Backup, dan Export",
+            "youtube_ids": [
+                "6ZoEgppVGCY",
+                "D3U1YXu6n7s"
+            ]
+        }
+    ],
+    "mininet": [
+        {
+            "filename": "2025-11-04-mininet-setup-08.md",
+            "filepath": "_posts/mininet/2025-11-04-mininet-setup-08.md",
+            "title": "Tahapan 08: VPLS (Private Connectivity) and QoS (Quality of Service Analysis)",
+            "date": "2025-11-04",
+            "tags": [
+                "mininet-series",
+                "HyperV",
+                "ONOS",
+                "Docker"
+            ],
+            "excerpt": "Mininet di Hyper-V (Part 8): VPLS (Private Connectivity) and QoS (Quality of Service Analysis)",
+            "youtube_ids": [
+                "IkT2eJtU_Dc"
+            ]
+        },
+        {
+            "filename": "2025-11-03-mininet-setup-07.md",
+            "filepath": "_posts/mininet/2025-11-03-mininet-setup-07.md",
+            "title": "Tahapan 07: Praktikum QoS (Quality of Service)",
+            "date": "2025-11-03",
+            "tags": [
+                "mininet-series",
+                "HyperV",
+                "ONOS",
+                "Docker"
+            ],
+            "excerpt": "Mininet di Hyper-V (Part 7): Praktikum QoS (Quality of Service)",
+            "youtube_ids": [
+                "XnEqtm8Ou8c"
+            ]
+        },
+        {
+            "filename": "2025-11-02-mininet-setup-06.md",
+            "filepath": "_posts/mininet/2025-11-02-mininet-setup-06.md",
+            "title": "Tahapan 06: Topology VPLS EZ",
+            "date": "2025-11-02",
+            "tags": [
+                "mininet-series",
+                "HyperV",
+                "ONOS",
+                "Docker"
+            ],
+            "excerpt": "Mininet di Hyper-V (Part 6): TOPOLOGY VPLS EZ",
+            "youtube_ids": [
+                "rrYD4ofdjco"
+            ]
+        },
+        {
+            "filename": "2025-11-01-mininet-setup-05.md",
+            "filepath": "_posts/mininet/2025-11-01-mininet-setup-05.md",
+            "title": "Tahapan 05: Topology Linear Custom",
+            "date": "2025-11-01",
+            "tags": [
+                "mininet-series",
+                "HyperV",
+                "ONOS",
+                "Docker"
+            ],
+            "excerpt": "Mininet di Hyper-V (Part 5): TOPOLOGY THIRD HARD",
+            "youtube_ids": [
+                "yr6hPOEFkXU"
+            ]
+        },
+        {
+            "filename": "2025-10-31-mininet-setup-04.md",
+            "filepath": "_posts/mininet/2025-10-31-mininet-setup-04.md",
+            "title": "Tahapan 04: Topology Tree Custom",
+            "date": "2025-10-31",
+            "tags": [
+                "mininet-series",
+                "HyperV",
+                "ONOS",
+                "Docker"
+            ],
+            "excerpt": "Mininet di Hyper-V (Part 4): TOPOLOGY SECOND BEGINNER",
+            "youtube_ids": [
+                "3sOGQxwXLhQ"
+            ]
+        },
+        {
+            "filename": "2025-10-30-mininet-setup-03.md",
+            "filepath": "_posts/mininet/2025-10-30-mininet-setup-03.md",
+            "title": "Tahapan 03: Topology Single Custom",
+            "date": "2025-10-30",
+            "tags": [
+                "mininet-series",
+                "HyperV",
+                "ONOS",
+                "Docker"
+            ],
+            "excerpt": "Mininet di Hyper-V (Part 3): TOPOLOGY FIRST EZ",
+            "youtube_ids": [
+                "T4xLQfwhbFA"
+            ]
+        },
+        {
+            "filename": "2025-10-20-mininet-setup-02.md",
+            "filepath": "_posts/mininet/2025-10-20-mininet-setup-02.md",
+            "title": "Integrasi Mininet VM - Tahapan 02: Integrasi ONOS dengan Mininet VM",
+            "date": "2025-10-20",
+            "tags": [
+                "mininet-series",
+                "HyperV",
+                "ONOS",
+                "Docker"
+            ],
+            "excerpt": "Mininet di Hyper-V (Part 2): Integrasi ONOS & MININET",
+            "youtube_ids": [
+                "4c9R0YHQAAY"
+            ]
+        },
+        {
+            "filename": "2025-10-10-mininet-setup-01.md",
+            "filepath": "_posts/mininet/2025-10-10-mininet-setup-01.md",
+            "title": "Installasi Mininet VM - Tahapan 01: Setup Mininet VM",
+            "date": "2025-10-10",
+            "tags": [
+                "mininet-series",
+                "HyperV",
+                "ONOS",
+                "Docker"
+            ],
+            "excerpt": "Mininet di Hyper-V (Part 1): Instalasi & Konfigurasi Dual Adapter",
+            "youtube_ids": [
+                "KYJy2arn2u4"
+            ]
+        }
+    ],
+    "projects": [
+        {
+            "filename": "2025-01-02-os-apok-web.md",
+            "filepath": "_posts/projects/2025-01-02-os-apok-web.md",
+            "title": "Studi Kasus: OS-APOK (Web Portfolio)",
+            "date": "2025-01-02",
+            "tags": [
+                "projects-series",
+                "WebStatic",
+                "HTML",
+                "CSS",
+                "JavaScript"
+            ],
+            "excerpt": "",
+            "youtube_ids": []
+        },
+        {
+            "filename": "2025-01-02-smartbin-iot-system.md",
+            "filepath": "_posts/projects/2025-01-02-smartbin-iot-system.md",
+            "title": "SmartBin: Sistem Manajemen Sampah Cerdas Berbasis IoT",
+            "date": "2025-01-02",
+            "tags": [
+                "projects-series",
+                "IoT",
+                "Laravel",
+                "Arduino",
+                "Hardware"
+            ],
+            "excerpt": "",
+            "youtube_ids": []
+        },
+        {
+            "filename": "2024-12-30-attc-travel-booking.md",
+            "filepath": "_posts/projects/2024-12-30-attc-travel-booking.md",
+            "title": "Studi Kasus: Aceh Ticket Travel Car (ATTC)",
+            "date": "2024-12-30",
+            "tags": [
+                "projects-series",
+                "System",
+                "Flutter",
+                "Firebase",
+                "Dart",
+                "PHP",
+                "Mysql",
+                "Xampp"
+            ],
+            "excerpt": "",
+            "youtube_ids": []
+        },
+        {
+            "filename": "2024-12-13-laravel-jwt-auth.md",
+            "filepath": "_posts/projects/2024-12-13-laravel-jwt-auth.md",
+            "title": "Studi Kasus: Sistem Autentikasi Laravel JWT",
+            "date": "2024-12-13",
+            "tags": [
+                "projects-series",
+                "Auth",
+                "Laravel",
+                "JWT",
+                "PHP",
+                "Bearer"
+            ],
+            "excerpt": "",
+            "youtube_ids": []
+        },
+        {
+            "filename": "2024-12-11-sistem-manajemen-apotek.md",
+            "filepath": "_posts/projects/2024-12-11-sistem-manajemen-apotek.md",
+            "title": "Studi Kasus: Sistem Manajemen Poliklinik/Apotek",
+            "date": "2024-12-11",
+            "tags": [
+                "projects-series",
+                "System",
+                "Flutter",
+                "Firebase",
+                "Dart",
+                "PHP",
+                "Xampp"
+            ],
+            "excerpt": "",
+            "youtube_ids": []
+        },
+        {
+            "filename": "2025-09-10-apok-fintrack.md",
+            "filepath": "_posts/projects/2025-09-10-apok-fintrack.md",
+            "title": "Studi Kasus: Apok FinTrack - Manajemen Keuangan",
+            "date": "2024-09-10",
+            "tags": [
+                "projects-series",
+                "System",
+                "Flutter",
+                "Firebase",
+                "Dart",
+                "SQLite"
+            ],
+            "excerpt": "Aplikasi mobile (Flutter) untuk mencatat arus kas harian, manajemen kartu, dan visualisasi data keuangan pribadi",
+            "youtube_ids": [
+                "xuzCJAbGtBo"
+            ]
+        },
+        {
+            "filename": "2024-08-01-teungku-craft.md",
+            "filepath": "_posts/projects/2024-08-01-teungku-craft.md",
+            "title": "Studi Kasus: Teungku Craft - E-Commerce",
+            "date": "2024-08-01",
+            "tags": [
+                "projects-series",
+                "WebStatic",
+                "HTML",
+                "CSS",
+                "JavaScript"
+            ],
+            "excerpt": "",
+            "youtube_ids": []
+        }
+    ],
+    "tutorials": [
+        {
+            "filename": "2025-09-20-dasar-dasar-markdown.md",
+            "filepath": "_posts/tutorials/2025-09-20-dasar-dasar-markdown.md",
+            "title": "Panduan Singkat: Dasar-Dasar Penulisan dengan Markdown",
+            "date": "2025-09-20",
+            "tags": [
+                "tutorials-series",
+                "Markdown"
+            ],
+            "excerpt": "Konsep Dasar-Dasar Markdown",
+            "youtube_ids": []
+        }
+    ]
+}

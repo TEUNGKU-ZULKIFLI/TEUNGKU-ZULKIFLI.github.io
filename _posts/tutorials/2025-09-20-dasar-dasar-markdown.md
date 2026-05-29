@@ -1,8 +1,9 @@
 ---
 title: "Panduan Singkat: Dasar-Dasar Penulisan dengan Markdown"
 date: "2025-09-20"
-category: "Tutorial"
-tags: ["tutorials-series"]
+tags: [tutorials-series, Markdown]
+excerpt: "Konsep Dasar-Dasar Markdown"
+youtube_id: ""
 ---
 
 # Memahami Dasar-Dasar Markdown

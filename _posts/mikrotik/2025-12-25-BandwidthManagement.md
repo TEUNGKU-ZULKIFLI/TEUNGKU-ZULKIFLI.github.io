@@ -1,9 +1,15 @@
 ---
 title: "Bandwidth Management (Polisi Lalu Lintas)"
 date: "2025-12-25"
-category: "Course"
-tags: ["mikrotik-series"]
+tags: [mikrotik-series, HyperV, MikroTikOS, Winbox]
+excerpt: "Konsep Dasar Bandwidth dan Simple Queue"
+youtube_id: "https://youtu.be/584cWqFxz4I"
 ---
+
+<!-- MikroTik di Hyper-V (#5): Limit Bandwidth via Simple Queue (GUI & CLI) -->
+<div class="video-container" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; margin: 1.5rem 0; border-radius: 8px; box-shadow: var(--shadow-md);">
+    <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;" src="https://www.youtube.com/embed/584cWqFxz4I?" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
 
 # 📂 DOKUMENTASI LAB MIKROTIK: MISI 2
 

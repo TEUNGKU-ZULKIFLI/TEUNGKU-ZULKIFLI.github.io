@@ -1,11 +1,14 @@
 ---
 title: "(Part 10): Install dan Konfigurasi Mail Server"
 date: "2025-10-03"
-category: "Course"
-tags: ["debian-server-series"]
+tags: [debian-server-series, HyperV, DebianWheezy]
+excerpt: "📖 BAB 4: KOMUNIKASI & KOLABORASI | Mail Server Lengkap"
+youtube_id: "https://youtu.be/aKe8M4RBrpk"
 ---
 
-<iframe src="https://www.youtube.com/embed/aKe8M4RBrpk?controls=0&modestbranding=1&rel=0&disablekb=1&autoplay=0" style="display:block;margin:auto;border:none;width:100%;max-width:960px;height:540px;" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+<div class="video-container" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; margin: 1.5rem 0; border-radius: 8px; box-shadow: var(--shadow-md);">
+    <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;" src="https://www.youtube.com/embed/aKe8M4RBrpk?" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
 
 # Dokumentasi Debian di Hyper V (Part 10): Install dan Konfigurasi Mail Server
 **Catatan Perjalanan & Solusi Praktis untuk VM Debian 7.8.0 "Wheezy"**

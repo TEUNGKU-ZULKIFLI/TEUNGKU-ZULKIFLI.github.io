@@ -1,9 +1,9 @@
 ---
 title: "Studi Kasus: Sistem Manajemen Poliklinik/Apotek"
 date: "2024-12-11"
-category: "Project"
-tags: ["System", "Flutter", "Firebase"]
-status: "Completed"
+tags: [projects-series, System, Flutter, Firebase, Dart, PHP, Xampp]
+excerpt: ""
+youtube_id: ""
 ---
 
 Aplikasi manajemen data obat, staf, dan pasien menggunakan Flutter dan Firebase sebagai backend realtime.
