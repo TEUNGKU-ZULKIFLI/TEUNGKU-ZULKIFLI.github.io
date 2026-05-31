@@ -6,33 +6,34 @@
     <title>Teungku Zulkifli - Portofolio & Blog</title>
     
     <!-- CSS Variables dan Design Tokens -->
-    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="./css/variables.css">
     
     <!-- Gaya Utama Website -->
-    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="./css/main.css">
 
     <!-- Gaya Khusus Render Artikel Markdown (SOP Tahap 3) -->
-    <link rel="stylesheet" href="css/markdown.css">
+    <link rel="stylesheet" href="./css/modules/markdown.css">
+
+    <!-- Gaya Khusus Konsol Terminal Terpisah (Modular) -->
+    <link rel="stylesheet" href="./css/modules/terminal.css">
 </head>
 <body>
 
     <!-- Header Website (App Navigation Shell - Stabil) -->
     <header id="app-header">
         <div class="header-container">
-            <!-- Baris Atas: Brand & Tombol Mode (Sangat Stabil di Mobile & Desktop) -->
+            <!-- Baris Atas: Brand & Tombol Mode -->
             <div class="header-top-row">
                 <a href="#home" class="brand-title">TEUNGKU</a>
                 <button id="theme-toggle" style="background: none; border: 1px solid var(--border-color); padding: 0.4rem 0.8rem; border-radius: var(--radius-sm); cursor: pointer; font-size: 0.85rem; font-weight: 600; color: var(--text-primary); transition: all var(--transition-fast);"></button>
             </div>
             
-            <!-- Menu Navigasi Utama (Horizontal Scrollable di Mobile) -->
+            <!-- Menu Navigasi Ringkas (Bebas dari Menu Menumpuk) -->
             <nav id="main-nav">
                 <a href="#home" class="nav-link active" data-link="home">Beranda</a>
                 <a href="#about" class="nav-link" data-link="about">Tentang</a>
                 <a href="#projects" class="nav-link" data-link="projects">Proyek</a>
                 <a href="#sertifikasi" class="nav-link" data-link="sertifikasi">Sertifikasi</a>
-                <a href="#resume" class="nav-link" data-link="resume">CV</a>
-                <a href="#contact" class="nav-link" data-link="contact">Kontak</a>
                 <a href="#blog" class="nav-link" data-link="blog">Blog</a>
             </nav>
         </div>
@@ -50,10 +51,10 @@
         <p>&copy; 2026 Teungku Zulkifli. Hak Cipta Dilindungi Undang-Undang.</p>
     </footer>
 
-    <!-- JS Library Lokal -->
-    <script src="js/lib/marked.min.js"></script>
+    <!-- JS Library Lokal (Hanya Marked.js untuk parser global) -->
+    <script src="./js/lib/marked.min.js"></script>
 
-    <!-- Logika Aplikasi Utama (Sebagai Modern ES Module) -->
-    <script type="module" src="js/app.js"></script>
+    <!-- Logika Aplikasi Utama (Sebagai Satu-satunya Modern ES Module) -->
+    <script type="module" src="./js/app.js"></script>
 </body>
 </html>

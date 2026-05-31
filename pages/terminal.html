@@ -1,0 +1,36 @@
+<!-- Halaman Navigasi Mandiri Khusus Terminal (#terminal) -->
+<div class="terminal-page-container">
+    
+    <div style="text-align: center; margin-bottom: 2rem;">
+        <h2 style="font-size: 2rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0.5rem;">
+            Konsol Terminal Interaktif
+        </h2>
+        <p style="color: var(--text-secondary); font-size: 1rem;">
+            Gunakan antarmuka baris perintah retro untuk menjelajahi data portofolio saya secara instan.
+        </p>
+    </div>
+
+    <div class="terminal-container">
+        <div class="terminal-header">
+            <div class="terminal-buttons">
+                <span class="btn-term close"></span>
+                <span class="btn-term minimize"></span>
+                <span class="btn-term expand"></span>
+            </div>
+            <div class="terminal-title">teungku@server:~</div>
+        </div>
+        
+        <div class="terminal-body" id="terminal-body">
+            <div class="terminal-output">
+                <p class="term-welcome">Selamat datang di Server Teungku OS v2.0!</p>
+                <p class="term-hint">Ketik <span class="term-highlight">help</span> untuk melihat daftar perintah yang tersedia.</p>
+            </div>
+            
+            <div class="terminal-input-line">
+                <span class="terminal-prompt">teungku@server:~$</span>
+                <input type="text" id="terminal-input" autofocus autocomplete="off" spellcheck="false">
+            </div>
+        </div>
+    </div>
+
+</div>
