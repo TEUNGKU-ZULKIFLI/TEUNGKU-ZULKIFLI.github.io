@@ -1,11 +1,11 @@
 /* ========================================================================
-   LOGIKA UTAMA APLIKASI (Router & Pengendali Dinamis Modular)
+   LOGIKA UTAMA APLIKASI (Router, Jalur Navigasi, & Pengendali Global)
 ======================================================================== */
 
 let dataProfil = null;
 let dataResume = null;
 
-// Mengambil database profil
+// Mengambil database profil secara aman
 async function ambilDataProfil() {
     if (dataProfil) return dataProfil;
     try {
@@ -18,7 +18,7 @@ async function ambilDataProfil() {
     }
 }
 
-// Mengambil database resume (CV) khusus
+// Mengambil database resume (CV)
 async function ambilDataResume() {
     if (dataResume) return dataResume;
     try {
@@ -31,7 +31,7 @@ async function ambilDataResume() {
     }
 }
 
-// Menyuntikkan data dinamis ke elemen halaman standar
+// Menyuntikkan data dinamis ke halaman
 async function isiDataHalaman(namaHalaman) {
     const data = await ambilDataProfil();
     if (!data) return;
@@ -218,8 +218,15 @@ function inisialisasiTema() {
     });
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     aturRute();
     inisialisasiTema();
     window.addEventListener('hashchange', aturRute);
+
+    try {
+        const modulBg = await import('./modules/canvas-bg.js');
+        modulBg.inisialisasiLatarBelakang();
+    } catch (err) {
+        console.error("Gagal memuat modul latar belakang:", err);
+    }
 });

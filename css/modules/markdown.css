@@ -1,75 +1,110 @@
 /* ========================================================================
-   GAYA VISUAL KONTEN MARKDOWN (SOP Dokumentasi Modern 2026)
+   GAYA VISUAL ARTIKEL MARKDOWN VITEPRESS-STYLE (Modern & Minimalis 2026)
+   Fokus pada kenyamanan membaca, tipografi bersih, dan kegunaan teknis.
 ======================================================================== */
 
 .markdown-body {
     font-size: 1.05rem;
-    line-height: 1.8;
+    line-height: 1.75;
     color: var(--text-primary);
+    font-family: var(--font-sans);
 
-    /* Judul Bab & Sub-Bab */
+    /* Judul Bab Headings */
     h1 {
         font-size: 2.25rem;
         font-weight: 800;
         margin-top: 2rem;
-        margin-bottom: 1rem;
-        border-bottom: 2px solid var(--border-color);
+        margin-bottom: 1.25rem;
+        letter-spacing: -0.02em;
+        color: var(--text-primary);
+        border-bottom: 1px solid var(--border-color);
         padding-bottom: 0.5rem;
     }
 
     h2 {
-        font-size: 1.65rem;
+        font-size: 1.6rem;
         font-weight: 700;
         margin-top: 1.75rem;
-        margin-bottom: 0.75rem;
+        margin-bottom: 1rem;
+        letter-spacing: -0.015em;
+        color: var(--text-primary);
     }
 
     h3 {
-        font-size: 1.35rem;
+        font-size: 1.3rem;
         font-weight: 600;
         margin-top: 1.5rem;
-        margin-bottom: 0.5rem;
+        margin-bottom: 0.75rem;
     }
 
     p {
         margin-bottom: 1.25rem;
-    }
-
-    /* Blok Kutipan / Kotak Analogi Sederhana (SOP) */
-    blockquote {
-        border-left: 4px solid var(--accent);
-        padding: 1rem 1.25rem;
-        background-color: var(--bg-tertiary);
-        border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-        font-style: italic;
         color: var(--text-secondary);
-        margin: 1.5rem 0;
-
-        p { margin: 0; }
     }
 
-    /* Inline Code (e.g. `sudo apt`) */
-    code {
-        font-family: var(--font-mono);
-        font-size: 0.9em;
+    /* Tautan Dalam Konten */
+    a {
+        color: var(--accent);
+        text-decoration: none;
+        font-weight: 500;
+        border-bottom: 1px dashed var(--accent);
+        transition: border-color var(--transition-fast);
+        
+        &:hover {
+            border-bottom-style: solid;
+        }
+    }
+
+    /* Blok Kutipan / Catatan Sederhana */
+    blockquote {
+        margin: 1.5rem 0;
+        padding: 0.75rem 1.25rem;
+        border-left: 4px solid var(--accent);
         background-color: var(--bg-tertiary);
-        color: var(--accent-text);
-        padding: 0.2rem 0.4rem;
+        border-radius: 0 var(--radius-md) var(--radius-md) 0;
+        
+        p {
+            margin: 0;
+            font-style: italic;
+            color: var(--text-secondary);
+        }
+    }
+
+    /* KOTAK CALLOUT UNIK KHAS VITEPRESS (Tip, Info, Peringatan) */
+    /* Sederhana namun sangat dekoratif di dokumen */
+    .callout-tip {
+        border-left-color: #10b981 !important; /* Hijau */
+        background-color: rgba(16, 185, 129, 0.05) !important;
+    }
+    
+    .callout-warning {
+        border-left-color: #f59e0b !important; /* Kuning */
+        background-color: rgba(245, 158, 11, 0.05) !important;
+    }
+
+    /* Inline Code (e.g. `ls -la`) */
+    code:not(pre code) {
+        font-family: var(--font-mono);
+        font-size: 0.875em;
+        background-color: var(--bg-tertiary);
+        color: #e11d48; /* Warna merah retro */
+        padding: 0.15rem 0.35rem;
         border-radius: var(--radius-sm);
         border: 1px solid var(--border-color);
     }
 
-    /* Blok Kode (Code Block - pre) */
+    /* Blok Kode Program Premium */
     pre {
-        background-color: #0f172a; /* Slate 900 */
+        background-color: #0b0f19; /* Latar belakang hitam monolitik */
         color: #f8fafc;
         padding: 1.25rem;
         border-radius: var(--radius-md);
         overflow-x: auto;
-        margin-bottom: 1.5rem;
-        border: 1px solid #1e293b;
+        margin: 1.5rem 0;
+        border: 1px solid var(--border-color);
         font-family: var(--font-mono);
         font-size: 0.95rem;
+        position: relative;
 
         code {
             background-color: transparent !important;
@@ -80,70 +115,49 @@
         }
     }
 
-    /* Daftar List */
-    ul {
-        list-style-type: disc;
+    /* Daftar List Rapi */
+    ul, ol {
         padding-left: 1.5rem;
         margin-bottom: 1.25rem;
-    }
-
-    ol {
-        list-style-type: decimal;
-        padding-left: 1.5rem;
-        margin-bottom: 1.25rem;
+        color: var(--text-secondary);
     }
 
     li {
-        margin-bottom: 0.4rem;
+        margin-bottom: 0.5rem;
     }
 
-    /* Tabel Praktikum (SOP) */
+    /* Tabel Parameter Praktikum */
     table {
         width: 100%;
-        margin-bottom: 1.5rem;
+        margin-bottom: 2rem;
         border-collapse: collapse;
         font-size: 0.95rem;
 
         th, td {
             border: 1px solid var(--border-color);
-            padding: 0.75rem;
+            padding: 0.75rem 1rem;
             text-align: left;
         }
 
         th {
             background-color: var(--bg-tertiary);
             font-weight: 700;
+            color: var(--text-primary);
         }
 
         tr:nth-child(even) {
-            background-color: var(--bg-primary);
+            background-color: rgba(0, 0, 0, 0.02);
         }
     }
 }
 
-/* Wadah Video YouTube Responsif (SOP) */
-.video-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1rem;
-    margin: 1.5rem 0;
-}
-
-.responsive-video-card {
-    position: relative;
-    padding-bottom: 56.25%; /* Rasio 16:9 */
-    height: 0;
-    overflow: hidden;
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-sm);
-    border: 1px solid var(--border-color);
-
-    iframe {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        border: 0;
+/* Modifikasi Khusus Tampilan Mode Gelap */
+html.dark .markdown-body {
+    code:not(pre code) {
+        color: #fb7185; /* Pink cerah di mode gelap */
+    }
+    
+    tr:nth-child(even) {
+        background-color: rgba(255, 255, 255, 0.02);
     }
 }

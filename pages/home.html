@@ -1,22 +1,192 @@
-<!-- Halaman Beranda (Home) - Murni Visual GUI Tanpa Logika Terminal -->
-<div class="home-container">
-    <div class="avatar-wrapper">
-        <!-- 
-          Jika Anda sudah memiliki foto profil asli, silakan ganti tag <svg> dengan:
-          <img src="assets/profile.jpg" alt="Foto Teungku Zulkifli">
-        -->
-        <svg class="default-avatar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-            <circle cx="12" cy="7" r="4"></circle>
-        </svg>
+<!-- Halaman Beranda - Desain Bersih dengan Bingkai Foto Hybrid & Lengan Kartun Berotot Pas Bahu -->
+<div class="home-layout-clean">
+    
+    <!-- Bagian Kartu Visual Avatar Hybrid -->
+    <div class="hybrid-avatar-section">
+        <div class="avatar-svg-container">
+            <!-- viewBox diatur ke 160 120 untuk memberi ruang lambaian lengan berotot di kanan tanpa terpotong sedikit pun -->
+            <svg class="avatar-clean-svg" viewBox="0 0 160 120" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <!-- Clip path persegi rounded untuk memotong foto 1:1 Anda secara otomatis -->
+                    <clipPath id="photo-rect-clip">
+                        <rect x="35" y="20" width="80" height="80" rx="16" ry="16" />
+                    </clipPath>
+                </defs>
+
+                <!-- 1. Efek Bayangan/Kedalaman Lembut di Belakang Bingkai -->
+                <rect x="38" y="23" width="80" height="80" rx="16" ry="16" fill="var(--bg-tertiary)" opacity="0.6" />
+
+                <!-- 2. FOTO FORMAL WAJAH ASLI ANDA -->
+                <!-- 
+                  Rasio aspek foto Anda (3024x3024) adalah 1:1 (persegi). 
+                  Jalur relatif menggunakan ./assets/profile.jpg agar aman dimuat dari root SPA.
+                -->
+                <image href="./assets/profile.jpg" 
+                       x="35" y="20" width="80" height="80" 
+                       clip-path="url(#photo-rect-clip)"
+                       preserveAspectRatio="xMidYMid slice" />
+
+                <!-- 3. Garis Bingkai Pembatas Foto (Border) -->
+                <rect x="35" y="20" width="80" height="80" rx="16" ry="16" fill="none" stroke="var(--border-color)" stroke-width="2.5" />
+
+                <!-- 4. LENGAN KANAN KARTUN SUPER BEROTOT (Diperbesar, Diturunkan, Menempel Sempurna) -->
+                <!-- transform-origin diturunkan ke engsel bahu bawah (x=114, y=82) agar putaran lambaian tetap kokoh -->
+                <g class="muscular-arm-wave">
+                    <!-- Otot lengan baju / sleeve yang diperbesar & diturunkan secara masif untuk menutup sudut bawah foto -->
+                    <path d="M 114,72 
+                             C 122,70 128,76 126,88 
+                             C 124,96 118,98 114,94 Z" 
+                          fill="var(--accent)" stroke="var(--border-color)" stroke-width="2.5" />
+                    
+                    <!-- Otot Bisep Kartun Vektor yang Sangat Besar & Forearm Berotot Komik -->
+                    <path d="M 116,84 
+                             C 128,88 138,76 136,62 
+                             C 134,54 144,40 139,30 
+                             C 133,20 123,28 121,38 
+                             C 118,48 110,58 114,68" 
+                          fill="#fbcfe8" stroke="var(--border-color)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                    
+                    <!-- Kepalan Tangan Kartun Bulat Kuat (Diperbesar r=7.5) -->
+                    <circle cx="137" cy="27" r="7.5" fill="#fbcfe8" stroke="var(--border-color)" stroke-width="2.5"/>
+                    
+                    <!-- Garis Detail Guratan Otot Bisep Dalam (Lebih Tebal dan Nyata) -->
+                    <path d="M 124,56 Q 128,53 129,59" fill="none" stroke="var(--border-color)" stroke-width="2" stroke-linecap="round"/>
+                </g>
+            </svg>
+        </div>
     </div>
 
-    <h1 id="hero-name" class="hero-name"></h1>
-    <h2 id="hero-role" class="hero-role"></h2>
-    <p id="hero-tagline" class="hero-tagline"></p>
+    <!-- Bagian Teks & Identitas Utama -->
+    <div class="profile-clean-text">
+        <h1 id="hero-name" class="hero-clean-title"></h1>
+        <h2 id="hero-role" class="hero-clean-subtitle"></h2>
+        <p id="hero-tagline" class="hero-clean-desc"></p>
 
-    <div class="action-buttons">
-        <a href="#resume" class="btn-primary">Download RESUME (ID)</a>
-        <a href="#terminal" class="btn-secondary" style="border-color:#38bdf8; color:#38bdf8;">⚡ Buka Terminal CLI</a>
+        <!-- Tombol Tindakan Utama (Call to Action) -->
+        <div class="action-buttons-clean">
+            <a href="#resume" class="btn-clean-primary">Download CV (IDN)</a>
+            <a href="#terminal" class="btn-clean-secondary">⚡ Buka Terminal CLI</a>
+        </div>
     </div>
+
 </div>
+
+<!-- CSS Khusus Beranda Yang Sangat Rapi, Stabil & Responsif -->
+<style>
+    .home-layout-clean {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 58vh;
+        text-align: center;
+        max-width: 700px;
+        margin: 0 auto;
+        animation: fadeIn var(--transition-normal) ease-in-out;
+    }
+
+    .hybrid-avatar-section {
+        margin-bottom: 2rem;
+        position: relative;
+    }
+
+    .avatar-svg-container {
+        width: 190px;
+        height: 190px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .avatar-clean-svg {
+        width: 100%;
+        height: 100%;
+        overflow: visible; /* Penting: mencegah pemotongan lengan kartun di luar kanvas */
+    }
+
+    /* ANIMASI LENGAN KANAN: Lambaian Otot Kartun Menyenangkan */
+    .muscular-arm-wave {
+        transform-origin: 114px 82px; /* Sumbu jangkar engsel bahu kanan baru */
+        animation: waveMuscular 1s ease-in-out infinite;
+    }
+
+    @keyframes waveMuscular {
+        0%, 100% { transform: rotate(0deg); }
+        50% { transform: rotate(-12deg); } /* Efek rotasi lambaian yang terkendali */
+    }
+
+    /* Tipografi Sederhana & Berwibawa */
+    .hero-clean-title {
+        font-size: 2.5rem;
+        font-weight: 850;
+        letter-spacing: -0.02em;
+        color: var(--text-primary);
+        margin-bottom: 0.5rem;
+    }
+
+    .hero-clean-subtitle {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: var(--accent);
+        margin-bottom: 1.25rem;
+    }
+
+    .hero-clean-desc {
+        font-size: 1rem;
+        line-height: 1.6;
+        color: var(--text-secondary);
+        margin-bottom: 2rem;
+    }
+
+    .action-buttons-clean {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+
+    .btn-clean-primary {
+        padding: 0.7rem 1.4rem;
+        background-color: var(--accent);
+        color: #ffffff;
+        text-decoration: none;
+        border-radius: var(--radius-md);
+        font-weight: 600;
+        font-size: 0.95rem;
+        transition: background-color var(--transition-fast), transform var(--transition-fast);
+    }
+
+    .btn-clean-primary:hover {
+        background-color: var(--accent-hover);
+        transform: translateY(-1px);
+    }
+
+    .btn-clean-secondary {
+        padding: 0.7rem 1.4rem;
+        background-color: transparent;
+        border: 1px solid var(--border-color);
+        color: var(--text-primary);
+        text-decoration: none;
+        border-radius: var(--radius-md);
+        font-weight: 600;
+        font-size: 0.95rem;
+        transition: all var(--transition-fast);
+    }
+
+    .btn-clean-secondary:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+        transform: translateY(-1px);
+    }
+
+    /* Responsif untuk Layar Mobile */
+    @media (max-width: 768px) {
+        .hero-clean-title {
+            font-size: 2rem;
+        }
+        .avatar-svg-container {
+            width: 160px;
+            height: 160px;
+        }
+    }
+</style>
