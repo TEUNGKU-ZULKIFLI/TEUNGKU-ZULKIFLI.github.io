@@ -1,0 +1,207 @@
+/* ========================================================================
+   MODUL CSS RESUME (Akurasi Tinggi Kertas A4 & Cetak PDF)
+======================================================================== */
+
+.resume-wrapper {
+    max-width: 820px; /* Lebar maksimal kertas A4 di monitor */
+    margin: 0 auto;
+    animation: fadeIn var(--transition-normal) ease-in-out;
+}
+
+/* Panel Aksi Pengendali Web */
+.resume-actions-panel {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    padding: 1rem 1.5rem;
+    border-radius: var(--radius-md);
+    margin-bottom: 2rem;
+    text-align: left;
+}
+
+.resume-actions-panel p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    margin: 0;
+}
+
+.btn-print-action {
+    padding: 0.6rem 1.2rem;
+    background-color: var(--accent);
+    color: #ffffff;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color var(--transition-fast);
+}
+
+.btn-print-action:hover {
+    background-color: var(--accent-hover);
+}
+
+/* Simulasi Dokumen Fisik Kertas A4 */
+.cv-document {
+    background-color: #ffffff;
+    color: #0f172a; /* Teks gelap pekat standar cetak */
+    padding: 3.5rem;
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-lg);
+    border: 1px solid #e2e8f0;
+    font-family: var(--font-sans);
+    line-height: 1.5;
+    text-align: left;
+}
+
+/* Header Profil Resume */
+.cv-header {
+    text-align: center;
+    border-bottom: 2px solid #0f172a;
+    padding-bottom: 1.25rem;
+    margin-bottom: 1.75rem;
+}
+
+.cv-name {
+    font-size: 2.25rem;
+    font-weight: 900;
+    color: #0f172a;
+    margin: 0 0 0.4rem 0;
+    letter-spacing: -0.03em;
+}
+
+.cv-contact-info {
+    font-size: 0.9rem;
+    color: #475569;
+    margin: 0 0 0.25rem 0;
+}
+
+.cv-link {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--accent);
+    text-decoration: none;
+}
+
+.cv-link:hover {
+    text-decoration: underline;
+}
+
+/* Seksi Bagian CV */
+.cv-section {
+    margin-bottom: 1.75rem;
+}
+
+.cv-section-title {
+    font-size: 1.15rem;
+    font-weight: 850;
+    color: #0f172a;
+    border-bottom: 1.5px solid #cbd5e1;
+    padding-bottom: 0.25rem;
+    margin: 0 0 1rem 0;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.cv-p {
+    font-size: 0.925rem;
+    line-height: 1.6;
+    color: #334155;
+    text-align: justify;
+    margin: 0;
+}
+
+/* Item Detail (Kerja, Pendidikan, Proyek) */
+.cv-items-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.cv-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.cv-item-header {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 800;
+    font-size: 0.95rem;
+    color: #0f172a;
+}
+
+.cv-item-sub {
+    font-style: italic;
+    font-size: 0.9rem;
+    color: #475569;
+}
+
+.cv-list {
+    padding-left: 1.25rem;
+    margin: 0.25rem 0 0 0;
+    font-size: 0.9rem;
+    color: #334155;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.cv-list li {
+    line-height: 1.5;
+    text-align: justify;
+}
+
+/* Kisi Keahlian Cetak */
+.cv-skills-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: #334155;
+}
+
+.cv-skill-col {
+    line-height: 1.5;
+}
+
+.cv-skill-col strong {
+    color: #0f172a;
+}
+
+/* Aturan Khusus Media Cetak PDF / Printer (Akurasi Presisi Tinggi) */
+@media print {
+    /* Sembunyikan semua elemen navigasi pelindung */
+    #app-header, 
+    #app-footer, 
+    .no-print {
+        display: none !important;
+    }
+    
+    body {
+        background-color: #ffffff !important;
+        color: #000000 !important;
+    }
+
+    #app-content {
+        padding: 0 !important;
+        margin: 0 !important;
+        max-width: 100% !important;
+    }
+
+    .cv-document {
+        box-shadow: none !important;
+        border: none !important;
+        padding: 0 !important; /* Gunakan margin native printer */
+        margin: 0 !important;
+        background-color: #ffffff !important;
+        color: #000000 !important;
+    }
+    
+    @page {
+        size: A4;
+        margin: 15mm; /* Margin fisik kertas standar dokumen nasional */
+    }
+}

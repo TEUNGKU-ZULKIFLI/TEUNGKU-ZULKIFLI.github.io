@@ -1,0 +1,133 @@
+/* ========================================================================
+   MODUL CSS SERTIFIKASI (Desain Grid Kredensial Minimalis & Bersih)
+======================================================================== */
+
+.cert-container-modern {
+    max-width: 800px;
+    margin: 0 auto;
+    animation: fadeIn var(--transition-normal) ease-in-out;
+}
+
+.cert-header-clean {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.cert-title-clean {
+    font-size: 2.25rem;
+    font-weight: 850;
+    letter-spacing: -0.025em;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.cert-desc-clean {
+    color: var(--text-secondary);
+    font-size: 1.05rem;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+.cert-loading-state {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 1rem;
+    padding: 2rem 0;
+}
+
+.cert-timeline-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+
+.cert-card-item {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+    transition: transform var(--transition-fast), 
+                border-color var(--transition-fast), 
+                box-shadow var(--transition-fast);
+}
+
+.cert-content-left {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.cert-name-text {
+    font-size: 1.15rem;
+    font-weight: 750;
+    color: var(--text-primary);
+    margin: 0;
+    line-height: 1.3;
+}
+
+.cert-issuer-text {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+.cert-content-right {
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.25rem;
+}
+
+.cert-year-badge {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--accent);
+}
+
+.cert-verify-link {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: color var(--transition-fast), border-color var(--transition-fast);
+}
+
+/* ========================================================================
+   DESKTOP ONLY HOVER INTERACTION (Mencegah Sticky Hover di Mobile)
+======================================================================= */
+@media (hover: hover) {
+    .cert-card-item:hover {
+        transform: translateY(-2px);
+        border-color: var(--accent);
+        box-shadow: var(--shadow-sm);
+    }
+
+    .cert-verify-link:hover {
+        color: var(--accent);
+        border-color: var(--accent);
+    }
+}
+
+@media (max-width: 600px) {
+    .cert-card-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+        padding: 1.25rem;
+    }
+
+    .cert-content-right {
+        text-align: left;
+        align-items: flex-start;
+        width: 100%;
+        border-top: 1px dashed var(--border-color);
+        padding-top: 0.75rem;
+    }
+}

@@ -1,0 +1,124 @@
+/* ========================================================================
+   MODUL CSS BERANDA (Gaya Khusus Beranda & Animasi Hybrid Lengan)
+======================================================================== */
+
+.home-layout-clean {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 58vh;
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto;
+    animation: fadeIn var(--transition-normal) ease-in-out;
+}
+
+.hybrid-avatar-section {
+    margin-bottom: 2rem;
+    position: relative;
+}
+
+.avatar-svg-container {
+    width: 180px;
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.avatar-clean-svg {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+}
+
+/* ANIMASI LENGAN KANAN: Lambaian Otot Kartun Menyenangkan */
+.muscular-arm-wave {
+    transform-origin: 114px 82px;
+    animation: waveMuscular 2.2s ease-in-out infinite;
+}
+
+@keyframes waveMuscular {
+    0%, 100% { transform: rotate(0deg); }
+    50% { transform: rotate(-12deg); }
+}
+
+/* Tipografi Beranda */
+.hero-clean-title {
+    font-size: 2.5rem;
+    font-weight: 850;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.hero-clean-subtitle {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--accent);
+    margin-bottom: 1.25rem;
+}
+
+.hero-clean-desc {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+}
+
+.action-buttons-clean {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.btn-clean-primary {
+    padding: 0.7rem 1.4rem;
+    background-color: var(--accent);
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: background-color var(--transition-fast), transform var(--transition-fast);
+}
+
+.btn-clean-secondary {
+    padding: 0.7rem 1.4rem;
+    background-color: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    text-decoration: none;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all var(--transition-fast);
+}
+
+/* ========================================================================
+   DESKTOP ONLY HOVER INTERACTION (Mencegah Sticky Hover di Mobile)
+======================================================================= */
+@media (hover: hover) {
+    .btn-clean-primary:hover {
+        background-color: var(--accent-hover);
+        transform: translateY(-1px);
+    }
+
+    .btn-clean-secondary:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+        transform: translateY(-1px);
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-clean-title {
+        font-size: 2rem;
+    }
+    .avatar-svg-container {
+        width: 150px;
+        height: 150px;
+    }
+}

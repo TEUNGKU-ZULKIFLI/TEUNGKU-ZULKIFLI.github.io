@@ -1,11 +1,57 @@
-<div class="about-container">
-    <h2 class="section-title">Tentang Saya</h2>
-    <div class="profile-card">
-        <p id="about-bio"></p>
-    </div>
+<!-- Halaman Tentang Saya - Tata Letak Modern & Pengelompokan Keahlian -->
+<div class="about-layout-modern">
+    
+    <!-- Kolom Kiri: Narasi Profil & Biografi -->
+    <section class="about-profile-section">
+        <h2 class="about-title">Tentang Saya</h2>
+        <div class="about-bio-card">
+            <p id="about-bio" class="about-bio-text">
+                <!-- Data akan disuntikkan secara dinamis oleh js/app.js -->
+                Memuat biografi...
+            </p>
+        </div>
+        
+        <!-- Poin Pencapaian Singkat (Nilai Tambah untuk HRD) -->
+        <div class="about-achievements-grid">
+            <div class="achievement-item">
+                <span class="achievement-icon">🛡️</span>
+                <div class="achievement-info">
+                    <h4>Keamanan & Jaringan</h4>
+                    <p>Fokus mitigasi IPS MikroTik & virtualisasi server.</p>
+                </div>
+            </div>
+            <div class="achievement-item">
+                <span class="achievement-icon">🤖</span>
+                <div class="achievement-info">
+                    <h4>Pengembang IoT</h4>
+                    <p>Eksperimen robotika IoRT dengan ESP32 & C++.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <div class="skills-section">
-        <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem; color: var(--text-primary);">Keahlian & Spesialisasi</h3>
-        <div id="skills-list" class="skills-list"></div>
-    </div>
+    <!-- Kolom Kanan: Metrik Keahlian Terkelompok -->
+    <section class="about-skills-section">
+        <h3 class="skills-block-title">Kompetensi Teknis</h3>
+        <p class="skills-subtitle">Teknologi dan alat yang aktif saya gunakan dalam rekayasa sistem:</p>
+        
+        <div class="skills-categories-container">
+            <!-- Kelompok 1: Jaringan & Peladen -->
+            <div class="skill-category-group">
+                <h4 class="category-title">Jaringan & Administrasi Server</h4>
+                <div id="skills-network-list" class="skills-badge-grid">
+                    <!-- Dinonaktifkan atau diisi via JSON secara modular -->
+                </div>
+            </div>
+
+            <!-- Kelompok 2: Pengembangan Perangkat Lunak -->
+            <div class="skill-category-group">
+                <h4 class="category-title">Bahasa Pemrograman & Framework</h4>
+                <div id="skills-dev-list" class="skills-badge-grid">
+                    <!-- Dinonaktifkan atau diisi via JSON secara modular -->
+                </div>
+            </div>
+        </div>
+    </section>
+
 </div>

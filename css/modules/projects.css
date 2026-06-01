@@ -1,0 +1,123 @@
+/* ========================================================================
+   MODUL CSS PROYEK (Grid Proyek & Kartu Proyek Efek Hover Protektif)
+======================================================================== */
+
+.projects-container {
+    margin: 0 auto;
+    animation: fadeIn var(--transition-normal) ease-in-out;
+}
+
+.projects-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    
+    h2 {
+        font-size: 2.25rem;
+        font-weight: 800;
+        margin-bottom: 0.5rem;
+    }
+    
+    p {
+        color: var(--text-secondary);
+        font-size: 1.1rem;
+    }
+}
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.5rem;
+}
+
+.project-card {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+
+    .project-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin-bottom: 0.75rem;
+        color: var(--text-primary);
+        transition: color var(--transition-fast);
+    }
+
+    .project-desc {
+        font-size: 0.95rem;
+        color: var(--text-secondary);
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+        flex-grow: 1;
+    }
+    
+    .project-tech {
+        margin-bottom: 1.5rem;
+    }
+
+    .tech-badge {
+        font-size: 0.75rem;
+        background: var(--bg-tertiary);
+        color: var(--text-secondary);
+        padding: 0.2rem 0.5rem;
+        border-radius: var(--radius-sm);
+        margin-right: 0.4rem;
+        margin-bottom: 0.4rem;
+        display: inline-block;
+    }
+
+    /* Area Aksi Dua Tombol di Bawah Kartu */
+    .project-actions {
+        display: flex;
+        gap: 1rem;
+        margin-top: auto;
+        border-top: 1px solid var(--border-color);
+        padding-top: 1rem;
+    }
+
+    .project-link {
+        font-size: 0.85rem;
+        font-weight: 700;
+        color: var(--text-secondary);
+        text-decoration: none;
+        transition: color var(--transition-fast);
+        
+        &.link-primary {
+            color: var(--accent);
+        }
+    }
+}
+
+/* ========================================================================
+   DESKTOP ONLY HOVER INTERACTION (Mencegah Sticky Hover di Mobile)
+======================================================================= */
+@media (hover: hover) {
+    .project-card:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-md);
+        border-color: var(--accent);
+    }
+
+    .project-card:hover .project-title {
+        color: var(--accent);
+    }
+
+    .project-link:hover {
+        color: var(--text-primary);
+        
+        &.link-primary:hover {
+            color: var(--accent-hover);
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    .project-card .project-actions {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+}
