@@ -48,7 +48,8 @@
             "periode": "Sep 2025",
             "poin": [
                 "Mengembangkan aplikasi mobile menggunakan Flutter dan SQLite untuk mengelola anggaran pribadi melalui aturan 50/30/20.",
-                "Merancang sistem 'Smart Input' otomatis yang dilengkapi format mata uang IDR kustom."
+                "Merancang sistem 'Smart Input' otomatis yang dilengkapi format mata uang IDR kustom.",
+                "Memvisualisasikan data keuangan mingguan melalui grafik interaktif untuk memberikan wawasan jelas mengenai rasio pendapatan terhadap pengeluaran."
             ]
         }
     ],

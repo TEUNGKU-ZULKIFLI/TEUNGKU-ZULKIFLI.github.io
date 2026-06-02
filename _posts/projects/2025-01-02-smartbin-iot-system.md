@@ -6,33 +6,81 @@ excerpt: ""
 youtube_id: ""
 ---
 
-**SmartBin** adalah solusi *Internet of Things (IoT)* yang mengintegrasikan perangkat keras sensor dengan platform web untuk memantau kapasitas sampah secara *real-time* dan memberikan *reward point* otomatis kepada pengguna.
+# SmartBin Dokumentasi — TONG BROH CAROENG
 
-![SmartBin Architecture](https://placehold.co/800x400/2c2c2c/f0f0f0?text=SmartBin+Architecture)
+## Ringkasan
+**SmartBin** adalah solusi Internet of Things yang menggabungkan perangkat keras sensor dengan platform web untuk memberikan **reward point otomatis** kepada pengguna saat membuang sampah pada tempatnya.  
+Nama alternatif: **TONG BROH CAROENG**.
 
 ---
 
-## 🚩 Latar Belakang
-Di lingkungan perkotaan, pengelolaan sampah seringkali tidak efisien. Petugas kebersihan sering memeriksa tong sampah yang masih kosong (membuang waktu/bensin) atau terlambat mengangkut tong yang sudah penuh (menyebabkan polusi). Selain itu, kurangnya insentif membuat masyarakat malas membuang sampah pada tempatnya.
+## Latar Belakang
+Banyak orang malas membuang sampah pada tempatnya. Akibatnya sampah menumpuk, menyumbat saluran air, dan memicu banjir serta masalah kesehatan lingkungan lainnya. Upaya edukasi dan kampanye seringkali kurang efektif karena tidak ada insentif langsung yang mendorong perubahan kebiasaan.
 
-## 💡 Solusi yang Ditawarkan
-SmartBin hadir dengan dua fungsi utama:
-1.  **Monitoring Kapasitas:** Mendeteksi kepenuhan sampah menggunakan sensor ultrasonik.
-2.  **Sistem Reward:** Memberikan poin kepada user yang membuang sampah, yang tercatat otomatis di dashboard.
+**Masalah inti**
+- **Kebiasaan buruk**: Banyak orang enggan membuang sampah pada tempatnya.  
+- **Dampak lingkungan**: Banjir, penyumbatan saluran, dan penurunan kualitas lingkungan.  
+- **Rendahnya partisipasi**: Tanpa insentif nyata, perilaku positif sulit dipertahankan.
 
-## 🛠️ Arsitektur Teknis
+**Mengapa proyek ini dibuat**  
+Untuk mengubah perilaku publik dengan mekanisme insentif: ketika seseorang membuang sampah pada tempatnya, sistem otomatis memberikan poin sebagai reward. Poin ini menjadi motivator langsung yang mendorong kebiasaan membuang sampah yang benar, sehingga secara bertahap meningkatkan kepatuhan dan mengurangi masalah lingkungan seperti banjir.
 
-| Layer | Teknologi | Deskripsi |
+---
+
+## Solusi dan Alur Penggunaan
+SmartBin menerapkan logika **reward-for-action** untuk mendorong perilaku membuang sampah yang benar.
+
+**Alur singkat**
+1. Pengguna terhubung ke jaringan lokal yang sama dengan perangkat SmartBin.  
+2. Pengguna mendaftar akun di aplikasi web melalui `http://smartbin.test`.  
+3. Saat akan membuang sampah, pengguna menekan tombol klaim pada halaman utama aplikasi web.  
+4. Pengguna membuang sampah ke tong yang dilengkapi sensor.  
+5. Sistem mendeteksi aksi lewat sensor dan **memberikan poin otomatis** yang langsung tercatat di dashboard pengguna.
+
+**Logika perubahan perilaku**
+- **Imbalan langsung** (immediate reward) memperkuat kebiasaan positif.  
+- **Visibilitas hasil** (dashboard poin dan riwayat) membuat kontribusi pengguna terasa nyata.  
+- **Gamifikasi sederhana** (poin, level, atau reward) meningkatkan keterlibatan jangka panjang.
+
+**Fitur utama**
+- **Pencatatan otomatis** saat sampah terdeteksi.  
+- **Sistem reward** real time ke akun pengguna.  
+- **Dashboard** untuk melihat riwayat, total poin, dan statistik.  
+- **Manajemen akun** pendaftaran dan autentikasi.  
+- **Toleransi offline lokal** untuk operasi dasar di jaringan LAN.
+
+---
+
+## Arsitektur Teknis
+**Perangkat keras**
+- **ESP8266 Wemos D1 R1** — mikrokontroler dengan WiFi.  
+- **Sensor Ultrasonic HC-SR04** — deteksi keberadaan sampah / level tong.  
+- **LCD 16x2 I2C** — tampilan status lokal.
+
+**Perangkat lunak**
+- **Backend**: Laravel berjalan di Docker (laradoc) untuk kemudahan deployment.  
+- **Frontend**: Aplikasi web sederhana (Laravel Blade atau SPA) untuk dashboard dan interaksi pengguna.  
+- **Firmware**: Arduino IDE untuk ESP8266, menangani pembacaan sensor dan komunikasi HTTP ke backend.
+
+**Tech Stack ringkas**
+
+| Komponen | Teknologi | Alasan Pemilihan |
 | :--- | :--- | :--- |
-| **Hardware** | NodeMCU ESP8266 | Mikrokontroler utama dengan modul WiFi. |
-| **Sensor** | Ultrasonik HC-SR04 | Mengukur jarak sampah untuk menentukan kepenuhan. |
-| **Backend** | Laravel 9 | REST API untuk menerima data sensor dan manajemen user. |
-| **Database** | MySQL | Menyimpan log transaksi sampah dan data user. |
-| **Container** | Docker | Digunakan untuk lingkungan pengembangan yang konsisten. |
+| **Mikrokontroler** | ESP8266 Wemos D1 R1 | Murah; WiFi terintegrasi |
+| **Sensor** | HC-SR04 Ultrasonic | Pengukuran jarak sederhana dan andal |
+| **Display** | LCD 16x2 I2C | Informasi lokal mudah dibaca |
+| **Backend** | Laravel di Docker | Deployment konsisten dan mudah dikelola |
+| **Firmware** | Arduino IDE | Sederhana untuk pengembangan perangkat
 
-## 🚀 Tantangan Teknis
-Salah satu tantangan terbesar adalah **latensi jaringan**. Terkadang koneksi WiFi pada ESP8266 terputus saat pengiriman data ke server Laravel.
-* **Solusi:** Saya mengimplementasikan logika *reconnect* otomatis pada kode C++ Arduino dan membuat *queue* sederhana untuk menyimpan data sementara jika offline.
+---
 
-## 🔗 Tautan
-[Lihat Kode di GitHub](https://github.com/TEUNGKU-ZULKIFLI/smartbin)
+## Tantangan Teknis dan Rekomendasi
+**Tantangan**
+- Ketergantungan pada jaringan lokal (LAN) yang sama antara pengguna dan tong.  
+- False positive atau false negative pada sensor ultrasonic akibat kondisi lingkungan (angin, objek lain, pantulan).
+
+**Rekomendasi**
+- Terapkan **debounce** dan threshold pada pembacaan sensor untuk mengurangi false trigger.  
+- Simpan buffer lokal pada perangkat untuk sinkronisasi saat koneksi ke backend terputus.  
+- Pertimbangkan opsi konektivitas alternatif (WiFi Direct, hotspot) untuk skenario tanpa infrastruktur jaringan.  
+- Tambahkan logging dan metrik untuk memantau akurasi sensor dan tingkat partisipasi pengguna.
