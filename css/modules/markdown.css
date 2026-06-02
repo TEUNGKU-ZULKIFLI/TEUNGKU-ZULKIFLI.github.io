@@ -1,61 +1,230 @@
 /* ========================================================================
-   GAYA VISUAL ARTIKEL MARKDOWN VITEPRESS-STYLE (Modern & Minimalis 2026)
-   Fokus pada kenyamanan membaca, tipografi bersih, dan kegunaan teknis.
+   MODUL CSS: BLOG & MARKDOWN (css/modules/markdown.css)
+   Gaya khusus halaman split-screen blog dan renderer dokumen Vitepress-style.
 ======================================================================== */
 
+.blog-container {
+    display: flex;
+    gap: 2.5rem;
+    min-height: 75vh;
+    width: 100%;
+    margin: 0 auto;
+    animation: fadeIn var(--transition-normal) ease-in-out;
+}
+
+/* 1. SEKSI SIDEBAR KIRI */
+.blog-sidebar {
+    width: 260px;
+    flex-shrink: 0;
+    border-right: 1px solid var(--border-color);
+    padding-right: 1.5rem;
+    text-align: left;
+}
+
+.blog-sidebar-header {
+    margin-bottom: 1.5rem;
+}
+
+.blog-sidebar-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    margin: 0 0 0.5rem 0;
+}
+
+.blog-sidebar-desc {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin: 0;
+}
+
+.blog-navigation-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.blog-loading-text {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+/* Kategori Header Di Sidebar */
+.blog-category-label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+    padding-left: 0.25rem;
+    border-left: 2px solid var(--border-color);
+}
+
+.blog-links-list {
+    list-style: none;
+    padding-left: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    margin: 0;
+}
+
+/* Tautan Artikel di Sidebar */
+.blog-sidebar-link {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    display: block;
+    padding: 0.35rem 0.5rem;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+    text-align: left;
+}
+
+.blog-sidebar-link:hover {
+    color: var(--accent);
+    background-color: var(--bg-tertiary);
+}
+
+.blog-sidebar-link.active {
+    background-color: var(--bg-tertiary);
+    color: var(--accent);
+    font-weight: 600;
+}
+
+/* 2. SEKSI PEMBACA KANAN (READER AREA) */
+.blog-reader-area {
+    flex-grow: 1;
+    max-width: var(--reader-max-width);
+    text-align: left;
+}
+
+/* Tombol Kembali di Mobile */
+.blog-back-bar {
+    margin-bottom: 1.5rem;
+}
+
+.blog-back-btn {
+    padding: 0.5rem 1rem;
+    background-color: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all var(--transition-fast);
+}
+
+.blog-back-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+/* Tampilan Menyambut Awal */
+.blog-welcome-state {
+    text-align: center;
+    padding: 4rem 1rem;
+    color: var(--text-muted);
+}
+
+.blog-welcome-icon {
+    font-size: 3rem;
+    display: block;
+    margin-bottom: 1rem;
+}
+
+.blog-welcome-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.blog-welcome-desc {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+/* Header di Dalam Artikel Aktif */
+.blog-post-header {
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 1.5rem;
+}
+
+.blog-post-title {
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+    line-height: 1.2;
+}
+
+.blog-post-meta {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+}
+
+.blog-post-tags {
+    display: flex;
+    gap: 0.4rem;
+}
+
+.blog-post-tag {
+    font-size: 0.75rem;
+    background-color: var(--bg-tertiary);
+    color: var(--text-secondary);
+    padding: 0.2rem 0.5rem;
+    border-radius: var(--radius-sm);
+}
+
+/* ========================================================================
+   RIASAN TIPOGRAFI ARTIKEL MARKDOWN (Vitepress-Style Markdown Body)
+======================================================================== */
 .markdown-body {
     font-size: 1.05rem;
     line-height: 1.75;
     color: var(--text-primary);
-    font-family: var(--font-sans);
 
-    /* Judul Bab Headings */
-    h1 {
-        font-size: 2.25rem;
+    h1, h2, h3, h4 {
+        color: var(--text-primary);
         font-weight: 800;
-        margin-top: 2rem;
-        margin-bottom: 1.25rem;
         letter-spacing: -0.02em;
-        color: var(--text-primary);
-        border-bottom: 1px solid var(--border-color);
-        padding-bottom: 0.5rem;
-    }
-
-    h2 {
-        font-size: 1.6rem;
-        font-weight: 700;
-        margin-top: 1.75rem;
+        margin-top: 2rem;
         margin-bottom: 1rem;
-        letter-spacing: -0.015em;
-        color: var(--text-primary);
     }
 
-    h3 {
-        font-size: 1.3rem;
-        font-weight: 600;
-        margin-top: 1.5rem;
-        margin-bottom: 0.75rem;
-    }
+    h1 { font-size: 2rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.4rem; }
+    h2 { font-size: 1.5rem; }
+    h3 { font-size: 1.25rem; }
 
     p {
         margin-bottom: 1.25rem;
         color: var(--text-secondary);
+        text-align: justify;
     }
 
-    /* Tautan Dalam Konten */
     a {
         color: var(--accent);
         text-decoration: none;
         font-weight: 500;
         border-bottom: 1px dashed var(--accent);
-        transition: border-color var(--transition-fast);
         
         &:hover {
             border-bottom-style: solid;
         }
     }
 
-    /* Blok Kutipan / Catatan Sederhana */
     blockquote {
         margin: 1.5rem 0;
         padding: 0.75rem 1.25rem;
@@ -70,24 +239,12 @@
         }
     }
 
-    /* KOTAK CALLOUT UNIK KHAS VITEPRESS (Tip, Info, Peringatan) */
-    /* Sederhana namun sangat dekoratif di dokumen */
-    .callout-tip {
-        border-left-color: #10b981 !important; /* Hijau */
-        background-color: rgba(16, 185, 129, 0.05) !important;
-    }
-    
-    .callout-warning {
-        border-left-color: #f59e0b !important; /* Kuning */
-        background-color: rgba(245, 158, 11, 0.05) !important;
-    }
-
-    /* Inline Code (e.g. `ls -la`) */
+    /* Inline Code */
     code:not(pre code) {
         font-family: var(--font-mono);
         font-size: 0.875em;
         background-color: var(--bg-tertiary);
-        color: #e11d48; /* Warna merah retro */
+        color: #e11d48;
         padding: 0.15rem 0.35rem;
         border-radius: var(--radius-sm);
         border: 1px solid var(--border-color);
@@ -95,7 +252,7 @@
 
     /* Blok Kode Program Premium */
     pre {
-        background-color: #0b0f19; /* Latar belakang hitam monolitik */
+        background-color: #05070f;
         color: #f8fafc;
         padding: 1.25rem;
         border-radius: var(--radius-md);
@@ -104,60 +261,64 @@
         border: 1px solid var(--border-color);
         font-family: var(--font-mono);
         font-size: 0.95rem;
-        position: relative;
 
         code {
             background-color: transparent !important;
             border: none !important;
             color: inherit !important;
             padding: 0;
-            font-size: inherit;
         }
     }
 
-    /* Daftar List Rapi */
     ul, ol {
         padding-left: 1.5rem;
         margin-bottom: 1.25rem;
         color: var(--text-secondary);
-    }
-
-    li {
-        margin-bottom: 0.5rem;
-    }
-
-    /* Tabel Parameter Praktikum */
-    table {
-        width: 100%;
-        margin-bottom: 2rem;
-        border-collapse: collapse;
-        font-size: 0.95rem;
-
-        th, td {
-            border: 1px solid var(--border-color);
-            padding: 0.75rem 1rem;
-            text-align: left;
-        }
-
-        th {
-            background-color: var(--bg-tertiary);
-            font-weight: 700;
-            color: var(--text-primary);
-        }
-
-        tr:nth-child(even) {
-            background-color: rgba(0, 0, 0, 0.02);
+        
+        li {
+            margin-bottom: 0.5rem;
         }
     }
 }
 
-/* Modifikasi Khusus Tampilan Mode Gelap */
 html.dark .markdown-body {
     code:not(pre code) {
-        color: #fb7185; /* Pink cerah di mode gelap */
+        color: #fb7185;
     }
-    
-    tr:nth-child(even) {
-        background-color: rgba(255, 255, 255, 0.02);
+}
+
+/* ========================================================================
+   ATURAN RESPONSIF PEMBAGIAN VIEW DI MOBILE (SOP Split Screen)
+======================================================================== */
+@media (max-width: 768px) {
+    .blog-container {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .blog-sidebar {
+        width: 100% !important;
+        border-right: none !important;
+        padding-right: 0 !important;
+        display: block; /* Default: tampilkan daftar indeks */
+    }
+
+    .blog-reader-area {
+        display: none; /* Default: sembunyikan area bacaan */
+    }
+
+    /* Saat masuk ke mode membaca artikel (.active-reading) */
+    .blog-container.active-reading {
+        .blog-sidebar {
+            display: none; /* Sembunyikan daftar indeks */
+        }
+        
+        .blog-reader-area {
+            display: block; /* Tampilkan area bacaan sepenuhnya */
+        }
+        
+        .blog-back-bar {
+            display: block !important; /* Munculkan tombol kembali */
+        }
     }
 }
