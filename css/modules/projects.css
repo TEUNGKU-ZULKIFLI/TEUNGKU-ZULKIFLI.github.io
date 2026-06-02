@@ -1,123 +1,164 @@
 /* ========================================================================
-   MODUL CSS PROYEK (Grid Proyek & Kartu Proyek Efek Hover Protektif)
+   MODUL CSS: PROJECTS (css/modules/projects.css)
+   Gaya khusus halaman Proyek dengan arsitektur penamaan kelas 'projects-'
 ======================================================================== */
 
 .projects-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    max-width: var(--container-max-width);
     margin: 0 auto;
     animation: fadeIn var(--transition-normal) ease-in-out;
 }
 
+/* Bagian Header Halaman */
 .projects-header {
     text-align: center;
-    margin-bottom: 3rem;
-    
-    h2 {
-        font-size: 2.25rem;
-        font-weight: 800;
-        margin-bottom: 0.5rem;
-    }
-    
-    p {
-        color: var(--text-secondary);
-        font-size: 1.1rem;
-    }
 }
 
+.projects-title {
+    font-size: 2.25rem;
+    font-weight: 850;
+    letter-spacing: -0.025em;
+    color: var(--text-primary);
+    margin: 0 0 0.5rem 0;
+}
+
+.projects-subtitle {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.projects-loading-text {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 1rem;
+    padding: 3rem 0;
+}
+
+/* Tata Letak Kisi Grid yang Kokoh & Responsif */
 .projects-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
     gap: 1.5rem;
+    width: 100%;
 }
 
-.project-card {
+/* Desain Kartu Proyek Minimalis Premium */
+.projects-card {
     background-color: var(--bg-secondary);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
-    padding: 1.5rem;
+    padding: 1.75rem;
     display: flex;
     flex-direction: column;
     text-align: left;
-    transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+    transition: transform var(--transition-fast), 
+                border-color var(--transition-fast), 
+                box-shadow var(--transition-fast);
+    position: relative;
+}
 
-    .project-title {
-        font-size: 1.25rem;
-        font-weight: 700;
-        margin-bottom: 0.75rem;
-        color: var(--text-primary);
-        transition: color var(--transition-fast);
-    }
+.projects-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--accent);
+    box-shadow: var(--shadow-md);
+}
 
-    .project-desc {
-        font-size: 0.95rem;
-        color: var(--text-secondary);
-        line-height: 1.6;
-        margin-bottom: 1.5rem;
-        flex-grow: 1;
+.projects-card-header {
+    margin-bottom: 0.75rem;
+}
+
+.projects-card-title {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin: 0;
+    letter-spacing: -0.015em;
+    transition: color var(--transition-fast);
+}
+
+.projects-card:hover .projects-card-title {
+    color: var(--accent);
+}
+
+.projects-card-desc {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    margin: 0 0 1.5rem 0;
+    flex-grow: 1; /* Memastikan deskripsi mengambil sisa ruang agar tombol sejajar */
+}
+
+/* Container Lencana Teknologi */
+.projects-card-tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    border-top: 1px dashed var(--border-color);
+    padding-top: 1rem;
+}
+
+.projects-tech-badge {
+    font-size: 0.75rem;
+    font-weight: 650;
+    background-color: var(--bg-tertiary);
+    color: var(--text-secondary);
+    padding: 0.25rem 0.6rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-color);
+    transition: all var(--transition-fast);
+}
+
+.projects-card:hover .projects-tech-badge {
+    border-color: rgba(56, 189, 248, 0.25);
+    color: var(--text-primary);
+}
+
+/* Kontainer Tombol Aksi */
+.projects-card-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: auto;
+    border-top: 1px solid var(--border-color);
+    padding-top: 1rem;
+}
+
+.projects-card-link {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.projects-card-link:hover {
+    color: var(--accent);
+}
+
+/* Link Aksi Utama (Demo/Dokumentasi) */
+.projects-card-link.link-primary {
+    color: var(--accent);
+}
+
+.projects-card-link.link-primary:hover {
+    color: var(--accent-hover);
+}
+
+/* Aturan Responsif Handphone */
+@media (max-width: 768px) {
+    .projects-title {
+        font-size: 1.85rem;
     }
     
-    .project-tech {
-        margin-bottom: 1.5rem;
-    }
-
-    .tech-badge {
-        font-size: 0.75rem;
-        background: var(--bg-tertiary);
-        color: var(--text-secondary);
-        padding: 0.2rem 0.5rem;
-        border-radius: var(--radius-sm);
-        margin-right: 0.4rem;
-        margin-bottom: 0.4rem;
-        display: inline-block;
-    }
-
-    /* Area Aksi Dua Tombol di Bawah Kartu */
-    .project-actions {
-        display: flex;
-        gap: 1rem;
-        margin-top: auto;
-        border-top: 1px solid var(--border-color);
-        padding-top: 1rem;
-    }
-
-    .project-link {
-        font-size: 0.85rem;
-        font-weight: 700;
-        color: var(--text-secondary);
-        text-decoration: none;
-        transition: color var(--transition-fast);
-        
-        &.link-primary {
-            color: var(--accent);
-        }
-    }
-}
-
-/* ========================================================================
-   DESKTOP ONLY HOVER INTERACTION (Mencegah Sticky Hover di Mobile)
-======================================================================= */
-@media (hover: hover) {
-    .project-card:hover {
-        transform: translateY(-4px);
-        box-shadow: var(--shadow-md);
-        border-color: var(--accent);
-    }
-
-    .project-card:hover .project-title {
-        color: var(--accent);
-    }
-
-    .project-link:hover {
-        color: var(--text-primary);
-        
-        &.link-primary:hover {
-            color: var(--accent-hover);
-        }
-    }
-}
-
-@media (max-width: 480px) {
-    .project-card .project-actions {
-        flex-direction: column;
-        gap: 0.5rem;
+    .projects-grid {
+        grid-template-columns: 1fr;
     }
 }
