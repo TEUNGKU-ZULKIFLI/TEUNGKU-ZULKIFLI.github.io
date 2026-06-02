@@ -1,17 +1,42 @@
 /* ========================================================================
-   GAYA VISUAL KONSOL TERMINAL RETRO (Modern Vanilla CSS)
+   MODUL CSS: TERMINAL (css/modules/terminal.css)
+   Gaya khusus simulator konsol dengan arsitektur penamaan kelas 'terminal-'
 ======================================================================== */
 
-.terminal-page-container {
-    max-width: 800px;
+.terminal-page-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    max-width: var(--reader-max-width);
     margin: 0 auto;
-    width: 100%;
     animation: fadeIn var(--transition-normal) ease-in-out;
 }
 
-.terminal-container {
+/* Header Bagian Atas Halaman */
+.terminal-page-header {
+    text-align: center;
+}
+
+.terminal-page-title {
+    font-size: 2.25rem;
+    font-weight: 850;
+    letter-spacing: -0.025em;
+    color: var(--text-primary);
+    margin: 0 0 0.5rem 0;
+}
+
+.terminal-page-subtitle {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Kotak Emulator Utama */
+.terminal-box-container {
     width: 100%;
-    background-color: #05070f; /* Konsol hitam pekat retro */
+    background-color: #060913; /* Warna konsol hitam pekat retro */
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-lg);
@@ -19,39 +44,42 @@
     font-family: var(--font-mono);
     display: flex;
     flex-direction: column;
-    height: 450px;
+    height: 420px;
     transition: border-color var(--transition-normal);
 }
 
-.terminal-container:hover {
+.terminal-box-container:hover {
     border-color: var(--accent);
 }
 
-.terminal-header {
-    background-color: #0e131f;
+/* Bilah Atas Konsol */
+.terminal-box-header {
+    background-color: #0e1422;
     padding: 0.75rem 1rem;
     display: flex;
     align-items: center;
     position: relative;
     border-bottom: 1px solid var(--border-color);
+    user-select: none;
 }
 
-.terminal-buttons {
+.terminal-box-buttons {
     display: flex;
     gap: 0.5rem;
 }
 
-.btn-term {
+.terminal-box-dot {
     width: 12px;
     height: 12px;
     border-radius: var(--radius-full);
     display: inline-block;
 }
-.btn-term.close { background-color: #ef4444; }
-.btn-term.minimize { background-color: #f59e0b; }
-.btn-term.expand { background-color: #10b981; }
 
-.terminal-title {
+.terminal-box-dot.terminal-close { background-color: #ef4444; }
+.terminal-box-dot.terminal-minimize { background-color: #f59e0b; }
+.terminal-box-dot.terminal-expand { background-color: #10b981; }
+
+.terminal-box-title {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
@@ -60,39 +88,43 @@
     font-weight: 600;
 }
 
-.terminal-body {
+/* Area Dalam Layar Konsol */
+.terminal-box-body {
     padding: 1.25rem;
     flex: 1;
     display: flex;
     flex-direction: column;
     overflow-y: auto;
-    color: #38bdf8; /* Teks cyan */
+    color: #38bdf8; /* Teks default cyan */
     font-size: 0.9rem;
     line-height: 1.6;
     text-align: left;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-color) transparent;
 }
 
-.terminal-output {
+.terminal-log-output {
     flex: 1;
 }
 
-.term-welcome { 
-    color: #34d399; 
-    font-weight: 700; 
-    margin-bottom: 0.25rem;
+.terminal-welcome-text {
+    color: #34d399; /* Hijau sukses */
+    font-weight: 700;
+    margin: 0 0 0.25rem 0;
 }
 
-.term-hint { 
-    color: var(--text-secondary); 
-    margin-bottom: 1rem;
+.terminal-hint-text {
+    color: var(--text-secondary);
+    margin: 0 0 1rem 0;
 }
 
-.term-highlight { 
-    color: #f43f5e; 
-    font-weight: 700; 
+.terminal-command-highlight {
+    color: #f43f5e; /* Pink highlight */
+    font-weight: 700;
 }
 
-.terminal-input-line {
+/* Baris Prompt & Input */
+.terminal-input-row {
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -100,13 +132,13 @@
     padding-top: 0.5rem;
 }
 
-.terminal-prompt {
+.terminal-prompt-text {
     color: #fbbf24; /* Kuning prompt */
     font-weight: 700;
     white-space: nowrap;
 }
 
-#terminal-input {
+#terminal-command-input {
     background: none;
     border: none;
     color: #ffffff;
@@ -114,11 +146,15 @@
     font-size: 0.9rem;
     width: 100%;
     outline: none;
+    caret-color: #34d399; /* Warna kursor mengetik */
 }
 
-/* Responsif Seluler */
+/* Aturan Responsif Handphone */
 @media (max-width: 768px) {
-    .terminal-container {
-        height: 350px;
+    .terminal-page-title {
+        font-size: 1.85rem;
+    }
+    .terminal-box-container {
+        height: 340px;
     }
 }

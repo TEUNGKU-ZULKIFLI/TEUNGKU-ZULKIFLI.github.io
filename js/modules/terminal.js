@@ -1,31 +1,33 @@
 /* ========================================================================
-   LOGIKA KONTROLER TERMINAL SIMULATOR (Modular JavaScript)
-   Menangani input, auto-scroll, pencarian perintah, dan rendering logs.
+   MODUL CONTROLLER: TERMINAL (js/modules/terminal.js)
+   Mengurus logika interaksi command-line, logs, dan dynamic responses.
 ======================================================================== */
 
-export function inisialisasiTerminal(dataProfil) {
-    const terminalInput = document.getElementById('terminal-input');
-    const terminalBody = document.getElementById('terminal-body');
-    if (!terminalInput || !terminalBody) return;
+export function inisialisasiTerminal(data) {
+    const commandInput = document.getElementById('terminal-command-input');
+    const terminalScreen = document.getElementById('terminal-screen');
+    
+    // Pengaman DOM: segera hentikan jika elemen tidak terdeteksi di halaman aktif
+    if (!commandInput || !terminalScreen) return;
 
-    // Otomatis fokus ketika area dalam terminal diklik
-    terminalBody.addEventListener('click', () => {
-        terminalInput.focus();
+    // Otomatis fokus ke input teks saat seluruh area hitam terminal diklik
+    terminalScreen.addEventListener('click', () => {
+        commandInput.focus();
     });
 
-    terminalInput.addEventListener('keydown', (e) => {
+    commandInput.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
-            const command = terminalInput.value.trim().toLowerCase();
-            prosesPerintah(command, dataProfil);
-            terminalInput.value = ''; // Bersihkan baris input
+            const command = commandInput.value.trim().toLowerCase();
+            prosesSistemPerintah(command, data);
+            commandInput.value = ''; // Kosongkan baris ketikan kembali
         }
     });
 }
 
-function prosesPerintah(perintah, data) {
-    const outputKontainer = document.querySelector('.terminal-output');
-    const terminalBody = document.getElementById('terminal-body');
-    if (!outputKontainer || !terminalBody) return;
+function prosesSistemPerintah(perintah, data) {
+    const logOutput = document.querySelector('.terminal-log-output');
+    const terminalScreen = document.getElementById('terminal-screen');
+    if (!logOutput || !terminalScreen) return;
 
     let respon = '';
 
@@ -44,11 +46,11 @@ function prosesPerintah(perintah, data) {
             respon = `<p>${data.personal.bio}</p>`;
             break;
         case 'skill':
-            respon = `<p><strong>Spesialisasi:</strong> ${data.skills.join(', ')}</p>`;
+            respon = `<p><strong>Keahlian Teknis:</strong> ${data.skills.join(', ')}</p>`;
             break;
         case 'project':
             respon = data.projects.map(p => `
-                <p style="margin-bottom:0.5rem;">• <strong>${p.title}</strong><br>
+                <p style="margin-bottom:0.5rem;">• <strong style="color:#34d399">${p.title}</strong><br>
                 <span style="color:var(--text-secondary); font-size:0.85rem;">${p.description}</span></p>
             `).join('');
             break;
@@ -64,26 +66,26 @@ function prosesPerintah(perintah, data) {
             `;
             break;
         case 'clear':
-            outputKontainer.innerHTML = '';
+            logOutput.innerHTML = '';
             return;
         case '':
             respon = '';
             break;
         default:
-            respon = `<p>Perintah <span style="color:#ef4444">'${perintah}'</span> tidak terdaftar. Ketik <span style="color:#34d399">help</span> untuk melihat menu.</p>`;
+            respon = `<p>Perintah <span style="color:#ef4444">'${perintah}'</span> tidak dikenali. Ketik <span style="color:#34d399">help</span> untuk menu.</p>`;
     }
 
-    // Buat elemen log baru untuk output perintah
-    const barisLog = document.createElement('div');
-    barisLog.style.marginBottom = '0.75rem';
-    barisLog.innerHTML = `
+    // Buat elemen baris log baru untuk menampung baris perintah
+    const barisLogBaru = document.createElement('div');
+    barisLogBaru.style.marginBottom = '0.75rem';
+    barisLogBaru.innerHTML = `
         <p style="margin: 0; color:#fbbf24;"><span>teungku@server:~$</span> <span style="color:#ffffff">${perintah}</span></p>
-        <div style="margin-top: 0.25rem; color:#f8fafc;">${respon}</div>
+        <div style="margin-top: 0.25rem;">${respon}</div>
     `;
-    outputKontainer.appendChild(barisLog);
+    logOutput.appendChild(barisLogBaru);
 
-    // Auto-scroll ke bawah secara halus tanpa forced reflow
+    // Auto-scroll ke bawah secara halus
     requestAnimationFrame(() => {
-        terminalBody.scrollTop = terminalBody.scrollHeight;
+        terminalScreen.scrollTop = terminalScreen.scrollHeight;
     });
 }
