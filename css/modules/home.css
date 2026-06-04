@@ -1,6 +1,6 @@
 /* ========================================================================
    MODUL CSS: HOME (css/modules/home.css)
-   Gaya visual khusus beranda dengan arsitektur penamaan kelas 'home-'
+   Gaya khusus beranda, optimasi kontainer, dan animasi halus layer SVG.
 ======================================================================== */
 
 .home-container {
@@ -15,37 +15,108 @@
     animation: fadeIn var(--transition-normal) ease-in-out;
 }
 
+/* Penyelarasan Kontainer SVG Responsif (Rasio 256:422 dari Figma) */
 .home-avatar-section {
     margin-bottom: 2rem;
     position: relative;
 }
 
-.home-avatar-canvas {
-    width: 190px;
-    height: 190px;
+.home-avatar-container {
+    width: 170px;
+    height: 280px; /* Menyesuaikan rasio aspek asli viewBox 256x422 (1:1.64) */
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow: visible;
 }
 
 .home-avatar-svg {
     width: 100%;
     height: 100%;
-    overflow: visible; /* Penting agar lengan tidak terpotong saat melambai */
+    display: block;
+    overflow: visible; /* Penting agar lambaian/pergerakan di luar kanvas figma tidak terpotong */
 }
 
-/* Animasi Rotasi Lengan Berotot */
-.home-arm-wave {
-    transform-origin: 114px 82px; /* Pusat engsel bahu kanan */
-    animation: waveMuscular 2.2s ease-in-out infinite;
+/* Fallback state jika file SVG gagal dipanggil */
+.home-avatar-fallback {
+    width: 150px;
+    height: 150px;
+    border-radius: var(--radius-full);
+    background-color: var(--bg-secondary);
+    border: 2px dashed var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-@keyframes waveMuscular {
-    0%, 100% { transform: rotate(0deg); }
-    50% { transform: rotate(-12deg); }
+.home-avatar-loading {
+    font-size: 0.9rem;
+    color: var(--text-muted);
 }
 
-/* Tipografi Identitas */
+/* ========================================================================
+   ANIMASI LAYER VECTOR FIGMA (Micro-Interactions Orisinal Calibrated)
+======================================================================== */
+
+/* 1. Animasi Bola Mata (Pupil Movement) */
+/* #eyes-main {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: pupilMove 2s ease-in-out infinite;
+    animation-delay: 3s;
+    will-change: transform;
+}
+
+@keyframes pupilMove {
+    0%, 100% { transform: translate(6px, 0px); }
+    50% { transform: translate(-6px, 0px); }
+} */
+
+/* 2. Kedipan Kelopak Atas (Turun Menutup) */
+#upper-eyelid-skin-main {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: blinkup 3s ease-in-out infinite;
+    will-change: transform;
+}
+
+@keyframes blinkup {
+    0%, 92%, 100% { transform: translateY(0px); }
+    95% { transform: translateY(5.5px); } /* Turun menutup sesuai koordinat kelopak atas */
+}
+
+/* 3. Kedipan Kelopak Bawah (Naik Menutup) */
+#lower-eyelid-left, 
+#lower-eyelid-right {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: blinkdown 3s ease-in-out infinite;
+    will-change: transform;
+}
+
+@keyframes blinkdown {
+    0%, 92%, 100% { transform: translateY(0px); }
+    95% { transform: translateY(-1.5px); } /* Naik menutup sesuai koordinat kelopak bawah */
+}
+
+/* 4. Animasi Nafas Lembut (Slight Breathing Effect) pada Tubuh */
+#Avatar-main {
+    transform-origin: bottom center;
+    animation: gentleBreathing 5s infinite ease-in-out;
+}
+
+@keyframes gentleBreathing {
+    0%, 100% {
+        transform: scale(1) translateY(0);
+    }
+    50% {
+        transform: scale(1.01) translateY(-1px);
+    }
+}
+
+/* ========================================================================
+   TIPOGRAFI & NAVIGASI ACTIONS
+======================================================================== */
 .home-title {
     font-size: 2.5rem;
     font-weight: 850;
@@ -68,7 +139,6 @@
     margin-bottom: 2rem;
 }
 
-/* Tombol Aksi */
 .home-actions {
     display: flex;
     justify-content: center;
@@ -85,11 +155,11 @@
     font-weight: 600;
     font-size: 0.95rem;
     transition: background-color var(--transition-fast), transform var(--transition-fast);
-    
-    &:hover {
-        background-color: var(--accent-hover);
-        transform: translateY(-1px);
-    }
+}
+
+.home-btn-primary:hover {
+    background-color: var(--accent-hover);
+    transform: translateY(-1px);
 }
 
 .home-btn-secondary {
@@ -102,21 +172,21 @@
     font-weight: 600;
     font-size: 0.95rem;
     transition: all var(--transition-fast);
-    
-    &:hover {
-        border-color: var(--accent);
-        color: var(--accent);
-        transform: translateY(-1px);
-    }
 }
 
-/* Aturan Responsif untuk Layar Handphone */
+.home-btn-secondary:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: translateY(-1px);
+}
+
+/* Aturan Responsif Mobile */
 @media (max-width: 768px) {
     .home-title {
         font-size: 2rem;
     }
-    .home-avatar-canvas {
-        width: 160px;
-        height: 160px;
+    .home-avatar-container {
+        width: 140px;
+        height: 230px; /* Rasio tetap terjaga pada layar HP */
     }
 }
