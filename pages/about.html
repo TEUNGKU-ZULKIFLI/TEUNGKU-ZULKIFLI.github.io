@@ -1,57 +1,40 @@
-<!-- Halaman Tentang Saya - Tata Letak Modern & Pengelompokan Keahlian -->
-<div class="about-layout-modern">
+<!-- ========================================================================
+   MODUL TEMPLATE: ABOUT (pages/about.html)
+   Struktur semantik murni dengan penamaan kelas 'about-' yang konsisten.
+======================================================================== */ -->
+<div class="about-container">
     
-    <!-- Kolom Kiri: Narasi Profil & Biografi -->
-    <section class="about-profile-section">
+    <!-- Judul Seksi Utama -->
+    <div class="about-header">
         <h2 class="about-title">Tentang Saya</h2>
-        <div class="about-bio-card">
-            <p id="about-bio" class="about-bio-text">
-                <!-- Data akan disuntikkan secara dinamis oleh js/app.js -->
-                Memuat biografi...
-            </p>
-        </div>
-        
-        <!-- Poin Pencapaian Singkat (Nilai Tambah untuk HRD) -->
-        <div class="about-achievements-grid">
-            <div class="achievement-item">
-                <span class="achievement-icon">🛡️</span>
-                <div class="achievement-info">
-                    <h4>Keamanan & Jaringan</h4>
-                    <p>Fokus mitigasi IPS MikroTik & virtualisasi server.</p>
-                </div>
-            </div>
-            <div class="achievement-item">
-                <span class="achievement-icon">🤖</span>
-                <div class="achievement-info">
-                    <h4>Pengembang IoT</h4>
-                    <p>Eksperimen robotika IoRT dengan ESP32 & C++.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+    </div>
 
-    <!-- Kolom Kanan: Metrik Keahlian Terkelompok -->
-    <section class="about-skills-section">
-        <h3 class="skills-block-title">Kompetensi Teknis</h3>
-        <p class="skills-subtitle">Teknologi dan alat yang aktif saya gunakan dalam rekayasa sistem:</p>
+    <!-- Blok Biografi Dinamis -->
+    <div class="about-card">
+        <p id="about-bio-text" class="about-desc">Memuat biografi...</p>
+    </div>
+
+    <!-- Area Pengelompokan Keahlian -->
+    <div class="about-skills-section">
+        <h3 class="about-skills-title">Keahlian & Kompetensi</h3>
         
-        <div class="skills-categories-container">
-            <!-- Kelompok 1: Jaringan & Peladen -->
-            <div class="skill-category-group">
-                <h4 class="category-title">Jaringan & Administrasi Server</h4>
-                <div id="skills-network-list" class="skills-badge-grid">
-                    <!-- Dinonaktifkan atau diisi via JSON secara modular -->
+        <div class="about-skills-layout">
+            <!-- Kelompok 1: Jaringan & Infrastruktur Server -->
+            <div class="about-skills-category">
+                <h4 class="about-category-title">Jaringan & Server</h4>
+                <div id="about-skills-network" class="about-skills-grid">
+                    <!-- Dimuat dinamis oleh js/modules/about.js -->
                 </div>
             </div>
 
-            <!-- Kelompok 2: Pengembangan Perangkat Lunak -->
-            <div class="skill-category-group">
-                <h4 class="category-title">Bahasa Pemrograman & Framework</h4>
-                <div id="skills-dev-list" class="skills-badge-grid">
-                    <!-- Dinonaktifkan atau diisi via JSON secara modular -->
+            <!-- Kelompok 2: Rekayasa Perangkat Lunak -->
+            <div class="about-skills-category">
+                <h4 class="about-category-title">Pemrograman & Framework</h4>
+                <div id="about-skills-dev" class="about-skills-grid">
+                    <!-- Dimuat dinamis oleh js/modules/about.js -->
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 
 </div>

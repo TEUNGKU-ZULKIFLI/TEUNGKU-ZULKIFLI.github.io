@@ -1,70 +1,76 @@
-<!-- Halaman Resume - Struktur Dokumen A4 Terstandarisasi -->
-<div class="resume-wrapper">
+<!-- ========================================================================
+   MODUL TEMPLATE: RESUME (pages/resume.html)
+   Struktur semantik murni dengan penamaan kelas 'resume-' yang konsisten.
+======================================================================== */ -->
+<div class="resume-container">
     
-    <!-- Panel Aksi Pengendali (Hanya terlihat di browser, tidak ikut dicetak) -->
-    <div class="no-print resume-actions-panel">
-        <p>Gunakan opsi di samping untuk mencetak atau menyimpan dokumen ini sebagai berkas PDF resmi.</p>
-        <button onclick="window.print()" class="btn-print-action">
+    <!-- Panel Cetak (Hanya terlihat di monitor, lenyap saat dicetak) -->
+    <div class="resume-actions no-print">
+        <p class="resume-actions-text">Gunakan opsi di samping untuk mencetak atau menyimpan dokumen ini sebagai berkas PDF resmi.</p>
+        <button id="resume-print-btn" class="resume-print-btn">
             🖨️ Cetak / Simpan PDF
         </button>
     </div>
 
-    <!-- Simulasi Kertas Dokumen Fisik A4 -->
-    <div class="cv-document">
-        <header class="cv-header">
-            <h1 id="cv-nama" class="cv-name"></h1>
-            <p id="cv-kontak" class="cv-contact-info"></p>
-            <a id="cv-tautan" href="#" target="_blank" class="cv-link"></a>
+    <!-- Simulasi Lembar Kertas Fisik A4 -->
+    <div class="resume-document">
+        
+        <!-- Kepala Resume -->
+        <header class="resume-doc-header">
+            <h1 id="resume-doc-name" class="resume-doc-name"></h1>
+            <p id="resume-doc-contact" class="resume-doc-contact"></p>
+            <a id="resume-doc-link" href="#" target="_blank" class="resume-doc-link"></a>
         </header>
 
-        <!-- Ringkasan Profesional -->
-        <section class="cv-section">
-            <h2 class="cv-section-title">Profil Profesional</h2>
-            <p id="cv-profil" class="cv-p"></p>
+        <!-- Profil Profesional -->
+        <section class="resume-doc-section">
+            <h2 class="resume-section-title">Profil Profesional</h2>
+            <p id="resume-doc-profile" class="resume-section-p"></p>
         </section>
 
-        <!-- Riwayat Pekerjaan -->
-        <section class="cv-section">
-            <h2 class="cv-section-title">Pengalaman Kerja</h2>
-            <div id="cv-pengalaman" class="cv-items-container">
-                <!-- Data dari resume_idn.json disuntikkan ke sini -->
+        <!-- Pengalaman Kerja -->
+        <section class="resume-doc-section">
+            <h2 class="resume-section-title">Pengalaman Kerja</h2>
+            <div id="resume-doc-experience" class="resume-items-list">
+                <!-- Disuntikkan dinamis oleh js/modules/resume.js -->
             </div>
         </section>
 
-        <!-- Riwayat Pendidikan -->
-        <section class="cv-section">
-            <h2 class="cv-section-title">Pendidikan</h2>
-            <div id="cv-pendidikan" class="cv-items-container">
-                <!-- Data dari resume_idn.json disuntikkan ke sini -->
+        <!-- Pendidikan -->
+        <section class="resume-doc-section">
+            <h2 class="resume-section-title">Pendidikan</h2>
+            <div id="resume-doc-education" class="resume-items-list">
+                <!-- Disuntikkan dinamis oleh js/modules/resume.js -->
             </div>
         </section>
 
         <!-- Proyek Teknis Pilihan -->
-        <section class="cv-section">
-            <h2 class="cv-section-title">Proyek Teknis</h2>
-            <div id="cv-proyek" class="cv-items-container">
-                <!-- Data dari resume_idn.json disuntikkan ke sini -->
+        <section class="resume-doc-section">
+            <h2 class="resume-section-title">Proyek Teknis</h2>
+            <div id="resume-doc-projects" class="resume-items-list">
+                <!-- Disuntikkan dinamis oleh js/modules/resume.js -->
             </div>
         </section>
 
-        <!-- Kelompok Keahlian Komparatif -->
-        <section class="cv-section">
-            <h2 class="cv-section-title">Keahlian & Kompetensi</h2>
-            <div class="cv-skills-grid">
-                <div class="cv-skill-col">
+        <!-- Kelompok Keahlian & Kompetensi -->
+        <section class="resume-doc-section">
+            <h2 class="resume-section-title">Keahlian & Kompetensi</h2>
+            <div class="resume-skills-grid">
+                <div class="resume-skills-column">
                     <strong>Administrasi Jaringan & Server:</strong>
-                    <span id="cv-skill-jaringan"></span>
+                    <span id="resume-skill-network"></span>
                 </div>
-                <div class="cv-skill-col">
+                <div class="resume-skills-column">
                     <strong>Pengembangan Perangkat Lunak:</strong>
-                    <span id="cv-skill-dev"></span>
+                    <span id="resume-skill-dev"></span>
                 </div>
-                <div class="cv-skill-col">
+                <div class="resume-skills-column">
                     <strong>Bahasa:</strong>
-                    <span id="cv-bahasa"></span>
+                    <span id="resume-skill-lang"></span>
                 </div>
             </div>
         </section>
+
     </div>
 
 </div>

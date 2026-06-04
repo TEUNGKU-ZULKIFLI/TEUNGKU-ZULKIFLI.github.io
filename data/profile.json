@@ -3,7 +3,7 @@
         "name": "Teungku Zulkifli",
         "role": "Administrator Sistem & Jaringan",
         "tagline": "Membangun infrastruktur peladen yang tangguh dan arsitektur jaringan yang terukur.",
-        "bio": "Saya adalah seorang profesional TI yang berpengalaman dan memiliki spesialisasi dalam sistem operasi Linux (khususnya Debian), rekayasa jaringan (Mikrotik, Cisco), serta pemahaman fundamental mengenai arsitektur sistem tingkat rendah (Low-Level). Saya memiliki minat yang besar terhadap otomatisasi dan pembelajaran berkelanjutan."
+        "bio": "Mahasiswa tingkat akhir D4 Teknologi Rekayasa Komputer Jaringan di Politeknik Negeri Lhokseumawe dengan fondasi komprehensif di bidang infrastruktur IT, administrasi jaringan, dan pengembangan perangkat lunak. Selain sedang merancang sistem mitigasi otomatis (IPS) terhadap serangan brute force pada router MikroTik sebagai tugas akhir, saya juga aktif mengembangkan berbagai proyek nyata berbasis Web, Mobile (Flutter), dan Internet of Things (IoT). Saya sangat adaptif dalam mengadopsi teknologi baru, termasuk pemanfaatan AI-tools. Mencari peluang karir yang dinamis sebagai Network Engineer, IT Support, maupun Software/Web Developer."
     },
     "contact": {
         "email": "teungkuzulkifli08@gmail.com",
@@ -23,6 +23,7 @@
             "description": "Mengembangkan aplikasi mobile menggunakan Flutter dan SQLite untuk membantu pengguna mengelola anggaran pribadi melalui aturan 50/30/20.",
             "tech": ["Flutter", "SQLite", "Dart"],
             "demo": "https://youtube.com/playlist?list=PLuXdnSVJrUhlPdxPsLkPj8o5QRjvfqQek&si=1DYkrLlrPohOKPiw",
+            "blog": "2025-09-10-apok-fintrack.md",
             "repo": "https://github.com/TEUNGKU-ZULKIFLI/finance_tracker/releases/tag/v1.0.0%2B1"
         },
         {
@@ -31,6 +32,7 @@
             "description": "Merancang platform robot mobil menggunakan ESP32 dan C++ (PlatformIO) untuk mendemonstrasikan konsep dasar Internet of Robotic Things (IoRT).",
             "tech": ["ESP32", "C++", "PlatformIO"],
             "demo": "https://youtu.be/RF_6JotvamE",
+            "blog": "",
             "repo": "https://github.com/TEUNGKU-ZULKIFLI/InternetofRoboticThings/tree/release-v1"
         },
         {
@@ -39,6 +41,7 @@
             "description": "Sistem tempat sampah pintar berbasis IoT yang terintegrasi dengan sensor ultrasonik & ESP8266 untuk REWARD POINT.",
             "tech": ["Laravel", "IoT (ESP8266)", "Arduino C++", "Docker"],
             "demo": "#",
+            "blog": "2025-01-02-smartbin-iot-system.md",
             "repo": "https://github.com/TEUNGKU-ZULKIFLI/smartbin/releases/tag/1.0.0"
         }
     ],
