@@ -31,9 +31,8 @@ export async function inisialisasiHome(data) {
     // 2. DYNAMIC SVG INJECTION & INTERACTIVE EYE TRACKING
     if (avatarContainer) {
         try {
-            // Ambil berkas SVG 4.8MB dari folder assets/
-            const respon = await fetch('./assets/Avatar-main.svg');
-            if (!respon.ok) throw new Error("Gagal mengambil berkas Avatar-main.svg");
+            const respon = await fetch('./assets/Avatar.svg');
+            if (!respon.ok) throw new Error("Gagal mengambil berkas Avatar.svg");
             
             const dataSVG = await respon.text();
             
@@ -48,38 +47,52 @@ export async function inisialisasiHome(data) {
             }
 
             // --- AKTIFKAN INTERAKSI BOLA MATA (EYE-TRACKING) ---
-            const bolaMata = document.getElementById('eyes-main');
+            const bolaMata = document.getElementById('Eyes-main');
             
-            if (bolaMata) {
+            // Deteksi Fitur Layar Sentuh / Seluler (Sangat Penting demi mencegah Memory Leak di HP!)
+            const isTouchDevice = window.matchMedia("(pointer: coarse)").matches || 
+                                  ('ontouchstart' in window) || 
+                                  (navigator.maxTouchPoints > 0);
+
+            if (bolaMata && !isTouchDevice) {
                 // Tambahkan transisi CSS halus agar gerakan bola mata tidak patah-patah
                 bolaMata.style.transition = 'transform 0.15s ease-out';
 
+                let ticking = false; // Flag pengunci requestAnimationFrame (Throttling)
+
                 const lacakGerakanMouse = (e) => {
-                    // Ambil posisi koordinat pusat dari elemen mata di layar
-                    const rectMata = bolaMata.getBoundingClientRect();
-                    const pusatMataX = rectMata.left + rectMata.width / 2;
-                    const pusatMataY = rectMata.top + rectMata.height / 2;
+                    if (!ticking) {
+                        window.requestAnimationFrame(() => {
+                            // Ambil posisi koordinat pusat dari elemen mata di layar
+                            const rectMata = bolaMata.getBoundingClientRect();
+                            const pusatMataX = rectMata.left + rectMata.width / 2;
+                            const pusatMataY = rectMata.top + rectMata.height / 2;
 
-                    // Hitung selisih jarak antara kursor mouse dengan pusat mata
-                    const selisihX = e.clientX - pusatMataX;
-                    const selisihY = e.clientY - pusatMataY;
+                            // Hitung selisih jarak antara kursor mouse dengan pusat mata
+                            const selisihX = e.clientX - pusatMataX;
+                            const selisihY = e.clientY - pusatMataY;
 
-                    // Tentukan sudut kemiringan lirikan menggunakan Trigonometri Arc Tangen
-                    const sudutLirikan = Math.atan2(selisihY, selisihX);
+                            // Tentukan sudut kemiringan lirikan menggunakan Trigonometri Arc Tangen
+                            const sudutLirikan = Math.atan2(selisihY, selisihX);
 
-                    // Batasi radius lirikan maksimum (dalam satuan piksel) agar mata tidak keluar batas
-                    const radiusMaksimum = 5.0; 
-                    const jarakKursor = Math.hypot(selisihX, selisihY);
-                    
-                    // Semakin dekat kursor ke mata, lirikan akan semakin sedikit mengecil secara proporsional
-                    const kekuatanLirikan = Math.min(jarakKursor * 0.03, radiusMaksimum);
+                            // Batasi radius lirikan maksimum (dalam satuan piksel) agar mata tidak keluar batas
+                            const radiusMaksimum = 5.0; 
+                            const jarakKursor = Math.hypot(selisihX, selisihY);
+                            
+                            // Semakin dekat kursor ke mata, lirikan akan semakin sedikit mengecil secara proporsional
+                            const kekuatanLirikan = Math.min(jarakKursor * 0.03, radiusMaksimum);
 
-                    // Hitung koordinat pergeseran (Translate X & Y)
-                    const pergeseranX = Math.cos(sudutLirikan) * kekuatanLirikan;
-                    const pergeseranY = Math.sin(sudutLirikan) * kekuatanLirikan;
+                            // Hitung koordinat pergeseran (Translate X & Y)
+                            const pergeseranX = Math.cos(sudutLirikan) * kekuatanLirikan;
+                            const pergeseranY = Math.sin(sudutLirikan) * kekuatanLirikan;
 
-                    // Terapkan translasi koordinat ke elemen mata
-                    bolaMata.style.transform = `translate(${pergeseranX}px, ${pergeseranY}px)`;
+                            // Terapkan translasi koordinat ke elemen mata
+                            bolaMata.style.transform = `translate(${pergeseranX}px, ${pergeseranY}px)`;
+                            
+                            ticking = false; // Buka kembali kunci siklus render berikutnya
+                        });
+                        ticking = true; // Kunci proses eksekusi selama siklus frame berlangsung
+                    }
                 };
 
                 // Kembalikan mata ke posisi tengah secara otomatis jika mouse keluar dari jendela peramban

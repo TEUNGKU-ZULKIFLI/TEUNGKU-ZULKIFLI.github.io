@@ -1,192 +1,274 @@
 /* ========================================================================
-   MODUL CSS: HOME (css/modules/home.css)
-   Gaya khusus beranda, optimasi kontainer, dan animasi halus layer SVG.
+MODUL CSS: HOME (css/modules/home.css)
+Gaya khusus beranda, optimasi kontainer, dan animasi halus layer SVG.
 ======================================================================== */
 
 .home-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 58vh;
-    text-align: center;
-    max-width: 700px;
-    margin: 0 auto;
-    animation: fadeIn var(--transition-normal) ease-in-out;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+min-height: 58vh;
+text-align: center;
+max-width: 700px;
+margin: 0 auto;
+animation: fadeIn var(--transition-normal) ease-in-out;
 }
 
-/* Penyelarasan Kontainer SVG Responsif (Rasio 256:422 dari Figma) */
+/* PR 1 FIXED: Penyelarasan Margin Negatif Avatar */
 .home-avatar-section {
-    margin-bottom: 2rem;
-    position: relative;
+margin-bottom: -4.5rem; /* Disesuaikan agar pas dengan batas bawah kemeja */
+position: relative;
+z-index: 1; /* Pastikan berada di bawah layer teks jika bertabrakan */
 }
 
 .home-avatar-container {
-    width: 170px;
-    height: 280px; /* Menyesuaikan rasio aspek asli viewBox 256x422 (1:1.64) */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: visible;
+width: 366px;
+height: 595px;
+display: flex;
+align-items: center;
+justify-content: center;
+overflow: visible;
 }
 
 .home-avatar-svg {
-    width: 100%;
-    height: 100%;
-    display: block;
-    overflow: visible; /* Penting agar lambaian/pergerakan di luar kanvas figma tidak terpotong */
+width: 100%;
+height: 100%;
+display: block;
+overflow: visible;
 }
 
-/* Fallback state jika file SVG gagal dipanggil */
 .home-avatar-fallback {
-    width: 150px;
-    height: 150px;
-    border-radius: var(--radius-full);
-    background-color: var(--bg-secondary);
-    border: 2px dashed var(--border-color);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+width: 150px;
+height: 150px;
+border-radius: var(--radius-full);
+background-color: var(--bg-secondary);
+border: 2px dashed var(--border-color);
+display: flex;
+align-items: center;
+justify-content: center;
 }
 
 .home-avatar-loading {
-    font-size: 0.9rem;
-    color: var(--text-muted);
+font-size: 0.9rem;
+color: var(--text-muted);
 }
 
 /* ========================================================================
-   ANIMASI LAYER VECTOR FIGMA (Micro-Interactions Orisinal Calibrated)
-======================================================================== */
+ANIMASI LAYER VECTOR FIGMA (Micro-Interactions Orisinal Calibrated)
+======================================================================= */
 
-/* 1. Animasi Bola Mata (Pupil Movement) */
-/* #eyes-main {
-    transform-box: fill-box;
-    transform-origin: center;
-    animation: pupilMove 2s ease-in-out infinite;
-    animation-delay: 3s;
-    will-change: transform;
+/* 1. Animasi Bola Mata (Pupil Movement - Desktop Only) */
+#Eyes-main {
+transform-box: fill-box;
+transform-origin: center;
+will-change: transform;
 }
 
-@keyframes pupilMove {
-    0%, 100% { transform: translate(6px, 0px); }
-    50% { transform: translate(-6px, 0px); }
-} */
+/* 1.2 Gerakan Lirikan Mata Otomatis Halus Khusus Seluler (Mobile Autopilot) */
+@media (pointer: coarse) or (hover: none) {
+#Eyes-main {
+animation: autopilotEyes 12s ease-in-out infinite;
+}
+}
 
-/* 2. Kedipan Kelopak Atas (Turun Menutup) */
-#upper-eyelid-skin-main {
-    transform-box: fill-box;
-    transform-origin: center;
-    animation: blinkup 3s ease-in-out infinite;
-    will-change: transform;
+@keyframes autopilotEyes {
+0%, 100%, 70%, 75% { transform: translate(0px, 0px); }
+10%, 25% { transform: translate(3px, 0.5px); }    /* Melirik kanan lembut */
+35%, 55% { transform: translate(-3px, 0.5px); }   /* Melirik kiri lembut */
+}
+
+/* 2. Kedipan Kelopak Atas (Turun Menutup - Sesuai ID Kelopak Atas Anda) */
+#Upper-eyelid-skin-main {
+transform-box: fill-box;
+transform-origin: center;
+animation: blinkup 3.5s ease-in-out infinite;
+will-change: transform;
 }
 
 @keyframes blinkup {
-    0%, 92%, 100% { transform: translateY(0px); }
-    95% { transform: translateY(5.5px); } /* Turun menutup sesuai koordinat kelopak atas */
+0%, 93%, 100% { transform: translateY(0px); }
+96% { transform: translateY(5.5px); } /* Turun menutup sesuai koordinat presisi */
 }
 
-/* 3. Kedipan Kelopak Bawah (Naik Menutup) */
-#lower-eyelid-left, 
-#lower-eyelid-right {
-    transform-box: fill-box;
-    transform-origin: center;
-    animation: blinkdown 3s ease-in-out infinite;
-    will-change: transform;
+/* 3. Kedipan Kelopak Bawah (Naik Menutup - Sesuai ID Kelopak Bawah Anda) */
+#lower-eyelid-line-left,
+#lower-eyelid-line-right {
+transform-box: fill-box;
+transform-origin: center;
+animation: blinkdown 3.5s ease-in-out infinite;
+will-change: transform;
 }
 
 @keyframes blinkdown {
-    0%, 92%, 100% { transform: translateY(0px); }
-    95% { transform: translateY(-1.5px); } /* Naik menutup sesuai koordinat kelopak bawah */
+0%, 93%, 100% { transform: translateY(0px); }
+96% { transform: translateY(-1.5px); } /* Naik menutup sesuai koordinat presisi */
 }
 
-/* 4. Animasi Nafas Lembut (Slight Breathing Effect) pada Tubuh */
+/* 4. Animasi Nafas Lembut (Slight Breathing Effect) pada Tubuh & Kepala */
 #Avatar-main {
-    transform-origin: bottom center;
-    animation: gentleBreathing 5s infinite ease-in-out;
+transform-origin: bottom center;
+animation: gentleBreathing 6s infinite ease-in-out;
 }
 
 @keyframes gentleBreathing {
-    0%, 100% {
-        transform: scale(1) translateY(0);
-    }
-    50% {
-        transform: scale(1.01) translateY(-1px);
-    }
+0%, 100% {
+transform: scale(1) translateY(0);
+}
+50% {
+transform: scale(1.008) translateY(-1.5px); /* Skala bernapas mikro yang sangat elegan */
+}
 }
 
 /* ========================================================================
-   TIPOGRAFI & NAVIGASI ACTIONS
+UPGRADE: ANIMASI MIKRO BERDASARKAN ID FIGMA PERMANEN ANDA
 ======================================================================== */
+
+/* 5. Alis Bergerak Naik-Turun Tipis (Sesuai Siklus Kedip & Bernapas) */
+#eyebrow-left,
+#eyebrow-right {
+transform-box: fill-box;
+transform-origin: center;
+animation: browMovement 6s infinite ease-in-out;
+will-change: transform;
+}
+
+@keyframes browMovement {
+0%, 100% { transform: translateY(0px); }
+50% { transform: translateY(-1px); } /* Bergerak naik sangat halus saat bernapas */
+}
+
+/* 6. Kedutan Bibir Tipis Saat Bernapas (Mencegah Kesan Kaku) */
+#mouth {
+transform-box: fill-box;
+transform-origin: center;
+animation: mouthMovement 12s infinite ease-in-out;
+will-change: transform;
+}
+
+@keyframes mouthMovement {
+0%, 100%, 80% { transform: scale(1); }
+40%, 45% { transform: scaleX(1.02) scaleY(0.98); } /* Sedikit meregang alami secara periodik */
+}
+
+/* 7. Gerakan Telinga Mikro Teratur (Subtle Ear Twitch) */
+#ear-left {
+transform-box: fill-box;
+transform-origin: right center;
+animation: earTwitchLeft 15s infinite ease-in-out;
+}
+
+#ear-right {
+transform-box: fill-box;
+transform-origin: left center;
+animation: earTwitchRight 15s infinite ease-in-out;
+}
+
+@keyframes earTwitchLeft {
+0%, 90%, 100% { transform: rotate(0deg); }
+93% { transform: rotate(-0.5deg); }
+96% { transform: rotate(0.2deg); }
+}
+
+@keyframes earTwitchRight {
+0%, 90%, 100% { transform: rotate(0deg); }
+93% { transform: rotate(0.5deg); }
+96% { transform: rotate(-0.2deg); }
+}
+
+/* PR 2 FIXED: Animasi Dasi Goyang Sepoi-sepoi */
+#tie {
+transform-box: fill-box;
+transform-origin: top center; /* Menggantung pas dari simpul kerah atas */
+animation: tieBreeze 8s infinite ease-in-out;
+will-change: transform;
+}
+
+@keyframes tieBreeze {
+0%, 100% { transform: rotate(0deg); }
+25% { transform: rotate(1.2deg) skewX(0.5deg); }
+50% { transform: rotate(-0.8deg) skewX(-0.3deg); }
+75% { transform: rotate(0.6deg) skewX(0.2deg); }
+}
+
+/* ========================================================================
+TIPOGRAFI & NAVIGASI ACTIONS
+======================================================================== */
+.home-text-section {
+position: relative;
+z-index: 10; /* PR 1 FIXED: Menjaga teks selalu berada di atas layer kemeja */
+}
+
 .home-title {
-    font-size: 2.5rem;
-    font-weight: 850;
-    letter-spacing: -0.02em;
-    color: var(--text-primary);
-    margin-bottom: 0.5rem;
+font-size: 2.5rem;
+font-weight: 850;
+letter-spacing: -0.02em;
+color: var(--text-primary);
+margin-bottom: 0.5rem;
 }
 
 .home-subtitle {
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: var(--accent);
-    margin-bottom: 1.25rem;
+font-size: 1.25rem;
+font-weight: 600;
+color: var(--accent);
+margin-bottom: 1.25rem;
 }
 
 .home-desc {
-    font-size: 1rem;
-    line-height: 1.6;
-    color: var(--text-secondary);
-    margin-bottom: 2rem;
+font-size: 1rem;
+line-height: 1.6;
+color: var(--text-secondary);
+margin-bottom: 2rem;
 }
 
 .home-actions {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    flex-wrap: wrap;
+display: flex;
+justify-content: center;
+gap: 1rem;
+flex-wrap: wrap;
 }
 
 .home-btn-primary {
-    padding: 0.7rem 1.4rem;
-    background-color: var(--accent);
-    color: #ffffff;
-    text-decoration: none;
-    border-radius: var(--radius-md);
-    font-weight: 600;
-    font-size: 0.95rem;
-    transition: background-color var(--transition-fast), transform var(--transition-fast);
+padding: 0.7rem 1.4rem;
+background-color: var(--accent);
+color: #ffffff;
+text-decoration: none;
+border-radius: var(--radius-md);
+font-weight: 600;
+font-size: 0.95rem;
+transition: background-color var(--transition-fast), transform var(--transition-fast);
 }
 
 .home-btn-primary:hover {
-    background-color: var(--accent-hover);
-    transform: translateY(-1px);
+background-color: var(--accent-hover);
+transform: translateY(-1px);
 }
 
 .home-btn-secondary {
-    padding: 0.7rem 1.4rem;
-    background-color: transparent;
-    border: 1px solid var(--border-color);
-    color: var(--text-primary);
-    text-decoration: none;
-    border-radius: var(--radius-md);
-    font-weight: 600;
-    font-size: 0.95rem;
-    transition: all var(--transition-fast);
+padding: 0.7rem 1.4rem;
+background-color: transparent;
+border: 1px solid var(--border-color);
+color: var(--text-primary);
+text-decoration: none;
+border-radius: var(--radius-md);
+font-weight: 600;
+font-size: 0.95rem;
+transition: all var(--transition-fast);
 }
 
 .home-btn-secondary:hover {
-    border-color: var(--accent);
-    color: var(--accent);
-    transform: translateY(-1px);
+border-color: var(--accent);
+color: var(--accent);
+transform: translateY(-1px);
 }
 
 /* Aturan Responsif Mobile */
 @media (max-width: 768px) {
-    .home-title {
-        font-size: 2rem;
-    }
-    .home-avatar-container {
-        width: 140px;
-        height: 230px; /* Rasio tetap terjaga pada layar HP */
-    }
+.home-title {
+font-size: 2rem;
+}
+.home-avatar-container {
+width: 140px;
+height: 230px; /* Rasio tetap terjaga pada layar HP */
+}
 }
